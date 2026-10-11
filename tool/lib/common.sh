@@ -38,3 +38,17 @@ find_aapt2() {
   echo "aapt2 not found in $sdk/build-tools" >&2
   return 1
 }
+
+# Prints the path of an LLVM binary tool (llvm-readobj, llvm-nm) from the
+# newest installed NDK; it reads Android ELF and Windows PE files alike.
+find_llvm_tool() {
+  local sdk ndk exe
+  sdk="$(android_sdk)" || return 1
+  for ndk in $(ls -d "$sdk"/ndk/*/ 2>/dev/null | sort -V -r); do
+    for exe in "$ndk"toolchains/llvm/prebuilt/*/bin/"$1" "$ndk"toolchains/llvm/prebuilt/*/bin/"$1".exe; do
+      [ -x "$exe" ] && { echo "$exe"; return 0; }
+    done
+  done
+  echo "$1 not found in an NDK under $sdk/ndk" >&2
+  return 1
+}

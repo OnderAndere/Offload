@@ -17,3 +17,10 @@ flutter_windows.dll
 # 2026-09-25 (T1.3). Prebuilt, sha256-verified download (DD-008).
 libsqlite3mc.so
 sqlite3mc.dll
+
+# The handwriting reader (T6a.2, DD-021): llama.cpp, ggml and mtmd built from
+# the pinned source into one library (native/offload_llama/); approved
+# 2026-10-11. CPU only, without common, server, OpenSSL or subprocess:
+# check_dependencies.sh checks that it imports no network functions.
+liboffload_llama.so
+offload_llama.dll

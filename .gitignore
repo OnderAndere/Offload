@@ -57,3 +57,6 @@ android/key.properties
 *.keystore
 .env
 google-services.json
+
+# llama.cpp source, downloaded and checked by native/offload_llama/CMakeLists.txt.
+native/offload_llama/.cache/

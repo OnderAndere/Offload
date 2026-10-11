@@ -24,6 +24,22 @@ android {
         targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // The handwriting reader (T6a.2, DD-021) for the 64-bit ABIs only: the
+        // model needs more memory than a 32-bit process has. On armeabi-v7a
+        // the library is absent and the app offers no image input.
+        externalNativeBuild {
+            cmake {
+                abiFilters += listOf("arm64-v8a", "x86_64")
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path = file("../../native/offload_llama/CMakeLists.txt")
+            version = "3.22.1"
+        }
     }
 
     buildTypes {

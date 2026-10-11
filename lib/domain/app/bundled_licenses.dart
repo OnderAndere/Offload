@@ -58,6 +58,18 @@ final bundledLicenses = <BundledLicense>[
       covers: const <String>[],
       asset: 'assets/licenses/$package-other.txt',
     ),
+  // The handwriting reader (T6a.2, DD-021): llama.cpp with ggml and mtmd,
+  // built into offload_llama (MIT, PO 11-10-2026), and the code by others
+  // inside it that carries its own notice: llamafile's matrix code
+  // (Mozilla) and YaRN (checked in the b11526 sources 11-10-2026).
+  // stb_image, miniaudio and the hash code of llama.cpp's vendor folder are
+  // not linked in: the app passes pixels, not files.
+  for (final part in ['', '-sgemm', '-yarn'])
+    (
+      packages: ['llama.cpp'],
+      covers: ['liboffload_llama.so', 'offload_llama.dll'],
+      asset: 'assets/licenses/llama.cpp$part.txt',
+    ),
   // Under the name Flutter's own overview uses for SQLite, so both
   // statements are listed together.
   (

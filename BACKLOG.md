@@ -661,8 +661,16 @@ first; the order follows the gate.
       reading pauses and resumes. PO decisions: read into memory; message + progress + screen on, a foreground service
       only if missed in use; the 5-minute stop. Details in DD-021 and the S6 report (*Phone*). The spike app and files
       were removed from the phone
-- [ ] **T6a.2** The native library in the app on Android and Windows: shim, isolate, `tool/allowed_native_libs.txt`
+- [x] **T6a.2** The native library in the app on Android and Windows: shim, isolate, `tool/allowed_native_libs.txt`
       and `bundledLicenses` (MIT, PO 11-10-2026), the network check of DD-008
+      — *done 11-10-2026 (PO choices: build from source, downloaded with a SHA-256 check, one re-measurement):*
+      `native/offload_llama/` builds llama.cpp b11526 into one library per platform (`liboffload_llama.so` for
+      arm64-v8a and x86_64, `offload_llama.dll`), exporting only `ol_read`/`ol_alloc`/`ol_free`; fixed CPU level
+      (arm64 dotprod + i8mm, x86_64 AVX2). `HandwritingReader` in `lib/platform/handwriting/` (isolate, phases,
+      cancel within seconds) plus a fake; `ReadingPolicy` in `lib/domain/handwriting/`. `check_dependencies.sh`
+      now also fails on network imports in native code. Measured: PC (MSVC) 40/22 s per notebook/whiteboard photo
+      at 2.2 GB, same text as S6; Fairphone 46–111 s at 2.3–2.5 GB, as fast as the prebuilt or faster. The emulator
+      only loads the library (2.5 GB RAM is too little to read). No visible change until T6a.4
 - [ ] **T6a.3** Settings → *Models*, shared with speech: import of several files at once, free-space check,
       progress, SHA-256 against a list in the app, remove, the source and licence as text; the model as a row in
       Settings → *Storage*; never in a backup, and the message after a restore (DD-007). Replaces the import of T6.1

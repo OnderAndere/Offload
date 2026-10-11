@@ -57,6 +57,12 @@ add_subdirectory("runner")
 # them to the application.
 include(flutter/generated_plugins.cmake)
 
+# The handwriting reader (T6a.2, DD-021): llama.cpp behind a small C API,
+# loaded by lib/platform/handwriting/ through dart:ffi.
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../native/offload_llama"
+  "${CMAKE_CURRENT_BINARY_DIR}/offload_llama")
+add_dependencies(${BINARY_NAME} offload_llama)
+
 
 # === Installation ===
 # Support files are copied into place next to the executable, so that it can
@@ -80,6 +86,9 @@ install(FILES "${FLUTTER_ICU_DATA_FILE}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}
 
 install(FILES "${FLUTTER_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
   COMPONENT Runtime)
+
+install(FILES "$<TARGET_FILE:offload_llama>"
+  DESTINATION "${INSTALL_BUNDLE_LIB_DIR}" COMPONENT Runtime)
 
 if(PLUGIN_BUNDLED_LIBRARIES)
   install(FILES "${PLUGIN_BUNDLED_LIBRARIES}"
