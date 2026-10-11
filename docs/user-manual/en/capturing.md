@@ -188,7 +188,7 @@ under the text field:
 
 A word only counts if it is at the start of your text, after a space, or directly after an
 opening bracket (`(`, `[` or `{`) — so for example `(@Jan)` works too. An `@` in the middle of
-a word, as in `jan@company.com`, does not make a person (the whole address is recognised as an
+a word, as in `jan@example.org`, does not make a person (the whole address is recognised as an
 email address, see [Phone numbers and email addresses](#phone-numbers-and-email-addresses)).
 If you put a backslash (`\`) right before a word, such as `\@Jan`, it is never recognised.
 Punctuation directly after it (for example the comma in `@Jan,`, or an opening bracket at the

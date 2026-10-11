@@ -6,10 +6,11 @@ You open **Settings** with the gear at the top right of the home screen (tooltip
 ## About Offload
 
 At the top of Settings you find **About Offload**. Below it you see which version and build you
-have installed, for example "Version 0.2.9 (build 76)", and when that build was made, for example
+have installed, for example "Version 0.6.2 (build 261)", and when that build was made, for example
 "Built on Sep 29, 2026, 2:43 PM" (in your own time zone and screen language). This is handy for
-checking that a new build was installed correctly. In a development version of the app (not built
-as a release) you see "Development build" here instead.
+checking that a new build was installed correctly. The build number goes up with every new build.
+In a development version of the app (not built as a release) you see "Development build" here
+instead.
 
 ### What Offload is for, and the licences
 
