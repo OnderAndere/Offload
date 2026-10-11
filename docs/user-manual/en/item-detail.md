@@ -185,6 +185,18 @@ The photos appear under the note in a row **Photos · 3** (with your number), ol
 - A long press on a thumbnail (on Windows: right click, or **Del** on a thumbnail that has the
   focus) opens a menu with **View** and **Delete**.
 
+### Photos on the cards
+
+An item with photos shows its newest photo as a small thumbnail (40 dp) on its card in the lists:
+the Inbox, Today, a project, a person and the Weekly review. In the search results the thumbnail
+takes the place of the item icon. When the item has more photos, a small badge shows how many.
+
+- Tap the card to open the item; the photos themselves open from the item detail.
+- Triage and the Insights lists (Horizon, Standstill) do not show the thumbnail.
+- If the photo file is missing, for example after restoring a backup without attachments, the card
+  shows a small "no image" mark instead.
+- A screen reader says "1 photo" or "3 photos"; in the search results it says "Item" first.
+
 ### Deleting a photo
 
 Offload asks **Delete photo?** "The photo is removed from this item. This cannot be undone."

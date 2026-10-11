@@ -20,7 +20,9 @@ outline of a head and shoulders.
 
 If you tap an **item**, it opens, see [Viewing and editing an item](item-detail.md). If you tap a
 **person**, that person's screen opens, see [People](people.md). Item cards also show the chips for
-who asked for it and who it is waiting for.
+who asked for it and who it is waiting for. An item with photos shows its newest photo as a small
+thumbnail instead of the item icon, with a number when it has more; see
+[Photos on the cards](item-detail.md#photos-on-the-cards).
 
 ## What is searched
 

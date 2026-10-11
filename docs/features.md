@@ -122,3 +122,7 @@ status and type, complete it and move it to the trash
   or from an image file (Windows). Offload keeps it small, upright, without EXIF or location,
   encrypted, with a thumbnail. They show as a row under the note, open full screen with zoom and
   can be deleted; see [The item detail](user-manual/en/item-detail.md#photos).
+- **Photos on the cards**: the newest photo shows as a small thumbnail on the item's card in the
+  lists (Inbox, Today, projects, people, Weekly review) and in search results, with a number when
+  there are more; see
+  [Photos on the cards](user-manual/en/item-detail.md#photos-on-the-cards).
