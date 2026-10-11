@@ -68,12 +68,12 @@ void main() {
 
   testDriftWidgets('saving adds them to the person, with Undo', (tester) async {
     await startApp(tester);
-    await capture(tester, 'Bel @Jan 06-12345678 of mail jan@voorbeeld.nl');
+    await capture(tester, 'Bel @Jan 06-12345678 of mail jan@example.org');
 
     expect(find.text(l10n.contactsTakenFromText(2, 'Jan')), findsOneWidget);
     expect(
       await detailsOf('Jan'),
-      unorderedEquals([('06-12345678', 'mobile'), ('jan@voorbeeld.nl', null)]),
+      unorderedEquals([('06-12345678', 'mobile'), ('jan@example.org', null)]),
     );
 
     await tester.tap(find.text(l10n.itemUndo));
@@ -146,7 +146,7 @@ void main() {
 
     await tester.enterText(
       find.byType(TextField).first,
-      'Afspraak @Jan jan@voorbeeld.nl',
+      'Afspraak @Jan jan@example.org',
     );
     await tester.pump();
     expect(
@@ -156,7 +156,7 @@ void main() {
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
 
-    expect(await detailsOf('Jan'), [('jan@voorbeeld.nl', null)]);
+    expect(await detailsOf('Jan'), [('jan@example.org', null)]);
     expect(find.text(l10n.contactsTakenFromText(1, 'Jan')), findsOneWidget);
     // Like every undo message it leaves by itself (DD-018).
     await tester.pump(const Duration(seconds: 6));

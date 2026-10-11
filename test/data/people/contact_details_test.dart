@@ -92,7 +92,7 @@ void main() {
       throwsA(isA<ContactException>()),
     );
     await expectLater(
-      people.addContactDetail('nobody', ContactKind.email, 'a@b.nl'),
+      people.addContactDetail('nobody', ContactKind.email, 'a@example.org'),
       throwsA(isA<PersonException>()),
     );
     expect(await details(jan), isEmpty);
@@ -222,8 +222,8 @@ void main() {
       final added = await people.addContactsFromText(jan, [
         (kind: ContactKind.phone, value: '06-12345678', label: 'mobile'),
         (kind: ContactKind.phone, value: '020-1234567', label: null),
-        (kind: ContactKind.email, value: 'jan@voorbeeld.nl', label: null),
-        (kind: ContactKind.email, value: 'JAN@voorbeeld.nl', label: null),
+        (kind: ContactKind.email, value: 'jan@example.org', label: null),
+        (kind: ContactKind.email, value: 'JAN@example.org', label: null),
       ]);
 
       expect(added, hasLength(2));
@@ -232,7 +232,7 @@ void main() {
         [
           ('+31 6 1234 5678', null),
           ('020-1234567', null),
-          ('jan@voorbeeld.nl', null),
+          ('jan@example.org', null),
         ],
       );
     });

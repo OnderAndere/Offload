@@ -1039,7 +1039,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get tokenEmailLabel => 'e-mailadres';
 
   @override
-  String get tokenEmailExample => 'Mail @Jan op jan@voorbeeld.nl';
+  String get tokenEmailExample => 'Mail @Jan op jan@example.org';
 
   @override
   String tokenContactFor(String value, String name) {

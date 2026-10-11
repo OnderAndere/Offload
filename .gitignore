@@ -2,8 +2,9 @@
 .claude/.qa-review-marker
 .claude/.docs-marker
 .claude/settings.local.json
-# Local-only DB backups (real personal collection data; used as a migration
-# fixture but kept out of git history — see SS-009).
+# Machine-specific notes for Claude Code (paths on the PO's machine).
+CLAUDE.local.md
+# Local-only backups; never in the repository.
 backups/
 # Throwaway spike code (root only; the notes in docs/spikes/ are versioned).
 /spikes/

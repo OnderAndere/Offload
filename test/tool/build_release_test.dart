@@ -23,13 +23,19 @@ void main() {
   });
 
   group('buildNumber', () {
-    test('reads the output of git rev-list --count', () {
-      expect(buildNumber('54\n'), 54);
+    test('adds the base to the output of git rev-list --count', () {
+      expect(buildNumber('54\n'), buildNumberBase + 54);
+    });
+
+    test('stays above every build of the private history (SPEC Q28)', () {
+      expect(buildNumberBase, 260);
+      expect(buildNumber('1'), 261);
     });
 
     test('fits the Windows version resource', () {
-      expect(buildNumber('$maxBuildNumber'), 65535);
-      expect(() => buildNumber('65536'), throwsFormatException);
+      final maxCount = maxBuildNumber - buildNumberBase;
+      expect(buildNumber('$maxCount'), 65535);
+      expect(() => buildNumber('${maxCount + 1}'), throwsFormatException);
     });
 
     test('rejects zero and anything that is not a number', () {

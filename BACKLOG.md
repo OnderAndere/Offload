@@ -616,7 +616,7 @@ or M6.
       to build when `.claude/.docs-marker` does not hold the current content hash (the same as `Get-DocsState`, recorded by `mark-docs.ps1`); without
       `--copy` it warns. `docs-trigger.ps1` (the reminder after every release build) is removed. CLAUDE.md (Agents en
       poorten, Definition of done) and `.claude/` updated (PO approval; through the review). No visible change
-      — *done 09-10-2026:* c233f8f (script, hook removed) and the CLAUDE.md commit after it
+      — *done 09-10-2026:* c233f8f in the private history (script, hook removed) and the CLAUDE.md commit after it
 - [x] **T8.12** The manual in English: translate it once into `docs/user-manual/en/` (screen names and date words from
       `app_en.arb`, examples fictional); the Dutch text leaves the tree (history keeps it; `nl/` follows with T8.5). The
       index becomes a task-oriented table of contents; "Status" and "Already built" move to `docs/features.md`. The
@@ -807,6 +807,13 @@ Order from `photo-resize-port-spec.md`: first the service, then the capture flow
 - [x] **T8.15** The root `README.md` in English (PO 09-10-2026): the project will be published on GitHub; it is still
       Dutch (found in the review of T8.12)
       — *done 10-10-2026 (clean-up round):* translated; CLAUDE.md is marked as Dutch (working agreements with the PO)
+- [x] **T8.16** Prepare the repository for publication (SPEC Q28, REQ-060, DD-008; PO 11-10-2026): the repository
+      starts afresh from the content of the last private commit (tree `7883e02`); the private history stays local.
+      The build number becomes `buildNumberBase` (260) plus the commit count, so it stays above every APK built
+      before; the Windows version resource says GPL-3.0-or-later instead of "All rights reserved"; machine-specific
+      paths move from `CLAUDE.md` to a local `CLAUDE.local.md`; example e-mail domains become `example.org`
+      (reserved for examples); a leftover comment in `.gitignore` is gone
+      — *done 11-10-2026*
 
 ## M9 · Manual sync (after v1)
 

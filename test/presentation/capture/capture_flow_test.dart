@@ -143,14 +143,14 @@ void main() {
 
     await tester.enterText(
       find.byType(TextField),
-      r'bel @Jan over #renovatie !morgen \@niet jan@firma.nl',
+      r'bel @Jan over #renovatie !morgen \@niet jan@example.org',
     );
     await tester.pump();
 
     expect(find.byType(Chip), findsNWidgets(4));
     expect(find.widgetWithText(Chip, 'Jan'), findsOneWidget);
     // The address goes to the one person in the text (T3.6).
-    expect(find.widgetWithText(Chip, 'jan@firma.nl → Jan'), findsOneWidget);
+    expect(find.widgetWithText(Chip, 'jan@example.org → Jan'), findsOneWidget);
     expect(find.widgetWithText(Chip, 'renovatie'), findsOneWidget);
     expect(find.bySemanticsLabel(RegExp(r'^datum: ')), findsOneWidget);
     expect(find.bySemanticsLabel('persoon: Jan'), findsOneWidget);

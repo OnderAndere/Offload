@@ -1487,7 +1487,7 @@ abstract class AppLocalizations {
   /// Example line for the email-address token in the syntax overview.
   ///
   /// In nl, this message translates to:
-  /// **'Mail @Jan op jan@voorbeeld.nl'**
+  /// **'Mail @Jan op jan@example.org'**
   String get tokenEmailExample;
 
   /// Chip of a phone number or email address in the text, with the one person in the same text it will be added to after saving.

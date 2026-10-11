@@ -80,7 +80,10 @@ void main() {
   });
 
   test('keeps what is not a token', () {
-    expect(render('jan@firma.nl om 10:00 #1'), 'jan@firma.nl om 10:00 #1');
+    expect(
+      render('jan@example.org om 10:00 #1'),
+      'jan@example.org om 10:00 #1',
+    );
     expect(
       render('  Regel een\n\n  ingesprongen  '),
       'Regel een\n\n  ingesprongen',

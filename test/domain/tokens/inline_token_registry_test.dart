@@ -71,8 +71,8 @@ void main() {
     });
 
     test('not inside a word: an e-mail address is no person', () {
-      // It is an e-mail address (T3.6), never the person "firma.nl".
-      expect(found('mail jan@firma.nl'), [('email', 'jan@firma.nl')]);
+      // It is an e-mail address (T3.6), never the person "example.org".
+      expect(found('mail jan@example.org'), [('email', 'jan@example.org')]);
       expect(found('prijs#1'), isEmpty);
     });
 
@@ -338,8 +338,8 @@ void main() {
     });
 
     test('no other token inside a link', () {
-      expect(found('[[Bel @Jan !vr #klus jan@firma.nl]] @Piet'), [
-        ('link', 'Bel @Jan !vr #klus jan@firma.nl'),
+      expect(found('[[Bel @Jan !vr #klus jan@example.org]] @Piet'), [
+        ('link', 'Bel @Jan !vr #klus jan@example.org'),
         ('person', 'Piet'),
       ]);
     });

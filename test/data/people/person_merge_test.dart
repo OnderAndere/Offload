@@ -196,7 +196,11 @@ void main() {
   test('a deleted detail of a merged person does not come back', () async {
     final a = await people.idFor('A');
     final b = await people.idFor('B');
-    final id = await people.addContactDetail(a, ContactKind.email, 'a@b.nl');
+    final id = await people.addContactDetail(
+      a,
+      ContactKind.email,
+      'a@example.org',
+    );
     await people.deleteContactDetail(id);
     await people.merge(a, b);
     expect(await people.restoreContactDetail(id), isFalse);

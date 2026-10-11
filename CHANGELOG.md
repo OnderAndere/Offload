@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- The e-mail example in the Dutch syntax help uses `jan@example.org`, a domain reserved for examples.
+- The build number in *Settings* keeps rising after the move to a fresh repository: the first new build is
+  +261, above every earlier one, so Android still accepts it as an update.
+- Windows: the file properties of `offload.exe` name the licence (GPL-3.0-or-later) instead of "All rights
+  reserved".
+
 ## [0.6.2] – 2026-10-10
 
 ### Added
@@ -403,7 +411,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 
 - **Phone numbers and email addresses in your text** (REQ-039). Type `@Jan 06-12345678
-  jan@voorbeeld.nl` and the number and address go to Jan's contact details when you save, with
+  jan@example.org` and the number and address go to Jan's contact details when you save, with
   "2 details added to Jan" and Undo. A Dutch mobile number gets the label Mobile; a number or
   address Jan already has is not added twice (`06-…` and `+31 6 …` count as one). Only what you
   type new is added, never from older items. Names the text no person or several, then nothing is

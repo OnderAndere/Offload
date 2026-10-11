@@ -1358,7 +1358,7 @@
   "@tokenEmailLabel": {
     "description": "Name of the email-address token (recognised without a sign) for chips, screen readers and the syntax overview."
   },
-  "tokenEmailExample": "Mail @Jan op jan@voorbeeld.nl",
+  "tokenEmailExample": "Mail @Jan op jan@example.org",
   "@tokenEmailExample": {
     "description": "Example line for the email-address token in the syntax overview."
   },

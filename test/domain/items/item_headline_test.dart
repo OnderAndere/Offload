@@ -64,7 +64,7 @@ void main() {
   });
 
   test('an e-mail address is no person and stays', () {
-    expect(headline('Mail jan@firma.nl').title, 'Mail jan@firma.nl');
+    expect(headline('Mail jan@example.org').title, 'Mail jan@example.org');
   });
 
   test('the text after the title line, for the triage card', () {

@@ -6,10 +6,11 @@
 //   dart run tool/build_release.dart windows [--copy]
 //
 // Steps:
-// 1. Build number = number of commits on HEAD (`git rev-list --count HEAD`):
-//    always rising, so Android accepts the APK as an update, and traceable to
-//    a commit. A dirty working tree gets the number of HEAD, with a warning.
-//    A shallow clone is refused: its count is too low.
+// 1. Build number = [buildNumberBase] + number of commits on HEAD
+//    (`git rev-list --count HEAD`): always rising, so Android accepts the APK
+//    as an update, and traceable to a commit. A dirty working tree gets the
+//    number of HEAD, with a warning. A shallow clone is refused: its count is
+//    too low.
 // 2. Writes build/build_info.json with the version name from pubspec.yaml
 //    (raised by tool/bump_version.dart, never by hand before v1), the build
 //    number and the moment of the build in UTC. The keys match
@@ -38,6 +39,13 @@ import 'package:offload/domain/app/build_info.dart';
 /// Largest build number the Windows version resource can hold: each of its
 /// four fields is 16 bits (FILEVERSION in windows/runner/Runner.rc).
 const maxBuildNumber = 65535;
+
+/// Commits of the private history before this repository started afresh for
+/// publication (11-10-2026, SPEC Q28, DD-008). Added to the commit count, so
+/// the build number keeps rising above every APK built before: Android refuses
+/// an update with a lower versionCode, and an uninstall loses all data. Never
+/// lower it.
+const buildNumberBase = 260;
 
 const buildInfoPath = 'build/build_info.json';
 
@@ -169,19 +177,21 @@ String? versionName(String pubspec) => RegExp(
   multiLine: true,
 ).firstMatch(pubspec)?[1];
 
-/// The build number from the output of `git rev-list --count HEAD`.
+/// The build number from the output of `git rev-list --count HEAD`:
+/// [buildNumberBase] plus the commit count.
 ///
-/// Throws a [FormatException] when it is not a number from 1 to
-/// [maxBuildNumber].
+/// Throws a [FormatException] when the count is not a number from 1 to
+/// [maxBuildNumber] minus [buildNumberBase].
 int buildNumber(String revListCount) {
-  final n = int.tryParse(revListCount.trim());
-  if (n == null || n < 1 || n > maxBuildNumber) {
+  final count = int.tryParse(revListCount.trim());
+  final maxCount = maxBuildNumber - buildNumberBase;
+  if (count == null || count < 1 || count > maxCount) {
     throw FormatException(
-      'build number must be 1..$maxBuildNumber',
+      'commit count must be 1..$maxCount',
       revListCount.trim(),
     );
   }
-  return n;
+  return buildNumberBase + count;
 }
 
 /// The content of build/build_info.json.

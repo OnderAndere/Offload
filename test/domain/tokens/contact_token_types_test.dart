@@ -72,7 +72,7 @@ void main() {
 
   group('email addresses', () {
     test('found, also with punctuation after them', () {
-      expect(found('mail jan@voorbeeld.nl'), [('email', 'jan@voorbeeld.nl')]);
+      expect(found('mail jan@example.org'), [('email', 'jan@example.org')]);
       expect(found('(petra.de-vries+offerte@post.example.org).'), [
         ('email', 'petra.de-vries+offerte@post.example.org'),
       ]);
@@ -90,14 +90,14 @@ void main() {
         contactsInText(registry.parse(text, context), home: nl);
 
     test('the one person and the details, a Dutch mobile labelled', () {
-      final result = read('@Jan 06-12345678 020-1234567 jan@voorbeeld.nl');
+      final result = read('@Jan 06-12345678 020-1234567 jan@example.org');
       expect(result.person, 'Jan');
       expect(
         [for (final c in result.contacts) (c.kind, c.value, c.label)],
         [
           (ContactKind.phone, '06-12345678', 'mobile'),
           (ContactKind.phone, '020-1234567', null),
-          (ContactKind.email, 'jan@voorbeeld.nl', null),
+          (ContactKind.email, 'jan@example.org', null),
         ],
       );
     });
@@ -112,11 +112,11 @@ void main() {
     test('newContacts: only what was not there before, once', () {
       final before = read('@Jan +31 6 1234 5678').contacts;
       final now = read(
-        '@Jan 06-12345678 jan@voorbeeld.nl JAN@voorbeeld.nl',
+        '@Jan 06-12345678 jan@example.org JAN@example.org',
       ).contacts;
       expect(
         [for (final c in newContacts(now, before, home: nl)) c.value],
-        ['jan@voorbeeld.nl'],
+        ['jan@example.org'],
       );
     });
   });

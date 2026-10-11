@@ -8,7 +8,7 @@ import 'token_types.dart';
 /// Rules for prefix tokens:
 /// - a token starts at the beginning of the text, after white space or
 ///   right after an opening bracket (`(@Jan)`, PO decision 27-09-2026), so
-///   `jan@firma.nl` is no person and `\@Jan` stays text (the escape);
+///   `jan@example.org` is no person and `\@Jan` stays text (the escape);
 /// - several types may share a prefix (`!` for dates and repeat words,
 ///   DD-004 point 14): they are tried in the order they are registered, and
 ///   the first that recognises the word has it;

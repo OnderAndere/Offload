@@ -82,7 +82,7 @@ void main() {
 
   test('sorted: phone numbers first, each kind by its order', () {
     final sorted = sortContactDetails([
-      detail('e1', ContactKind.email, 'a@b.nl'),
+      detail('e1', ContactKind.email, 'a@example.org'),
       detail('p2', ContactKind.phone, '222', order: 1),
       detail('p1', ContactKind.phone, '111'),
     ]);
