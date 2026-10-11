@@ -174,15 +174,16 @@ Een regel toevoegen aan een `tool/allowed_*.txt` vraagt akkoord van de product o
 
 ## Ontwikkelomgeving (deze machine)
 
-Windows 11, PowerShell 5.1. Tools die **niet** op het `PATH` staan; gebruik deze paden:
+Windows 11, PowerShell 5.1. Tools die **niet** op het `PATH` staan; gebruik deze paden. De paden die per
+machine verschillen (JDK, vcpkg, Git Bash) staan in `CLAUDE.local.md` (niet in de repo, T8.16):
 
 | Tool | Pad / gebruik |
 |---|---|
 | `adb` | `$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe` — in PowerShell: `$adb = "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe"; & $adb devices` |
 | `emulator` | `$env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe -avd Offload_API_36` (op de achtergrond starten) |
 | `sdkmanager`, `avdmanager` | `$env:LOCALAPPDATA\Android\Sdk\cmdline-tools\latest\bin\` — vereisen Java 17+ |
-| Java voor Android-builds | `$env:JAVA_HOME = "D:\Program Files\Android\Android Studio\jbr"` (JBR 21). Op het `PATH` staat Java 15; die is te oud |
-| `vcpkg` | `C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\vcpkg\vcpkg.exe` (alleen nodig als een Windows-plugin het vraagt) |
+| Java voor Android-builds | `$env:JAVA_HOME` naar de `jbr` van Android Studio (JBR 21, pad in `CLAUDE.local.md`). Op het `PATH` staat Java 15; die is te oud |
+| `vcpkg` | in de Visual Studio Build Tools, pad in `CLAUDE.local.md` (alleen nodig als een Windows-plugin het vraagt) |
 
 - **Test-emulator:** `Offload_API_36` (Android 16 / API 36, AOSP-image zonder Google APIs),
   device-id `emulator-5554` zodra hij draait. Controleer met `flutter devices`.
@@ -231,7 +232,7 @@ Windows 11, PowerShell 5.1. Tools die **niet** op het `PATH` staan; gebruik deze
   - **Voorkomen:** `tool/build_release.dart apk` stopt de daemon vóór het bouwen en controleert
     na afloop de tijdstempel van de APK ("exit 0" alleen bewijst niet dat er gebouwd is). Bouw je
     zonder dat script, stop de daemon dan eerst zelf:
-    `$env:JAVA_HOME = "D:\Program Files\Android\Android Studio\jbr"; & .\android\gradlew.bat -p android --stop`.
+    `$env:JAVA_HOME` zetten (zie boven) en dan `& .\android\gradlew.bat -p android --stop`.
     Bouw APK en Windows in **aparte** aanroepen (niet achter elkaar in één commando).
   - **Herstellen:** met `Get-CimInstance Win32_Process` (kolommen `ProcessId`,
     `ParentProcessId`, `CommandLine`) twee bomen zoeken en elk stoppen met
@@ -243,7 +244,7 @@ Windows 11, PowerShell 5.1. Tools die **niet** op het `PATH` staan; gebruik deze
     `conhost.exe`-processen van podman met hoge CPU, en een Java-proces van een andere ontwikkeltool.
 - **Bash-scripts (`tool/*.sh`) via Git Bash draaien.** Vanuit PowerShell wijst `bash` naar de
   WSL-bash in `C:\Windows\system32` (exitcode 127). Gebruik de Bash-tool, of vanuit PowerShell
-  `& "D:\Git\bin\bash.exe" tool/check_permissions.sh`.
+  de `bash.exe` van Git for Windows (pad in `CLAUDE.local.md`), bv. `& $gitBash tool/check_permissions.sh`.
 
 ## Valkuilen (eerder geraakt of voorzien)
 
