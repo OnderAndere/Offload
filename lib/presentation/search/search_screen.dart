@@ -11,6 +11,7 @@ import '../items/item_providers.dart';
 import '../people/people_providers.dart';
 import '../people/person_actions.dart';
 import '../people/person_look.dart';
+import '../photos/card_photo.dart';
 import '../projects/project_look.dart';
 import '../projects/project_providers.dart';
 import 'search_providers.dart';
@@ -172,7 +173,11 @@ class _ResultTile extends ConsumerWidget {
             ),
         ];
         return ListTile(
-          leading: Icon(Icons.notes, semanticLabel: l10n.searchKindItem),
+          // The newest photo instead of the icon, as on the cards (T5.4).
+          leading: CardPhoto(
+            itemId: hit.id,
+            orElse: Icon(Icons.notes, semanticLabel: l10n.searchKindItem),
+          ),
           title: Text(
             hit.title ?? hit.text,
             maxLines: 3,

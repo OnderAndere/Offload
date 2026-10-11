@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import '../../domain/attachments/attachment.dart';
+import '../../domain/attachments/photo_summary.dart';
 import '../database/app_database.dart';
 import '../storage/app_storage.dart';
 import 'attachment_store.dart';
@@ -77,6 +78,27 @@ class DriftAttachmentRepository {
   /// [liveFor] as it changes: the photos of an item on screen (T5.3).
   Stream<List<Attachment>> watchFor(AttachmentOwner owner) =>
       _liveFor(owner).watch();
+
+  /// The photos of every item, by item id, as they change: for the cards in
+  /// the lists (T5.4). One query for the whole list, and only the columns
+  /// the summary needs.
+  Stream<Map<String, PhotoSummary>> watchItemPhotoSummaries() {
+    final a = _db.attachments;
+    final query = _db.selectOnly(a)
+      ..addColumns([a.id, a.itemId, a.mimeType])
+      ..where(a.itemId.isNotNull() & a.deletedAt.isNull());
+    return query.watch().map(
+      (rows) => summarisePhotos(
+        rows.map(
+          (row) => (
+            id: row.read(a.id)!,
+            itemId: row.read(a.itemId)!,
+            mimeType: row.read(a.mimeType)!,
+          ),
+        ),
+      ),
+    );
+  }
 
   SimpleSelectStatement<$AttachmentsTable, Attachment> _liveFor(
     AttachmentOwner owner,

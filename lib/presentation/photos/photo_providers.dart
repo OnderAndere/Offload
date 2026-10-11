@@ -5,6 +5,7 @@ import '../../data/attachments/attachment_store.dart';
 import '../../data/attachments/drift_attachment_repository.dart';
 import '../../data/attachments/photo_storage_service.dart';
 import '../../domain/attachments/attachment.dart';
+import '../../domain/attachments/photo_summary.dart';
 import '../../platform/cipher/aead_cipher.dart';
 import '../../platform/cipher/platform_aead_cipher.dart';
 import '../../platform/photo_source/photo_source.dart';
@@ -65,6 +66,17 @@ final itemPhotosProvider = StreamProvider.autoDispose
             ],
           );
     });
+
+/// The photos of every item, by item id, for the cards in the lists (T5.4):
+/// one query for the whole list, as the tokens. Empty for a storage without
+/// files (tests).
+final itemPhotoSummariesProvider = StreamProvider<Map<String, PhotoSummary>>((
+  ref,
+) {
+  final photos = ref.watch(photoStorageProvider);
+  if (photos == null) return Stream.value(const {});
+  return photos.attachments.watchItemPhotoSummaries();
+});
 
 /// What adding a photo to an item is doing: one at a time per item
 /// (DD-018 point 19 (b)).

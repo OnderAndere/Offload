@@ -3525,6 +3525,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String cardPhotos(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count photos',
+      one: '1 photo',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get photoView => 'View';
 
   @override

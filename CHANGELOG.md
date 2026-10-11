@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.6.3] – 2026-10-11
+
+### Added
+
+- **Photos on the cards**: an item with photos shows the newest one as a small thumbnail on its card in the
+  lists (Inbox, Today, projects, people, the weekly review) and in the search results, with the number when it
+  has more. Tap the card to open the item and its photos.
+
 ### Changed
 
 - The e-mail example in the Dutch syntax help uses `jan@example.org`, a domain reserved for examples.

@@ -4790,6 +4790,12 @@ abstract class AppLocalizations {
   /// **'Foto {index} van {count}'**
   String photoSemantics(int index, int count);
 
+  /// What a screen reader says for the thumbnail on an item's card in a list (T5.4): how many photos the item has.
+  ///
+  /// In nl, this message translates to:
+  /// **'{count, plural, =1{1 foto} other{{count} foto\'s}}'**
+  String cardPhotos(int count);
+
   /// Menu entry on a thumbnail: open the photo full screen.
   ///
   /// In nl, this message translates to:

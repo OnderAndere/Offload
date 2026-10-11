@@ -122,4 +122,45 @@ void main() {
     expect(await attachments.liveFor(PersonOwner(personId)), hasLength(1));
     expect(await attachments.liveFor(ItemOwner(itemId)), isEmpty);
   });
+
+  test('the photos of every item for the cards: newest and count, live '
+      'photos of items only (T5.4)', () async {
+    final otherId = await DriftItemRepository(
+      storage,
+    ).capture('Tuinplan schetsen', source: ItemSource.app);
+    final first = await attachments.add(
+      owner: ItemOwner(itemId),
+      mimeType: 'image/jpeg',
+      content: text('one'),
+    );
+    final second = await attachments.add(
+      owner: ItemOwner(itemId),
+      mimeType: 'image/jpeg',
+      content: text('two'),
+    );
+    await attachments.add(
+      owner: ItemOwner(itemId),
+      mimeType: 'audio/mp4',
+      content: text('voice'),
+    );
+    final gone = await attachments.add(
+      owner: ItemOwner(otherId),
+      mimeType: 'image/jpeg',
+      content: text('gone'),
+    );
+    await attachments.delete(gone);
+    final personId = await storage.writer.insert(
+      storage.database.people,
+      const PeopleCompanion(name: Value('Sanne')),
+    );
+    await attachments.add(
+      owner: PersonOwner(personId),
+      mimeType: 'image/jpeg',
+      content: text('card'),
+    );
+
+    final summaries = await attachments.watchItemPhotoSummaries().first;
+    expect(summaries, {itemId: (newestId: second, count: 2)});
+    expect(second.compareTo(first), greaterThan(0));
+  });
 }

@@ -20,6 +20,7 @@ import '../items/item_labels.dart';
 import '../items/item_type_look.dart';
 import '../people/people_providers.dart';
 import '../people/person_look.dart';
+import '../photos/card_photo.dart';
 import '../projects/project_look.dart';
 import '../projects/project_providers.dart';
 import '../search/duplicate_hint.dart';
@@ -62,7 +63,8 @@ final minuteClockProvider = StreamProvider.autoDispose<DateTime>((ref) async* {
 
 /// One item in the inbox list as a card (T2.8, DD-018 point 2): the first
 /// line as the title without tokens, "+ N lines" for more, the chips of the
-/// processed tokens and the relative time. Tapping opens the item detail.
+/// processed tokens and the relative time, and the newest photo on the
+/// right (T5.4). Tapping opens the item detail.
 class InboxCard extends ConsumerWidget {
   const InboxCard({
     super.key,
@@ -108,9 +110,6 @@ class InboxCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final muted = theme.textTheme.bodySmall?.copyWith(
-      color: theme.colorScheme.onSurfaceVariant,
-    );
     final registry = ref.watch(inlineTokenRegistryProvider);
     final today = LocalDate.of(now);
     final parseContext = parseContextOf(l10n, today);
@@ -155,53 +154,76 @@ class InboxCard extends ConsumerWidget {
             onTap: () => ItemDetailScreen.open(context, item.id),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-              child: Column(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          headline.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.titleSmall,
-                        ),
-                      ),
-                      if (label != null) ...[
-                        const SizedBox(width: 12),
-                        Semantics(
-                          label: spoken,
-                          excludeSemantics: true,
-                          child: Text(label, style: muted),
-                        ),
-                      ],
-                    ],
+                  Expanded(child: _content(context, headline, label, spoken)),
+                  CardPhoto(
+                    itemId: item.id,
+                    padding: const EdgeInsetsDirectional.only(start: 12),
                   ),
-                  if (headline.moreLines > 0)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Text(
-                        l10n.inboxMoreLines(headline.moreLines),
-                        style: muted,
-                      ),
-                    ),
-                  StoredTokenChips(
-                    item: item,
-                    tokens: tokens,
-                    today: today,
-                    showProject: showProject,
-                    hidePersonId: hidePersonId,
-                  ),
-                  DuplicateHint(item: item),
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  /// The text of the card: the title with the time, "+ N lines", the chips
+  /// and the duplicate hint.
+  Widget _content(
+    BuildContext context,
+    ItemHeadline headline,
+    String? label,
+    String? spoken,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final muted = theme.textTheme.bodySmall?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
+    final today = LocalDate.of(now);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Expanded(
+              child: Text(
+                headline.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.titleSmall,
+              ),
+            ),
+            if (label != null) ...[
+              const SizedBox(width: 12),
+              Semantics(
+                label: spoken,
+                excludeSemantics: true,
+                child: Text(label, style: muted),
+              ),
+            ],
+          ],
+        ),
+        if (headline.moreLines > 0)
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Text(l10n.inboxMoreLines(headline.moreLines), style: muted),
+          ),
+        StoredTokenChips(
+          item: item,
+          tokens: tokens,
+          today: today,
+          showProject: showProject,
+          hidePersonId: hidePersonId,
+        ),
+        DuplicateHint(item: item),
+      ],
     );
   }
 }

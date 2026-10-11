@@ -750,12 +750,18 @@ Order from `photo-resize-port-spec.md`: first the service, then the capture flow
       that is never shut down; one idle thread per activity instance. Shut them down in `onDestroy` or share one
       — *done 11-10-2026:* every channel with a worker thread (photos, backup files, sharing, AES-GCM, the capture queue)
       has `close()`, called in `MainActivity.onDestroy` after `super`; a running task still finishes
-- [ ] **T5.4** Own `ImageProvider` with a cache key and `cacheWidth`; lists show only
+- [x] **T5.4** Own `ImageProvider` with a cache key and `cacheWidth`; lists show only
       thumbnails (DD-006 point 5)
       — *from T7.2b (PO 09-10-2026):* the first task that shows attachments (this or T6.2) shows *Attachment not in this backup*
       (NL "Bijlage niet in deze back-up") for a record whose file is absent after a restore (DD-007 point 7a)
       — *T5.3 (10-10-2026):* `AttachmentImage` and the text for a missing photo exist (in the item detail); left here: a
       photo mark or thumbnail on the cards in the lists
+      — *done 11-10-2026 (PO decisions 1–3, DESIGN point 19):* `CardPhoto` on every `InboxCard` and in the search
+      results: the newest photo, 40 dp, with the number; one query for the list (`watchItemPhotoSummaries`);
+      measured in profile mode (`integration_test/card_photos_test.dart`, 120 items with a photo, scrolling while the
+      thumbnails load): Windows 429 frames, build avg 0.7 ms, raster avg 1.3 ms, none over 16.7 ms; emulator build avg
+      1.6 ms (none over), raster 24 of 436 over, but 45 of 434 over in the same list without photos (the emulator's
+      rasteriser, not the photos). The Fairphone (the lower bound) still to measure
 - [ ] **T5.5** Fallback for a missing thumbnail + lazy regeneration (REQ-032)
 - [ ] **T5.6** In-app view of photo and PDF; "open in external app" with a warning and
       clean-up (REQ-025) — *T5.3 (10-10-2026):* a photo already opens full screen with zoom (`PhotoViewer`); left here:
@@ -1106,6 +1112,7 @@ migration (since T1.6 there is data).
   activity is recreated (low memory, "Don't keep activities") the Dart side that waited for the answer is gone too;
   a rotation does not recreate it (the manifest's `configChanges`). The only effect is that the user picks the file
   again. Worth it only if it is seen in use
+  — *PO 11-10-2026:* stays parked; take it up only if it is seen in use
 - *Proposal (review of 3085837, 09-10-2026):* `ShareChannel.kt` and `BackupFileChannel.kt` each create their own
   single-thread executor per channel instance and never shut it down; Android recreating `MainActivity` (e.g. a
   rotation) leaves an idle thread per instance until the process ends (harmless: no CPU, little memory). Tidy:

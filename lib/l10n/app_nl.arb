@@ -4648,6 +4648,15 @@
       }
     }
   },
+  "cardPhotos": "{count, plural, =1{1 foto} other{{count} foto's}}",
+  "@cardPhotos": {
+    "description": "What a screen reader says for the thumbnail on an item's card in a list (T5.4): how many photos the item has.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "photoView": "Bekijken",
   "@photoView": {
     "description": "Menu entry on a thumbnail: open the photo full screen."

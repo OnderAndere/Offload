@@ -780,6 +780,7 @@
   "photoSourceFailed": "The photo could not be opened.",
   "photoSaveFailed": "The photo was not saved.",
   "photoSemantics": "Photo {index} of {count}",
+  "cardPhotos": "{count, plural, =1{1 photo} other{{count} photos}}",
   "photoView": "View",
   "photoDelete": "Delete",
   "photoDeleteTitle": "Delete photo?",
