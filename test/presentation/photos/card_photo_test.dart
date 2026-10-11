@@ -31,6 +31,7 @@ void main() {
     WidgetTester tester,
     Map<String, PhotoSummary> summaries, {
     Object? failure,
+    String? kindLabel,
   }) async {
     final photos = _FakePhotos(failure);
     await tester.pumpWidget(
@@ -45,12 +46,13 @@ void main() {
           locale: const Locale('nl'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: const Scaffold(
+          home: Scaffold(
             body: Center(
               child: CardPhoto(
                 itemId: itemId,
-                orElse: Text('geen'),
-              ), // l10n-ignore: test
+                orElse: const Text('geen'), // l10n-ignore: test
+                kindLabel: kindLabel,
+              ),
             ),
           ),
         ),
@@ -95,6 +97,24 @@ void main() {
     await show(tester, {itemId: (newestId: newest, count: 3)});
     expect(find.text('3'), findsOneWidget);
     expect(find.bySemanticsLabel(l10n.cardPhotos(3)), findsOneWidget);
+    semantics.dispose();
+  });
+
+  testWidgets('in place of an icon that said what the row is, that is said '
+      'first (search results)', (tester) async {
+    final semantics = tester.ensureSemantics();
+    await show(tester, {
+      itemId: (newestId: newest, count: 3),
+    }, kindLabel: l10n.searchKindItem);
+    expect(
+      find.bySemanticsLabel(
+        RegExp(
+          '^${RegExp.escape(l10n.searchKindItem)}\\s+'
+          '${RegExp.escape(l10n.cardPhotos(3))}\$',
+        ),
+      ),
+      findsOneWidget,
+    );
     semantics.dispose();
   });
 

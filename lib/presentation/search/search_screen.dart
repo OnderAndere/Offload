@@ -177,6 +177,7 @@ class _ResultTile extends ConsumerWidget {
           leading: CardPhoto(
             itemId: hit.id,
             orElse: Icon(Icons.notes, semanticLabel: l10n.searchKindItem),
+            kindLabel: l10n.searchKindItem,
           ),
           title: Text(
             hit.title ?? hit.text,

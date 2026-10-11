@@ -19,6 +19,7 @@ class CardPhoto extends ConsumerWidget {
     required this.itemId,
     this.padding = EdgeInsets.zero,
     this.orElse = const SizedBox.shrink(),
+    this.kindLabel,
   });
 
   final String itemId;
@@ -27,6 +28,10 @@ class CardPhoto extends ConsumerWidget {
   final EdgeInsetsGeometry padding;
 
   final Widget orElse;
+
+  /// What the row is, said before the number of photos where the photo
+  /// takes the place of an icon that said it (search results).
+  final String? kindLabel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,7 +43,7 @@ class CardPhoto extends ConsumerWidget {
     final theme = Theme.of(context);
     final dpr = MediaQuery.devicePixelRatioOf(context);
     final id = summary.newestId;
-    return Padding(
+    final thumbnail = Padding(
       padding: padding,
       child: Semantics(
         label: AppLocalizations.of(context).cardPhotos(summary.count),
@@ -101,5 +106,8 @@ class CardPhoto extends ConsumerWidget {
         ),
       ),
     );
+    return kindLabel == null
+        ? thumbnail
+        : Semantics(label: kindLabel, child: thumbnail);
   }
 }
