@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Where was I on Today – sketch, screen 22</title>
+<style>
+  :root {
+    --bg: #FBF8FC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --orange-text: #8F430E; --blue: #245A8C;
+    --blue-chip: #E3ECF5; --purple: #6750A4;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1660px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; width: 390px; min-height: 120px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 10px; }
+  .phone { width: 390px; height: 800px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 12px 0 16px; gap: 10px; font-size: 22px; }
+  .appbar .date { margin-left: auto; font-size: 13px; color: var(--muted); }
+  .line { margin: 4px 12px; padding: 10px 12px; border-radius: 10px; background: #E9E1F5; display: flex; }
+  .line.plain { background: var(--surface); border: 1px solid var(--line); }
+  .line span { flex: 1; } .line b { color: var(--purple); }
+  .group { margin: 14px 16px 2px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .group.late { color: var(--orange-text); }
+  .group.ww { color: var(--blue); }
+  .card { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  .meta { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 2px 8px; font-size: 12px; background: var(--surface); }
+  .chip.late { color: var(--orange-text); border-color: var(--orange); }
+  .ww-card { margin: 6px 12px; background: var(--blue-chip); border-radius: 12px; padding: 8px 12px; border-left: 4px solid var(--blue); }
+  .ww-card .t { display: flex; gap: 6px; align-items: baseline; font-weight: 600; }
+  .ww-card .t .ago { margin-left: auto; font-weight: 400; font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .ww-card .s { font-size: 13px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ww-card .s i { color: var(--muted); font-style: normal; }
+  .more { margin: 2px 16px 0; font-size: 13px; color: var(--blue); font-weight: 600; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: 20px 20px 0 0;
+           box-shadow: 0 -4px 16px rgba(0,0,0,.18); padding: 10px 0 70px; }
+  .sheet .handle { width: 40px; height: 4px; border-radius: 2px; background: #C9C5BE; margin: 0 auto 8px; }
+  .sheet .h { padding: 4px 20px 6px; font-weight: 600; }
+  .scrim { position: absolute; inset: 0; background: rgba(0,0,0,.32); }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: #ECE8E0; z-index: 2;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .win { width: 1100px; height: 560px; background: var(--bg); border: 1px solid #9A968F; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+  .win .title { height: 30px; font-size: 12px; padding: 7px 12px; background: #F1EFEA; border-bottom: 1px solid var(--line); }
+  .win .body { flex: 1; display: flex; }
+  .rail { width: 80px; border-right: 1px solid var(--line); font-size: 11px; color: var(--muted); padding-top: 12px; text-align: center; }
+  .rail div { margin: 10px 0; } .rail .on { color: var(--text); font-weight: 600; }
+  .listpane { width: 440px; border-right: 1px solid var(--line); }
+  .detail { flex: 1; padding: 0; }
+  .search { margin: 10px 12px; border: 1px solid var(--muted); border-radius: 20px; padding: 6px 14px; color: var(--muted); }
+  .sel { outline: 2px solid var(--purple); outline-offset: -1px; }
+  .resume { margin: 12px 16px; background: var(--blue-chip); border-radius: 14px; padding: 10px 12px 6px; border-left: 4px solid var(--blue); }
+  .resume .h { display: flex; gap: 6px; font-size: 12px; color: var(--blue); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+  .resume .h .ago { margin-left: auto; text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--muted); }
+  .resume .k { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .resume .acts { display: flex; justify-content: flex-end; gap: 4px; margin-top: 4px; }
+  .resume .acts span { color: var(--blue); font-weight: 600; padding: 6px 10px; }
+  .field { margin: 8px 16px; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface); min-height: 80px; }
+  .legend { margin-top: 28px; max-width: 1660px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>"Where was I" on Today (T4b.2) – sketch, screen 22</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb). Sample data is
+fictional; today is Friday 9 October 2026. Orange outline = new. <b>Starting point</b> (PO 06-10-2026, after use; DD-018
+point 13 (e)): show the open "Waar was ik" notes on <i>Vandaag</i>, as a trial. The notes themselves, the form and the
+resume card in the item or project stay as built (T10.3). <b>To decide:</b> where on <i>Vandaag</i> (A, B or C), and
+the questions in the legend. The card is the same in A and B: a calm blue (not orange: a note is not late), the title of
+the item or project, the next step on one line (else what was in mind), and how long ago. A tap opens the item or
+project, where the resume card has <i>Bijwerken</i> and <i>Hervat</i>.</p>
+
+<div class="row">
+<div>
+<h3>A · At the top, under the inbox line (advice)</h3>
+<p class="note">Where you look first when you sit down again: what you were in the middle of. Above the deadlines, so
+kept short: at most 3, newest first; "+2 meer" unfolds the rest in place. A note on an item that is also due today
+shows in both places (a different question each).</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">Vandaag<span class="date">vr 9 okt</span></div>
+  <div class="line"><span>2 in je inbox</span><b>Verwerken ›</b></div>
+  <div class="new" style="margin:4px 4px 0;padding-bottom:6px">
+    <div class="group ww">⏸ Waar was ik · 5</div>
+    <div class="ww-card"><div class="t">▣ Verbouwing keuken<span class="ago">2 uur geleden</span></div>
+      <div class="s">Tegelzetter mailen over de planning</div></div>
+    <div class="ww-card"><div class="t">Presentatie buurtvereniging<span class="ago">gisteren</span></div>
+      <div class="s">Dia 6 t/m 9: cijfers van de enquête</div></div>
+    <div class="ww-card"><div class="t">Belastingaangifte 2025<span class="ago">3 dagen geleden</span></div>
+      <div class="s"><i>In mijn hoofd:</i> hypotheekrente nog nakijken</div></div>
+    <div class="more">+2 meer</div>
+  </div>
+  <div class="group late">⚠ Verlopen · 1</div>
+  <div class="card">Fietsband plakken<div class="meta"><span class="chip late">📅 wo 7 okt</span></div></div>
+  <div class="group">Vandaag · 1</div>
+  <div class="card">Presentatie buurtvereniging<div class="meta"><span class="chip">⇑ Hoge prioriteit</span><span class="chip late">📅 vr 9 okt</span></div></div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span>Inzicht</span></div>
+</div>
+</div>
+
+<div>
+<h3>B · At the bottom, after the other groups</h3>
+<p class="note">Deadlines first, the notes as a quiet list below them, all shown. Calmer, but on a full day you scroll
+to find them, and on a phone they are often off screen.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">Vandaag<span class="date">vr 9 okt</span></div>
+  <div class="line"><span>2 in je inbox</span><b>Verwerken ›</b></div>
+  <div class="group late">⚠ Verlopen · 1</div>
+  <div class="card">Fietsband plakken<div class="meta"><span class="chip late">📅 wo 7 okt</span></div></div>
+  <div class="group">Vandaag · 1</div>
+  <div class="card">Presentatie buurtvereniging<div class="meta"><span class="chip">⇑ Hoge prioriteit</span><span class="chip late">📅 vr 9 okt</span></div></div>
+  <div class="group">Blijft stil · 1</div>
+  <div class="card">Sleutel tuinhuis terugkrijgen<div class="meta"><span class="chip">Wacht op Joris</span><span class="chip">12 dagen stil</span></div></div>
+  <div class="new" style="margin:4px 4px 0;padding-bottom:6px">
+    <div class="group ww">⏸ Waar was ik · 5</div>
+    <div class="ww-card"><div class="t">▣ Verbouwing keuken<span class="ago">2 uur geleden</span></div>
+      <div class="s">Tegelzetter mailen over de planning</div></div>
+    <div class="ww-card"><div class="t">Presentatie buurtvereniging<span class="ago">gisteren</span></div>
+      <div class="s">Dia 6 t/m 9: cijfers van de enquête</div></div>
+    <div class="ww-card"><div class="t">Belastingaangifte 2025<span class="ago">3 dagen geleden</span></div>
+      <div class="s"><i>In mijn hoofd:</i> hypotheekrente nog nakijken</div></div>
+  </div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span>Inzicht</span></div>
+</div>
+</div>
+
+<div>
+<h3>C · One line, like the inbox line</h3>
+<p class="note">Takes the least room: "⏸ 5 keer waar was ik · Bekijken ›". A tap opens a sheet with the notes; a tap
+there opens the item or project. Calm, but one tap further, and the next step itself is not in sight.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">Vandaag<span class="date">vr 9 okt</span></div>
+  <div class="line"><span>2 in je inbox</span><b>Verwerken ›</b></div>
+  <div class="line plain new"><span>⏸ 5 keer waar was ik</span><b style="color:var(--blue)">Bekijken ›</b></div>
+  <div class="group late">⚠ Verlopen · 1</div>
+  <div class="card">Fietsband plakken<div class="meta"><span class="chip late">📅 wo 7 okt</span></div></div>
+  <div class="group">Vandaag · 1</div>
+  <div class="card">Presentatie buurtvereniging<div class="meta"><span class="chip">⇑ Hoge prioriteit</span><span class="chip late">📅 vr 9 okt</span></div></div>
+  <div class="scrim"></div>
+  <div class="sheet">
+    <div class="handle"></div>
+    <div class="h">Waar was ik</div>
+    <div class="ww-card"><div class="t">▣ Verbouwing keuken<span class="ago">2 uur geleden</span></div>
+      <div class="s">Tegelzetter mailen over de planning</div></div>
+    <div class="ww-card"><div class="t">Presentatie buurtvereniging<span class="ago">gisteren</span></div>
+      <div class="s">Dia 6 t/m 9: cijfers van de enquête</div></div>
+    <div class="ww-card"><div class="t">Belastingaangifte 2025<span class="ago">3 dagen geleden</span></div>
+      <div class="s"><i>In mijn hoofd:</i> hypotheekrente nog nakijken</div></div>
+    <div class="ww-card"><div class="t">Offerte zonnepanelen<span class="ago">2 weken geleden</span></div>
+      <div class="s">Drie offertes naast elkaar zetten</div></div>
+    <div class="ww-card"><div class="t">▣ Tuinplan<span class="ago">5 weken geleden</span></div>
+      <div class="s"><i>In mijn hoofd:</i> schaduw achterin meten</div></div>
+  </div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span>Inzicht</span></div>
+</div>
+</div>
+</div>
+
+<h2>Windows, variant A</h2>
+<p class="lead">The note cards are in the list like the other cards: ↑/↓ move through them, <kbd>Enter</kbd> or a click
+opens an item in the right pane, with the resume card at the top (<i>Bijwerken</i>, <i>Hervat</i>). A project opens its
+project screen, as from <i>Verbanden</i>. Delete and completing from the list (<kbd>Del</kbd>, <kbd>Ctrl</kbd>+<kbd>Enter</kbd>) do
+nothing on a note card: it is a note, not the item.</p>
+<div class="win">
+  <div class="title">Offload</div>
+  <div class="body">
+    <div class="rail"><div>＋</div><div class="on">Vandaag</div><div>Inbox</div><div>Projecten</div><div>Personen</div><div>Inzicht</div></div>
+    <div class="listpane">
+      <div class="search">Zoek in items en personen</div>
+      <div class="group ww" style="margin-top:6px">⏸ Waar was ik · 3</div>
+      <div class="ww-card"><div class="t">▣ Verbouwing keuken<span class="ago">2 uur geleden</span></div>
+        <div class="s">Tegelzetter mailen over de planning</div></div>
+      <div class="ww-card sel"><div class="t">Presentatie buurtvereniging<span class="ago">gisteren</span></div>
+        <div class="s">Dia 6 t/m 9: cijfers van de enquête</div></div>
+      <div class="ww-card"><div class="t">Belastingaangifte 2025<span class="ago">3 dagen geleden</span></div>
+        <div class="s"><i>In mijn hoofd:</i> hypotheekrente nog nakijken</div></div>
+      <div class="group late">⚠ Verlopen · 1</div>
+      <div class="card">Fietsband plakken<div class="meta"><span class="chip late">📅 wo 7 okt</span></div></div>
+    </div>
+    <div class="detail">
+      <div class="resume">
+        <div class="h">⏸ Waar was ik<span class="ago">gisteren</span></div>
+        <div class="k">Volgende stap</div><div>Dia 6 t/m 9: cijfers van de enquête</div>
+        <div class="k">Wat ik in mijn hoofd had</div><div>Grafiek per straat, niet per huis</div>
+        <div class="acts"><span>Bijwerken</span><span>Hervat</span></div>
+      </div>
+      <div class="field">Presentatie buurtvereniging *hoog !vandaag</div>
+    </div>
+  </div>
+</div>
+
+<ul class="legend">
+  <li><b>Q1 · Where (A, B or C):</b> advice A, at the top, at most 3 with "+n meer" to unfold in place.</li>
+  <li><b>Q2 · Which notes:</b> every open note of a live item (not done, archived, parked with a future "Terugzien op",
+  or in the trash) or a live project (not archived, not in the trash); newest first. Advice: no age limit, the age is
+  shown, and <i>Hervat</i> in the item clears it.</li>
+  <li><b>Q3 · On the card:</b> advice no buttons and no swipe on <i>Vandaag</i>: a tap opens the item or project,
+  where <i>Hervat</i> and <i>Bijwerken</i> are. A swipe on Vandaag completes or trashes an item; on a note that would be
+  confusing.</li>
+  <li><b>Q4 · A trial:</b> advice no setting to switch it off; judged after use (M4b), like other trials.</li>
+  <li><b>Q5 · "Niets voor vandaag":</b> notes are not deadlines; with only notes, the empty message still shows below
+  them.</li>
+</ul>
+</body>
+</html>

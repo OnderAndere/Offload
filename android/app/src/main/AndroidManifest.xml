@@ -1,0 +1,147 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Deadline reminders (T4.1, DD-005): asked once, at the first deadline
+         (AC REQ-020). No exact-alarm permission (CLAUDE.md rule 5). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Reminders planned again after a restart (T4.3, DD-005): granted at
+         install, no question to the user. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <application
+        android:label="Offload"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <!-- Specifies an Android theme to apply to this Activity as soon as
+                 the Android process has started. This theme is visible to the user
+                 while the Flutter UI initializes. After that, this theme continues
+                 to determine the Window background behind the Flutter UI. -->
+            <meta-data
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme"
+              />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- App shortcuts on a long press of the icon (REQ-063, Q41a). -->
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
+        <!-- Opens the app on Today or Insights from the Offload bar and the app
+             shortcuts (REQ-063, DD-010); shows nothing. A task of its own, so the
+             launcher clearing a shortcut's task never clears the app's. -->
+        <activity
+            android:name=".OpenDestinationActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity="eu.marandos.offload.open"
+            android:theme="@android:style/Theme.NoDisplay" />
+        <!-- Quick capture from the home-screen widget (REQ-001, DD-010). Not
+             exported: the widget's PendingIntent opens it, the share sheet
+             only through the alias below. Its own task
+             affinity keeps it apart from the app, so closing it returns to
+             the home screen. -->
+        <activity
+            android:name=".capture.QuickCaptureActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:taskAffinity="eu.marandos.offload.capture"
+            android:launchMode="singleTask"
+            android:theme="@style/QuickCaptureTheme"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
+        <!-- Text and links from the share sheet (REQ-002, DD-010): the same
+             window, filled in with what was shared. Only this alias is
+             exported, so other apps can offer text but never save it: the
+             user still taps Save. Files come later (attachments, M5). -->
+        <activity-alias
+            android:name=".capture.ShareCaptureActivity"
+            android:targetActivity=".capture.QuickCaptureActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+        <!-- Hands a shared file (a backup, DD-014) to the app the user picks in
+             the share menu, and a file to write a photo in to the camera app
+             (T5.3): only two folders in the cache (res/xml/share_paths.xml),
+             access granted per request. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.share"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/share_paths" />
+        </provider>
+        <!-- Posts a planned deadline reminder (T4.1, DD-005); only the app's own
+             alarms reach it. -->
+        <receiver
+            android:name=".reminders.ReminderReceiver"
+            android:exported="false" />
+        <!-- Plans the stored reminder days again after a restart, an app update
+             or a change of time zone (T4.3, DD-005). Exported only because the
+             system sends these protected broadcasts; no other app can. -->
+        <receiver
+            android:name=".reminders.ReminderRestoreReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".capture.CaptureWidgetProvider"
+            android:exported="false"
+            android:label="@string/widget_button">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/capture_widget_info" />
+        </receiver>
+        <!-- The Offload bar (REQ-063, DD-019): Capture, Today and, wider, Insights. -->
+        <receiver
+            android:name=".capture.OffloadBarWidgetProvider"
+            android:exported="false"
+            android:label="@string/bar_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/offload_bar_info" />
+        </receiver>
+        <!-- Don't delete the meta-data below.
+             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+    <!-- Required to query activities that can process text, see:
+         https://developer.android.com/training/package-visibility and
+         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+
+         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
+</manifest>

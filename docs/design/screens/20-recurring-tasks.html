@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Recurring tasks – sketch, screen 20</title>
+<style>
+  :root {
+    --bg: #FBF8FC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --orange-text: #8F430E; --blue: #245A8C;
+    --blue-chip: #E3ECF5; --purple: #6750A4; --purple-chip: #EADDFF;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1680px; margin: 0 0 20px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col p.note { color: var(--muted); margin: 0 0 10px; width: 390px; min-height: 152px; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 8px; }
+  .phone { width: 390px; height: 760px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; font-size: 22px; }
+  .appbar .sp { flex: 1; } .appbar .ic { font-size: 18px; color: var(--muted); }
+  .field { margin: 4px 16px; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface); min-height: 70px; }
+  .field .tok { color: var(--blue); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 16px; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 2px 8px; font-size: 12px; background: var(--surface); white-space: nowrap; }
+  .chip.big { padding: 6px 10px; font-size: 13px; }
+  .chip.late { color: var(--orange-text); border-color: var(--orange); }
+  .chip.calm { color: var(--blue); }
+  .btns { display: flex; gap: 8px; margin: 10px 16px; }
+  .btn { border-radius: 20px; padding: 8px 16px; font-weight: 600; font-size: 13px; }
+  .btn.fill { background: var(--purple); color: #fff; } .btn.out { border: 1px solid var(--line); color: var(--purple); }
+  .menu { position: absolute; right: 10px; top: 70px; width: 250px; background: #F3EDF7; border-radius: 6px;
+          box-shadow: 0 4px 14px #0004; padding: 6px 0; }
+  .menu div { padding: 12px 16px; display: flex; gap: 14px; }
+  .card { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  .card .meta { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .scrim { position: absolute; inset: 0; background: #0006; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: #F7F2FA; border-radius: 26px 26px 0 0; padding: 10px 0 18px; }
+  .sheet .grab { width: 32px; height: 4px; border-radius: 2px; background: #79747E; margin: 0 auto 12px; }
+  .sheet .h { font-size: 18px; padding: 4px 24px 2px; }
+  .sheet .sub { font-size: 13px; color: var(--muted); padding: 0 24px 8px; }
+  .sheet .o { display: flex; align-items: center; gap: 14px; padding: 13px 24px; }
+  .sheet .o span { flex: 1; } .sheet .o small { color: var(--muted); font-size: 13px; }
+  .snack { position: absolute; left: 12px; right: 12px; bottom: 76px; background: #313033; color: #F4EFF4; border-radius: 6px; padding: 12px 14px; font-size: 13px; display: flex; gap: 10px; }
+  .snack span { flex: 1; } .snack b { color: #D0BCFF; }
+  .group { margin: 14px 16px 2px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .group.late { color: var(--orange-text); }
+  .line { margin: 4px 12px; padding: 10px 12px; border-radius: 10px; background: var(--blue-chip); display: flex; }
+  .line span { flex: 1; } .line b { color: var(--purple); }
+  .block { margin: 10px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  .block .h { padding: 8px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .block .r { padding: 8px 12px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 8px; }
+  .block .r span { flex: 1; } .block .r small { color: var(--muted); }
+  .block .r.more { color: var(--purple); font-weight: 600; font-size: 13px; }
+  .sugg { margin: 0 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 2px 8px #0002; }
+  .sugg div { padding: 9px 12px; display: flex; gap: 10px; border-top: 1px solid #EEE; }
+  .sugg div:first-child { border-top: 0; background: #EEE8F4; }
+  .sugg span { flex: 1; } .sugg small { color: var(--muted); }
+  .kb { position: absolute; left: 0; right: 0; bottom: 0; height: 250px; background: #D5D8DD; }
+  .prefix { position: absolute; left: 0; right: 0; bottom: 250px; height: 44px; background: #F1ECF4; border-top: 1px solid var(--line);
+            display: flex; gap: 6px; align-items: center; padding: 0 8px; font-size: 12px; overflow: hidden; white-space: nowrap; }
+  .prefix span { border: 1px solid var(--line); border-radius: 14px; padding: 4px 9px; background: var(--surface); }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .nav .on { color: var(--text); font-weight: 600; }
+  .foot { margin: 12px 16px; font-size: 12px; color: var(--muted); }
+  table.cmp { border-collapse: collapse; max-width: 1680px; background: var(--surface); margin-top: 8px; }
+  table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; font-size: 13px; }
+  table.cmp th { background: #F1ECF4; }
+  table.cmp td.adv { background: #EEF5EC; }
+  .legend { margin-top: 28px; max-width: 1680px; }
+  .legend li { margin: 4px 0; }
+  code { font-family: "IBM Plex Mono", Consolas, monospace; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>Recurring tasks (T4.7, REQ-061) – sketch, screen 20</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb). Sample data is
+fictional; today is Tuesday 6 October 2026. Orange outline = new. <b>Decided</b> (PO, 06-10-2026; SPEC Q29–Q35, AC REQ-061, DD-018 point 18): the
+repetition is a token in the text (<code>!dagelijks</code>, <code>!wekelijks</code>, <code>!maandelijks</code>; EN
+<code>!daily</code>, <code>!weekly</code>, <code>!monthly</code>; recognised in every app language), for a <i>Taak</i> or an item without a type yet, fixed on the calendar. A date
+token in the same text is the <b>first time</b> of the series; without one, the first time done, else the day the token
+was typed. Completing a time records it on the item ("Gedaan") and moves the item to the next date of the series after
+today; a time left for days is <b>one</b> overdue card. Model B (one series item plus a record per time) was chosen;
+the table below shows the comparison with model A.</p>
+
+<div class="row">
+<div class="col">
+<h3>1 · Capturing: the token and the button</h3>
+<p class="note">The prefix bar gets a button <i>↻ herhalen</i>: it puts <code>!</code> in the text and opens the list with
+only the three rhythm words, each with the date of the first time. Typing <code>!d</code> yourself shows them among the
+date words. Chips below the field, from the text only (rule 7): the rhythm and the first time.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">✕<span class="sp"></span><span class="btn fill" style="font-size:14px">Opslaan</span></div>
+  <div class="field">Rugoefeningen <span class="tok">!</span>▏</div>
+  <div class="sugg new">
+    <div><span>↻ dagelijks</span><small>elke dag · vanaf vandaag</small></div>
+    <div><span>↻ wekelijks</span><small>elke di · vanaf vandaag</small></div>
+    <div><span>↻ maandelijks</span><small>elke 6e · vanaf vandaag</small></div>
+  </div>
+  <div class="prefix"><span>@ persoon</span><span># tag</span><span>! datum</span><span class="new">↻ herhalen</span><span>^ project</span><span>* prioriteit</span></div>
+  <div class="kb"></div>
+</div>
+</div>
+
+<div class="col">
+<h3>2 · Vandaag: one card per series</h3>
+<p class="note">A repeating task is on <i>Vandaag</i> on its date, like any deadline. Left for days it is <b>one</b> overdue
+card (the run of 29 Sep), never a pile. The card has a calm chip <i>↻ wekelijks</i>. Swiping right completes <b>this
+time</b>: the card leaves, and the message names the next time. Undo takes the record back and puts the item back on its
+old date and status.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">Vandaag<span class="sp"></span><span class="ic">🔍</span></div>
+  <div class="group late">⚠ Verlopen · 1</div>
+  <div class="card">Hardlopen<div class="meta"><span class="chip">☑ Taak</span><span class="chip new">↻ wekelijks</span><span class="chip late">⚠ di 29 sep</span></div></div>
+  <div class="group">Vandaag · 2</div>
+  <div class="card">Rugoefeningen<div class="meta"><span class="chip">☑ Taak</span><span class="chip new">↻ dagelijks</span><span class="chip late">⚠ vandaag</span></div></div>
+  <div class="card">Offerte dakgoot opvragen<div class="meta"><span class="chip">☑ Taak</span><span class="chip late">⚠ vandaag</span></div></div>
+  <div class="snack new"><span>Afgerond · volgende keer di 13 okt</span><b>Ongedaan maken</b></div>
+  <div class="nav"><span class="on">Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span>Inzicht</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>3 · The item: rhythm, this time, and "Gedaan"</h3>
+<p class="note">The text stays as typed. The chips say the rhythm and <b>this time</b> (orange when today or overdue); the
+date token <code>!di</code> was the first time and is shown as such in the rhythm chip. <i>Afronden</i> completes this
+time. Below the buttons a block <i>Gedaan</i>: when each time was done, newest first, with "te laat" when done after its
+date; the five newest, then <i>Alles tonen</i>.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">←<span class="sp"></span><span class="ic">⤴</span><span class="ic">⋮</span></div>
+  <div class="chips"><span class="chip big">☑ Taak</span><span class="chip big">Actief</span></div>
+  <div class="field">Hardlopen <span class="tok">!wekelijks</span> <span class="tok">!di</span> <span class="tok">#sport</span></div>
+  <div class="chips">
+    <span class="chip new calm">↻ Wekelijks · elke di, sinds 8 sep</span>
+    <span class="chip new late">⚠ Deze keer: di 29 sep</span>
+    <span class="chip"># sport</span>
+  </div>
+  <div class="btns"><span class="btn fill">Afronden</span><span class="btn out">Wacht op…</span></div>
+  <div class="block new">
+    <div class="h">Gedaan · 3×</div>
+    <div class="r"><span>wo 23 sep</span><small>keer van di 22 sep · 1 dag te laat</small></div>
+    <div class="r"><span>di 15 sep</span><small>op tijd</small></div>
+    <div class="r"><span>di 8 sep</span><small>op tijd</small></div>
+  </div>
+  <div class="foot">Vastgelegd ma 7 sep 21:12 · widget</div>
+</div>
+</div>
+
+<div class="col">
+<h3>4 · A task without repetition: "Afronden en herhalen…"</h3>
+<p class="note">For a task that does not repeat yet, ⋮ has <i>Afronden en herhalen…</i>. The sheet shows the next time per
+rhythm, counted from the task's date (or today). A choice adds the token to the end of the text (a user edit, as a button
+does), completes this time and moves the item on, in one step with undo. Also for an item without a type;
+not for an idea, request or note.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">←<span class="sp"></span><span class="ic">⤴</span><span class="ic">⋮</span></div>
+  <div class="chips"><span class="chip big">☑ Taak</span><span class="chip big">Actief</span></div>
+  <div class="field">Filter afzuigkap schoonmaken <span class="tok">!6-10-2026</span></div>
+  <div class="scrim"></div>
+  <div class="sheet new">
+    <div class="grab"></div>
+    <div class="h">Afronden en herhalen</div>
+    <div class="sub">Deze keer is klaar. Wanneer komt hij terug?</div>
+    <div class="o">↻<span>Dagelijks</span><small>wo 7 okt</small></div>
+    <div class="o">↻<span>Wekelijks</span><small>di 13 okt</small></div>
+    <div class="o">↻<span>Maandelijks</span><small>vr 6 nov</small></div>
+    <div class="sub" style="padding-top:8px">Zet <code>!maandelijks</code> in de tekst; weghalen stopt de herhaling.</div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="row" style="margin-top:28px">
+<div class="col">
+<h3>5 · Stopping a series</h3>
+<p class="note">Three ways, all keep the history. <b>Remove the token</b> from the text: the item is an ordinary task again,
+with the date of its text. <b>⋮ → Herhaling stoppen</b>: removes the token and completes the item in one step, with
+undo; it then sits under <i>Afgerond</i> in its project, with its "Gedaan" list. <b>Afgerond</b> or <b>Gearchiveerd</b>
+in the status chip ends the series too.</p>
+<div class="phone" style="height:520px">
+  <div class="status">9:41</div>
+  <div class="appbar">←<span class="sp"></span><span class="ic">⤴</span><span class="ic">⋮</span></div>
+  <div class="chips"><span class="chip big">☑ Taak</span><span class="chip big">Actief</span></div>
+  <div class="field">Hardlopen <span class="tok">!wekelijks</span> <span class="tok">!di</span> <span class="tok">#sport</span></div>
+  <div class="menu">
+    <div>↩ Terugzien op…</div>
+    <div>📌 Waar was ik</div>
+    <div class="new">⏹ Herhaling stoppen</div>
+    <div>🔗 Verbanden tonen</div>
+    <div>🗑 Naar prullenbak</div>
+  </div>
+  <div class="snack new" style="bottom:16px"><span>Herhaling gestopt · Hardlopen is afgerond</span><b>Ongedaan maken</b></div>
+</div>
+</div>
+
+<div class="col">
+<h3>6 · Not a task</h3>
+<p class="note">The token works on a <i>Taak</i> and on an item without a type yet (from the widget). On an idea, request
+or note its chip says so and the item does not move on when completed. The date stays the one the series had reached, so changing the type never
+makes an item jump back to an old date; making it a <i>Taak</i> again resumes the series.</p>
+<div class="phone" style="height:520px">
+  <div class="status">9:41</div>
+  <div class="appbar">←<span class="sp"></span><span class="ic">⤴</span><span class="ic">⋮</span></div>
+  <div class="chips"><span class="chip big">💡 Idee</span><span class="chip big">Actief</span></div>
+  <div class="field">Moestuinplan bijwerken <span class="tok">!maandelijks</span></div>
+  <div class="chips">
+    <span class="chip new" style="color:var(--muted)">↻ Maandelijks · herhaalt alleen bij een taak</span>
+    <span class="chip calm">📅 vr 6 nov</span>
+  </div>
+  <div class="btns"><span class="btn fill">Afronden</span><span class="btn out">Wacht op…</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>7 · Elsewhere (no new screens)</h3>
+<p class="note">Everything below follows from the item's date, which is always the current time of the series.</p>
+<div class="block" style="margin:0;width:390px">
+  <div class="h">Where a repeating task shows</div>
+  <div class="r"><span><b>Vandaag</b>: on its date and overdue, one card</span></div>
+  <div class="r"><span><b>Melding</b>: a line in the notification of every series date, also while a time is open</span></div>
+  <div class="r"><span><b>Horizon</b>: only the next time, one dot per series</span></div>
+  <div class="r"><span><b>Weekoverzicht</b>: never under "Stilgevallen"; under "Deadlines" when due</span></div>
+  <div class="r"><span><b>Stilstand</b>: completing a time counts as a touch</span></div>
+  <div class="r"><span><b>Zoeken, archief</b>: one item, as now</span></div>
+  <div class="r"><span><b>Windows</b>: Ctrl+Enter completes this time; ⋮ as on the phone</span></div>
+</div>
+</div>
+</div>
+
+<h2>Q32 · One item per time (A) or one series item with a record per time (B)</h2>
+<table class="cmp">
+  <tr><th></th><th>A · a new item per time (PO's first preference)</th><th>B · one series item + a light record per time (chosen)</th></tr>
+  <tr><td><b>History</b></td><td>Every time is a done item of its own: "when did I do it" is the list of done copies, spread over <i>Afgerond</i> in the project.</td><td class="adv">The item shows <i>Gedaan</i>: date, on time or late. All in one place.</td></tr>
+  <tr><td><b>Text as the only source</b></td><td>The new item needs the next date in <i>its</i> text: the app must write a new date token into a copy (<code>!di</code> → <code>!13-10-2026</code>), or the date comes from a column besides the text.</td><td class="adv">The text never changes. The date is worked out from the text and the records: the first time series date after the last done one.</td></tr>
+  <tr><td><b>Archive and projects</b></td><td>A daily task gives 365 done items a year under <i>Afgerond</i>.</td><td class="adv">One item.</td></tr>
+  <tr><td><b>Search index</b></td><td>Every copy is indexed: "hardlopen" gives a hit per time.</td><td class="adv">One hit.</td></tr>
+  <tr><td><b>Insights</b></td><td>Horizon and Standstill see only the open copy, so fine; a later "how often did I do it" has to collect copies by series.</td><td class="adv">Horizon: the next time. Standstill: completing touches the item. A later streak or count reads the records directly.</td></tr>
+  <tr><td><b>Note, people, links, project</b></td><td>Copied to every new item, or not: either way a choice per field (a <code>[[link]]</code>, a "Where was I", a requester).</td><td class="adv">Stay on the one item.</td></tr>
+  <tr><td><b>Sync (Q33)</b></td><td>The next item gets UUIDv5(series, date): two devices make the same row.</td><td class="adv">The record gets UUIDv5(item, date): two devices make the same record and work out the same next date; no item is ever made twice.</td></tr>
+  <tr><td><b>Undo</b></td><td>Trash the new item (tombstone) and put back the old status.</td><td class="adv">Remove the record (tombstone) and put back the old date and status.</td></tr>
+  <tr><td><b>A note per time</b> ("5 km")</td><td>Possible: each copy has its own note.</td><td>Not in v1; a record can get a short note later.</td></tr>
+</table>
+
+<ul class="legend">
+  <li><b>Series dates</b> are calendar dates (<code>LocalDate</code>), never times: summer and winter time do not exist for them; the reminder of a day comes at the day's set time, as now.</li>
+  <li><b>Monthly</b> counts from the first time's day of the month: on the 31st it falls on the last day of shorter months (30 Nov, 28 Feb, 29 Feb in a leap year) and goes back to the 31st after (31 Dec), never drifting to the 28th. A first time on 29 Feb repeats monthly on the 29th (28 Feb in other years).</li>
+  <li><b>Next time</b> after completing = the first series date after both the completed time's date and today: early (Saturday for Tuesday) gives the Tuesday after; late (Thursday for Tuesday) gives the next Tuesday; a daily task left three days gives tomorrow.</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Overview – People (reference sketch)</title>
+<style>
+  :root { --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66; --line: #DAD6CE;
+          --orange: #B35712; --blue: #245A8C; --seg: #E6E1D8; --mono: "IBM Plex Mono", Consolas, monospace; }
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 390px; height: 844px; background: var(--bg); color: var(--text); position: relative;
+         font: 14px/1.35 "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; overflow: hidden; }
+  .top { padding: 18px 16px 0; position: relative; }
+  .date { font-family: var(--mono); color: var(--muted); font-size: 13px; letter-spacing: .02em; }
+  h1 { margin: 2px 0 0; font-size: 28px; }
+  .filter { position: absolute; right: 16px; top: 32px; width: 44px; height: 44px; border-radius: 50%;
+            border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; font-size: 18px; }
+  .segs { margin: 16px 16px 12px; background: var(--seg); border-radius: 12px; display: flex; padding: 4px; }
+  .segs span { flex: 1; text-align: center; padding: 10px 0; font-size: 13px; border-radius: 9px; }
+  .segs .on { background: #1B1D20; color: #fff; }
+  .card { margin: 0 16px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px 12px 12px; }
+  .tiles { display: flex; gap: 10px; margin: 0 16px 12px; }
+  .kpi { flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 12px 14px; font-size: 12px; color: var(--muted); }
+  .kpi b { display: block; font-size: 30px; font-family: var(--mono); margin: 2px 0; }
+  .kpi.lev b { color: #8F430E; } .kpi.wait b { color: var(--blue); }
+  .ct { padding: 0 4px 6px; } .ct b { font-size: 15px; }
+  .dir { text-align: center; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+  .dir .l { color: #8F430E; margin-right: 14px; } .dir .r { color: var(--blue); }
+  .p { padding: 6px 4px 8px; }
+  .p .nm { display: flex; font-size: 14px; font-weight: 600; }
+  .p .nm span { margin-left: auto; font-family: var(--mono); font-weight: 400; color: var(--muted); font-size: 12px; }
+  .p .nm span.late { color: #8F430E; font-weight: 600; }
+  .bal { position: relative; height: 22px; margin-top: 6px; }
+  .bal .a, .bal .b { position: absolute; top: 0; height: 20px; color: #fff; font-size: 11px; display: flex; align-items: center; padding: 0 6px; box-sizing: border-box; }
+  .bal .a { right: 50%; background: var(--orange); border-radius: 4px 0 0 4px; border-right: 1px solid #1B1D20; }
+  .bal .b { left: 50%; background: var(--blue); border-radius: 0 4px 4px 0; justify-content: flex-end; }
+  .foot { color: var(--muted); font-size: 12px; padding: 4px; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 70px; border-top: 1px solid var(--line); background: var(--bg);
+         display: flex; justify-content: space-around; align-items: center; font-size: 10px; color: var(--muted); }
+  .nav div { text-align: center; width: 70px; }
+  .nav .i { display: block; font-size: 17px; margin: 0 auto 2px; width: 50px; border-radius: 12px; padding: 2px 0; }
+  .nav .on { color: var(--blue); font-weight: 600; }
+  .nav .on .i { background: #DCE6F0; }
+</style>
+</head>
+<body>
+<div class="top"><div class="date">za 26 sep · wk 39</div><h1>Overzicht</h1><div class="filter">☰</div></div>
+<div class="segs"><span>Horizon</span><span>Stilstand</span><span class="on">Personen</span><span>Samenhang</span></div>
+<div class="tiles"><div class="kpi lev">Ik moet nog leveren<b>11</b>aan 5 personen</div><div class="kpi wait">Ik wacht nog op<b>7</b>van 4 personen</div></div>
+<div class="card">
+  <div class="ct"><b>Toezeggingenbalans</b></div>
+  <div class="dir"><span class="l">← ik lever</span><span class="r">ik wacht op →</span></div>
+  <div class="p"><div class="nm">Jan<span>oudste 12 d</span></div><div class="bal"><span class="a" style="width:120px">4</span><span class="b" style="width:30px">1</span></div></div>
+  <div class="p"><div class="nm">Pieter<span class="late">oudste 26 d</span></div><div class="bal"><span class="a" style="width:90px">3</span></div></div>
+  <div class="p"><div class="nm">Marieke<span>oudste 19 d</span></div><div class="bal"><span class="a" style="width:30px">1</span><span class="b" style="width:90px">3</span></div></div>
+  <div class="p"><div class="nm">Sanne<span>oudste 5 d</span></div><div class="bal"><span class="a" style="width:60px">2</span><span class="b" style="width:60px">2</span></div></div>
+  <div class="p"><div class="nm">Bestuur tennisclub<span>oudste 3 d</span></div><div class="bal"><span class="a" style="width:30px">1</span><span class="b" style="width:30px">1</span></div></div>
+  <div class="foot">Tik op een persoon voor de 1-op-1-voorbereiding.</div>
+</div>
+<div class="nav"><div><span class="i">📥</span>Inbox</div><div><span class="i">☀</span>Vandaag</div><div class="on"><span class="i">▦</span>Overzicht</div><div><span class="i">👥</span>Personen</div><div><span class="i">🔍</span>Zoeken</div></div>
+</body>
+</html>

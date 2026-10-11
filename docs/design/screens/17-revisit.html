@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Revisit on – sketch, screen 17</title>
+<style>
+  :root {
+    --bg: #FBF8FC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --orange-text: #8F430E; --blue: #245A8C;
+    --blue-chip: #E3ECF5; --purple: #6750A4; --purple-chip: #EADDFF;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1320px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; max-width: 1320px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col p.note { width: 390px; min-height: 132px; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 8px; }
+  .phone { width: 390px; height: 760px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .phone.dark { background: #20242B; color: #E8EAED; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .dark .status { color: #B9BEC6; }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; font-size: 22px; }
+  .appbar .sp { flex: 1; } .appbar .ic { font-size: 18px; color: var(--muted); }
+  .sec { margin: 16px 20px 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .set { display: flex; align-items: center; gap: 12px; padding: 10px 20px; }
+  .set .t { flex: 1; } .set .t small { display: block; color: var(--muted); font-size: 12px; }
+  .switch { width: 44px; height: 24px; border-radius: 12px; background: var(--purple); position: relative; flex: none; }
+  .switch::after { content: ""; position: absolute; right: 3px; top: 3px; width: 18px; height: 18px; border-radius: 9px; background: #fff; }
+  .drop { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-family: "IBM Plex Mono", Consolas, monospace; }
+  .field { margin: 4px 16px; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface); min-height: 70px; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 16px; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 2px 8px; font-size: 12px; background: var(--surface); white-space: nowrap; }
+  .chip.big { padding: 6px 10px; font-size: 13px; }
+  .revline { margin: 6px 16px; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; background: var(--blue-chip); color: var(--blue); }
+  .revline span { flex: 1; } .revline b { font-weight: 400; color: var(--muted); }
+  .btns { display: flex; gap: 8px; margin: 10px 16px; }
+  .btn { border-radius: 20px; padding: 8px 16px; font-weight: 600; font-size: 13px; }
+  .btn.fill { background: var(--purple); color: #fff; } .btn.out { border: 1px solid var(--line); color: var(--purple); }
+  .btn.text { color: var(--purple); padding: 8px 10px; }
+  .menu { position: absolute; right: 10px; top: 70px; width: 230px; background: #F3EDF7; border-radius: 6px;
+          box-shadow: 0 4px 14px #0004; padding: 6px 0; }
+  .menu div { padding: 12px 16px; display: flex; gap: 14px; }
+  .card { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  .card .meta { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .scrim { position: absolute; inset: 0; background: #0006; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: #F7F2FA; border-radius: 26px 26px 0 0; padding: 10px 0 18px; }
+  .sheet .grab { width: 32px; height: 4px; border-radius: 2px; background: #79747E; margin: 0 auto 12px; }
+  .sheet .h { font-size: 18px; padding: 4px 24px 8px; }
+  .sheet .o { display: flex; align-items: center; gap: 14px; padding: 13px 24px; }
+  .sheet .o span { flex: 1; } .sheet .o small { color: var(--muted); font-size: 13px; }
+  .sheet hr { border: 0; border-top: 1px solid var(--line); margin: 6px 0; }
+  .snack { position: absolute; left: 12px; right: 12px; bottom: 76px; background: #313033; color: #F4EFF4; border-radius: 6px; padding: 12px 14px; font-size: 13px; display: flex; gap: 10px; }
+  .snack span { flex: 1; } .snack b { color: #D0BCFF; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 12px; }
+  .grid div { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); text-align: center; padding: 10px 4px; font-size: 13px; }
+  .under { display: flex; justify-content: center; gap: 22px; color: var(--purple); font-weight: 600; font-size: 13px; margin-top: 6px; }
+  .bar { height: 4px; background: var(--line); margin: 0 16px; } .bar i { display: block; height: 4px; width: 25%; background: var(--blue); }
+  .group { margin: 14px 16px 2px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .line { margin: 4px 12px; padding: 10px 12px; border-radius: 10px; background: var(--blue-chip); display: flex; }
+  .line span { flex: 1; } .line b { color: var(--purple); }
+  .notif { margin: 8px 12px; background: #2D3138; border-radius: 18px; padding: 12px 14px; color: #E8EAED; }
+  .notif .h { font-size: 12px; color: #B9BEC6; display: flex; gap: 6px; align-items: center; }
+  .notif .h .ic { width: 16px; height: 16px; border-radius: 4px; background: #245A8C; display: inline-block; }
+  .notif .t { font-weight: 600; margin-top: 4px; }
+  .notif ul { margin: 4px 0 0; padding-left: 18px; color: #D5D8DD; font-size: 13px; }
+  .clock { text-align: center; font-size: 64px; font-weight: 300; margin: 40px 0 16px; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .nav .on { color: var(--text); font-weight: 600; }
+  .win { width: 1280px; height: 560px; background: var(--bg); border: 8px solid #1B1D20; border-radius: 10px; display: flex; overflow: hidden; }
+  .rail { width: 84px; background: #ECE8E0; padding: 20px 8px; font-size: 12px; color: var(--muted); }
+  .rail div { padding: 8px 4px; } .rail .on { color: var(--text); font-weight: 600; }
+  .pane { flex: 1; padding: 18px 24px; position: relative; }
+  .kbd { font-family: "IBM Plex Mono", Consolas, monospace; font-size: 11px; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; background: #fff; color: var(--muted); }
+  .dlg { position: absolute; left: 640px; top: 40px; width: 360px; background: #F7F2FA; border-radius: 20px; box-shadow: 0 6px 24px #0005; padding: 14px 0; }
+  .dlg .h { font-size: 18px; padding: 4px 22px 8px; }
+  .dlg .o { display: flex; gap: 12px; padding: 10px 22px; } .dlg .o span { flex: 1; } .dlg .o small { color: var(--muted); }
+  .dlg .o.sel { background: #E8DEF8; }
+  .legend { margin-top: 28px; max-width: 1320px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>Revisit on (T4.2) – sketch, screen 17</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb). Sample data is
+fictional; today is Friday 9 October 2026. Orange outline = new. <b>Already decided</b> (PO, 04-10-2026; REQ-021,
+DD-005): <i>Terugzien op…</i> ("Revisit on…") parks an item: its status becomes <i>Gepland</i> (scheduled) with a date,
+a day like a deadline. From the start of that day the app puts it back to <i>inbox</i>: at start-up, when the app comes
+back to the front and at a change of day while it runs. A notification cannot change the encrypted database, so this
+check is the mechanism itself; the notification is the signal. Changing a parked item's status by hand drops its date.
+Where to park (a): the item detail, triage, the step <i>Stilgevallen</i> of the weekly review and <i>Gepland</i> in the
+status chip. The choice (b): <i>Morgen</i>, <i>Volgende week</i> (Monday), <i>Over een maand</i>, <i>Kies datum…</i>.
+The notification (c): in the one notification a day. <i>Vandaag</i> (d): a group "Terug in je inbox". Windows (e):
+returning works; notifications follow in T4.5. No inline token (f).</p>
+
+<h2>Parking an item</h2>
+<div class="row">
+<div class="col">
+<h3>1 · Item detail: ⋮ → Terugzien op…</h3>
+<p class="note">A new entry in the menu, for every item that is not done or archived. Choosing <i>Gepland</i> in the
+status chip opens the same sheet (2); closing the sheet changes nothing, so an item is never scheduled without a date
+from now on.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">← <span class="sp"></span><span class="ic">⇪</span><span class="ic">⋮</span></div>
+  <div class="field">Fietsenrek schuur ophangen; eerst kijken of de muur het houdt</div>
+  <div class="chips"><span class="chip big">☑ Taak ▾</span><span class="chip big">Actief ▾</span></div>
+  <div class="btns"><span class="btn fill">Afronden</span><span class="btn out">Wacht op…</span></div>
+  <div class="menu">
+    <div class="new">↩ &nbsp;Terugzien op…</div>
+    <div>⌘ &nbsp;Verbanden tonen</div>
+    <div>🗑 &nbsp;Naar de prullenbak</div>
+  </div>
+</div>
+</div>
+
+<div class="col">
+<h3>2 · The choice of a date</h3>
+<p class="note">A sheet with three quick choices, each with its date, and Android's date picker (from tomorrow). For an
+item that is already parked the current date is marked and <i>Niet meer terugzien</i> is added: the item goes back to
+active.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">← <span class="sp"></span><span class="ic">⇪</span><span class="ic">⋮</span></div>
+  <div class="field">Fietsenrek schuur ophangen; eerst kijken of de muur het houdt</div>
+  <div class="scrim"></div>
+  <div class="sheet new">
+    <div class="grab"></div>
+    <div class="h">Terugzien op</div>
+    <div class="o">☀ <span>Morgen</span><small>za 10 okt</small></div>
+    <div class="o">📅 <span>Volgende week</span><small>ma 12 okt</small></div>
+    <div class="o">🗓 <span>Over een maand</span><small>ma 9 nov</small></div>
+    <div class="o">✎ <span>Kies datum…</span></div>
+    <hr>
+    <div class="o" style="color:var(--muted)">✕ <span>Niet meer terugzien</span><small>als het al gepland is</small></div>
+  </div>
+</div>
+</div>
+
+<div class="col">
+<h3>3 · Parked</h3>
+<p class="note">The status chip says <i>Gepland</i>; under it a line "Terugzien op ma 12 okt" (tap = the sheet again,
+✕ = not any more). A message with undo, which puts back the status and date it had. On cards elsewhere (Projects,
+People, search) a calm chip "↩ 12 okt".</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">← <span class="sp"></span><span class="ic">⇪</span><span class="ic">⋮</span></div>
+  <div class="field">Fietsenrek schuur ophangen; eerst kijken of de muur het houdt</div>
+  <div class="chips"><span class="chip big">☑ Taak ▾</span><span class="chip big">Gepland ▾</span></div>
+  <div class="revline new">↩ <span>Terugzien op ma 12 okt</span><b>✕</b></div>
+  <div class="btns"><span class="btn fill">Afronden</span><span class="btn out">Wacht op…</span></div>
+  <div class="sec">Elders, op de kaart</div>
+  <div class="card">Fietsenrek schuur ophangen<div class="meta"><span class="chip">☑ Taak</span><span class="chip new" style="color:var(--blue)">↩ 12 okt</span></div></div>
+  <div class="snack new"><span>Terug op ma 12 okt</span><b>Ongedaan maken</b></div>
+</div>
+</div>
+</div>
+
+<div class="row" style="margin-top:28px">
+<div class="col">
+<h3>4 · Triage: Later…</h3>
+<p class="note">A text button <i>Later…</i> by <i>Overslaan</i> and <i>Openen</i>; the six destinations stay as they
+are. It opens the sheet (2); after a date the next card comes, with the usual message and undo ("Terug op ma 12 okt").
+The end screen counts it as processed.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">✕ Verwerken<span class="sp"></span><span style="font-size:13px;color:var(--muted)">3 van 12</span></div>
+  <div class="bar"><i></i></div>
+  <div class="card" style="height:330px;margin-top:14px"><b>Cursus timmeren uitzoeken</b><br>Na de verbouwing, misschien in het voorjaar.</div>
+  <div class="grid"><div>☑<br>Taak</div><div>💡<br>Idee</div><div>✋<br>Verzoek</div><div>⏳<br>Wacht op</div><div>📄<br>Notitie</div><div>🗑<br>Prullenbak</div></div>
+  <div class="under"><span>Overslaan</span><span class="new">↩ Later…</span><span>Openen</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>5 · Weekly review: Stilgevallen</h3>
+<p class="note">A third button on each card: <i>Later…</i>, the same sheet. A parked item leaves the step's count (it
+comes back by itself); the card is dimmed with "✓ Terug op ma 12 okt" and undo, like <i>Houden</i>. The end screen
+adds "1 later terugzien".</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">← Weekoverzicht<span class="sp"></span><span style="font-size:13px;color:var(--muted)">5 / 5</span></div>
+  <div class="group">3 weken of langer niet aangeraakt · 2</div>
+  <div class="card">Moestuinbak bijvullen met compost<div class="meta"><span class="chip" style="color:var(--orange-text)">7 weken niet aangeraakt</span></div>
+    <div class="btns" style="margin:8px 0 0"><span class="btn out">Houden</span><span class="btn out">Archiveren</span><span class="btn out new">↩ Later…</span></div></div>
+  <div class="card" style="opacity:.55">Cursus fotografie vergelijken<div class="meta"><span class="chip">4 weken niet aangeraakt</span></div>
+    <div style="margin-top:8px;color:var(--blue)" class="new">✓ Terug op ma 12 okt</div></div>
+</div>
+</div>
+
+<div class="col">
+<h3>6 · The day it returns: Vandaag</h3>
+<p class="note">(d) A group "Terug in je inbox" with the inbox items whose date is today or earlier, so the returned
+item is not lost among new captures. It leaves the group once processed. Cards, tap, swipes and keys as on
+<i>Vandaag</i>; the inbox line still counts all of the inbox.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">Vandaag</div>
+  <div class="line"><span>5 in je inbox</span><b>Verwerken ›</b></div>
+  <div class="group">Vandaag · 1</div>
+  <div class="card">Contributie vereniging overmaken<div class="meta"><span class="chip" style="color:var(--orange-text)">⚠ vandaag</span></div></div>
+  <div class="new" style="margin:0 4px;padding-bottom:4px">
+    <div class="group">Terug in je inbox · 2</div>
+    <div class="card">Fietsenrek schuur ophangen<div class="meta"><span class="chip">☑ Taak</span></div></div>
+    <div class="card">Cursus timmeren uitzoeken</div>
+  </div>
+  <div class="nav"><span class="on">Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span>Inzicht</span></div>
+</div>
+</div>
+</div>
+
+<h2>The notification and Settings</h2>
+<div class="row">
+<div class="col">
+<h3>7 · The notification</h3>
+<p class="note">(c) Still one notification a day, at the time set. With only returned items the title says so; with
+both, deadlines first, then the returned items marked "Terug:". At most five lines, then "en nog n". One item in all:
+a tap opens it; more: <i>Vandaag</i>.</p>
+<div class="phone dark" style="height:420px">
+  <div class="status">9:00</div>
+  <div class="notif new"><div class="h"><span class="ic"></span>Offload · nu</div>
+    <div class="t">Terug in je inbox</div><div>Fietsenrek schuur ophangen</div></div>
+  <div class="notif new"><div class="h"><span class="ic"></span>Offload · nu</div>
+    <div class="t">1 deadline · 2 terug in je inbox</div>
+    <ul><li>Contributie vereniging overmaken</li><li>Terug: Fietsenrek schuur ophangen</li><li>Terug: Cursus timmeren uitzoeken</li></ul></div>
+</div>
+</div>
+
+<div class="col">
+<h3>8 · On the lock screen</h3>
+<p class="note">As for deadlines: only the counts, never a title. The notification channel in Android's settings is
+renamed from "Deadlines" to "Herinneringen".</p>
+<div class="phone dark" style="height:420px">
+  <div class="status">9:00</div>
+  <div class="clock">9:00</div>
+  <div class="notif new"><div class="h"><span class="ic"></span>Offload</div><div class="t">1 deadline · 2 terug in je inbox</div></div>
+</div>
+</div>
+
+<div class="col">
+<h3>9 · Settings → Herinneringen</h3>
+<p class="note">The switch covers both kinds; its texts say so. The question for notifications also comes when the first
+item is parked; the message after a refusal and the warning mention returned items too.</p>
+<div class="phone" style="height:420px">
+  <div class="status">9:41</div>
+  <div class="appbar">← Instellingen</div>
+  <div class="sec">Herinneringen</div>
+  <div class="set new"><span class="t">Meldingen bij deadlines en terugzien<small>Op de dag zelf; één melding per dag.</small></span><span class="switch"></span></div>
+  <div class="set"><span class="t">Tijdstip<small>Wanneer de melding van die dag komt.</small></span><span class="drop">09:00 ▾</span></div>
+  <div class="sec">Na een weigering</div>
+  <div class="card new" style="font-size:13px">Zonder meldingen zie je deadlines en teruggekomen items op Vandaag.</div>
+</div>
+</div>
+</div>
+
+<h2>Windows</h2>
+<p class="note">The same choices; the sheet is a small dialog, operated with ↑/↓, <span class="kbd">Enter</span> and
+<span class="kbd">Esc</span>. Keys: <span class="kbd">6</span> = <i>Later…</i> in triage (after 1–5 and
+<span class="kbd">Del</span>), <span class="kbd">3</span> = <i>Later…</i> in the step <i>Stilgevallen</i> (after
+<span class="kbd">1</span> Houden and <span class="kbd">2</span> Archiveren). Returning works on Windows too; the
+notification comes with T4.5, until then the group on <i>Vandaag</i> is the signal.</p>
+<div class="win">
+  <div class="rail"><div>Vandaag</div><div class="on">Inbox</div><div>Projecten</div><div>Personen</div><div>Inzicht</div></div>
+  <div class="pane">
+    <div style="color:var(--muted)">Verwerken · 3 van 12 <span style="float:right"><span class="kbd">Esc</span> stoppen</span></div>
+    <div class="card" style="margin:14px 0;height:250px"><b>Cursus timmeren uitzoeken</b><br>Na de verbouwing, misschien in het voorjaar.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span class="chip big">☑ Taak <span class="kbd">1</span></span><span class="chip big">💡 Idee <span class="kbd">2</span></span>
+      <span class="chip big">✋ Verzoek <span class="kbd">3</span></span><span class="chip big">⏳ Wacht op <span class="kbd">4</span></span>
+      <span class="chip big">📄 Notitie <span class="kbd">5</span></span><span class="chip big">🗑 Prullenbak <span class="kbd">Del</span></span>
+    </div>
+    <div style="margin-top:10px;color:var(--muted);font-size:12px"><span class="kbd">→</span> / <span class="kbd">Space</span> overslaan ·
+      <span class="new" style="padding:0 4px">↩ Later… <span class="kbd">6</span></span> · <span class="kbd">Ctrl</span>+<span class="kbd">Z</span> ongedaan maken</div>
+    <div class="dlg new">
+      <div class="h">Terugzien op</div>
+      <div class="o sel">☀ <span>Morgen</span><small>za 10 okt</small></div>
+      <div class="o">📅 <span>Volgende week</span><small>ma 12 okt</small></div>
+      <div class="o">🗓 <span>Over een maand</span><small>ma 9 nov</small></div>
+      <div class="o">✎ <span>Kies datum…</span></div>
+    </div>
+  </div>
+</div>
+
+<ul class="legend">
+  <li><b>Returning:</b> status <i>Gepland</i> with a date → <i>inbox</i> from the start of that day, written as a normal change (HLC, change log), so two devices that both do it agree. The inbox is otherwise never a status to move back to (DD-018 point 1); this is a repository method of its own, like <code>classify</code> in triage.</li>
+  <li><b>The date stays after returning:</b> it marks the item for the group on <i>Vandaag</i> while it is in the inbox. Only <i>Gepland</i> with a date returns, so a processed item never returns twice. Changing a parked item's status by hand clears the date.</li>
+  <li><b>A deadline before the date</b> is allowed: the deadline still shows on <i>Vandaag</i> and gets its reminder, whatever the status.</li>
+  <li><b>Volgende week</b> is next Monday (on a Monday the Monday after); <b>Over een maand</b> the same day next month, or its last day.</li>
+</ul>
+</body>
+</html>

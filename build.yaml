@@ -1,0 +1,18 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          # ISO-8601 text keeps timestamps readable and time-zone explicit.
+          store_date_time_values_as_text: true
+          # The linked SQLite is sqlite3mc 3.53 with FTS5 (T1.4, DD-016).
+          sql:
+            dialect: sqlite
+            options:
+              version: "3.45"
+              modules:
+                - fts5
+          databases:
+            app_database: lib/data/database/app_database.dart
+          schema_dir: drift_schemas/
+          test_dir: test/drift/

@@ -1,0 +1,8 @@
+# gen-l10n configuration (DD-009). Dutch is the source language; every other
+# language is one extra ARB file in lib/l10n/ and then appears in Settings.
+arb-dir: lib/l10n
+template-arb-file: app_nl.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false
+required-resource-attributes: true

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Photos in an item – sketch, screen 23</title>
+<style>
+  :root {
+    --bg: #FBF8FC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --orange-text: #8F430E; --blue: #245A8C;
+    --blue-chip: #E3ECF5; --purple: #6750A4; --purple-soft: #E9E1F5;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1660px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; width: 390px; min-height: 100px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 10px; }
+  .phone { width: 390px; height: 800px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .phone.dark { background: #000; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 12px 0 8px; gap: 14px; font-size: 20px; }
+  .appbar .icons { margin-left: auto; display: flex; gap: 18px; font-size: 18px; color: var(--muted); }
+  .dark .status, .dark .appbar { color: #EEE; } .dark .appbar .icons { color: #EEE; }
+  .content { padding: 0 16px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 12px; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; font-size: 13px; background: var(--surface); }
+  .field { border: 1px solid var(--muted); border-radius: 6px; padding: 10px 12px; background: var(--surface); min-height: 70px; }
+  .field.note { min-height: 54px; border-color: var(--line); color: var(--muted); position: relative; padding-top: 14px; }
+  .field.note .lbl { position: absolute; top: -9px; left: 10px; background: var(--bg); padding: 0 4px; font-size: 12px; }
+  .label { font-size: 13px; font-weight: 600; color: var(--muted); margin: 14px 0 6px; }
+  .strip { display: flex; gap: 8px; overflow: hidden; }
+  .thumb { width: 88px; height: 88px; border-radius: 10px; overflow: hidden; flex: none; background: #CFCAC0; position: relative; }
+  .thumb svg { display: block; }
+  .thumb.busy { background: var(--purple-soft); display: flex; flex-direction: column; align-items: center;
+                justify-content: center; font-size: 11px; color: var(--purple); text-align: center; gap: 6px; }
+  .spinner { width: 22px; height: 22px; border-radius: 50%; border: 3px solid #CBBFE6; border-top-color: var(--purple); }
+  .thumb.missing { background: #F1EFEA; border: 1px dashed var(--muted); display: flex; flex-direction: column;
+                   align-items: center; justify-content: center; font-size: 11px; color: var(--muted); text-align: center; padding: 6px; gap: 4px; }
+  .thumb.pressed { outline: 3px solid var(--purple); }
+  .buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .btn { border-radius: 20px; padding: 8px 14px; font-size: 13px; border: 1px solid var(--muted); color: var(--purple); background: var(--surface); }
+  .btn.filled { background: var(--purple); color: #FFF; border-color: var(--purple); }
+  .small { font-size: 12px; color: var(--muted); margin-top: 16px; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: 20px 20px 0 0;
+           box-shadow: 0 -4px 16px rgba(0,0,0,.18); padding: 10px 0 24px; z-index: 3; }
+  .sheet .handle { width: 40px; height: 4px; border-radius: 2px; background: #C9C5BE; margin: 0 auto 8px; }
+  .sheet .h { padding: 4px 20px 6px; font-weight: 600; }
+  .sheet .opt { padding: 14px 20px; display: flex; gap: 16px; font-size: 15px; }
+  .scrim { position: absolute; inset: 0; background: rgba(0,0,0,.32); z-index: 2; }
+  .menu { position: absolute; background: var(--surface); border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,.22);
+          padding: 6px 0; z-index: 3; min-width: 170px; }
+  .menu div { padding: 10px 16px; }
+  .dialog { position: absolute; left: 30px; right: 30px; top: 270px; background: var(--surface); border-radius: 24px;
+            padding: 22px 22px 14px; z-index: 3; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+  .dialog .t { font-size: 20px; margin-bottom: 12px; }
+  .dialog .acts { display: flex; justify-content: flex-end; gap: 18px; margin-top: 20px; color: var(--purple); font-weight: 600; }
+  .snack { position: absolute; left: 12px; right: 12px; bottom: 16px; background: #313033; color: #F4EFF4;
+           border-radius: 6px; padding: 14px 16px; font-size: 14px; z-index: 3; }
+  .viewer { position: absolute; top: 80px; left: 0; right: 0; bottom: 60px; display: flex; align-items: center; justify-content: center; }
+  .win { width: 1100px; height: 600px; background: var(--bg); border: 1px solid #9A968F; border-radius: 8px; overflow: hidden;
+         display: flex; flex-direction: column; position: relative; }
+  .win .title { height: 30px; font-size: 12px; padding: 7px 12px; background: #F1EFEA; border-bottom: 1px solid var(--line); }
+  .win .body { flex: 1; display: flex; }
+  .rail { width: 80px; border-right: 1px solid var(--line); font-size: 11px; color: var(--muted); padding-top: 12px; text-align: center; }
+  .rail div { margin: 10px 0; } .rail .on { color: var(--text); font-weight: 600; }
+  .listpane { width: 380px; border-right: 1px solid var(--line); }
+  .detail { flex: 1; padding: 8px 20px; }
+  .card { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  .card.sel { outline: 2px solid var(--purple); outline-offset: -1px; }
+  .filedlg { position: absolute; left: 40px; top: 300px; width: 520px; height: 280px; background: #FFF; border: 1px solid #7A7A7A;
+             box-shadow: 0 10px 30px rgba(0,0,0,.3); font-size: 12px; display: flex; flex-direction: column; z-index: 3; }
+  .filedlg .tb { padding: 8px 12px; border-bottom: 1px solid #DDD; background: #F3F3F3; }
+  .filedlg .files { flex: 1; padding: 10px 14px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; align-content: start; }
+  .filedlg .files div { text-align: center; color: #333; }
+  .filedlg .files div span { display: block; height: 64px; background: #DDE3EA; border-radius: 4px; margin-bottom: 4px; }
+  .filedlg .foot { padding: 10px 14px; border-top: 1px solid #DDD; display: flex; gap: 8px; align-items: center; }
+  .filedlg .foot .in { flex: 1; border: 1px solid #999; padding: 4px 6px; }
+  .filedlg .foot .sel { border: 1px solid #999; padding: 4px 8px; }
+  .filedlg .foot .b { border: 1px solid #999; padding: 4px 16px; background: #F3F3F3; }
+  .legend { margin-top: 28px; max-width: 1660px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>Photos in an item (T5.3) – sketch, screen 23</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb). Sample data is
+fictional; today is Saturday 10 October 2026. Orange outline = new. <b>Decided before the sketch</b> (PO 10-10-2026, a–f):
+the camera through the device's camera app, its file in Offload's own cache removed at once (a); one photo at a time (b);
+deleting asks first, no undo (c); tapping a photo opens it full screen with zoom, the rest of viewing in T5.6 (d); photos
+only in the item detail, not while capturing (e); business cards later (f). A photo goes through the pipeline of T5.2:
+at most 1600 px, upright, without EXIF and location, encrypted; the thumbnail is 256 px.</p>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="wb1" viewBox="0 0 88 88">
+      <rect width="88" height="88" fill="#8B8578"/><rect x="6" y="10" width="76" height="62" fill="#F7F7F2"/>
+      <rect x="12" y="18" width="24" height="16" fill="none" stroke="#2C6E49" stroke-width="2"/>
+      <rect x="44" y="18" width="30" height="16" fill="none" stroke="#2C6E49" stroke-width="2"/>
+      <rect x="12" y="42" width="62" height="20" fill="none" stroke="#245A8C" stroke-width="2"/>
+      <path d="M16 52 h10 M30 52 h12 M48 52 h18" stroke="#B35712" stroke-width="2"/>
+    </symbol>
+    <symbol id="wb2" viewBox="0 0 88 88">
+      <rect width="88" height="88" fill="#7F7A70"/><rect x="4" y="14" width="80" height="58" fill="#F4F4EE"/>
+      <path d="M12 26 h40 M12 34 h52 M12 42 h30 M12 50 h46 M12 58 h24" stroke="#245A8C" stroke-width="2"/>
+      <circle cx="68" cy="54" r="8" fill="none" stroke="#B35712" stroke-width="2"/>
+    </symbol>
+    <symbol id="seed" viewBox="0 0 88 88">
+      <rect width="88" height="88" fill="#C9B48A"/><rect x="18" y="8" width="52" height="72" rx="3" fill="#E9DFC6"/>
+      <rect x="24" y="16" width="40" height="30" fill="#7FA35B"/><circle cx="44" cy="31" r="9" fill="#C0392B"/>
+      <path d="M26 56 h36 M26 64 h28" stroke="#5A5F66" stroke-width="3"/>
+    </symbol>
+  </defs>
+</svg>
+
+<h2>1 · The item with photos (Android)</h2>
+<div class="row">
+<div>
+<h3>A · Photos under the note, the button with the others</h3>
+<p class="note">A row of thumbnails under <i>Notitie</i>, oldest first (the order of a whiteboard session), only when the
+item has photos. More than fit: the row scrolls sideways. <i>Foto toevoegen</i> is an outlined button next to
+<i>Wachten op…</i> and <i>Waar was ik?</i>, for every item, also a done one.</p>
+<div class="phone">
+  <div class="status">10:12</div>
+  <div class="appbar">←<span class="icons">⤴ ? ⋮</span></div>
+  <div class="content">
+    <div class="chips"><span class="chip">Actief ▾</span><span class="chip">☑ Taak ▾</span><span class="chip">▣ Moestuin</span></div>
+    <div class="field">Indeling moestuin voor het voorjaar uitwerken !vr 16 okt ^Moestuin</div>
+    <div style="height:16px"></div>
+    <div class="field note"><span class="lbl">Notitie</span>Bedden 1–3 wisselen, kas achterin.</div>
+    <div class="new" style="padding:2px 4px 6px;margin:4px -4px 0">
+      <div class="label">Foto's · 3</div>
+      <div class="strip">
+        <div class="thumb"><svg width="88" height="88"><use href="#wb1"/></svg></div>
+        <div class="thumb"><svg width="88" height="88"><use href="#wb2"/></svg></div>
+        <div class="thumb"><svg width="88" height="88"><use href="#seed"/></svg></div>
+      </div>
+    </div>
+    <div class="buttons">
+      <span class="btn filled">✓ Afronden</span><span class="btn">Wachten op…</span><span class="btn">⏸ Waar was ik?</span>
+      <span class="btn new">📷 Foto toevoegen</span>
+    </div>
+    <div class="small">Vastgelegd 9 okt 2026, 20:41 via widget</div>
+  </div>
+</div>
+</div>
+
+<div>
+<h3>B · Adding: camera or gallery</h3>
+<p class="note">On Android the button opens a sheet with two choices. <i>Foto maken</i> opens the camera app; after
+<i>OK</i> there the photo comes in. <i>Uit galerij</i> opens Android's own photo picker (no permission). Cancelling
+either changes nothing.</p>
+<div class="phone">
+  <div class="status">10:12</div>
+  <div class="appbar">←<span class="icons">⤴ ? ⋮</span></div>
+  <div class="content">
+    <div class="chips"><span class="chip">Actief ▾</span><span class="chip">☑ Taak ▾</span><span class="chip">▣ Moestuin</span></div>
+    <div class="field">Indeling moestuin voor het voorjaar uitwerken !vr 16 okt ^Moestuin</div>
+  </div>
+  <div class="scrim"></div>
+  <div class="sheet new">
+    <div class="handle"></div>
+    <div class="h">Foto toevoegen</div>
+    <div class="opt">📷<span>Foto maken</span></div>
+    <div class="opt">🖼<span>Uit galerij</span></div>
+  </div>
+</div>
+</div>
+
+<div>
+<h3>C · While the photo is made ready</h3>
+<p class="note">At the end of the row a tile <i>Foto verwerken…</i> (about 1–1.5 s for a 50 MP photo). The screen stays
+usable: typing, scrolling, going back. The tile becomes the thumbnail when done. A photo Offload cannot read (e.g. a
+HEIC on Windows) gives a message and keeps nothing.</p>
+<div class="phone">
+  <div class="status">10:13</div>
+  <div class="appbar">←<span class="icons">⤴ ? ⋮</span></div>
+  <div class="content">
+    <div class="chips"><span class="chip">Actief ▾</span><span class="chip">☑ Taak ▾</span><span class="chip">▣ Moestuin</span></div>
+    <div class="field">Indeling moestuin voor het voorjaar uitwerken !vr 16 okt ^Moestuin</div>
+    <div style="height:16px"></div>
+    <div class="field note"><span class="lbl">Notitie</span>Bedden 1–3 wisselen, kas achterin.</div>
+    <div class="label">Foto's · 2</div>
+    <div class="strip">
+      <div class="thumb"><svg width="88" height="88"><use href="#wb1"/></svg></div>
+      <div class="thumb"><svg width="88" height="88"><use href="#wb2"/></svg></div>
+      <div class="thumb busy new"><div class="spinner"></div>Foto<br>verwerken…</div>
+    </div>
+    <div class="buttons">
+      <span class="btn filled">✓ Afronden</span><span class="btn">Wachten op…</span><span class="btn">⏸ Waar was ik?</span>
+      <span class="btn" style="opacity:.45">📷 Foto toevoegen</span>
+    </div>
+  </div>
+  <div class="snack new">Deze foto kan Offload niet lezen.</div>
+</div>
+</div>
+</div>
+
+<h2>2 · Viewing and deleting</h2>
+<div class="row">
+<div>
+<h3>D · Full screen, with zoom</h3>
+<p class="note">A tap on a thumbnail opens the photo on black: pinch or double tap to zoom, drag to move. In the bar
+the way back and 🗑 <i>Verwijderen</i>. One photo at a time: the next is a tap on its thumbnail. PDFs and <i>Openen in
+andere app</i> come with T5.6.</p>
+<div class="phone dark new">
+  <div class="status">10:14</div>
+  <div class="appbar">←<span class="icons">🗑</span></div>
+  <div class="viewer"><svg width="374" height="374"><use href="#wb1"/></svg></div>
+</div>
+</div>
+
+<div>
+<h3>E · Long press: the menu</h3>
+<p class="note">Long press on a thumbnail (on Windows a right click, or <kbd>Del</kbd> on a focused one) opens a menu
+with <i>Bekijken</i> and <i>Verwijderen</i>.</p>
+<div class="phone">
+  <div class="status">10:15</div>
+  <div class="appbar">←<span class="icons">⤴ ? ⋮</span></div>
+  <div class="content">
+    <div class="chips"><span class="chip">Actief ▾</span><span class="chip">☑ Taak ▾</span><span class="chip">▣ Moestuin</span></div>
+    <div class="field">Indeling moestuin voor het voorjaar uitwerken !vr 16 okt ^Moestuin</div>
+    <div style="height:16px"></div>
+    <div class="field note"><span class="lbl">Notitie</span>Bedden 1–3 wisselen, kas achterin.</div>
+    <div class="label">Foto's · 3</div>
+    <div class="strip">
+      <div class="thumb"><svg width="88" height="88"><use href="#wb1"/></svg></div>
+      <div class="thumb pressed"><svg width="88" height="88"><use href="#wb2"/></svg></div>
+      <div class="thumb"><svg width="88" height="88"><use href="#seed"/></svg></div>
+    </div>
+  </div>
+  <div class="menu new" style="left:110px;top:330px"><div>Bekijken</div><div>Verwijderen</div></div>
+</div>
+</div>
+
+<div>
+<h3>F · Deleting asks first</h3>
+<p class="note">From the menu or the viewer. <i>Verwijderen</i> removes the photo and its thumbnail at once
+(encrypted files and all); there is no undo (decision c).</p>
+<div class="phone">
+  <div class="status">10:15</div>
+  <div class="appbar">←<span class="icons">⤴ ? ⋮</span></div>
+  <div class="content">
+    <div class="chips"><span class="chip">Actief ▾</span><span class="chip">☑ Taak ▾</span><span class="chip">▣ Moestuin</span></div>
+    <div class="field">Indeling moestuin voor het voorjaar uitwerken !vr 16 okt ^Moestuin</div>
+  </div>
+  <div class="scrim"></div>
+  <div class="dialog new">
+    <div class="t">Foto verwijderen?</div>
+    De foto verdwijnt uit dit item. Dit kun je niet ongedaan maken.
+    <div class="acts"><span>Annuleren</span><span>Verwijderen</span></div>
+  </div>
+</div>
+</div>
+</div>
+
+<h2>3 · A photo that is not in the backup</h2>
+<div class="row">
+<div>
+<h3>G · After restoring a backup without attachments</h3>
+<p class="note">The photo's record came back, its file did not (DD-007 point 7a). Its tile says so instead of a
+thumbnail, and opening it shows the same text; <i>Verwijderen</i> still works. Pulled forward from T5.4: this is the
+first screen that shows attachments.</p>
+<div class="phone">
+  <div class="status">10:20</div>
+  <div class="appbar">←<span class="icons">⤴ ? ⋮</span></div>
+  <div class="content">
+    <div class="chips"><span class="chip">Actief ▾</span><span class="chip">☑ Taak ▾</span><span class="chip">▣ Moestuin</span></div>
+    <div class="field">Indeling moestuin voor het voorjaar uitwerken !vr 16 okt ^Moestuin</div>
+    <div style="height:16px"></div>
+    <div class="field note"><span class="lbl">Notitie</span>Bedden 1–3 wisselen, kas achterin.</div>
+    <div class="label">Foto's · 3</div>
+    <div class="strip">
+      <div class="thumb"><svg width="88" height="88"><use href="#wb1"/></svg></div>
+      <div class="thumb missing new">🚫<span>Bijlage niet in deze back-up</span></div>
+      <div class="thumb"><svg width="88" height="88"><use href="#seed"/></svg></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<h2>4 · Windows</h2>
+<div class="row">
+<div>
+<h3>H · The same in the detail pane; the button opens the Open dialog</h3>
+<p class="note" style="width:1100px;min-height:0">No camera on Windows: <i>Foto toevoegen…</i> opens Windows' own Open
+dialog with the filter <i>Afbeeldingen</i> (jpg, jpeg, png, webp, gif, bmp; also <i>Alle bestanden</i>). Thumbnails take
+focus with <kbd>Tab</kbd>: <kbd>Enter</kbd> opens, <kbd>Del</kbd> asks to delete. In the viewer <kbd>Esc</kbd> closes and
+the mouse wheel zooms.</p>
+<div class="win">
+  <div class="title">Offload</div>
+  <div class="body">
+    <div class="rail"><div>✎<br>Vastleggen</div><div>Vandaag</div><div class="on">Inbox</div><div>Projecten</div><div>Personen</div><div>Inzicht</div></div>
+    <div class="listpane">
+      <div style="padding:14px 16px;font-size:20px">Inbox</div>
+      <div class="card sel">Indeling moestuin voor het voorjaar uitwerken</div>
+      <div class="card">Fietsenrek bij de schuur vastzetten</div>
+      <div class="card">Zaden bestellen voor de kas</div>
+    </div>
+    <div class="detail">
+      <div class="chips"><span class="chip">Actief ▾</span><span class="chip">☑ Taak ▾</span><span class="chip">▣ Moestuin</span></div>
+      <div class="field">Indeling moestuin voor het voorjaar uitwerken !vr 16 okt ^Moestuin</div>
+      <div style="height:16px"></div>
+      <div class="field note"><span class="lbl">Notitie</span>Bedden 1–3 wisselen, kas achterin.</div>
+      <div class="new" style="padding:2px 4px 6px;margin:4px -4px 0">
+        <div class="label">Foto's · 2</div>
+        <div class="strip">
+          <div class="thumb"><svg width="88" height="88"><use href="#wb1"/></svg></div>
+          <div class="thumb"><svg width="88" height="88"><use href="#wb2"/></svg></div>
+        </div>
+      </div>
+      <div class="buttons">
+        <span class="btn filled">✓ Afronden</span><span class="btn">Wachten op…</span><span class="btn">⏸ Waar was ik?</span>
+        <span class="btn new">📷 Foto toevoegen…</span>
+      </div>
+    </div>
+  </div>
+  <div class="filedlg">
+    <div class="tb">Openen &nbsp;›&nbsp; Afbeeldingen &nbsp;›&nbsp; Moestuin</div>
+    <div class="files">
+      <div><span></span>bed-indeling.jpg</div><div><span></span>whiteboard-1.jpg</div><div><span></span>whiteboard-2.jpg</div>
+      <div><span></span>zakje-tomaat.png</div><div><span></span>kas-maten.jpg</div>
+    </div>
+    <div class="foot">Bestandsnaam: <span class="in">bed-indeling.jpg</span><span class="sel">Afbeeldingen ▾</span><span class="b">Openen</span><span class="b">Annuleren</span></div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="legend">
+<h2>Notes</h2>
+<ul>
+  <li><b>Where:</b> only the item detail (decision e); not the capture screen, the widget or triage. Cards in the lists
+  get no photo mark in this task; thumbnails on cards come with T5.4.</li>
+  <li><b>One at a time</b> (decision b): the button is dimmed while a photo is made ready, so two never run together.</li>
+  <li><b>Camera (decision a, Android):</b> the camera app writes its JPEG into Offload's own cache
+  (<code>cache/camera/</code>); Offload reads it, removes it at once and removes any leftover at start. Some camera apps also
+  keep a copy in their own gallery; Offload cannot prevent that.</li>
+  <li><b>Gallery (Android):</b> Android's photo picker, one photo; the bytes are read into memory, no copy on disk.</li>
+  <li><b>Thumbnails</b> come from the encrypted thumbnail file through Offload's own image provider with the attachment id
+  as cache key (DD-006 point 5), pulled forward from T5.4.</li>
+  <li><b>Accessibility:</b> each thumbnail reads "Foto 2 van 3"; the button and the menu entries are normal buttons
+  (≥ 48 dp).</li>
+</ul>
+</div>
+<p class="lead" style="margin-top:24px"><i>This sketch was made with the help of AI (Claude) and reviewed by the product
+owner.</i></p>
+</body>
+</html>

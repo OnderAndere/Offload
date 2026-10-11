@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- App shortcut icon (REQ-063), generated from ic_widget_capture: the glyph, light, on the navy of the app
+     icon. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#FF22304F"
+        android:pathData="M24,0a24,24 0 1,0 0.01,0z" />
+    <group
+        android:translateX="12"
+        android:translateY="12">
+    <path
+        android:pathData="M3,12 v4.5 a3.5,3.5 0 0,0 3.5,3.5 h11 a3.5,3.5 0 0,0 3.5,-3.5 v-4.5"
+        android:strokeWidth="2"
+        android:strokeColor="#FFF1F5FB"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#FFF1F5FB"
+        android:fillType="evenOdd"
+        android:pathData="M6.5,9.5 a5.5,5.5 0 1,0 11,0 a5.5,5.5 0 1,0 -11,0 Z M11.05,6.75 H12.95 V8.55 H14.75 V10.45 H12.95 V12.25 H11.05 V10.45 H9.25 V8.55 H11.05 Z" />
+</group>
+</vector>

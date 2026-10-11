@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The folders the FileProvider serves, both in the app's cache: the share
+     folder, which holds one shared file at a time (DD-014), and the folder the
+     camera app writes a photo in, removed right after reading (T5.3). -->
+<paths>
+    <cache-path name="share" path="share/" />
+    <cache-path name="camera" path="camera/" />
+</paths>

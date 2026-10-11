@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Where was I – sketch, screen 13</title>
+<style>
+  :root {
+    --bg: #FBF8FC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --orange-text: #8F430E; --blue: #245A8C;
+    --blue-chip: #E3ECF5; --purple: #6750A4; --purple-chip: #EADDFF; --card: #F3EEF6;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1320px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; max-width: 1320px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col p.note { width: 390px; min-height: 112px; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 8px; }
+  kbd { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 12px; }
+
+  .phone { width: 390px; height: 760px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 8px 0 12px; gap: 2px; }
+  .appbar .back { font-size: 22px; flex: 1; }
+  .appbar .ttl { font-size: 22px; flex: 1; }
+  .icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 18px; color: var(--muted); border-radius: 20px; }
+  .chips { display: flex; gap: 8px; padding: 6px 16px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; font-size: 13px; background: var(--surface); }
+  .field { margin: 8px 16px; border: 1px solid #8E8A84; border-radius: 6px; padding: 12px 14px; min-height: 64px; }
+  .field.focus { border: 2px solid var(--purple); }
+  .field.empty { color: var(--muted); }
+  .field label { display: block; font-size: 12px; color: var(--purple); margin: -20px 0 6px -4px; background: var(--surface); width: max-content; padding: 0 4px; }
+  .prefix { display: flex; gap: 14px; padding: 2px 18px; color: var(--purple); font-weight: 600; font-size: 13px; }
+  .btns { display: flex; gap: 8px; padding: 10px 16px; flex-wrap: wrap; }
+  .btn { border-radius: 20px; padding: 8px 16px; font-weight: 600; font-size: 14px; border: 1px solid #79747E; color: var(--purple); }
+  .btn.filled { background: var(--purple); color: #fff; border-color: var(--purple); }
+  .meta { padding: 4px 16px; font-size: 12px; color: var(--muted); }
+  .menu { position: absolute; background: var(--surface); border-radius: 8px; box-shadow: 0 3px 12px #0003;
+          padding: 6px 0; width: 210px; z-index: 3; }
+  .menu div { padding: 11px 16px; }
+  .scrim { position: absolute; inset: 0; background: #0005; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: 20px 20px 0 0;
+           padding: 8px 0 12px; box-shadow: 0 -2px 10px #0003; }
+  .grab { width: 36px; height: 4px; background: var(--line); border-radius: 2px; margin: 4px auto 10px; }
+  .st { font-size: 17px; font-weight: 600; padding: 0 20px 4px; }
+  .sub { font-size: 12px; color: var(--muted); padding: 0 20px 14px; }
+  .bar { display: flex; justify-content: flex-end; gap: 8px; padding: 6px 16px 0; }
+  .kbd { position: absolute; left: 0; right: 0; bottom: 0; height: 230px; background: #E8EAED; display: grid;
+         grid-template-columns: repeat(10, 1fr); gap: 5px; padding: 10px 6px; font-size: 18px; }
+  .kbd span { background: #fff; border-radius: 6px; display: grid; place-items: center; }
+
+  .resume { margin: 8px 12px; background: var(--blue-chip); border-radius: 14px; padding: 10px 12px 6px; border-left: 4px solid var(--blue); }
+  .resume .h { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--blue); font-weight: 600;
+               text-transform: uppercase; letter-spacing: .04em; }
+  .resume .h .ago { margin-left: auto; text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--muted); }
+  .resume .k { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .resume .v { font-size: 14px; }
+  .resume .acts { display: flex; justify-content: flex-end; gap: 4px; margin-top: 4px; }
+  .resume .acts span { color: var(--blue); font-weight: 600; padding: 6px 10px; }
+
+  .r { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+       padding: 10px 12px; display: flex; }
+  .r .t { flex: 1; font-weight: 600; }
+  .r .w { color: var(--muted); font-size: 12px; }
+  .sec { margin: 12px 16px 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 64px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .nav .on { color: var(--text); font-weight: 600; }
+
+  .desk { width: 1280px; height: 640px; background: var(--bg); border: 8px solid #1B1D20;
+          border-radius: 10px; display: flex; overflow: hidden; position: relative; }
+  .rail { width: 88px; background: #ECE8E0; padding-top: 12px; display: flex; flex-direction: column;
+          align-items: center; gap: 14px; font-size: 11px; color: var(--muted); flex: none; }
+  .rail .fabr { background: #E6E0F3; border-radius: 14px; width: 56px; height: 56px; display: grid; place-items: center; font-size: 22px; }
+  .rail .on { color: var(--text); font-weight: 600; }
+  .pane { width: 440px; border-right: 1px solid var(--line); padding-top: 6px; flex: none; }
+  .search { margin: 8px 12px 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+            padding: 8px 14px; color: var(--muted); }
+  .detail { flex: 1; position: relative; }
+  .dialog { position: absolute; left: 50%; top: 110px; transform: translateX(-50%); width: 460px; background: var(--surface);
+            border-radius: 24px; padding: 20px 4px 14px; box-shadow: 0 6px 24px #0004; z-index: 4; }
+  .callout { position: absolute; background: #FFF6D8; border: 1px solid #E2C766; border-radius: 6px;
+             padding: 4px 7px; font-size: 11px; color: #5A4A10; max-width: 240px; z-index: 5; }
+  .legend { margin-top: 28px; max-width: 1320px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>"Where was I" (T10.3) – sketch, screen 13</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb); typeface IBM
+Plex Sans. <b>Already decided</b> (PO, 02-10-2026; AC REQ-049): a compact form with two fields, <i>Volgende stap</i> and
+<i>Wat ik in mijn hoofd had</i>, the focus in the first, Enter saves and Shift+Enter is a new line, one filled field is
+enough, two empty ones save nothing, the form loads no lists (b); one current note per item or project, updated
+while open, resumed ones kept in the background (c); a resume card at the top of the item or project with both fields
+and how long ago, <i>Hervat</i> closes it, <i>Bijwerken</i> opens the form filled in, the card stays until resumed (d);
+not on Today for now (e); taking one counts as touching the item (f). Sample data is fictional. Orange outline = new.
+<b>Open for the PO</b> were (a) and (b′).<br><b>Decided (PO, 02-10-2026):</b> (a) variant B, the button by <i>Afronden</i> (C stays the alternative), and on Windows <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>; (b′) closing with text saves it anyway (discard with <i>Hervat</i>, or empty the fields). See DESIGN.md, DD-018 point 13.</p>
+
+<h2>(a) Where it starts – three variants</h2>
+<div class="row">
+<div class="col">
+<h3>A · In the ⋮ menu</h3>
+<p class="note">One entry in ⋮ of the item (above <i>Naar prullenbak</i>) and of the project. Calm: nothing extra on
+screen. Two taps, and you have to know it is there.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="icon">⤴</span><span class="icon">⋮</span></div>
+  <div class="chips"><span class="chip">Actief ▾</span><span class="chip">Taak ▾</span><span class="chip">📁 Verbouwing ▾</span></div>
+  <div class="field">Offerte kozijnen vergelijken @Jan</div>
+  <div class="prefix"><span>@ persoon</span><span># tag</span><span>! datum</span><span>^ project</span></div>
+  <div class="chips"><span class="chip">👤 Jan</span></div>
+  <div class="field empty" style="min-height:52px">Notitie</div>
+  <div class="btns"><span class="btn filled">✓ Afronden</span><span class="btn">Wachten op…</span></div>
+  <div class="menu new" style="right:10px; top:84px"><div>⏸ Waar was ik?…</div><div>Naar prullenbak</div></div>
+</div>
+</div>
+
+<div class="col">
+<h3>B · A button by Afronden</h3>
+<p class="note">A third button in the row under the item: <i>Waar was ik?</i>. One tap and always visible, right
+where you work on the item; the row gets fuller. The project gets the same button under its title.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="icon">⤴</span><span class="icon">⋮</span></div>
+  <div class="chips"><span class="chip">Actief ▾</span><span class="chip">Taak ▾</span><span class="chip">📁 Verbouwing ▾</span></div>
+  <div class="field">Offerte kozijnen vergelijken @Jan</div>
+  <div class="prefix"><span>@ persoon</span><span># tag</span><span>! datum</span><span>^ project</span></div>
+  <div class="chips"><span class="chip">👤 Jan</span></div>
+  <div class="field empty" style="min-height:52px">Notitie</div>
+  <div class="btns"><span class="btn filled">✓ Afronden</span><span class="btn">Wachten op…</span><span class="btn new">⏸ Waar was ik?</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>C · An icon in the top bar</h3>
+<p class="note">A ⏸ icon next to share, with the tooltip <i>Waar was ik?</i>. One tap, takes no room in the item; an
+icon alone is less clear the first time. The project gets the same icon in its top bar.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="icon new">⏸</span><span class="icon">⤴</span><span class="icon">⋮</span></div>
+  <div class="chips"><span class="chip">Actief ▾</span><span class="chip">Taak ▾</span><span class="chip">📁 Verbouwing ▾</span></div>
+  <div class="field">Offerte kozijnen vergelijken @Jan</div>
+  <div class="prefix"><span>@ persoon</span><span># tag</span><span>! datum</span><span>^ project</span></div>
+  <div class="chips"><span class="chip">👤 Jan</span></div>
+  <div class="field empty" style="min-height:52px">Notitie</div>
+  <div class="btns"><span class="btn filled">✓ Afronden</span><span class="btn">Wachten op…</span></div>
+  <div style="position:absolute; left:150px; top:36px" class="callout">tooltip: Waar was ik?</div>
+</div>
+</div>
+</div>
+
+<h2>The form and the resume card</h2>
+<div class="row">
+<div class="col">
+<h3>(b) The form</h3>
+<p class="note">A sheet over the item, the keyboard open, the focus in <i>Volgende stap</i>. The item's title above,
+so you see what it is for. <i>Opslaan</i> or Enter saves; Shift+Enter is a new line. <b>(b′) decided:</b> closing with text in it
+(Sluiten, swipe down, Esc) saves it anyway, so nothing typed is lost; the button reads <i>Sluiten</i>, not
+<i>Annuleren</i>.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="icon">⤴</span><span class="icon">⋮</span></div>
+  <div class="field">Offerte kozijnen vergelijken @Jan</div>
+  <div class="scrim"></div>
+  <div class="sheet new" style="bottom:230px">
+    <div class="grab"></div>
+    <div class="st">Waar was ik?</div>
+    <div class="sub">Offerte kozijnen vergelijken</div>
+    <div class="field focus" style="min-height:48px"><label>Volgende stap</label>Prijzen van leverancier B in tabel zetten|</div>
+    <div class="field" style="min-height:64px; margin-top:16px"><label style="color:var(--muted)">Wat ik in mijn hoofd had</label><span style="color:var(--muted)">Bijv. waarom, wat je wilde checken…</span></div>
+    <div class="bar"><span class="btn" style="border:none">Sluiten</span><span class="btn filled">Opslaan</span></div>
+  </div>
+  <div class="kbd"><span>q</span><span>w</span><span>e</span><span>r</span><span>t</span><span>y</span><span>u</span><span>i</span><span>o</span><span>p</span>
+    <span>a</span><span>s</span><span>d</span><span>f</span><span>g</span><span>h</span><span>j</span><span>k</span><span>l</span><span>↵</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>(d) The resume card in the item</h3>
+<p class="note">At the top of the item, above the status chips: both fields and how long ago. <i>Hervat</i> closes it
+(the note is done); <i>Bijwerken</i> opens the form filled in. Until then it stays, every time you open the item.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="icon">⤴</span><span class="icon">⋮</span></div>
+  <div class="resume new">
+    <div class="h">⏸ Waar was ik <span class="ago">3 dagen geleden</span></div>
+    <div class="k">Volgende stap</div><div class="v">Prijzen van leverancier B in tabel zetten</div>
+    <div class="k">Wat ik in mijn hoofd had</div><div class="v">B was goedkoper maar levert pas in november; vragen of dat sneller kan.</div>
+    <div class="acts"><span>Bijwerken</span><span>Hervat</span></div>
+  </div>
+  <div class="chips"><span class="chip">Actief ▾</span><span class="chip">Taak ▾</span><span class="chip">📁 Verbouwing ▾</span></div>
+  <div class="field">Offerte kozijnen vergelijken @Jan</div>
+  <div class="chips"><span class="chip">👤 Jan</span></div>
+  <div class="btns"><span class="btn filled">✓ Afronden</span><span class="btn">Wachten op…</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>(d) The resume card in a project</h3>
+<p class="note">The same card at the top of the project, above its groups. A project's note is about the project as a
+whole: where you left off with the renovation, not with one item.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="ttl" style="font-size:20px">Verbouwing</span><span class="icon">⋮</span></div>
+  <div class="resume new">
+    <div class="h">⏸ Waar was ik <span class="ago">12 dagen geleden</span></div>
+    <div class="k">Volgende stap</div><div class="v">Keuze kozijnen afronden, dan tegels</div>
+    <div class="acts"><span>Bijwerken</span><span>Hervat</span></div>
+  </div>
+  <div class="sec">Actief · 3</div>
+  <div class="r"><span class="t">Offerte kozijnen vergelijken</span><span class="w">vr 9 okt</span></div>
+  <div class="r"><span class="t">Tegels kiezen</span><span class="w">2 d</span></div>
+  <div class="r"><span class="t">Schilder bellen</span><span class="w">5 d</span></div>
+  <div class="sec">Wacht op · 1</div>
+  <div class="r"><span class="t">Getekende opdracht</span><span class="w">Jan</span></div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span class="on">Projecten</span><span>Personen</span><span>Inzicht</span></div>
+</div>
+</div>
+</div>
+
+<h2>Windows</h2>
+<p class="note">The same card at the top of the detail pane; the form as a dialog. Enter saves, Shift+Enter is a new
+line, Esc closes (and keeps what was typed). <b>Decided (a):</b> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
+("pauze") in an item or project.</p>
+<div class="desk">
+  <div class="rail"><div class="fabr">＋</div><span class="on">Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span>Inzicht</span></div>
+  <div class="pane">
+    <div class="search">Zoek in items en personen</div>
+    <div class="sec">Vandaag · 2</div>
+    <div class="r" style="background:var(--blue-chip)"><span class="t">Offerte kozijnen vergelijken</span><span class="w">vr 9 okt</span></div>
+    <div class="r"><span class="t">Ledenlijst bijwerken</span><span class="w">vandaag</span></div>
+  </div>
+  <div class="detail">
+    <div class="appbar" style="justify-content:flex-end"><span class="icon">⤴</span><span class="icon">⋮</span></div>
+    <div class="resume" style="margin:4px 18px">
+      <div class="h">⏸ Waar was ik <span class="ago">3 dagen geleden</span></div>
+      <div class="k">Volgende stap</div><div class="v">Prijzen van leverancier B in tabel zetten</div>
+      <div class="acts"><span>Bijwerken</span><span>Hervat</span></div>
+    </div>
+    <div class="field" style="margin:8px 18px">Offerte kozijnen vergelijken @Jan</div>
+    <div class="scrim"></div>
+    <div class="dialog new">
+      <div class="st">Waar was ik?</div>
+      <div class="sub">Offerte kozijnen vergelijken</div>
+      <div class="field focus" style="min-height:44px"><label>Volgende stap</label>Prijzen van leverancier B in tabel zetten|</div>
+      <div class="field" style="min-height:60px; margin-top:16px"><label style="color:var(--muted)">Wat ik in mijn hoofd had</label><span style="color:var(--muted)">Bijv. waarom, wat je wilde checken…</span></div>
+      <div class="bar"><span class="btn" style="border:none">Sluiten</span><span class="btn filled">Opslaan</span></div>
+    </div>
+  </div>
+  <div class="callout" style="left:560px; top:470px">Enter saves · Shift+Enter new line · Esc closes and keeps the text</div>
+</div>
+
+<ol class="legend" type="a">
+  <li><b>Where it starts (decided):</b> B, a button by <i>Afronden</i> (C the alternative); the same for a project. On Windows also <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>.</li>
+  <li><b>The form (decided):</b> two fields, focus in the first, Enter saves, Shift+Enter new line, Esc or Sluiten closes and keeps the text; the item's title above. <b>(b′) decided:</b> closing with text saves it anyway; the button reads <i>Sluiten</i>.</li>
+  <li><b>One current note (decided):</b> updated while open; resumed ones kept in the background.</li>
+  <li><b>The resume card (decided):</b> at the top of item and project, both fields and how long ago; Hervat, Bijwerken.</li>
+</ol>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from lib/l10n/app_en.arb by tool/gen_android_strings.dart. Do not edit. -->
+<resources>
+    <string name="capture_hint">What\'s on your mind?</string>
+    <string name="capture_save">Save</string>
+    <string name="capture_failed">Saving failed. Your text is still here; please try again.</string>
+    <string name="widget_button">Capture</string>
+    <string name="widget_description">Capture a thought with one tap</string>
+    <string name="widget_hint">Capture something…</string>
+    <string name="bar_name">Offload bar</string>
+    <string name="bar_description">Capture, Today and Insights in one tap</string>
+    <string name="bar_today">Today</string>
+    <string name="bar_insights">Insights</string>
+    <string name="open_today">Open Today</string>
+    <string name="open_insights">Open Insights</string>
+</resources>

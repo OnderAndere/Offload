@@ -1,0 +1,73 @@
+# Dart packages that may end up in the app (direct and transitive, dev
+# dependencies excluded), checked by tool/check_dependencies.sh (DD-008).
+# Adding a package needs product-owner approval after checking its
+# permissions, network use and native code.
+
+# Flutter SDK and its own dependencies.
+flutter
+sky_engine
+characters
+collection
+material_color_utilities
+meta
+vector_math
+
+# Localisation (DD-009): gen-l10n runtime and date/number formatting;
+# approved 2026-09-25 (T1.5).
+flutter_localizations
+intl
+clock
+
+# Riverpod 2.x for state (CLAUDE.md architecture); approved 2026-09-25 (T1.5).
+# Not 3.x: that pulls flutter_test (with leak_tracker and its VM-service
+# WebSocket client) into the shipped dependencies.
+flutter_riverpod
+riverpod
+state_notifier
+
+# drift (database, DD-001) and its runtime dependencies; approved 2026-09-25 (T1.3).
+drift
+async
+convert
+path
+stack_trace
+stream_channel
+web
+
+# sqlite3 with SQLite3MultipleCiphers (DD-007); approved 2026-09-25 (T1.3).
+sqlite3
+ffi
+typed_data
+crypto
+
+# Build-hook machinery pulled in by sqlite3. Runs at build time to fetch and
+# verify the native library; no Dart code of these ships in the app logic.
+code_assets
+hooks
+native_toolchain_c
+record_use
+file
+glob
+logging
+pub_semver
+source_span
+string_scanner
+term_glyph
+yaml
+
+# Markdown rendering of the user manual in the app and later of notes (DD-020,
+# REQ-065, T10.10): pure Dart, Dart team (tools.dart.dev), BSD-3-Clause, no
+# network or native code; args comes with it. Approved by the PO 2026-10-09 (T8.13).
+markdown
+args
+
+# Photo pipeline (DD-006/D5, REQ-027, T5.2): image encodes the downscaled
+# pixels as JPEG; pure Dart, MIT, no network or native code. Approved by the PO
+# 2026-09-24 (spike S2). It brings archive (zip/gzip, pure Dart, MIT) and
+# through that posix (dart:ffi bindings to the system C library for file
+# modes when unpacking; ships no native library, no network; never reached
+# by the JPEG path). Approved by the PO 2026-10-10 ("offline and privacy
+# first"), after checking both for network code.
+image
+archive
+posix

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Connections – sketch, screen 15</title>
+<style>
+  :root {
+    --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --orange-text: #8F430E; --blue: #245A8C;
+    --blue-chip: #E3ECF5; --purple: #6750A4; --seg: #E6E1D8;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1320px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; max-width: 1320px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col p.note { width: 390px; min-height: 132px; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 8px; }
+  kbd { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 12px; }
+  .mono { font-family: "IBM Plex Mono", Consolas, monospace; }
+
+  .phone { width: 390px; height: 760px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 8px 0 16px; gap: 2px; }
+  .appbar .ttl { font-size: 22px; flex: 1; }
+  .appbar .date { font-size: 12px; color: var(--muted); margin-right: 6px; }
+  .appbar .back { font-size: 22px; flex: 1; }
+  .icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 18px; color: var(--muted); border-radius: 20px; }
+  .segs { display: flex; margin: 4px 12px 8px; background: var(--seg); border-radius: 12px; padding: 3px; }
+  .segs span { flex: 1; text-align: center; padding: 7px 0; font-size: 13px; border-radius: 9px; }
+  .segs .on { background: #1B1D20; color: #fff; font-weight: 600; }
+  .card { margin: 0 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 10px 12px; position: relative; }
+  .focushead { display: flex; align-items: center; gap: 8px; }
+  .focushead .k { font-size: 12px; color: var(--muted); }
+  .focushead .v { font-weight: 600; font-size: 15px; }
+  .focushead .grow { flex: 1; }
+  .tbtn { border: 1px solid #79747E; border-radius: 18px; padding: 5px 14px; color: var(--purple); font-weight: 600; font-size: 13px; }
+  .depth { display: flex; background: var(--seg); border-radius: 10px; padding: 3px; margin: 8px 0 4px; }
+  .depth span { flex: 1; text-align: center; padding: 5px 0; font-size: 13px; border-radius: 8px; }
+  .depth .on { background: #fff; font-weight: 600; box-shadow: 0 1px 2px #0002; }
+  .graph { position: relative; }
+  .graph svg { position: absolute; inset: 0; }
+  .lbl { position: absolute; width: 96px; margin-left: -48px; text-align: center; line-height: 1.2; }
+  .lbl .c { font-size: 9.5px; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+  .lbl .t { font-size: 12px; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .lbl.far { width: 84px; margin-left: -42px; }
+  .lbl.far .t { font-weight: 400; color: var(--muted); -webkit-line-clamp: 1; }
+  .lbl.o .c { color: var(--orange-text); font-weight: 600; }
+  .fpill { position: absolute; transform: translate(-50%, -50%); background: #1B1D20; color: #fff; border-radius: 12px;
+           padding: 8px 14px; font-weight: 600; font-size: 13px; max-width: 130px; text-align: center; line-height: 1.2; }
+  .legend-g { display: flex; gap: 16px; font-size: 11.5px; color: var(--muted); padding: 4px 2px 0; }
+  .hintline { font-size: 12px; color: var(--muted); margin: 8px 16px; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .nav .on { color: var(--text); font-weight: 600; }
+  .scrim { position: absolute; inset: 0; background: #0005; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: 20px 20px 0 0;
+           padding: 8px 0 12px; box-shadow: 0 -2px 10px #0003; }
+  .grab { width: 36px; height: 4px; background: var(--line); border-radius: 2px; margin: 4px auto 10px; }
+  .st { font-size: 17px; font-weight: 600; padding: 0 20px 2px; }
+  .sub { font-size: 12px; color: var(--muted); padding: 0 20px 10px; }
+  .kv { padding: 3px 20px; font-size: 13px; } .kv b { font-weight: 600; color: var(--muted); font-weight: 400; display: inline-block; width: 84px; }
+  .body { padding: 8px 20px; color: var(--muted); font-size: 13px; }
+  .bar { display: flex; justify-content: flex-end; gap: 8px; padding: 6px 16px 0; }
+  .btn { border-radius: 20px; padding: 8px 16px; font-weight: 600; font-size: 14px; border: 1px solid #79747E; color: var(--purple); }
+  .btn.filled { background: var(--purple); color: #fff; border-color: var(--purple); }
+  .sec { margin: 10px 20px 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .li { display: flex; align-items: center; gap: 10px; padding: 8px 20px; }
+  .li .g { width: 26px; text-align: center; font-size: 16px; }
+  .li .t { flex: 1; } .li .w { font-size: 12px; color: var(--muted); }
+  .li.hl { background: #EADDFF66; }
+  .sfield { margin: 4px 16px 6px; border: 2px solid var(--purple); border-radius: 22px; padding: 8px 14px; }
+  .menu { position: absolute; background: var(--surface); border-radius: 8px; box-shadow: 0 3px 12px #0003;
+          padding: 6px 0; width: 220px; z-index: 3; }
+  .menu div { padding: 11px 16px; }
+  .chips { display: flex; gap: 8px; padding: 6px 16px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; font-size: 13px; background: var(--surface); }
+  .field { margin: 8px 16px; border: 1px solid #8E8A84; border-radius: 6px; padding: 12px 14px; min-height: 64px; background: var(--surface); }
+  .empty { text-align: center; color: var(--muted); padding: 40px 24px; }
+  .empty .big { font-size: 40px; }
+  .empty .h { color: var(--text); font-weight: 600; font-size: 16px; margin: 8px 0 4px; }
+  .sr { width: 390px; background: var(--surface); border: 1px dashed #8E8A84; border-radius: 12px; padding: 12px 16px; font-size: 13px; }
+  .sr ol { margin: 6px 0 0; padding-left: 20px; } .sr li { margin: 3px 0; }
+
+  .desk { width: 1280px; height: 700px; background: var(--bg); border: 8px solid #1B1D20;
+          border-radius: 10px; display: flex; overflow: hidden; position: relative; }
+  .rail { width: 88px; background: #ECE8E0; padding-top: 12px; display: flex; flex-direction: column;
+          align-items: center; gap: 14px; font-size: 11px; color: var(--muted); flex: none; }
+  .rail .fabr { background: #E6E0F3; border-radius: 14px; width: 56px; height: 56px; display: grid; place-items: center; font-size: 22px; }
+  .rail .on { color: var(--text); font-weight: 600; }
+  .pane { width: 460px; border-right: 1px solid var(--line); padding-top: 6px; flex: none; position: relative; }
+  .search { margin: 8px 12px 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+            padding: 8px 14px; color: var(--muted); }
+  .detail { flex: 1; position: relative; }
+  .hover { position: absolute; width: 250px; background: var(--surface); border-radius: 10px; box-shadow: 0 4px 16px #0004;
+           padding: 10px 12px; font-size: 12.5px; z-index: 4; }
+  .hover .t { font-weight: 600; font-size: 14px; }
+  .hover .m { color: var(--muted); }
+  .callout { position: absolute; background: #FFF6D8; border: 1px solid #E2C766; border-radius: 6px;
+             padding: 4px 7px; font-size: 11px; color: #5A4A10; max-width: 260px; z-index: 5; }
+  .legend { margin-top: 28px; max-width: 1320px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>Connections (T10.14) – sketch, screen 15</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb); typeface IBM Plex Sans.
+Sample data is fictional; today is Sunday 4 October 2026 (week 40). Orange outline = new. The reference sketch
+<code>overview/04-connections.png</code> (design v1) is the starting point; <b>after this sketch</b> (PO 04-10-2026): 2 steps at most 8 direct and 8 second-step nodes, and the graph can be zoomed (DD-018 point 15); where they differ, this sketch and DD-018 point 15 win.
+<b>Already decided</b> (PO, 04-10-2026; AC REQ-059, DD-017): the fourth segment of Inzicht, NL <b>Verbanden</b>, EN
+<b>Connections</b>; a local graph around one focus, <i>1 stap</i> or <i>2 stappen</i>, never a global graph. Nodes are items,
+projects and people (no tags in v1); lines are <code>[[…]]</code> links in both directions (items in the trash left out, done
+items shown with a tick), an item and its project, a sub-project and its parent, an item and its people (<code>@person</code>,
+asked by, waiting for). <i>Beslissing</i> and <i>vraag</i> come with T10.11/T10.12 (after v1). A fixed radial layout, drawn by
+the app itself (no package): at most 12 direct nodes, on the second step at most 2 per direct node and 16 in all; the rest is
+"+n meer". The start focus is the item last opened (while the app runs), otherwise an empty state; entries: Inzicht, and
+<i>Verbanden tonen</i> in an item, a person and a project; not in the weekly review; the list form only for screen readers and
+behind "+n meer". <b>Decided (PO, 04-10-2026):</b> (a)–(e) all as proposed; see DESIGN.md, DD-018 point 15.</p>
+
+<h2>Phone</h2>
+<div class="row">
+<div class="col">
+<h3>1 · Verbanden, 1 stap</h3>
+<p class="note">The focus in the middle, its direct connections around it, each with a shape, a type word and the title (two
+lines at most). Shapes follow the type icons of the app: an item a square with its type icon (a task done: ticked), a person a
+circle with initials, a project a filled block. (a) An item due today or overdue gets the orange outline and "vandaag" /
+"verlopen" in its type line, as on the cards. Tap = new focus; long press = preview.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span><span class="date mono">zo 4 okt · wk 40</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="segs new"><span>Horizon</span><span>Stilstand</span><span>Personen</span><span class="on">Verbanden</span></div>
+  <div class="card">
+    <div class="focushead"><div class="grow"><div class="k">Focus</div><div class="v">Kippenhok bouwen</div></div><span class="tbtn">Wijzig</span></div>
+    <div class="depth"><span class="on">1 stap</span><span>2 stappen</span></div>
+    <div class="graph" id="g1" style="height:440px"></div>
+    <div class="legend-g"><span>━ direct gekoppeld</span><span>┅ via tussenstap</span></div>
+  </div>
+  <div class="hintline">Tik om te focussen · lang indrukken voor een voorbeeld</div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on">Inzicht</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>2 · 2 stappen</h3>
+<p class="note">The direct nodes move inwards; the second step sits outside them, in the same direction as the node it goes
+through, with dotted lines and plain (not bold) titles. Dimmed means a lighter line and a regular weight, not a pale text:
+titles keep 4.5:1, on one line. (b) A direct node with more behind it than fits gets a small count ("+7"); tapping it makes it the focus.
+A node reached through two direct nodes is drawn once.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span><span class="date mono">zo 4 okt · wk 40</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="segs"><span>Horizon</span><span>Stilstand</span><span>Personen</span><span class="on">Verbanden</span></div>
+  <div class="card">
+    <div class="focushead"><div class="grow"><div class="k">Focus</div><div class="v">Kippenhok bouwen</div></div><span class="tbtn">Wijzig</span></div>
+    <div class="depth"><span>1 stap</span><span class="on">2 stappen</span></div>
+    <div class="graph new" id="g2" style="height:440px"></div>
+    <div class="legend-g"><span>━ direct gekoppeld</span><span>┅ via tussenstap</span></div>
+  </div>
+  <div class="hintline">Tik om te focussen · lang indrukken voor een voorbeeld</div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on">Inzicht</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>3 · Long press: preview</h3>
+<p class="note">A sheet with what the node is, without leaving the graph: title, type and status, project, date and people,
+the first lines of the note. <i>Openen</i> opens the item (a person or project opens its own screen); <i>Focussen</i> does
+what a tap does. Back closes the sheet.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span><span class="date mono">zo 4 okt · wk 40</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="segs"><span>Horizon</span><span>Stilstand</span><span>Personen</span><span class="on">Verbanden</span></div>
+  <div class="card">
+    <div class="focushead"><div class="grow"><div class="k">Focus</div><div class="v">Kippenhok bouwen</div></div><span class="tbtn">Wijzig</span></div>
+    <div class="depth"><span class="on">1 stap</span><span>2 stappen</span></div>
+    <div class="graph" id="g3" style="height:440px"></div>
+  </div>
+  <div class="scrim"></div>
+  <div class="sheet new">
+    <div class="grab"></div>
+    <div class="st">Gaas en palen kopen</div>
+    <div class="sub">Taak · Actief</div>
+    <div class="kv"><b>Project</b>📁 Tuin</div>
+    <div class="kv"><b>Deadline</b><span style="color:var(--orange-text);font-weight:600">⚠ vandaag</span></div>
+    <div class="kv"><b>Personen</b>@Joris</div>
+    <div class="body">Bij de bouwmarkt: 10 m gaas, 6 palen van 1,8 m. Vragen of ze bezorgen…</div>
+    <div class="bar"><span class="btn">Focussen</span><span class="btn filled">Openen</span></div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="row" style="margin-top:28px">
+<div class="col">
+<h3>4 · Wijzig: choosing another focus</h3>
+<p class="note">(c) A sheet with a search field over items, people and projects (the search index, as for <code>[[</code>,
+items in the trash left out). Before typing it shows what was opened last ("Recent geopend": items, people and projects). Choosing makes it the focus; the previous focus
+stays reachable with Back.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span><span class="date mono">zo 4 okt · wk 40</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="segs"><span>Horizon</span><span>Stilstand</span><span>Personen</span><span class="on">Verbanden</span></div>
+  <div class="scrim"></div>
+  <div class="sheet new" style="top:150px">
+    <div class="grab"></div>
+    <div class="st">Focus kiezen</div>
+    <div class="sfield">kipp|</div>
+    <div class="sec">Items</div>
+    <div class="li hl"><span class="g">💡</span><span class="t">Kippenhok bouwen</span><span class="w">Idee · 📁 Tuin</span></div>
+    <div class="li"><span class="g">☐</span><span class="t">Kippenvoer bestellen</span><span class="w">Actief</span></div>
+    <div class="li"><span class="g">✋</span><span class="t">Kippen oppassen voor Ilse</span><span class="w">Afgerond</span></div>
+    <div class="sec">Recent geopend</div>
+    <div class="li"><span class="g">📄</span><span class="t">Maten kippenhok</span><span class="w">Notitie</span></div>
+    <div class="li"><span class="g">●</span><span class="t">Sanne</span><span class="w">Persoon</span></div>
+    <div class="li"><span class="g">■</span><span class="t">Clubhuis</span><span class="w">Project</span></div>
+  </div>
+</div>
+</div>
+
+<div class="col">
+<h3>5 · Many connections: "+n meer"</h3>
+<p class="note">A person (or project) as focus can have many items. The graph shows 11 and a twelfth node "+6 meer": first
+<code>[[…]]</code> links, then people and project, then the items touched last (open before done). A tap on "+6 meer"
+opens the full list (6).</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span><span class="date mono">zo 4 okt · wk 40</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="segs"><span>Horizon</span><span>Stilstand</span><span>Personen</span><span class="on">Verbanden</span></div>
+  <div class="card">
+    <div class="focushead"><div class="grow"><div class="k">Focus · persoon</div><div class="v">Sanne</div></div><span class="tbtn">Wijzig</span></div>
+    <div class="depth"><span class="on">1 stap</span><span>2 stappen</span></div>
+    <div class="graph new" id="g5" style="height:440px"></div>
+    <div class="legend-g"><span>━ direct gekoppeld</span><span>┅ via tussenstap</span></div>
+  </div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on">Inzicht</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>6 · All connections (the list)</h3>
+<p class="note">The list behind "+n meer": every connection, grouped as a screen reader hears it, with why it is linked
+(link, asked by, waiting for, mentioned, project). A tap on a row makes it the focus; long press = preview.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span></div>
+  <div class="scrim"></div>
+  <div class="sheet new" style="top:110px">
+    <div class="grab"></div>
+    <div class="st">Verbanden van Sanne · 17</div>
+    <div class="sec">Direct gekoppeld · 17</div>
+    <div class="li"><span class="g">✋</span><span class="t">Fietsenrek clubhuis</span><span class="w">vroeg Sanne</span></div>
+    <div class="li"><span class="g">☐</span><span class="t">Ledenlijst bijwerken</span><span class="w">wacht op Sanne</span></div>
+    <div class="li"><span class="g">💡</span><span class="t">Kippenhok bouwen</span><span class="w">noemt Sanne</span></div>
+    <div class="li"><span class="g">☐</span><span class="t">Zaal reserveren voor feest</span><span class="w">noemt Sanne</span></div>
+    <div class="li"><span class="g">📄</span><span class="t">Notulen bestuur september</span><span class="w">noemt Sanne</span></div>
+    <div class="li"><span class="g">☑</span><span class="t">Sleutel clubhuis teruggeven</span><span class="w">afgerond</span></div>
+    <div class="li" style="color:var(--muted)">… 11 meer</div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="row" style="margin-top:28px">
+<div class="col">
+<h3>7 · Entry: Verbanden tonen</h3>
+<p class="note">In the item detail the ⋮ menu gets <i>Verbanden tonen</i>; it opens Inzicht → Verbanden with this item as
+the focus. The person and project screens get the same line in their ⋮ menu.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="icon">⤴</span><span class="icon">⋮</span></div>
+  <div class="chips"><span class="chip">Actief ▾</span><span class="chip">Idee ▾</span><span class="chip">📁 Tuin ▾</span></div>
+  <div class="field">Kippenhok bouwen met @Sanne, eerst [[Gaas en palen kopen]] en [[Maten kippenhok]]</div>
+  <div class="menu" style="right:10px; top:80px">
+    <div class="new">🔗 Verbanden tonen</div><div>🗑 Naar prullenbak</div>
+  </div>
+</div>
+</div>
+
+<div class="col">
+<h3>8 · No focus yet</h3>
+<p class="note">Before any item was opened since the app started, the segment asks for a focus. <i>Kies een item</i> opens
+the sheet of 4.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span><span class="date mono">zo 4 okt · wk 40</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="segs"><span>Horizon</span><span>Stilstand</span><span>Personen</span><span class="on">Verbanden</span></div>
+  <div class="card new">
+    <div class="empty"><div class="big">⟡</div><div class="h">Hoe hangt het samen?</div>
+    <div>Kies een item, persoon of project; je ziet wat ermee verbonden is.</div>
+    <div style="margin-top:16px"><span class="btn filled">Kies een item</span></div></div>
+  </div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on">Inzicht</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>For TalkBack and Narrator</h3>
+<p class="note">The graph is one element whose children are read as a list (AC REQ-059); every node says its type, title,
+why it is linked and, on the second step, through what. Actions: activate = focus, a custom action <i>Voorbeeld</i>.</p>
+<div class="sr">
+  <b>Read as (1 · 2 stappen):</b>
+  <ol>
+    <li>Focus: idee, Kippenhok bouwen. 6 direct gekoppeld, 5 via een tussenstap.</li>
+    <li>Direct gekoppeld: project Tuin. Nog 7 via Tuin.</li>
+    <li>Direct gekoppeld: taak Gaas en palen kopen, deadline vandaag, koppeling.</li>
+    <li>Direct gekoppeld: verzoek Buren vragen over geluid, verwijst hiernaar.</li>
+    <li>…</li>
+    <li>Via tussenstap Tuin: taak Moestuinbakken vullen.</li>
+    <li>Via tussenstap Gaas en palen kopen: persoon Joris.</li>
+  </ol>
+</div>
+</div>
+</div>
+
+<h2>Windows</h2>
+<p class="note">(e) With two panes the graph sits in the list pane and the right pane shows the focus (item detail, person
+or project), as with Personen. The mouse pointer on a node shows the preview as a card; a click focuses. Keys: <kbd>Tab</kbd>
+reaches the focus line, the depth switch and the graph; in the graph <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd> select
+the nearest node in that direction, <kbd>Enter</kbd> focuses, <kbd>Space</kbd> shows the preview, <kbd>Esc</kbd> or
+<kbd>Alt</kbd>+<kbd>←</kbd> goes back to the previous focus.</p>
+<div class="desk">
+  <div class="rail"><div class="fabr">＋</div><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on">Inzicht</span></div>
+  <div class="pane">
+    <div class="search">Zoek in items en personen</div>
+    <div class="segs"><span>Horizon en stilstand</span><span>Personen</span><span class="on">Verbanden</span></div>
+    <div class="card">
+      <div class="focushead"><div class="grow"><div class="k">Focus</div><div class="v">Kippenhok bouwen</div></div><span class="tbtn">Wijzig</span></div>
+      <div class="depth"><span>1 stap</span><span class="on">2 stappen</span></div>
+      <div class="graph" id="gw" style="height:470px"></div>
+    </div>
+    <div class="hover new" style="left:200px; top:520px">
+      <div class="t">Gaas en palen kopen</div>
+      <div class="m">Taak · Actief · 📁 Tuin</div>
+      <div style="color:var(--orange-text);font-weight:600">⚠ deadline vandaag</div>
+      <div class="m">Bij de bouwmarkt: 10 m gaas, 6 palen…</div>
+    </div>
+  </div>
+  <div class="detail">
+    <div class="appbar" style="justify-content:flex-end"><span class="icon">⤴</span><span class="icon">⋮</span></div>
+    <div class="chips" style="padding:6px 18px"><span class="chip">Actief ▾</span><span class="chip">Idee ▾</span><span class="chip">📁 Tuin ▾</span></div>
+    <div class="field" style="margin:8px 18px">Kippenhok bouwen met @Sanne, eerst [[Gaas en palen kopen]] en [[Maten kippenhok]], daarna [[Oud hout ophalen]]</div>
+    <div class="chips" style="padding:6px 18px"><span class="chip">@ Sanne</span><span class="chip" style="border-color:var(--purple);color:var(--purple)">🔗 Gaas en palen kopen</span><span class="chip" style="border-color:var(--purple);color:var(--purple)">🔗 Maten kippenhok</span><span class="chip" style="border-color:var(--purple);color:var(--purple)">🔗 Oud hout ophalen</span></div>
+    <div class="sec" style="margin-left:22px">Verwijst hiernaar · 1</div>
+    <div class="li" style="margin:0 6px"><span class="t">Buren vragen over geluid</span><span class="w">Verzoek</span></div>
+  </div>
+  <div class="callout" style="left:150px; top:640px">←/→/↑/↓ nearest node · Enter focus · Space preview · Esc back</div>
+</div>
+
+<ol class="legend" type="a">
+  <li><b>Today and overdue (decided):</b> an item due today or overdue gets the orange outline and "vandaag" / "verlopen" in its type line, the same rule as the date chip (DD-017: orange = needs my attention now). Without it the graph has no orange at all.</li>
+  <li><b>More behind a node (decided):</b> on 2 stappen a direct node with more second-step nodes than fit (2) shows "+n"; in the list for screen readers "nog n via …". Whether 2 per node becomes a setting is judged after use.</li>
+  <li><b>Choosing a focus (decided):</b> a sheet with a search field over items, people and projects; before typing what was opened last: items, people and projects (at most five, while the app runs). Alternative: only items, people and projects are reached through their own screens (<i>Verbanden tonen</i>).</li>
+  <li><b>Depth at start (decided):</b> <i>1 stap</i>, the choice kept while the app runs (not stored). 1 stap is the calmer view; 2 stappen one tap away.</li>
+  <li><b>Windows (decided):</b> the graph in the list pane, the focus in the right pane, so the detail follows the focus. Alternative: the graph over both panes (more room, like Horizon en stilstand) and the detail only through <i>Openen</i>.</li>
+</ol>
+
+<script>
+// Fixed radial layout, as proposed for the app: direct nodes evenly on an
+// ellipse starting at the top; second-step nodes on an outer ellipse in the
+// direction of the node they go through.
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
+const ICON = { task: '', taskDone: '✓', idea: '💡', request: '✋', note: '≡', inbox: '' };
+function drawNode(svg, n, x, y, far) {
+  const stroke = n.o ? '#B35712' : (far ? '#9AA9BA' : '#245A8C');
+  const sw = n.o ? 2.5 : 2;
+  if (n.k === 'project') {
+    el('rect', { x: x - 17, y: y - 12, width: 34, height: 24, rx: 5, fill: far ? '#7E9BB9' : '#245A8C' }, svg);
+  } else if (n.k === 'person') {
+    el('circle', { cx: x, cy: y, r: 13, fill: '#fff', stroke, 'stroke-width': sw }, svg);
+    const t = el('text', { x, y: y + 4, 'text-anchor': 'middle', 'font-size': 10, 'font-weight': 600, fill: '#1B1D20' }, svg); t.textContent = n.l.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  } else if (n.k === 'more') {
+    el('rect', { x: x - 22, y: y - 12, width: 44, height: 24, rx: 12, fill: '#E6E1D8' }, svg);
+    const t = el('text', { x, y: y + 4, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 600, fill: '#1B1D20' }, svg); t.textContent = n.l;
+  } else {
+    el('rect', { x: x - 12, y: y - 12, width: 24, height: 24, rx: 5, fill: '#fff', stroke, 'stroke-width': sw, 'stroke-dasharray': n.k === 'inbox' ? '3 2' : '' }, svg);
+    const g = n.k === 'task' && n.done ? '✓' : ICON[n.k];
+    if (g) { const t = el('text', { x, y: y + 4.5, 'text-anchor': 'middle', 'font-size': n.k === 'task' ? 14 : 11, 'font-weight': 700, fill: '#245A8C' }, svg); t.textContent = g; }
+  }
+  if (n.more) {
+    el('circle', { cx: x + 16, cy: y - 12, r: 9, fill: '#1B1D20' }, svg);
+    const t = el('text', { x: x + 16, y: y - 8.5, 'text-anchor': 'middle', 'font-size': 9, 'font-weight': 600, fill: '#fff' }, svg); t.textContent = '+' + n.more;
+  }
+}
+const CAP = { project: 'Project', person: 'Persoon', task: 'Taak', idea: 'Idee', request: 'Verzoek', note: 'Notitie', inbox: 'Inbox', more: '' };
+function graph(id, focus, nodes, two) {
+  if (!two) nodes = nodes.map(d => Object.assign({}, d, { more: 0 }));
+  const box = document.getElementById(id);
+  const W = box.clientWidth, H = box.clientHeight, cx = W / 2, cy = H / 2 - 6;
+  const svg = el('svg', { width: W, height: H, viewBox: `0 0 ${W} ${H}` }, box);
+  const n = nodes.length;
+  // Each direct node gets a sector in proportion to what hangs behind it
+  // (two steps), so its second-step nodes stay in its own direction. With
+  // more than eight direct nodes they alternate between two radii.
+  const w = nodes.map(d => two ? Math.max(1, (d.kids || []).length) : 1);
+  const total = w.reduce((a, b) => a + b, 0);
+  const stagger = n > 8;
+  const r1 = two ? [W * 0.31, H * 0.23] : [W * 0.34, H * 0.36];
+  const r1b = [W * 0.41, H * 0.39];
+  const r2 = [W * 0.42, H * 0.41];
+  let acc = 0;
+  const pos = nodes.map((d, i) => {
+    const a0 = -Math.PI / 2 + acc / total * 2 * Math.PI, span = w[i] / total * 2 * Math.PI; acc += w[i];
+    const a = a0 + span / 2, r = stagger && i % 2 ? r1b : (stagger ? [W * 0.25, H * 0.22] : r1);
+    return { a, a0, span, x: cx + r[0] * Math.cos(a), y: cy + r[1] * Math.sin(a) };
+  });
+  const far = [];
+  if (two) nodes.forEach((d, i) => (d.kids || []).forEach((k, j, all) => {
+    const a = pos[i].a0 + (j + 0.5) * pos[i].span / all.length;
+    far.push({ n: k, x: cx + r2[0] * Math.cos(a), y: cy + r2[1] * Math.sin(a), px: pos[i].x, py: pos[i].y });
+  }));
+  far.forEach(f => el('line', { x1: f.px, y1: f.py, x2: f.x, y2: f.y, stroke: '#B9B4AA', 'stroke-width': 1.6, 'stroke-dasharray': '4 4' }, svg));
+  pos.forEach(p => el('line', { x1: cx, y1: cy, x2: p.x, y2: p.y, stroke: '#9DB3CB', 'stroke-width': 2 }, svg));
+  far.forEach(f => drawNode(svg, f.n, f.x, f.y, true));
+  nodes.forEach((d, i) => drawNode(svg, d, pos[i].x, pos[i].y, false));
+  const label = (d, x, y, isFar) => {
+    const L = document.createElement('div'); L.className = 'lbl' + (isFar ? ' far' : '') + (d.o ? ' o' : '');
+    L.style.left = x + 'px'; L.style.top = (y + 15) + 'px';
+    const cap = CAP[d.k] + (d.o ? ' · ' + d.o : '') + (d.done ? ' · af' : '');
+    L.innerHTML = (cap ? `<div class="c">${cap}</div>` : '') + (d.k === 'more' ? '' : `<div class="t">${d.l}</div>`);
+    box.appendChild(L);
+  };
+  far.forEach(f => label(f.n, f.x, f.y, true));
+  nodes.forEach((d, i) => label(d, pos[i].x, pos[i].y, false));
+  const F = document.createElement('div'); F.className = 'fpill'; F.style.left = cx + 'px'; F.style.top = cy + 'px'; F.textContent = focus; box.appendChild(F);
+}
+const kip = [
+  { k: 'project', l: 'Tuin', more: 7, kids: [{ k: 'task', l: 'Moestuinbakken vullen' }, { k: 'idea', l: 'Vijver uitdiepen' }] },
+  { k: 'task', l: 'Gaas en palen kopen', o: 'vandaag', kids: [{ k: 'person', l: 'Joris' }] },
+  { k: 'note', l: 'Maten kippenhok' },
+  { k: 'task', l: 'Oud hout ophalen', done: true },
+  { k: 'request', l: 'Buren vragen over geluid', kids: [{ k: 'person', l: 'Ilse' }] },
+  { k: 'person', l: 'Sanne', more: 15, kids: [{ k: 'request', l: 'Fietsenrek clubhuis' }] },
+];
+graph('g1', 'Kippenhok bouwen', kip, false);
+graph('g2', 'Kippenhok bouwen', kip, true);
+graph('g3', 'Kippenhok bouwen', kip, false);
+graph('gw', 'Kippenhok bouwen', kip, true);
+graph('g5', 'Sanne', [
+  { k: 'request', l: 'Fietsenrek clubhuis' }, { k: 'task', l: 'Ledenlijst bijwerken', o: 'verlopen' },
+  { k: 'idea', l: 'Kippenhok bouwen' }, { k: 'task', l: 'Zaal reserveren voor feest' },
+  { k: 'note', l: 'Notulen bestuur september' }, { k: 'task', l: 'Kascontrole regelen' },
+  { k: 'inbox', l: 'Sanne bellen over rooster' }, { k: 'request', l: 'Foto’s van de open dag' },
+  { k: 'task', l: 'Bardienst ruilen' }, { k: 'note', l: 'Ideeën jubileum' },
+  { k: 'task', l: 'Sleutel clubhuis teruggeven', done: true }, { k: 'more', l: '+6 meer' },
+], false);
+</script>
+</body>
+</html>

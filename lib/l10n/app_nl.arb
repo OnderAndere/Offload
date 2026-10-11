@@ -1,0 +1,4679 @@
+{
+  "@@locale": "nl",
+  "appTitle": "Offload",
+  "@appTitle": {
+    "description": "Name of the app, shown in the title bar and the task switcher."
+  },
+  "languageName": "Nederlands",
+  "@languageName": {
+    "description": "Name of this language in the language itself (endonym), shown as an option in the language picker. Never translate it into another language."
+  },
+  "openSettingsTooltip": "Instellingen openen",
+  "@openSettingsTooltip": {
+    "description": "Tooltip and screen-reader label of the gear button that opens Settings."
+  },
+  "settingsTitle": "Instellingen",
+  "@settingsTitle": {
+    "description": "Title of the Settings screen."
+  },
+  "settingsLanguageHeader": "Taal",
+  "@settingsLanguageHeader": {
+    "description": "Section header above the language choice in Settings."
+  },
+  "settingsLanguageSystem": "Systeemtaal",
+  "@settingsLanguageSystem": {
+    "description": "Language option that follows the language of the device."
+  },
+  "settingsLanguageSystemHint": "Volgt de taal van het toestel; is die niet beschikbaar, dan Engels",
+  "@settingsLanguageSystemHint": {
+    "description": "Explanation under the system-language option: the app falls back to English when the device language is not offered."
+  },
+  "startupLoading": "Offload wordt gestart",
+  "@startupLoading": {
+    "description": "Screen-reader label of the progress indicator while the encrypted storage opens."
+  },
+  "startupMissingKeyTitle": "Sleutel ontbreekt",
+  "@startupMissingKeyTitle": {
+    "description": "Title of the start-up error when data exists but its encryption key is missing."
+  },
+  "startupMissingKeyBody": "Er staan gegevens van Offload op dit apparaat, maar de sleutel om ze te openen ontbreekt. Offload maakt geen nieuwe sleutel aan, want dan worden je gegevens voorgoed onleesbaar. Er is niets gewijzigd.",
+  "@startupMissingKeyBody": {
+    "description": "Explanation of the missing-key start-up error. Must say that nothing was changed."
+  },
+  "startupKeyUnavailableTitle": "Sleutel niet leesbaar",
+  "@startupKeyUnavailableTitle": {
+    "description": "Title of the start-up error when the stored key cannot be read."
+  },
+  "startupKeyUnavailableBody": "De sleutel van Offload is aanwezig, maar kan nu niet worden gelezen. Er is niets gewijzigd. Probeer het opnieuw of start het apparaat opnieuw op.",
+  "@startupKeyUnavailableBody": {
+    "description": "Explanation of the unreadable-key start-up error."
+  },
+  "startupDatabaseTitle": "Gegevens niet te openen",
+  "@startupDatabaseTitle": {
+    "description": "Title of the start-up error when the encrypted database cannot be opened."
+  },
+  "startupDatabaseBody": "De gegevens van Offload kunnen niet worden geopend. Er is niets verwijderd.",
+  "@startupDatabaseBody": {
+    "description": "Explanation of the database start-up error."
+  },
+  "startupUnexpectedTitle": "Offload kan niet starten",
+  "@startupUnexpectedTitle": {
+    "description": "Title of an unexpected start-up error."
+  },
+  "startupUnexpectedBody": "Er ging iets mis bij het starten. Er is niets verwijderd.",
+  "@startupUnexpectedBody": {
+    "description": "Explanation of an unexpected start-up error."
+  },
+  "startupErrorDetails": "Technische details: {details}",
+  "@startupErrorDetails": {
+    "description": "Technical error text under a start-up error, for support.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "startupRetry": "Opnieuw proberen",
+  "@startupRetry": {
+    "description": "Button that retries opening the storage after a start-up error."
+  },
+  "settingsLanguageSaveFailed": "De taalkeuze kon niet worden bewaard",
+  "@settingsLanguageSaveFailed": {
+    "description": "Message when the chosen language could not be stored; the choice still applies until the app restarts."
+  },
+  "inboxTitle": "Inbox",
+  "@inboxTitle": {
+    "description": "Title of the inbox: captured items that are not processed yet."
+  },
+  "inboxItemCount": "{count, plural, =0{Nog geen items} =1{1 item} other{{count} items}}",
+  "@inboxItemCount": {
+    "description": "Number of items in the inbox; the zero form is also the text of the empty inbox.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inboxCapturedAt": "{date}, {time}",
+  "@inboxCapturedAt": {
+    "description": "When an inbox item was captured, in local time and the active language. Both placeholders get the same moment.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      },
+      "time": {
+        "type": "DateTime",
+        "format": "jm"
+      }
+    }
+  },
+  "inboxLoadFailed": "De inbox kan niet worden geladen. Er is niets verwijderd.",
+  "@inboxLoadFailed": {
+    "description": "Shown instead of the inbox when reading it fails."
+  },
+  "captureAction": "Vastleggen",
+  "@captureAction": {
+    "description": "Button on the inbox that opens quick capture."
+  },
+  "captureTitle": "Vastleggen",
+  "@captureTitle": {
+    "description": "Title of the quick-capture screen."
+  },
+  "captureHint": "Wat heb je in je hoofd?",
+  "@captureHint": {
+    "description": "Placeholder in the empty quick-capture field."
+  },
+  "captureSave": "Opslaan",
+  "@captureSave": {
+    "description": "Tooltip and screen-reader label of the button that saves the captured text."
+  },
+  "captureSaveFailed": "Opslaan is mislukt. Je tekst staat er nog; probeer het opnieuw.",
+  "@captureSaveFailed": {
+    "description": "Shown under the capture field when saving fails. Must say the text was kept."
+  },
+  "androidWidgetDescription": "Leg met één tik een gedachte vast",
+  "@androidWidgetDescription": {
+    "description": "Description of the capture widget in the Android widget picker. Android resource, generated by tool/gen_android_strings.dart; no placeholders."
+  },
+  "androidWidgetHint": "Leg iets vast…",
+  "@androidWidgetHint": {
+    "description": "Text next to the icon when the capture widget is made wide (DD-019). Android resource, generated by tool/gen_android_strings.dart; no placeholders."
+  },
+  "captureUnreadable": "{count, plural, =1{1 vastgelegd item kon niet worden gelezen. Het is apart bewaard, niet verwijderd.} other{{count} vastgelegde items konden niet worden gelezen. Ze zijn apart bewaard, niet verwijderd.}}",
+  "@captureUnreadable": {
+    "description": "Note in the inbox when captures from the widget could not be read. They are kept in quarantine, never deleted.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "captureFetchFailed": "Items uit de widget konden nog niet worden opgehaald. Ze blijven bewaard; Offload probeert het opnieuw.",
+  "@captureFetchFailed": {
+    "description": "Note in the inbox when captures waiting outside the app could not be fetched. Nothing is lost; the app tries again when it comes back."
+  },
+  "noticeDismiss": "Sluiten",
+  "@noticeDismiss": {
+    "description": "Tooltip and screen-reader label of the button that closes a note."
+  },
+  "trayNewItem": "Nieuw item",
+  "@trayNewItem": {
+    "description": "Windows system-tray menu item that opens quick capture."
+  },
+  "trayOpen": "Openen",
+  "@trayOpen": {
+    "description": "Windows system-tray menu item that shows the Offload window."
+  },
+  "trayQuit": "Afsluiten",
+  "@trayQuit": {
+    "description": "Windows system-tray menu item that really quits Offload (closing the window only hides it to the tray)."
+  },
+  "hotkeyUnavailable": "De sneltoets Win+Shift+B is al in gebruik door een ander programma. Vastleggen kan via het systeemvak of met de knop Vastleggen.",
+  "@hotkeyUnavailable": {
+    "description": "Note in the inbox (Windows) when the global capture shortcut could not be registered because another program uses it."
+  },
+  "settingsBackupHeader": "Back-up en export",
+  "@settingsBackupHeader": {
+    "description": "Section in Settings for making and restoring backups and for the export (T7.1, T7.2, T7.3)."
+  },
+  "backupPassphraseRow": "Wachtwoordzin",
+  "@backupPassphraseRow": {
+    "description": "Row in Settings → Back-up that sets or changes the backup passphrase."
+  },
+  "backupPassphraseSet": "Ingesteld",
+  "@backupPassphraseSet": {
+    "description": "Second line of the passphrase row when a passphrase is set."
+  },
+  "backupPassphraseNotSet": "Nog niet ingesteld: nodig voor een back-up",
+  "@backupPassphraseNotSet": {
+    "description": "Second line of the passphrase row when none is set yet."
+  },
+  "backupPassphraseTitle": "Wachtwoordzin voor back-ups",
+  "@backupPassphraseTitle": {
+    "description": "Title of the dialog that sets the backup passphrase."
+  },
+  "backupPassphraseField": "Wachtwoordzin",
+  "@backupPassphraseField": {
+    "description": "Label of the first passphrase field."
+  },
+  "backupPassphraseRepeat": "Nog een keer",
+  "@backupPassphraseRepeat": {
+    "description": "Label of the field that repeats the passphrase."
+  },
+  "backupPassphraseHint": "Minstens {min} tekens, bijvoorbeeld vier losse woorden. Je typt hem alleen als je een back-up op een ander toestel terugzet.",
+  "@backupPassphraseHint": {
+    "description": "Explanation under the passphrase fields (PO decision: at least 12 characters).",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "backupPassphraseMismatch": "De twee zijn niet gelijk",
+  "@backupPassphraseMismatch": {
+    "description": "Error when the repeated passphrase differs."
+  },
+  "backupPassphraseTooShort": "Minstens {min} tekens",
+  "@backupPassphraseTooShort": {
+    "description": "Error when the passphrase is too short.",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "backupPassphraseInvalid": "Zonder tab of nieuwe regel",
+  "@backupPassphraseInvalid": {
+    "description": "Error when the passphrase holds a control character."
+  },
+  "backupStrength": "Sterkte: {level}",
+  "@backupStrength": {
+    "description": "Strength indicator of the passphrase, a rough guide on length and variety.",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "backupStrengthTooShort": "te kort",
+  "@backupStrengthTooShort": {
+    "description": "Strength level: below the minimum."
+  },
+  "backupStrengthFair": "redelijk",
+  "@backupStrengthFair": {
+    "description": "Strength level."
+  },
+  "backupStrengthGood": "goed",
+  "@backupStrengthGood": {
+    "description": "Strength level."
+  },
+  "backupStrengthStrong": "sterk",
+  "@backupStrengthStrong": {
+    "description": "Strength level."
+  },
+  "backupPassphraseWarning": "Zonder deze wachtwoordzin kan een back-up niet worden teruggezet, ook niet door de app.",
+  "@backupPassphraseWarning": {
+    "description": "The explicit warning of AC REQ-026, to be confirmed."
+  },
+  "backupPassphraseWarningConfirm": "Ik begrijp het",
+  "@backupPassphraseWarningConfirm": {
+    "description": "Checkbox that confirms the warning; saving needs it."
+  },
+  "backupPassphraseChangeNote": "Oudere back-ups houden hun oude wachtwoordzin.",
+  "@backupPassphraseChangeNote": {
+    "description": "Note when changing an existing passphrase (AC REQ-026)."
+  },
+  "backupPassphraseShow": "Wachtwoordzin tonen",
+  "@backupPassphraseShow": {
+    "description": "Tooltip of the eye button that shows or hides the passphrase."
+  },
+  "backupSave": "Opslaan",
+  "@backupSave": {
+    "description": "Button that saves the passphrase."
+  },
+  "backupCancel": "Annuleren",
+  "@backupCancel": {
+    "description": "Button that closes a backup dialog without changes."
+  },
+  "backupPassphraseSaved": "Wachtwoordzin opgeslagen",
+  "@backupPassphraseSaved": {
+    "description": "Message after saving the passphrase."
+  },
+  "backupMake": "Back-up maken",
+  "@backupMake": {
+    "description": "Row in Settings → Back-up that makes a backup."
+  },
+  "backupMakeSubtitle": "Alles versleuteld in één bestand; je kiest zelf waar",
+  "@backupMakeSubtitle": {
+    "description": "Second line of the row Back-up maken."
+  },
+  "backupFileType": "Offload-back-up",
+  "@backupFileType": {
+    "description": "Name of the file type in the save and open windows."
+  },
+  "backupFileName": "Offload-back-up-{date}",
+  "@backupFileName": {
+    "description": "Proposed file name, without extension; the date as year-month-day.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "backupBusy": "Even geduld…",
+  "@backupBusy": {
+    "description": "Shown while a backup is made or read."
+  },
+  "backupMade": "Back-up gemaakt",
+  "@backupMade": {
+    "description": "Message after a backup was saved."
+  },
+  "backupFailed": "De back-up is niet gelukt",
+  "@backupFailed": {
+    "description": "Message when making a backup failed; nothing was saved."
+  },
+  "exportRow": "Exporteren",
+  "@exportRow": {
+    "description": "Settings → Backup and export: row that starts an export (T7.3)."
+  },
+  "exportRowSubtitle": "Leesbaar, niet versleuteld (Markdown of JSON)",
+  "@exportRowSubtitle": {
+    "description": "Second line of the row Exporteren."
+  },
+  "exportDialogTitle": "Exporteren",
+  "@exportDialogTitle": {
+    "description": "Title of the dialog that chooses the export format and shows the warning."
+  },
+  "exportWarning": "Deze export is niet versleuteld. Iedereen met het bestand kan alles lezen.",
+  "@exportWarning": {
+    "description": "Warning in the export dialog, confirmed every time by the export button (PO 09-10-2026)."
+  },
+  "exportMarkdown": "Markdown",
+  "@exportMarkdown": {
+    "description": "Export format choice: a readable text file."
+  },
+  "exportMarkdownHint": "Leesbaar, in elke teksteditor",
+  "@exportMarkdownHint": {
+    "description": "Second line of the Markdown choice."
+  },
+  "exportJson": "JSON",
+  "@exportJson": {
+    "description": "Export format choice: structured data for other programs."
+  },
+  "exportJsonHint": "Gestructureerd, voor andere programma's",
+  "@exportJsonHint": {
+    "description": "Second line of the JSON choice."
+  },
+  "exportConfirm": "Exporteren",
+  "@exportConfirm": {
+    "description": "Button in the export dialog: confirms the warning and starts the export."
+  },
+  "exportFileName": "Offload-export-{date}",
+  "@exportFileName": {
+    "description": "Proposed name of an export file, without extension; date is year-month-day.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "exportMarkdownFileType": "Markdown-bestand",
+  "@exportMarkdownFileType": {
+    "description": "File type name in the Windows save window for a Markdown export."
+  },
+  "exportJsonFileType": "JSON-bestand",
+  "@exportJsonFileType": {
+    "description": "File type name in the Windows save window for a JSON export."
+  },
+  "exportSaved": "Export opgeslagen",
+  "@exportSaved": {
+    "description": "Message after an export was saved."
+  },
+  "exportReadyToShare": "Export klaargezet om te delen",
+  "@exportReadyToShare": {
+    "description": "Message after the export was handed to the share menu; Android does not say whether it was sent."
+  },
+  "exportFailed": "De export is niet gelukt",
+  "@exportFailed": {
+    "description": "Message when an export failed; nothing was saved."
+  },
+  "exportTitle": "Offload-export",
+  "@exportTitle": {
+    "description": "Markdown export: the title at the top of the file."
+  },
+  "exportMadeOn": "Gemaakt op {date}, {time}",
+  "@exportMadeOn": {
+    "description": "Markdown export: when it was made, local time. Both placeholders get the same moment.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd"
+      },
+      "time": {
+        "type": "DateTime",
+        "format": "jm"
+      }
+    }
+  },
+  "exportCounts": "Items: {items} · projecten: {projects} · personen: {people}",
+  "@exportCounts": {
+    "description": "Markdown export: the numbers under the title.",
+    "placeholders": {
+      "items": {
+        "type": "int"
+      },
+      "projects": {
+        "type": "int"
+      },
+      "people": {
+        "type": "int"
+      }
+    }
+  },
+  "exportProjects": "Projecten",
+  "@exportProjects": {
+    "description": "Markdown export: heading of the projects."
+  },
+  "exportWithoutProject": "Zonder project",
+  "@exportWithoutProject": {
+    "description": "Markdown export: heading of the items without a project."
+  },
+  "exportPeople": "Personen",
+  "@exportPeople": {
+    "description": "Markdown export: heading of the people."
+  },
+  "exportArchived": "gearchiveerd",
+  "@exportArchived": {
+    "description": "Markdown export: after the name of an archived project, in brackets."
+  },
+  "exportDue": "deadline {date}",
+  "@exportDue": {
+    "description": "Markdown export: the deadline of an item, in its line of facts.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMEd"
+      }
+    }
+  },
+  "exportRevisit": "terugzien op {date}",
+  "@exportRevisit": {
+    "description": "Markdown export: when a parked item comes back.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMEd"
+      }
+    }
+  },
+  "exportRequester": "gevraagd door {name}",
+  "@exportRequester": {
+    "description": "Markdown export: who asked for the item.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "exportWaitingOn": "wacht op {name}",
+  "@exportWaitingOn": {
+    "description": "Markdown export: whom the item waits for.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "exportAsked": "gevraagd op {date}",
+  "@exportAsked": {
+    "description": "Markdown export: the day it was asked (commitment).",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  },
+  "exportPromise": "toegezegd: {text}",
+  "@exportPromise": {
+    "description": "Markdown export: what was promised.",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "exportExpected": "verwacht op {date}",
+  "@exportExpected": {
+    "description": "Markdown export: the day a waiting item is expected.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  },
+  "exportCaptured": "vastgelegd {date}",
+  "@exportCaptured": {
+    "description": "Markdown export: the day the item was captured.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  },
+  "exportNextStep": "Waar was ik, volgende stap: {text}",
+  "@exportNextStep": {
+    "description": "Markdown export: the next step of an open Where was I note.",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "exportInMind": "Waar was ik, in mijn hoofd: {text}",
+  "@exportInMind": {
+    "description": "Markdown export: what was in mind in an open Where was I note.",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "exportCompletions": "Gedaan: {dates}",
+  "@exportCompletions": {
+    "description": "Markdown export: the completed times of a recurring task; dates is a list of dates.",
+    "placeholders": {
+      "dates": {
+        "type": "String"
+      }
+    }
+  },
+  "exportDay": "{date}",
+  "@exportDay": {
+    "description": "Markdown export: one date in a list of dates.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  },
+  "exportAliases": "Ook: {aliases}",
+  "@exportAliases": {
+    "description": "Markdown export: the other names of a person.",
+    "placeholders": {
+      "aliases": {
+        "type": "String"
+      }
+    }
+  },
+  "exportBirthday": "Verjaardag: {date}",
+  "@exportBirthday": {
+    "description": "Markdown export: a birthday with a year.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd"
+      }
+    }
+  },
+  "exportBirthdayNoYear": "Verjaardag: {date}",
+  "@exportBirthdayNoYear": {
+    "description": "Markdown export: a birthday without a year.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMMd"
+      }
+    }
+  },
+  "exportWork": "Werk: {text}",
+  "@exportWork": {
+    "description": "Markdown export: organisation and job title of a person.",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "exportContact": "{kind} ({label})",
+  "@exportContact": {
+    "description": "Markdown export: the kind of a contact detail with its label, e.g. 'Telefoonnummer (werk)'.",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsStorageHeader": "Opslag",
+  "@settingsStorageHeader": {
+    "description": "Settings: header of the section that shows what Offload keeps on this device (T7.5)."
+  },
+  "storageDatabase": "Database",
+  "@storageDatabase": {
+    "description": "Settings → Storage: row of the encrypted database."
+  },
+  "storageDatabaseHint": "Versleuteld: alles wat je hebt vastgelegd",
+  "@storageDatabaseHint": {
+    "description": "Settings → Storage: second line of the database row."
+  },
+  "storageTemporary": "Tijdelijke bestanden",
+  "@storageTemporary": {
+    "description": "Settings → Storage: row of Offload's own temporary copies (Android)."
+  },
+  "storageTemporaryHint": "Een gedeelde back-up of export; gaat na een dag weg",
+  "@storageTemporaryHint": {
+    "description": "Settings → Storage: second line of the temporary files row."
+  },
+  "storageContent": "Inhoud",
+  "@storageContent": {
+    "description": "Settings → Storage: row with the numbers of items, projects and people."
+  },
+  "storageItems": "{count, plural, =1{1 item} other{{count} items}}",
+  "@storageItems": {
+    "description": "Settings → Storage: the number of items, the trash included.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storageTrashed": "waarvan {count} in de prullenbak",
+  "@storageTrashed": {
+    "description": "Settings → Storage: after the number of items, when some are in the trash.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storageProjects": "{count, plural, =1{1 project} other{{count} projecten}}",
+  "@storageProjects": {
+    "description": "Settings → Storage: the number of projects.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storagePeople": "{count, plural, =1{1 persoon} other{{count} personen}}",
+  "@storagePeople": {
+    "description": "Settings → Storage: the number of people.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storageKilobytes": "{value} kB",
+  "@storageKilobytes": {
+    "description": "Settings → Storage: a size in kilobytes (1000 bytes), whole.",
+    "placeholders": {
+      "value": {
+        "type": "double",
+        "format": "decimalPatternDigits",
+        "optionalParameters": {
+          "decimalDigits": 0
+        }
+      }
+    }
+  },
+  "storageMegabytes": "{value} MB",
+  "@storageMegabytes": {
+    "description": "Settings → Storage: a size in megabytes, one decimal.",
+    "placeholders": {
+      "value": {
+        "type": "double",
+        "format": "decimalPatternDigits",
+        "optionalParameters": {
+          "decimalDigits": 1
+        }
+      }
+    }
+  },
+  "storageGigabytes": "{value} GB",
+  "@storageGigabytes": {
+    "description": "Settings → Storage: a size in gigabytes, one decimal.",
+    "placeholders": {
+      "value": {
+        "type": "double",
+        "format": "decimalPatternDigits",
+        "optionalParameters": {
+          "decimalDigits": 1
+        }
+      }
+    }
+  },
+  "storageUnavailable": "Niet te bepalen",
+  "@storageUnavailable": {
+    "description": "Settings → Storage: shown when the sizes could not be read."
+  },
+  "storageJoin": "{first} · {second}",
+  "@storageJoin": {
+    "description": "Settings → Storage: joins two parts of the content line.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "storageWithTrash": "{items}, {trashed}",
+  "@storageWithTrash": {
+    "description": "Settings → Storage: the number of items followed by how many are in the trash.",
+    "placeholders": {
+      "items": {
+        "type": "String"
+      },
+      "trashed": {
+        "type": "String"
+      }
+    }
+  },
+  "backupShare": "Delen…",
+  "@backupShare": {
+    "description": "Choice when making a backup on Android: hand the encrypted backup file to another app through the share menu (DD-014)."
+  },
+  "backupSaveOnDevice": "Opslaan op dit toestel…",
+  "@backupSaveOnDevice": {
+    "description": "Choice when making a backup on Android: save the file with the system document picker."
+  },
+  "backupReadyToShare": "Back-up klaargezet om te delen",
+  "@backupReadyToShare": {
+    "description": "Message after the backup was handed to the share menu; Android does not say whether it was really sent."
+  },
+  "backupRestore": "Back-up terugzetten",
+  "@backupRestore": {
+    "description": "Row in Settings → Back-up that restores a backup."
+  },
+  "backupRestoreSubtitle": "Vervangt alles op dit toestel",
+  "@backupRestoreSubtitle": {
+    "description": "Second line of the row Back-up terugzetten."
+  },
+  "backupRestoreAskTitle": "Wachtwoordzin van deze back-up",
+  "@backupRestoreAskTitle": {
+    "description": "Title of the dialog asking the passphrase when this device's own does not open the backup."
+  },
+  "backupRestoreAskBody": "Deze back-up is gemaakt met een andere wachtwoordzin, of op een ander toestel.",
+  "@backupRestoreAskBody": {
+    "description": "Explanation in the dialog that asks the passphrase of a backup."
+  },
+  "backupRestoreAskOk": "Openen",
+  "@backupRestoreAskOk": {
+    "description": "Button that tries the typed passphrase."
+  },
+  "backupWrongPassphrase": "Deze wachtwoordzin past niet, of het bestand is geen back-up van Offload.",
+  "@backupWrongPassphrase": {
+    "description": "Error when the passphrase does not open the file."
+  },
+  "backupTooNew": "Deze back-up komt van een nieuwere versie van Offload. Werk de app eerst bij.",
+  "@backupTooNew": {
+    "description": "Error for a backup of a newer app version."
+  },
+  "backupUnreadable": "Het bestand kon niet worden gelezen of geschreven.",
+  "@backupUnreadable": {
+    "description": "Error when the file could not be read or written."
+  },
+  "backupRestoreConfirmTitle": "Alles vervangen?",
+  "@backupRestoreConfirmTitle": {
+    "description": "Title of the confirmation before restoring."
+  },
+  "backupRestoreConfirmBody": "{count, plural, =1{Deze back-up bevat 1 item} other{Deze back-up bevat {count} items}}, laatst gewijzigd op {date}. Alles wat nu op dit toestel staat, wordt vervangen; je instellingen blijven. Dit is een kopie, geen synchronisatie.",
+  "@backupRestoreConfirmBody": {
+    "description": "Body of the confirmation before restoring; the date of the newest change in the backup.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  },
+  "backupRestoreConfirmBodyUndated": "{count, plural, =1{Deze back-up bevat 1 item} other{Deze back-up bevat {count} items}}. Alles wat nu op dit toestel staat, wordt vervangen; je instellingen blijven. Dit is een kopie, geen synchronisatie.",
+  "@backupRestoreConfirmBodyUndated": {
+    "description": "Body of the confirmation before restoring a backup that records no change (so no date).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "backupRestoreConfirm": "Terugzetten",
+  "@backupRestoreConfirm": {
+    "description": "Button that restores, replacing everything."
+  },
+  "backupOptionsContinue": "Verder",
+  "@backupOptionsContinue": {
+    "description": "Button that goes on from the choice with or without attachments to saving the backup."
+  },
+  "backupWithAttachments": "Met bijlagen (≈ {size})",
+  "@backupWithAttachments": {
+    "description": "Switch when making a backup: include the attachments; the size is their total on this device now.",
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "backupWithAttachmentsHint": "Zonder bijlagen is de back-up kleiner, maar zitten ze er niet in.",
+  "@backupWithAttachmentsHint": {
+    "description": "Line under the switch with or without attachments."
+  },
+  "backupProgress": "{done} van {total}",
+  "@backupProgress": {
+    "description": "Progress while a backup is made or restored, e.g. '12 MB van 85 MB'.",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "backupMissingNote": "{message}. {count, plural, =1{1 bijlage ontbrak en zit er niet in.} other{{count} bijlagen ontbraken en zitten er niet in.}}",
+  "@backupMissingNote": {
+    "description": "Message after a backup was made or shared while some attachment files were missing or damaged; message is the usual message.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "backupNoRoom": "Niet genoeg vrije ruimte: nodig ongeveer {needed}, vrij {free}.",
+  "@backupNoRoom": {
+    "description": "Message when there is too little free space to make or restore a backup; nothing was changed.",
+    "placeholders": {
+      "needed": {
+        "type": "String"
+      },
+      "free": {
+        "type": "String"
+      }
+    }
+  },
+  "backupRestoreWithAttachments": "{count, plural, =1{Met 1 bijlage.} other{Met {count} bijlagen.}}",
+  "@backupRestoreWithAttachments": {
+    "description": "Line in the restore confirmation: how many attachments the backup holds.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "backupRestoreNoAttachments": "Deze back-up heeft geen bijlagen; bijlagen die niet bij de teruggezette items horen, verdwijnen.",
+  "@backupRestoreNoAttachments": {
+    "description": "Warning in the restore confirmation when the backup was made without attachments and this device has some."
+  },
+  "restoreUndoneTitle": "Terugzetten niet gelukt",
+  "@restoreUndoneTitle": {
+    "description": "Title shown once after start when a restored backup could not be opened and the previous data came back."
+  },
+  "restoreUndoneBody": "De teruggezette back-up kon niet worden geopend. Je gegevens van vóór het terugzetten zijn er weer; er is niets verloren.",
+  "@restoreUndoneBody": {
+    "description": "Body of that message."
+  },
+  "restoreUndoneOk": "OK",
+  "@restoreUndoneOk": {
+    "description": "Button that closes that message."
+  },
+  "settingsAboutHeader": "Over Offload",
+  "@settingsAboutHeader": {
+    "description": "Section header at the top of Settings with the version and build of the app."
+  },
+  "aboutOpen": "Waarvoor Offload is en de licenties",
+  "@aboutOpen": {
+    "description": "Row in the section About Offload of Settings that opens the screen About Offload (REQ-062)."
+  },
+  "aboutPurpose": "Offload maakt je hoofd leeg. Lopend werk, wat nog komt, ideeën en verzoeken van anderen leg je in een paar seconden vast, en je verwerkt ze als het jou uitkomt. Alles blijft op je eigen apparaat, versleuteld en zonder internet.",
+  "@aboutPurpose": {
+    "description": "What Offload is for, on the screen About Offload (text decided by the PO 03-10-2026, REQ-062)."
+  },
+  "aboutLicenceTitle": "Licentie",
+  "@aboutLicenceTitle": {
+    "description": "Row on About Offload naming the licence of the app; tapping shows its full text."
+  },
+  "aboutLicenceName": "GNU GPL 3.0 of later",
+  "@aboutLicenceName": {
+    "description": "The licence of Offload (GPL-3.0-or-later, Q37), under the row Licentie."
+  },
+  "aboutLicenceFailed": "De licentietekst kon niet worden geladen",
+  "@aboutLicenceFailed": {
+    "description": "Shown instead of the licence text when the bundled file could not be read."
+  },
+  "aboutComponentsTitle": "Licenties van onderdelen",
+  "@aboutComponentsTitle": {
+    "description": "Row on About Offload that opens Flutter's licence overview: every shipped package, library and typeface."
+  },
+  "aboutComponentsSubtitle": "Pakketten, bibliotheken en lettertypen in de app",
+  "@aboutComponentsSubtitle": {
+    "description": "Second line of the row Licenties van onderdelen."
+  },
+  "settingsVersion": "Versie {version} (build {buildNumber})",
+  "@settingsVersion": {
+    "description": "Version of the app in Settings.",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "0.1.0"
+      },
+      "buildNumber": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+  "settingsBuiltAt": "Gebouwd op {date}, {time}",
+  "@settingsBuiltAt": {
+    "description": "Moment the app was built, in local time and the active language. Both placeholders get the same moment.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      },
+      "time": {
+        "type": "DateTime",
+        "format": "jm"
+      }
+    }
+  },
+  "settingsDevelopmentBuild": "Ontwikkelversie",
+  "@settingsDevelopmentBuild": {
+    "description": "Shown in Settings instead of version and build moment for a build made without build information (development)."
+  },
+  "tokenDateToday": "vandaag",
+  "@tokenDateToday": {
+    "description": "Date word of the inline syntax after '!' (DD-004), in lowercase without spaces. Several words may be given, separated by commas. Means today."
+  },
+  "tokenDateTomorrow": "morgen",
+  "@tokenDateTomorrow": {
+    "description": "Date word of the inline syntax after '!' (DD-004), in lowercase without spaces. Several words may be given, separated by commas. Means tomorrow."
+  },
+  "tokenDateDayAfterTomorrow": "overmorgen",
+  "@tokenDateDayAfterTomorrow": {
+    "description": "Date word of the inline syntax after '!' (DD-004), in lowercase without spaces. Several words may be given, separated by commas. Means the day after tomorrow."
+  },
+  "tokenDateNextWeek": "volgendeweek",
+  "@tokenDateNextWeek": {
+    "description": "Date word of the inline syntax after '!' (DD-004), in lowercase without spaces. Several words may be given, separated by commas. Means Monday of next week."
+  },
+  "tokenPriorityHigh": "hoog",
+  "@tokenPriorityHigh": {
+    "description": "Priority word of the inline syntax after '*' (DD-004 point 3), in lowercase without spaces. Several words may be given, separated by commas. Means high priority; '*1' works in every language."
+  },
+  "tokenPriorityLow": "laag",
+  "@tokenPriorityLow": {
+    "description": "Priority word of the inline syntax after '*' (DD-004 point 3), in lowercase without spaces. Several words may be given, separated by commas. Means low priority; '*3' works in every language."
+  },
+  "tokenWeekdaysShort": "ma,di,wo,do,vr,za,zo",
+  "@tokenWeekdaysShort": {
+    "description": "Short weekday words of the inline syntax after '!' (DD-004): exactly seven, comma-separated, lowercase, Monday first. A weekday means the next such day, never today."
+  },
+  "tokenWeekdaysLong": "maandag,dinsdag,woensdag,donderdag,vrijdag,zaterdag,zondag",
+  "@tokenWeekdaysLong": {
+    "description": "Full weekday words of the inline syntax after '!' (DD-004): exactly seven, comma-separated, lowercase, Monday first."
+  },
+  "tokenPersonLabel": "persoon",
+  "@tokenPersonLabel": {
+    "description": "Name of the person token (@) for chips, screen readers and later the prefix bar."
+  },
+  "tokenTagLabel": "tag",
+  "@tokenTagLabel": {
+    "description": "Name of the tag token (#) for chips, screen readers and later the prefix bar."
+  },
+  "tokenDateLabel": "datum",
+  "@tokenDateLabel": {
+    "description": "Name of the date token (!) for chips, screen readers and later the prefix bar."
+  },
+  "tokenDateChip": "{date}",
+  "@tokenDateChip": {
+    "description": "The recognised date on a chip under the capture field, short, in the active language.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "tokenChipSemantics": "{kind}: {value}",
+  "@tokenChipSemantics": {
+    "description": "Screen-reader label of a recognised token chip, e.g. 'datum: vr 2 okt'.",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenOtherLabel": "herkend woord",
+  "@tokenOtherLabel": {
+    "description": "Name of a recognised token of a type without its own name (fallback, for screen readers)."
+  },
+  "tokenSuggestionNew": "Nieuw: {name}",
+  "@tokenSuggestionNew": {
+    "description": "Line in the suggestion list that adds a person or tag not known yet; it is created when the item is saved.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsInputHeader": "Invoer",
+  "@settingsInputHeader": {
+    "description": "Header of the settings section about capturing text."
+  },
+  "settingsPrefixBar": "Prefix-balk",
+  "@settingsPrefixBar": {
+    "description": "Title above the prefix bar options: the bar with @, # and ! buttons in quick capture."
+  },
+  "settingsPrefixBarHint": "Knoppen voor de invoertekens bij het vastleggen",
+  "@settingsPrefixBarHint": {
+    "description": "Explains the prefix bar in Settings. Does not list the signs: the bar grows with new token types."
+  },
+  "settingsPrefixBarAlways": "Altijd zichtbaar",
+  "@settingsPrefixBarAlways": {
+    "description": "Prefix bar option: always shown with sign and label (default)."
+  },
+  "settingsPrefixBarCollapsed": "Ingeklapt",
+  "@settingsPrefixBarCollapsed": {
+    "description": "Prefix bar option: one slim row with only the signs, expandable."
+  },
+  "settingsPrefixBarCollapsedHint": "Eén smalle regel met alleen de tekens, uit te klappen",
+  "@settingsPrefixBarCollapsedHint": {
+    "description": "Explains the collapsed prefix bar option."
+  },
+  "settingsPrefixBarOff": "Uit",
+  "@settingsPrefixBarOff": {
+    "description": "Prefix bar option: no bar."
+  },
+  "settingsPrefixBarSaveFailed": "De instelling van de prefix-balk kon niet worden bewaard",
+  "@settingsPrefixBarSaveFailed": {
+    "description": "Shown when the prefix bar setting could not be stored; it still applies until restart."
+  },
+  "prefixBarButton": "{sign} {label}",
+  "@prefixBarButton": {
+    "description": "Button in the prefix bar and title in the syntax overview, e.g. '@ persoon'.",
+    "placeholders": {
+      "sign": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "prefixBarInsert": "{label} invoegen",
+  "@prefixBarInsert": {
+    "description": "Tooltip and screen-reader label of a prefix bar button, e.g. 'persoon invoegen'.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "prefixBarHelp": "Syntaxoverzicht",
+  "@prefixBarHelp": {
+    "description": "Tooltip of the ? button in the prefix bar."
+  },
+  "prefixBarExpand": "Uitklappen",
+  "@prefixBarExpand": {
+    "description": "Tooltip: show the full prefix bar buttons."
+  },
+  "prefixBarCollapse": "Inklappen",
+  "@prefixBarCollapse": {
+    "description": "Tooltip: show only the signs in the prefix bar."
+  },
+  "syntaxOverviewTitle": "Syntaxoverzicht",
+  "@syntaxOverviewTitle": {
+    "description": "Title of the overview of all inline tokens."
+  },
+  "syntaxOverviewIntro": "Zet een teken direct voor een woord. Je tekst blijft zoals je hem typt.",
+  "@syntaxOverviewIntro": {
+    "description": "Intro line of the syntax overview."
+  },
+  "syntaxOverviewClose": "Sluiten",
+  "@syntaxOverviewClose": {
+    "description": "Closes the syntax overview."
+  },
+  "tokenPersonExample": "Bel @Jan over de offerte",
+  "@tokenPersonExample": {
+    "description": "Example line for the person token in the syntax overview."
+  },
+  "tokenTagExample": "Dakgoot schoonmaken #klussen",
+  "@tokenTagExample": {
+    "description": "Example line for the tag token in the syntax overview."
+  },
+  "tokenDateExample": "Offerte af !vrijdag, ook !morgen of !12-10",
+  "@tokenDateExample": {
+    "description": "Example line for the date token in the syntax overview; use this language's date words."
+  },
+  "commitmentHeader": "Toezegging",
+  "@commitmentHeader": {
+    "description": "Item detail: header of the block with who asked, what was promised and by when, or whom it waits for (T10.1)."
+  },
+  "commitmentAskedOn": "Gevraagd op {date}",
+  "@commitmentAskedOn": {
+    "description": "Item detail, commitment block: the day it was asked (by default the day it was captured).",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "commitmentPromised": "Beloofd: {text}",
+  "@commitmentPromised": {
+    "description": "Item detail, commitment block: what I promised (by default the item title).",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "commitmentDue": "Voor: {date}",
+  "@commitmentDue": {
+    "description": "Item detail, commitment block: by when I promised it, the item deadline.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "commitmentDueAdd": "Datum toevoegen",
+  "@commitmentDueAdd": {
+    "description": "Item detail, commitment block: no deadline yet; tapping picks one and puts it in the text."
+  },
+  "commitmentWaitsOn": "Wacht op {name}",
+  "@commitmentWaitsOn": {
+    "description": "Item detail, commitment block: whom the item waits for.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "commitmentWaitsOnNobody": "Wacht (op niemand in het bijzonder)",
+  "@commitmentWaitsOnNobody": {
+    "description": "Item detail, commitment block: a waiting item without a person."
+  },
+  "commitmentExpected": "Verwacht: {date}",
+  "@commitmentExpected": {
+    "description": "Item detail, commitment block: by when I expect it, for a waiting item.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "commitmentExpectedLate": "Verwacht: {date} · {days, plural, =1{1 dag} other{{days} dagen}} te laat",
+  "@commitmentExpectedLate": {
+    "description": "Item detail, commitment block: the expected day has passed; shown in orange with a warning icon.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "commitmentExpectedAdd": "Verwacht op toevoegen",
+  "@commitmentExpectedAdd": {
+    "description": "Item detail, commitment block: a waiting item without an expected date."
+  },
+  "commitmentReset": "Terugzetten",
+  "@commitmentReset": {
+    "description": "Item detail, commitment block: tooltip of the button that clears a value set by hand (asked on back to the capture day, expected date removed)."
+  },
+  "commitmentPromiseTitle": "Wat heb je beloofd?",
+  "@commitmentPromiseTitle": {
+    "description": "Title of the dialog that edits what was promised."
+  },
+  "commitmentPromiseField": "Beloofd",
+  "@commitmentPromiseField": {
+    "description": "Label of the field in the dialog that edits what was promised."
+  },
+  "commitmentPromiseHint": "Leeg: de titel van het item.",
+  "@commitmentPromiseHint": {
+    "description": "Help text under the field that edits what was promised."
+  },
+  "commitmentChangeFailed": "Opslaan is mislukt.",
+  "@commitmentChangeFailed": {
+    "description": "Message when changing a commitment failed."
+  },
+  "commitmentExpectedChip": "verwacht {date}",
+  "@commitmentExpectedChip": {
+    "description": "Chip on the card of a waiting item: the expected day, still ahead.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "commitmentLateChip": "{days} d te laat",
+  "@commitmentLateChip": {
+    "description": "Chip on the card of a waiting item past its expected day (with a warning icon), and on Today.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "commitmentLateChipLabel": "{days, plural, =1{1 dag te laat} other{{days} dagen te laat}}",
+  "@commitmentLateChipLabel": {
+    "description": "Screen-reader text of the late chip.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "todayLateSection": "Had binnen moeten zijn · {count}",
+  "@todayLateSection": {
+    "description": "Today: header of the group of waiting items past their expected day (T10.1).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "waitForExpected": "Verwacht op…",
+  "@waitForExpected": {
+    "description": "Person sheet when waiting: the optional line that picks by when it is expected."
+  },
+  "waitForExpectedDate": "Verwacht op {date}",
+  "@waitForExpectedDate": {
+    "description": "Person sheet when waiting: the expected day picked.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "waitForExpectedOptional": "optioneel",
+  "@waitForExpectedOptional": {
+    "description": "Person sheet when waiting: under the line that picks the expected day."
+  },
+  "peopleDeliverTitle": "Ik moet nog leveren",
+  "@peopleDeliverTitle": {
+    "description": "People: header of the total of open items people asked for (T10.2)."
+  },
+  "peopleDeliverTotal": "{count} aan {people, plural, =1{1 persoon} other{{people} personen}}",
+  "@peopleDeliverTotal": {
+    "description": "People: the total of open items I deliver and to how many people.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "people": {
+        "type": "int"
+      }
+    }
+  },
+  "peopleWaitTitle": "Ik wacht nog op",
+  "@peopleWaitTitle": {
+    "description": "People: header of the total of open items waiting on people."
+  },
+  "peopleWaitTotal": "{count} van {people, plural, =1{1 persoon} other{{people} personen}}",
+  "@peopleWaitTotal": {
+    "description": "People: the total of open items I wait for and from how many people.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "people": {
+        "type": "int"
+      }
+    }
+  },
+  "peopleLegendDeliver": "← ik lever",
+  "@peopleLegendDeliver": {
+    "description": "People: legend above the bars, the left (orange) part."
+  },
+  "peopleLegendWait": "ik wacht →",
+  "@peopleLegendWait": {
+    "description": "People: legend above the bars, the right (blue) part."
+  },
+  "peopleLegendOldest": "oudste",
+  "@peopleLegendOldest": {
+    "description": "People: legend above the age column (the oldest open item)."
+  },
+  "peopleAge": "{days} d",
+  "@peopleAge": {
+    "description": "People: age in days of the oldest open item with a person, short.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "peopleRowSemantics": "{name}: jij levert {deliver}, jij wacht op {waiting}, oudste {days, plural, =1{1 dag} other{{days} dagen}}",
+  "@peopleRowSemantics": {
+    "description": "People: screen-reader text of a person row with open items.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "deliver": {
+        "type": "int"
+      },
+      "waiting": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "peopleRowSemanticsOld": "{text}, oud",
+  "@peopleRowSemanticsOld": {
+    "description": "People: screen-reader text of a row whose oldest item is past the threshold; text is peopleRowSemantics.",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsPeopleHeader": "Personen",
+  "@settingsPeopleHeader": {
+    "description": "Settings: header of the people settings."
+  },
+  "settingsOldAfter": "Oud na",
+  "@settingsOldAfter": {
+    "description": "Settings: from how many days an open item with a person counts as old."
+  },
+  "settingsOldAfterHint": "Vanaf zo veel dagen is een open item bij een persoon oud: het valt op in de balans.",
+  "@settingsOldAfterHint": {
+    "description": "Settings: explanation under Old after."
+  },
+  "tokenPhoneLabel": "telefoonnummer",
+  "@tokenPhoneLabel": {
+    "description": "Name of the phone-number token (recognised without a sign) for chips, screen readers and the syntax overview."
+  },
+  "tokenPhoneExample": "Bel @Jan op 06-12345678 of +31 6 1234 5678",
+  "@tokenPhoneExample": {
+    "description": "Example line for the phone-number token in the syntax overview."
+  },
+  "tokenEmailLabel": "e-mailadres",
+  "@tokenEmailLabel": {
+    "description": "Name of the email-address token (recognised without a sign) for chips, screen readers and the syntax overview."
+  },
+  "tokenEmailExample": "Mail @Jan op jan@voorbeeld.nl",
+  "@tokenEmailExample": {
+    "description": "Example line for the email-address token in the syntax overview."
+  },
+  "tokenContactFor": "{value} → {name}",
+  "@tokenContactFor": {
+    "description": "Chip of a phone number or email address in the text, with the one person in the same text it will be added to after saving.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenProjectNone": "{word} · geen project",
+  "@tokenProjectNone": {
+    "description": "Chip of a ^project word that names no project in use (PO decision 03-10-2026): saving does not put the item in a project. In the item detail tapping creates it.",
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenProjectSeveral": "{word} · meerdere projecten",
+  "@tokenProjectSeveral": {
+    "description": "Chip of a ^project word that fits sub-projects under different parents, so it names none; the path (parent/name) from the suggestion list tells them apart.",
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenProjectCreateTooltip": "Project maken en dit item erin zetten",
+  "@tokenProjectCreateTooltip": {
+    "description": "Tooltip and screen-reader hint of the 'no project' chip in the item detail: tapping asks for the name, creates the project and puts this item in it."
+  },
+  "contactLinkTooltip": "Koppelen aan een persoon",
+  "@contactLinkTooltip": {
+    "description": "Tooltip and screen-reader hint of a phone-number or email chip in the item detail when the text names no person or several: tapping asks to whom it belongs."
+  },
+  "contactLinkTitle": "Van wie is dit?",
+  "@contactLinkTitle": {
+    "description": "Title of the person sheet that links a phone number or email address from the text to a person."
+  },
+  "contactsTakenFromText": "{count, plural, =1{Toegevoegd aan {name}} other{{count} gegevens toegevoegd aan {name}}}",
+  "@contactsTakenFromText": {
+    "description": "Message after saving: phone numbers or email addresses from the text were added to the person's contact details. Shown with Undo.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsTakenUndoFailed": "Weghalen is mislukt; de gegevens staan nog bij de persoon.",
+  "@contactsTakenUndoFailed": {
+    "description": "Message when undoing contact details taken from the text failed."
+  },
+  "settingsPhoneCountry": "Land voor telefoonnummers",
+  "@settingsPhoneCountry": {
+    "description": "Settings: the country of phone numbers typed without a country code."
+  },
+  "settingsPhoneCountryHint": "Voor nummers zonder +landcode, zoals 06-12345678.",
+  "@settingsPhoneCountryHint": {
+    "description": "Settings: explanation under the country for phone numbers."
+  },
+  "settingsCountryOption": "{country} (+{code})",
+  "@settingsCountryOption": {
+    "description": "One country in the list of Settings, with its calling code.",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "countryName": "{iso, select, NL{Nederland} BE{België} LU{Luxemburg} DE{Duitsland} FR{Frankrijk} GB{Verenigd Koninkrijk} IE{Ierland} ES{Spanje} PT{Portugal} IT{Italië} AT{Oostenrijk} CH{Zwitserland} DK{Denemarken} SE{Zweden} NO{Noorwegen} FI{Finland} IS{IJsland} PL{Polen} CZ{Tsjechië} SK{Slowakije} HU{Hongarije} GR{Griekenland} HR{Kroatië} SI{Slovenië} RO{Roemenië} BG{Bulgarije} EE{Estland} LV{Letland} UA{Oekraïne} TR{Turkije} MA{Marokko} SR{Suriname} ZA{Zuid-Afrika} US{Verenigde Staten} CA{Canada} AU{Australië} NZ{Nieuw-Zeeland} other{{iso}}}",
+  "@countryName": {
+    "description": "Name of a country by its ISO 3166-1 code, for the list of countries for phone numbers in Settings.",
+    "placeholders": {
+      "iso": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenProjectLabel": "project",
+  "@tokenProjectLabel": {
+    "description": "Name of the project token (^) for chips, screen readers, the prefix bar and the syntax overview."
+  },
+  "tokenProjectExample": "Kozijnen bestellen ^verbouwing, ook ^oude-schuur of ^verbouwing/keuken",
+  "@tokenProjectExample": {
+    "description": "Example line for the project token in the syntax overview: a name without spaces (a dash for a space), and a sub-project after a slash."
+  },
+  "tokenLinkLabel": "item",
+  "@tokenLinkLabel": {
+    "description": "Name of the link token ([[…]], T10.9) for chips, screen readers, the prefix bar ('[[ item') and the syntax overview: it links to another item."
+  },
+  "tokenLinkExample": "Kozijnen bestellen, zie [[Offerte kozijnen vergelijken]]",
+  "@tokenLinkExample": {
+    "description": "Example line for the link token in the syntax overview: the title of another item between double square brackets."
+  },
+  "tokenSuggestionItemDetail": "{status} · {project}",
+  "@tokenSuggestionItemDetail": {
+    "description": "Second line of an item in the [[ suggestion list: its status and the project it is in.",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      },
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenLinkTrashed": "{title} · in prullenbak",
+  "@tokenLinkTrashed": {
+    "description": "Chip of a link whose target item is in the trash (DD-018 point 14); tapping opens it, where it can be restored.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenLinkNone": "{label} · geen item",
+  "@tokenLinkNone": {
+    "description": "Chip of a [[…]] that names no item (PO decision 03-10-2026): nothing is created by itself. In the item detail tapping creates an inbox item with this text and links it.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenLinkCreateTooltip": "Nieuw item maken en koppelen",
+  "@tokenLinkCreateTooltip": {
+    "description": "Tooltip and screen-reader hint of the 'geen item' chip in the item detail: tapping creates an inbox item with that text and links it."
+  },
+  "tokenLinkOpenTooltip": "Item openen",
+  "@tokenLinkOpenTooltip": {
+    "description": "Screen-reader hint of a link chip in the item detail: tapping opens the linked item."
+  },
+  "tokenLinkCreateFailed": "Het item kon niet worden gemaakt",
+  "@tokenLinkCreateFailed": {
+    "description": "Message when creating an item from the 'geen item' chip failed; nothing changed."
+  },
+  "itemLinkedFrom": "Verwijst hiernaar · {count}",
+  "@itemLinkedFrom": {
+    "description": "Header of the section of backlinks in the item detail (DD-018 point 14): the items whose text links to this one.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "duplicateLink": "Koppelen",
+  "@duplicateLink": {
+    "description": "Action in the duplicate comparison (AC REQ-053): writes [[…]] with the other item into the text of the newer one and links them."
+  },
+  "duplicateLinkFailed": "Koppelen is niet gelukt",
+  "@duplicateLinkFailed": {
+    "description": "Message when linking from the duplicate hint failed; nothing changed."
+  },
+  "tokenPriorityLabel": "prioriteit",
+  "@tokenPriorityLabel": {
+    "description": "Name of the priority token (*) for chips, screen readers, the prefix bar and the syntax overview."
+  },
+  "tokenPriorityExample": "Offerte nakijken *hoog, ook *laag of *1, *2, *3",
+  "@tokenPriorityExample": {
+    "description": "Example line for the priority token in the syntax overview; use this language's priority words (tokenPriorityHigh, tokenPriorityLow)."
+  },
+  "tokenPriorityChip": "{priority, select, high{Hoge prioriteit} low{Lage prioriteit} other{Normale prioriteit}}",
+  "@tokenPriorityChip": {
+    "description": "Text of a priority chip on cards, in the item detail and in the suggestion list.",
+    "placeholders": {
+      "priority": {
+        "type": "String"
+      }
+    }
+  },
+  "tokenSuggestionNewProject": "Project maken: {name}",
+  "@tokenSuggestionNewProject": {
+    "description": "Line in the suggestion list after '^' that creates a project with this name right away, at the top level (AC REQ-050).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "syntaxEscapeLabel": "gewone tekst",
+  "@syntaxEscapeLabel": {
+    "description": "Syntax overview: a backslash before a sign keeps it plain text."
+  },
+  "syntaxEscapeExample": "Zet er \\ voor: \\@Jan wordt niet herkend",
+  "@syntaxEscapeExample": {
+    "description": "Example line for the escape in the syntax overview."
+  },
+  "searchTooltip": "Zoeken",
+  "@searchTooltip": {
+    "description": "Tooltip of the search button in the inbox app bar."
+  },
+  "searchHint": "Zoek in items en personen",
+  "@searchHint": {
+    "description": "Hint in the search field."
+  },
+  "searchStart": "Typ een of meer woorden. Het begin van een woord is genoeg.",
+  "@searchStart": {
+    "description": "Shown on the search screen before anything is typed; explains prefix search."
+  },
+  "searchNoResults": "Niets gevonden voor „{query}”",
+  "@searchNoResults": {
+    "description": "Shown when a search finds nothing.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchFailed": "Zoeken lukte niet. Probeer het opnieuw.",
+  "@searchFailed": {
+    "description": "Shown when searching failed."
+  },
+  "searchClear": "Wissen",
+  "@searchClear": {
+    "description": "Tooltip of the button that clears the search field."
+  },
+  "searchKindItem": "Item",
+  "@searchKindItem": {
+    "description": "Screen-reader label of the icon of an item in the search results."
+  },
+  "searchKindPerson": "Persoon",
+  "@searchKindPerson": {
+    "description": "Screen-reader label of the icon of a person in the search results."
+  },
+  "duplicateHint": "Lijkt op een ander item",
+  "@duplicateHint": {
+    "description": "Hint under an inbox item that nearly repeats an older item (REQ-053); opens the comparison."
+  },
+  "duplicateTitle": "Bestaat dit al?",
+  "@duplicateTitle": {
+    "description": "Title of the dialog comparing an item with the older item it looks like."
+  },
+  "duplicateThisItem": "Dit item",
+  "@duplicateThisItem": {
+    "description": "Label above the text of the new item in the comparison."
+  },
+  "duplicateOtherItem": "Lijkt op dit item van {date}, {time}",
+  "@duplicateOtherItem": {
+    "description": "Label above the older item in the comparison. Both placeholders get the same moment.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      },
+      "time": {
+        "type": "DateTime",
+        "format": "jm"
+      }
+    }
+  },
+  "duplicateIgnore": "Negeren",
+  "@duplicateIgnore": {
+    "description": "Button: these are not the same; the hint does not come back for this pair."
+  },
+  "duplicateClose": "Sluiten",
+  "@duplicateClose": {
+    "description": "Closes the comparison without a choice."
+  },
+  "duplicateIgnoreFailed": "Negeren is niet bewaard. Probeer het opnieuw.",
+  "@duplicateIgnoreFailed": {
+    "description": "Shown when storing the ignore choice failed."
+  },
+  "tokenSuggestionPickDate": "Kies een datum…",
+  "@tokenSuggestionPickDate": {
+    "description": "Last line of the date suggestions: opens a calendar; the chosen day goes into the text as a fixed date."
+  },
+  "itemStatusInbox": "Inbox",
+  "@itemStatusInbox": {
+    "description": "Item status: not processed yet."
+  },
+  "itemStatusActive": "Actief",
+  "@itemStatusActive": {
+    "description": "Item status: being worked on."
+  },
+  "itemStatusWaiting": "Wacht op",
+  "@itemStatusWaiting": {
+    "description": "Item status: waiting on someone else."
+  },
+  "itemStatusScheduled": "Gepland",
+  "@itemStatusScheduled": {
+    "description": "Item status: planned for later."
+  },
+  "itemStatusDone": "Afgerond",
+  "@itemStatusDone": {
+    "description": "Item status: completed."
+  },
+  "itemStatusArchived": "Gearchiveerd",
+  "@itemStatusArchived": {
+    "description": "Item status: done and put away."
+  },
+  "itemTypeNone": "Geen type",
+  "@itemTypeNone": {
+    "description": "Item without a type (REQ-018)."
+  },
+  "itemTypeTask": "Taak",
+  "@itemTypeTask": {
+    "description": "Item type."
+  },
+  "itemTypeRequest": "Verzoek",
+  "@itemTypeRequest": {
+    "description": "Item type: something someone asked."
+  },
+  "itemTypeIdea": "Idee",
+  "@itemTypeIdea": {
+    "description": "Item type."
+  },
+  "itemTypeNote": "Notitie",
+  "@itemTypeNote": {
+    "description": "Item type; also the triage button that keeps an item as a note."
+  },
+  "itemTypeKind": "type",
+  "@itemTypeKind": {
+    "description": "Screen-reader kind of the type chip on a card, read as 'type: Taak' (tokenChipSemantics)."
+  },
+  "itemStatusTooltip": "Status wijzigen",
+  "@itemStatusTooltip": {
+    "description": "Tooltip of the status chip in the item detail."
+  },
+  "itemTypeTooltip": "Type wijzigen",
+  "@itemTypeTooltip": {
+    "description": "Tooltip of the type chip in the item detail."
+  },
+  "itemComplete": "Afronden",
+  "@itemComplete": {
+    "description": "Button: mark the item done."
+  },
+  "itemReopen": "Heropenen",
+  "@itemReopen": {
+    "description": "Button: make a done or archived item active again."
+  },
+  "itemWaitFor": "Wachten op…",
+  "@itemWaitFor": {
+    "description": "Button: set the item to waiting (who comes later)."
+  },
+  "itemTextHint": "Tekst van het item",
+  "@itemTextHint": {
+    "description": "Hint in the text field of the item detail."
+  },
+  "itemTextEmpty": "Een item heeft tekst nodig. De vorige tekst blijft bewaard.",
+  "@itemTextEmpty": {
+    "description": "Shown under the text field when it is empty; nothing is saved."
+  },
+  "itemNoteLabel": "Notitie",
+  "@itemNoteLabel": {
+    "description": "Label above the note field of the item detail."
+  },
+  "itemNoteHint": "Notitie toevoegen",
+  "@itemNoteHint": {
+    "description": "Hint in the empty note field."
+  },
+  "navProjects": "Projecten",
+  "@navProjects": {
+    "description": "Destination Projects in the bottom bar and the rail, and the title of the project list (DD-018 point 6)."
+  },
+  "projectsWithout": "Zonder project",
+  "@projectsWithout": {
+    "description": "Fixed row at the top of the project list: the items that have no project."
+  },
+  "projectsArchived": "Gearchiveerd · {count}",
+  "@projectsArchived": {
+    "description": "Folded part at the bottom of the project list with the archived projects.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "projectsNew": "Nieuw project",
+  "@projectsNew": {
+    "description": "Tooltip of the + button in the project list, and title of the dialog that creates a project."
+  },
+  "projectsEmpty": "Nog geen projecten. Maak er een met +.",
+  "@projectsEmpty": {
+    "description": "Project list without any project."
+  },
+  "projectsOpenCount": "{count, plural, =1{1 open item} other{{count} open items}}",
+  "@projectsOpenCount": {
+    "description": "Screen-reader text for the number on a project row.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "projectsOverdueCount": "{count} verlopen",
+  "@projectsOverdueCount": {
+    "description": "The overdue count on a project row, for screen readers and as tooltip.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "projectGroup": "{group, select, inbox{Inbox} active{Actief} waiting{Wacht op} scheduled{Gepland} notes{Notities} other{Afgerond}} · {count}",
+  "@projectGroup": {
+    "description": "Header of a group of items in a project, by status (DD-018 point 6).",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "projectEmpty": "Nog niets in dit project.",
+  "@projectEmpty": {
+    "description": "A project without items and without sub-projects."
+  },
+  "projectRename": "Hernoemen",
+  "@projectRename": {
+    "description": "Project menu: rename."
+  },
+  "projectMove": "Verplaatsen…",
+  "@projectMove": {
+    "description": "Project menu: put the project under another one, or at the top level."
+  },
+  "projectArchive": "Archiveren",
+  "@projectArchive": {
+    "description": "Project menu: archive a finished project."
+  },
+  "projectRestore": "Terugzetten",
+  "@projectRestore": {
+    "description": "Menu of an archived project: bring it back."
+  },
+  "projectDelete": "Verwijderen",
+  "@projectDelete": {
+    "description": "Project menu: delete the project (its items stay)."
+  },
+  "projectMenuTooltip": "Projectacties",
+  "@projectMenuTooltip": {
+    "description": "Tooltip of the ⋮ menu of a project."
+  },
+  "projectRenameTitle": "Project hernoemen",
+  "@projectRenameTitle": {
+    "description": "Title of the rename dialog."
+  },
+  "projectNameLabel": "Naam",
+  "@projectNameLabel": {
+    "description": "Name field in the project dialogs."
+  },
+  "projectParentLabel": "Onder",
+  "@projectParentLabel": {
+    "description": "Choice of the parent project in the new-project dialog."
+  },
+  "projectTopLevel": "Bovenaan (geen hoofdproject)",
+  "@projectTopLevel": {
+    "description": "Parent choice: no parent project."
+  },
+  "projectMoveTitle": "Verplaatsen naar",
+  "@projectMoveTitle": {
+    "description": "Title of the move dialog."
+  },
+  "projectCreate": "Maken",
+  "@projectCreate": {
+    "description": "Button that creates a project."
+  },
+  "projectSave": "Opslaan",
+  "@projectSave": {
+    "description": "Button that saves a renamed project."
+  },
+  "projectCancel": "Annuleren",
+  "@projectCancel": {
+    "description": "Closes a project dialog without a change."
+  },
+  "projectDeleteTitle": "{name} verwijderen?",
+  "@projectDeleteTitle": {
+    "description": "Title of the confirmation before deleting a project.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "projectDeleteBody": "De items blijven bestaan en raken dit project kwijt. Deelprojecten komen bovenaan te staan. Je kunt het meteen ongedaan maken.",
+  "@projectDeleteBody": {
+    "description": "Body of the confirmation before deleting a project."
+  },
+  "projectDeleted": "Project verwijderd",
+  "@projectDeleted": {
+    "description": "Message after deleting a project, with Undo."
+  },
+  "projectArchived": "Project gearchiveerd",
+  "@projectArchived": {
+    "description": "Message after archiving a project, with Undo."
+  },
+  "projectRestored": "Project teruggezet",
+  "@projectRestored": {
+    "description": "Message after restoring a project from the archive."
+  },
+  "projectErrorNameTaken": "Er is al een project met deze naam.",
+  "@projectErrorNameTaken": {
+    "description": "A project name that is taken under the same parent."
+  },
+  "projectErrorEmptyName": "Geef het project een naam.",
+  "@projectErrorEmptyName": {
+    "description": "An empty project name."
+  },
+  "projectErrorTooDeep": "Dat kan niet: projecten hebben hoogstens twee niveaus.",
+  "@projectErrorTooDeep": {
+    "description": "A change that would make a third level of projects."
+  },
+  "projectErrorNotAvailable": "Dit project bestaat niet meer of is gearchiveerd.",
+  "@projectErrorNotAvailable": {
+    "description": "A change to a project that is deleted or archived."
+  },
+  "projectChangeFailed": "Dat is niet gelukt. Probeer het nog eens.",
+  "@projectChangeFailed": {
+    "description": "Any other failure of a project change."
+  },
+  "projectPickerTitle": "Project",
+  "@projectPickerTitle": {
+    "description": "Title of the sheet that chooses the project of an item."
+  },
+  "projectPickerHint": "Zoek of typ een nieuwe naam",
+  "@projectPickerHint": {
+    "description": "Filter field in the project sheet."
+  },
+  "projectNone": "Geen project",
+  "@projectNone": {
+    "description": "The choice \"no project\", and the project chip of an item without one."
+  },
+  "projectNewNamed": "Nieuw project: {name}",
+  "@projectNewNamed": {
+    "description": "Creates a project with the typed name and chooses it.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "projectNewEllipsis": "Nieuw project…",
+  "@projectNewEllipsis": {
+    "description": "Opens the dialog for a new project from the project sheet."
+  },
+  "projectChipTooltip": "Project kiezen",
+  "@projectChipTooltip": {
+    "description": "Tooltip of the project chip in the item detail and on the triage card."
+  },
+  "projectArchivedName": "{name} (gearchiveerd)",
+  "@projectArchivedName": {
+    "description": "An archived project on the chip of an item that still belongs to it.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "projectPath": "{parent} › {name}",
+  "@projectPath": {
+    "description": "The full path of a sub-project, e.g. in a tooltip.",
+    "placeholders": {
+      "parent": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "projectKind": "project",
+  "@projectKind": {
+    "description": "Kind of chip for screen readers, before the project name (\"project: Renovatie\")."
+  },
+  "projectSubprojects": "Deelprojecten",
+  "@projectSubprojects": {
+    "description": "Screen-reader label of the row of sub-project chips."
+  },
+  "itemShare": "Delen",
+  "@itemShare": {
+    "description": "Share icon in the top bar of the item detail (tooltip) and the button that opens the Android share menu (REQ-043)."
+  },
+  "itemShareTitle": "Item delen",
+  "@itemShareTitle": {
+    "description": "Title of the share preview."
+  },
+  "itemShareIncludeTags": "Tags meenemen",
+  "@itemShareIncludeTags": {
+    "description": "Switch in the share preview: keep the #tags in the shared text (left out by default, AC REQ-043)."
+  },
+  "itemShareAsTyped": "Zoals getypt (voor Offload)",
+  "@itemShareAsTyped": {
+    "description": "Switch in the share preview: share the text with all tokens and fixed dates, so Offload on another device makes an item with the same text and tokens (T2.7a)."
+  },
+  "itemShareAsTypedHint": "Met @, #, ^, * en vaste datums: Offload op een ander toestel maakt er een item met dezelfde tekst en tokens van.",
+  "@itemShareAsTypedHint": {
+    "description": "Second line of the switch Zoals getypt (voor Offload)."
+  },
+  "itemShareHelper": "Wat je hier aanpast, verandert het item niet.",
+  "@itemShareHelper": {
+    "description": "Under the editable text in the share preview (AC REQ-043)."
+  },
+  "itemShareCopy": "Kopiëren",
+  "@itemShareCopy": {
+    "description": "Windows: copies the shared text to the clipboard."
+  },
+  "itemShareSaveAs": "Opslaan als…",
+  "@itemShareSaveAs": {
+    "description": "Windows: saves the shared text as a text file through the save window."
+  },
+  "itemShareCancel": "Annuleren",
+  "@itemShareCancel": {
+    "description": "Closes the share preview without sharing."
+  },
+  "itemShareCopied": "Gekopieerd naar het klembord",
+  "@itemShareCopied": {
+    "description": "Message after copying the shared text."
+  },
+  "itemShareSaved": "Opgeslagen",
+  "@itemShareSaved": {
+    "description": "Message after saving the shared text as a file."
+  },
+  "itemShareFailed": "Delen is niet gelukt. Probeer het nog eens.",
+  "@itemShareFailed": {
+    "description": "Message when sharing, copying or saving failed."
+  },
+  "itemShareFileType": "Tekstbestand",
+  "@itemShareFileType": {
+    "description": "Windows: name of the file type (.txt) in the save window."
+  },
+  "itemShareDate": "{date}",
+  "@itemShareDate": {
+    "description": "A date token written out in the shared text, this year: e.g. 'vrijdag 2 oktober'.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMMEEEEd"
+      }
+    }
+  },
+  "itemShareDateWithYear": "{date}",
+  "@itemShareDateWithYear": {
+    "description": "A date token written out in the shared text, another year: e.g. 'vrijdag 1 januari 2027'.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMEEEEd"
+      }
+    }
+  },
+  "itemMoveToTrash": "Naar de prullenbak",
+  "@itemMoveToTrash": {
+    "description": "Menu action in the item detail."
+  },
+  "itemMovedToTrash": "Naar de prullenbak verplaatst",
+  "@itemMovedToTrash": {
+    "description": "Message after moving an item to the trash."
+  },
+  "itemUndo": "Ongedaan maken",
+  "@itemUndo": {
+    "description": "Action in the message after moving to the trash."
+  },
+  "itemSaveFailed": "Opslaan is mislukt. Je wijziging staat er nog; probeer het opnieuw.",
+  "@itemSaveFailed": {
+    "description": "Shown in the item detail when saving an edit failed."
+  },
+  "itemGone": "Dit item staat in de prullenbak of bestaat niet meer.",
+  "@itemGone": {
+    "description": "Shown when an opened item is gone."
+  },
+  "itemCapturedVia": "Vastgelegd {date}, {time} via {source}",
+  "@itemCapturedVia": {
+    "description": "Bottom line of the item detail; source is one of the itemSource* texts.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      },
+      "time": {
+        "type": "DateTime",
+        "format": "jm"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "itemSourceApp": "de app",
+  "@itemSourceApp": {
+    "description": "Capture source, completes 'via …'."
+  },
+  "itemSourceWidget": "de widget",
+  "@itemSourceWidget": {
+    "description": "Capture source, completes 'via …'."
+  },
+  "itemSourceShare": "delen",
+  "@itemSourceShare": {
+    "description": "Capture source, completes 'via …'."
+  },
+  "itemSourceHotkey": "de sneltoets",
+  "@itemSourceHotkey": {
+    "description": "Capture source, completes 'via …'."
+  },
+  "itemSourceTray": "het systeemvak",
+  "@itemSourceTray": {
+    "description": "Capture source, completes 'via …'."
+  },
+  "itemSourceVoice": "spraak",
+  "@itemSourceVoice": {
+    "description": "Capture source, completes 'via …'."
+  },
+  "duplicateOpen": "Openen",
+  "@duplicateOpen": {
+    "description": "Opens the older item from the duplicate hint."
+  },
+  "inboxMoreLines": "{count, plural, =1{+ 1 regel} other{+ {count} regels}}",
+  "@inboxMoreLines": {
+    "description": "Under the title of an inbox card: how many more non-empty lines the text has (DD-018 point 2).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ageJustNow": "zojuist",
+  "@ageJustNow": {
+    "description": "Relative time on an inbox card: less than a minute ago (DD-018 point 2)."
+  },
+  "ageMinutes": "{count} min",
+  "@ageMinutes": {
+    "description": "Relative time on an inbox card: minutes ago, short.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ageHours": "{count} u",
+  "@ageHours": {
+    "description": "Relative time on an inbox card: hours ago today, short.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ageYesterday": "gisteren",
+  "@ageYesterday": {
+    "description": "Relative time on an inbox card: the previous calendar day."
+  },
+  "ageDays": "{count} d",
+  "@ageDays": {
+    "description": "Relative time on an inbox card: days ago (2 to 6), short.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ageDate": "{date}",
+  "@ageDate": {
+    "description": "Relative time on an inbox card: a week or longer ago, the date, short.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "ageMinutesLong": "{count, plural, =1{1 minuut geleden} other{{count} minuten geleden}}",
+  "@ageMinutesLong": {
+    "description": "Relative time for screen readers: minutes ago, written out.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ageHoursLong": "{count, plural, =1{1 uur geleden} other{{count} uur geleden}}",
+  "@ageHoursLong": {
+    "description": "Relative time for screen readers: hours ago, written out.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ageDaysLong": "{count, plural, =1{1 dag geleden} other{{count} dagen geleden}}",
+  "@ageDaysLong": {
+    "description": "Relative time for screen readers: days ago, written out.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ageDateLong": "op {date}",
+  "@ageDateLong": {
+    "description": "Relative time for screen readers: a week or longer ago, the full date.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMEEEEd"
+      }
+    }
+  },
+  "inboxTriage": "Verwerken · {count}",
+  "@inboxTriage": {
+    "description": "Button at the top of the inbox that starts triage, card by card (T2.4, DD-018 point 3), with the number of inbox items.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "triageTitle": "Verwerken",
+  "@triageTitle": {
+    "description": "Title of the triage screen."
+  },
+  "triageProgress": "{position} van {total}",
+  "@triageProgress": {
+    "description": "Progress in triage: the card being handled and the total.",
+    "placeholders": {
+      "position": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "triageStop": "Stoppen",
+  "@triageStop": {
+    "description": "Tooltip of the close button of triage; what was chosen stays."
+  },
+  "triageWaitFor": "Wacht op",
+  "@triageWaitFor": {
+    "description": "Triage button: waiting for someone (status waiting, asks for whom)."
+  },
+  "triageTrash": "Prullenbak",
+  "@triageTrash": {
+    "description": "Triage button and screen-reader action: to the trash."
+  },
+  "triageSkip": "Overslaan",
+  "@triageSkip": {
+    "description": "Skip this card (it stays in the inbox); also in the person sheet: go on without a person."
+  },
+  "triageOpen": "Openen",
+  "@triageOpen": {
+    "description": "Opens the item of the card in the item detail."
+  },
+  "triageWhoAsked": "Wie vroeg dit?",
+  "@triageWhoAsked": {
+    "description": "Title of the person sheet after Request."
+  },
+  "triageWaitingOn": "Op wie wacht je?",
+  "@triageWaitingOn": {
+    "description": "Title of the person sheet after Wait for."
+  },
+  "triagePersonHint": "Naam",
+  "@triagePersonHint": {
+    "description": "Hint in the name field of the person sheet."
+  },
+  "triagePersonDone": "Klaar",
+  "@triagePersonDone": {
+    "description": "Confirms the person in the sheet."
+  },
+  "triageMovedTo": "Naar {destination}",
+  "@triageMovedTo": {
+    "description": "Message after a triage choice, with Undo.",
+    "placeholders": {
+      "destination": {
+        "type": "String"
+      }
+    }
+  },
+  "triageDoneTitle": "Alles heeft een plek",
+  "@triageDoneTitle": {
+    "description": "End of triage: every card has been handled."
+  },
+  "triageDoneProcessed": "{count, plural, =1{1 verwerkt} other{{count} verwerkt}}",
+  "@triageDoneProcessed": {
+    "description": "End of triage: how many cards got a destination.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "triageDoneSkipped": "{count, plural, =1{1 overgeslagen, die staat nog in je inbox} other{{count} overgeslagen, die staan nog in je inbox}}",
+  "@triageDoneSkipped": {
+    "description": "End of triage: how many cards were skipped; only shown when there are any.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "triageDeleteKey": "Del",
+  "@triageDeleteKey": {
+    "description": "Name of the Delete key on the trash button of triage (Windows)."
+  },
+  "triageButtonWithKey": "{label}  {key}",
+  "@triageButtonWithKey": {
+    "description": "A triage button on Windows: its label and its key (1-5, Del).",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "triageBackToInbox": "Terug naar de inbox",
+  "@triageBackToInbox": {
+    "description": "Button on the end screen of triage."
+  },
+  "inboxStatusAndTime": "{status} · {when}",
+  "@inboxStatusAndTime": {
+    "description": "Subtitle of a processed item in the inbox list: its status and when it was captured.",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "itemChangeFailed": "Wijzigen is mislukt. Probeer het opnieuw.",
+  "@itemChangeFailed": {
+    "description": "Shown when changing status or type, or moving to the trash, failed."
+  },
+  "itemUndoFailed": "Ongedaan maken is mislukt; het item staat nog in de prullenbak.",
+  "@itemUndoFailed": {
+    "description": "Shown when taking an item out of the trash failed."
+  },
+  "navToday": "Vandaag",
+  "@navToday": {
+    "description": "Navigation destination and title of the Today screen (DD-011, DD-018 point 4)."
+  },
+  "navInboxBadge": "{count, plural, =0{geen onverwerkte items} =1{1 onverwerkt item} other{{count} onverwerkte items}}",
+  "@navInboxBadge": {
+    "description": "Screen-reader text of the badge on the Inbox destination, read with its label 'Inbox': the number of unprocessed items (DD-018 point 5).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayDate": "{date}",
+  "@todayDate": {
+    "description": "Today's date next to the title of the Today screen, short (e.g. 'ma 28 sep').",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "todayInboxLine": "{count, plural, =1{1 in je inbox} other{{count} in je inbox}}",
+  "@todayInboxLine": {
+    "description": "Line at the top of Today: how many items wait in the inbox; tapping it goes to the Inbox.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayProcess": "Verwerken",
+  "@todayProcess": {
+    "description": "Button on the inbox line of Today: starts triage."
+  },
+  "todayOverdue": "Verlopen · {count}",
+  "@todayOverdue": {
+    "description": "Section header on Today: items whose deadline has passed, with their number.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayDueToday": "Vandaag · {count}",
+  "@todayDueToday": {
+    "description": "Section header on Today: items due today, with their number.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayEmptyTitle": "Niets voor vandaag",
+  "@todayEmptyTitle": {
+    "description": "Today with nothing due: a positive confirmation, never a blank screen."
+  },
+  "todayEmptyText": "Geen deadlines vandaag en niets verlopen.",
+  "@todayEmptyText": {
+    "description": "Explanation under 'Niets voor vandaag'."
+  },
+  "todayLoadFailed": "Vandaag kon niet worden geladen.",
+  "@todayLoadFailed": {
+    "description": "Shown when the items for Today cannot be read."
+  },
+  "itemCompleted": "Afgerond",
+  "@itemCompleted": {
+    "description": "Message after completing an item from Today, with an Undo button."
+  },
+  "triageBack": "Terug",
+  "@triageBack": {
+    "description": "End button of triage started from Today: back to Today."
+  },
+  "panesChooseItem": "Kies een item",
+  "@panesChooseItem": {
+    "description": "Detail pane on Windows with nothing selected (DD-018 point 5)."
+  },
+  "panesChooseHint": "Met de muis, of met ↑ en ↓ in de lijst.",
+  "@panesChooseHint": {
+    "description": "Hint under 'Kies een item': how to select a card."
+  },
+  "navPeople": "Personen",
+  "@navPeople": {
+    "description": "Destination People in the bottom bar and the rail, and the title of the people list (DD-018 point 7)."
+  },
+  "peopleFilterHint": "Zoek een persoon",
+  "@peopleFilterHint": {
+    "description": "Hint in the filter field above the people list; it matches names and aliases."
+  },
+  "peopleEmpty": "Nog geen personen. Noem iemand met @naam bij het vastleggen.",
+  "@peopleEmpty": {
+    "description": "People list without any person."
+  },
+  "peopleNoMatch": "Niemand gevonden.",
+  "@peopleNoMatch": {
+    "description": "People list when the filter matches nobody."
+  },
+  "personAliases": "ook: {aliases}",
+  "@personAliases": {
+    "description": "Under the name on a person screen: the other names the person is found by.",
+    "placeholders": {
+      "aliases": {
+        "type": "String"
+      }
+    }
+  },
+  "personList": "{list, select, requestedBy{Gevraagd door {name}} waitingFor{Wacht op {name}} other{Genoemd in}} · {count}",
+  "@personList": {
+    "description": "Header of a list on a person screen with its number of open items (DD-018 point 7).",
+    "placeholders": {
+      "list": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "personEmpty": "Nog niets met deze persoon.",
+  "@personEmpty": {
+    "description": "Person screen without any linked item."
+  },
+  "personMenuTooltip": "Persoonacties",
+  "@personMenuTooltip": {
+    "description": "Tooltip of the menu on a person screen."
+  },
+  "personRename": "Hernoemen",
+  "@personRename": {
+    "description": "Menu entry on a person screen."
+  },
+  "personRenameTitle": "Persoon hernoemen",
+  "@personRenameTitle": {
+    "description": "Title of the rename dialog."
+  },
+  "personNameLabel": "Naam",
+  "@personNameLabel": {
+    "description": "Label of the name field in the rename dialog."
+  },
+  "personRenameKeeps": "\"{name}\" blijft werken als bijnaam.",
+  "@personRenameKeeps": {
+    "description": "Under the name field in the rename dialog: the old name becomes an alias (DD-015).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "personSave": "Opslaan",
+  "@personSave": {
+    "description": "Confirm button of the rename dialog."
+  },
+  "personCancel": "Annuleren",
+  "@personCancel": {
+    "description": "Cancel button of the rename dialog."
+  },
+  "personErrorEmptyName": "Geef een naam.",
+  "@personErrorEmptyName": {
+    "description": "Rename refused: the name is empty."
+  },
+  "personErrorNameTaken": "Er is al een persoon die zo heet.",
+  "@personErrorNameTaken": {
+    "description": "Rename refused: the name or an alias of another person (merging comes later)."
+  },
+  "personErrorNotAvailable": "Deze persoon bestaat niet meer.",
+  "@personErrorNotAvailable": {
+    "description": "A change refused because the person was deleted."
+  },
+  "personRequesterKind": "Gevraagd door",
+  "@personRequesterKind": {
+    "description": "Kind of the requester chip, for screen readers and as tooltip."
+  },
+  "personWaitingKind": "Wacht op",
+  "@personWaitingKind": {
+    "description": "Kind of the waiting-for chip, for screen readers and as tooltip."
+  },
+  "personOpen": "{name} openen",
+  "@personOpen": {
+    "description": "Menu entry of a person chip in the item detail: opens the person.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "personChange": "Andere persoon…",
+  "@personChange": {
+    "description": "Menu entry of a person chip in the item detail: choose another person."
+  },
+  "personRemove": "Weghalen",
+  "@personRemove": {
+    "description": "Menu entry of a person chip in the item detail: the item no longer has this person."
+  },
+  "personInText": "in de tekst",
+  "@personInText": {
+    "description": "In the person sheet, after a person named with @ in the item text."
+  },
+  "personErrorSamePerson": "Kies een andere persoon.",
+  "@personErrorSamePerson": {
+    "description": "Merge refused: a person cannot be merged with themselves."
+  },
+  "personMerge": "Samenvoegen met…",
+  "@personMerge": {
+    "description": "Menu entry on a person screen: merge this person into another (DD-015, T3.2b)."
+  },
+  "personMergePickerTitle": "{name} samenvoegen met",
+  "@personMergePickerTitle": {
+    "description": "Title of the list that chooses the person to merge into.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "personMergeNoOthers": "Er is nog niemand anders.",
+  "@personMergeNoOthers": {
+    "description": "The merge list when there is no other person."
+  },
+  "personMergeTitle": "Personen samenvoegen?",
+  "@personMergeTitle": {
+    "description": "Title of the confirmation before merging."
+  },
+  "personMergeBody": "{from} samenvoegen met {into}? Alle items en bijnamen gaan naar {into}; \"{from}\" blijft werken als bijnaam.",
+  "@personMergeBody": {
+    "description": "Body of the confirmation before merging person {from} into {into}.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "into": {
+        "type": "String"
+      }
+    }
+  },
+  "personMergeConfirm": "Samenvoegen",
+  "@personMergeConfirm": {
+    "description": "Confirm button of the merge confirmation."
+  },
+  "personMerged": "{from} is samengevoegd met {into}",
+  "@personMerged": {
+    "description": "Message after merging, with Undo.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "into": {
+        "type": "String"
+      }
+    }
+  },
+  "personMergeWith": "Samenvoegen met {name}…",
+  "@personMergeWith": {
+    "description": "Button in the rename dialog when the name belongs to another person.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "personMergeUndoFailed": "Ongedaan maken is mislukt; de personen blijven samengevoegd.",
+  "@personMergeUndoFailed": {
+    "description": "Message when undoing a merge of people failed."
+  },
+  "personBirthdayAdd": "Verjaardag toevoegen",
+  "@personBirthdayAdd": {
+    "description": "On a person screen without a birthday: opens the birthday dialog (REQ-031)."
+  },
+  "personBirthday": "{date}",
+  "@personBirthday": {
+    "description": "A birthday without a year, e.g. \"3 april\".",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMMd"
+      }
+    }
+  },
+  "personBirthdayWithAge": "{date} · {age, plural, =1{1 jaar} other{{age} jaar}}",
+  "@personBirthdayWithAge": {
+    "description": "A birthday with its year and the age now, e.g. \"3 april 1980 · 46 jaar\".",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd"
+      },
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "personBirthdayTitle": "Verjaardag",
+  "@personBirthdayTitle": {
+    "description": "Title of the birthday dialog, and the kind for screen readers."
+  },
+  "personBirthdayTooltip": "Verjaardag wijzigen",
+  "@personBirthdayTooltip": {
+    "description": "Tooltip and screen-reader hint of the birthday line on a person screen."
+  },
+  "personBirthdayDay": "Dag",
+  "@personBirthdayDay": {
+    "description": "Label of the day field in the birthday dialog."
+  },
+  "personBirthdayMonth": "Maand",
+  "@personBirthdayMonth": {
+    "description": "Label of the month choice in the birthday dialog."
+  },
+  "personBirthdayYear": "Jaar (optioneel)",
+  "@personBirthdayYear": {
+    "description": "Label of the year field in the birthday dialog."
+  },
+  "personMonthName": "{date}",
+  "@personMonthName": {
+    "description": "A month name in the month choice of the birthday dialog.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMM"
+      }
+    }
+  },
+  "personBirthdayInvalid": "Deze datum bestaat niet.",
+  "@personBirthdayInvalid": {
+    "description": "Birthday dialog: the day, month and year give no real date."
+  },
+  "personNoteLabel": "Notitie",
+  "@personNoteLabel": {
+    "description": "Label of the note field on a person screen (REQ-031)."
+  },
+  "personNoteHint": "Wat je over deze persoon wilt onthouden",
+  "@personNoteHint": {
+    "description": "Hint in the empty note field on a person screen."
+  },
+  "personBirthdaySemantics": "Verjaardag: {value}",
+  "@personBirthdaySemantics": {
+    "description": "Screen-reader label of the birthday line on a person screen.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewTitle": "Weekoverzicht",
+  "@reviewTitle": {
+    "description": "Title of the weekly review, and the tooltip of its icon at the top of Today (REQ-013, DD-018 point 8)."
+  },
+  "reviewStartTooltipWithKey": "Weekoverzicht (Ctrl+Shift+W)",
+  "@reviewStartTooltipWithKey": {
+    "description": "Windows: tooltip of the weekly review icon at the top of Today, naming its key (DD-018 point 8)."
+  },
+  "todayReviewLine": "Weekoverzicht · laatste {days} d geleden",
+  "@todayReviewLine": {
+    "description": "Today: line shown while a weekly review is due; days since the last completed review, short (DD-018 point 4).",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "todayReviewLineLabel": "Weekoverzicht, laatste keer {days, plural, =1{1 dag} other{{days} dagen}} geleden",
+  "@todayReviewLineLabel": {
+    "description": "Today: what a screen reader says for the weekly review line, the age in words (REQ-016).",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "todayReviewLineNever": "Weekoverzicht · nog niet gedaan",
+  "@todayReviewLineNever": {
+    "description": "Today: the weekly review line when no review was completed yet."
+  },
+  "todayReviewLineNeverLabel": "Weekoverzicht, nog niet gedaan",
+  "@todayReviewLineNeverLabel": {
+    "description": "Today: what a screen reader says for the weekly review line when no review was completed yet."
+  },
+  "reviewClose": "Weekoverzicht sluiten",
+  "@reviewClose": {
+    "description": "Tooltip of the close button of the weekly review."
+  },
+  "reviewStart": "Beginnen",
+  "@reviewStart": {
+    "description": "Button on the start screen of the weekly review."
+  },
+  "reviewStepInbox": "Inbox leeg maken",
+  "@reviewStepInbox": {
+    "description": "Step 1 of the weekly review."
+  },
+  "reviewStepWaiting": "Wacht op doorlopen",
+  "@reviewStepWaiting": {
+    "description": "Step 2 of the weekly review."
+  },
+  "reviewStepDeadlines": "Deadlines",
+  "@reviewStepDeadlines": {
+    "description": "Step 3 of the weekly review."
+  },
+  "reviewStepStale": "Stilgevallen",
+  "@reviewStepStale": {
+    "description": "Step 4 of the weekly review: items not touched for a while."
+  },
+  "reviewInboxCount": "{count, plural, =1{1 item te verwerken} other{{count} items te verwerken}}",
+  "@reviewInboxCount": {
+    "description": "Start screen, step 1.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewWaitingCount": "{count, plural, =1{1 item} other{{count} items}}",
+  "@reviewWaitingCount": {
+    "description": "Start screen, step 2.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewDeadlinesCount": "{overdue} verlopen · {upcoming} in de komende 2 weken",
+  "@reviewDeadlinesCount": {
+    "description": "Start screen, step 3.",
+    "placeholders": {
+      "overdue": {
+        "type": "int"
+      },
+      "upcoming": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewStaleCount": "{count, plural, =1{1 item} other{{count} items}}, {weeks, plural, =1{1 week} other{{weeks} weken}} of langer niet aangeraakt",
+  "@reviewStaleCount": {
+    "description": "Start screen, step 4.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewNothing": "✓ niets te doen",
+  "@reviewNothing": {
+    "description": "Start screen: a step with nothing to do, which is skipped."
+  },
+  "reviewStepOf": "{step} / {total}",
+  "@reviewStepOf": {
+    "description": "Which step of how many, in the top bar.",
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewPrevious": "Vorige",
+  "@reviewPrevious": {
+    "description": "Button: the previous step."
+  },
+  "reviewNext": "Volgende",
+  "@reviewNext": {
+    "description": "Button: the next step."
+  },
+  "reviewFinish": "Klaar",
+  "@reviewFinish": {
+    "description": "Button on the last step."
+  },
+  "reviewInboxEmpty": "✓ De inbox is leeg",
+  "@reviewInboxEmpty": {
+    "description": "Step 1 when there is nothing to process."
+  },
+  "reviewProcess": "Verwerken",
+  "@reviewProcess": {
+    "description": "Step 1: starts the triage."
+  },
+  "reviewStillWaiting": "Wacht nog",
+  "@reviewStillWaiting": {
+    "description": "Step 2, per card: you looked and still wait (records the moment)."
+  },
+  "reviewKeep": "Houden",
+  "@reviewKeep": {
+    "description": "Step 4, per card: keep it as it is (records the moment)."
+  },
+  "reviewArchive": "Archiveren",
+  "@reviewArchive": {
+    "description": "Step 4, per card: archive with undo."
+  },
+  "reviewArchived": "Gearchiveerd",
+  "@reviewArchived": {
+    "description": "Message after archiving from the weekly review, with undo."
+  },
+  "reviewHandledWaiting": "✓ Wacht nog",
+  "@reviewHandledWaiting": {
+    "description": "A handled card in step 2."
+  },
+  "reviewHandledKept": "✓ Gehouden",
+  "@reviewHandledKept": {
+    "description": "A handled card in step 4."
+  },
+  "reviewHandledDone": "✓ Afgerond",
+  "@reviewHandledDone": {
+    "description": "A card completed in the review."
+  },
+  "reviewHandledArchived": "✓ Gearchiveerd",
+  "@reviewHandledArchived": {
+    "description": "A card archived in the review."
+  },
+  "reviewHandledTrashed": "✓ In de prullenbak",
+  "@reviewHandledTrashed": {
+    "description": "A card sent to the trash in the review."
+  },
+  "reviewAgeDays": "{days, plural, =1{1 dag niet aangeraakt} other{{days} dagen niet aangeraakt}}",
+  "@reviewAgeDays": {
+    "description": "How long an item was not touched, under two weeks.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewAgeWeeks": "{weeks} weken niet aangeraakt",
+  "@reviewAgeWeeks": {
+    "description": "How long an item was not touched, two weeks or more.",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewOverdue": "Verlopen · {count}",
+  "@reviewOverdue": {
+    "description": "Step 3: header of the overdue items.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewUpcoming": "Komende 2 weken · {count}",
+  "@reviewUpcoming": {
+    "description": "Step 3: header of the items due from today up to 14 days ahead.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewStaleHeader": "{weeks, plural, =1{1 week} other{{weeks} weken}} of langer niet aangeraakt · {count}",
+  "@reviewStaleHeader": {
+    "description": "Step 4: header with X and the number of items.",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewEndTitle": "Klaar ✓",
+  "@reviewEndTitle": {
+    "description": "End screen of the weekly review."
+  },
+  "reviewEndKept": "{count} gehouden",
+  "@reviewEndKept": {
+    "description": "End screen: how many items were kept or still waited for.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewEndDone": "{count} afgerond",
+  "@reviewEndDone": {
+    "description": "End screen: how many items were completed.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewEndArchived": "{count} gearchiveerd",
+  "@reviewEndArchived": {
+    "description": "End screen: how many items were archived.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewEndTrashed": "{count} in de prullenbak",
+  "@reviewEndTrashed": {
+    "description": "End screen: how many items went to the trash.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewEndNothing": "Alles was al bij.",
+  "@reviewEndNothing": {
+    "description": "End screen when nothing was changed."
+  },
+  "reviewEndBack": "Naar Vandaag",
+  "@reviewEndBack": {
+    "description": "End screen: back to Today."
+  },
+  "settingsReviewHeader": "Weekoverzicht",
+  "@settingsReviewHeader": {
+    "description": "Settings: section of the weekly review."
+  },
+  "settingsStaleAfter": "Stilgevallen na",
+  "@settingsStaleAfter": {
+    "description": "Settings: after how many weeks an untouched open item is stale (AC REQ-051)."
+  },
+  "settingsStaleAfterHint": "Een open item dat zo lang niet is aangeraakt, komt in de laatste stap van het weekoverzicht.",
+  "@settingsStaleAfterHint": {
+    "description": "Settings: explanation under Stale after."
+  },
+  "settingsReviewDueAfter": "Aan de beurt na",
+  "@settingsReviewDueAfter": {
+    "description": "Settings: after how many days since the last completed weekly review a new one is due (DD-018 point 8)."
+  },
+  "settingsReviewDueAfterHint": "Zo lang na het laatste afgeronde weekoverzicht toont Vandaag een regel om het te starten.",
+  "@settingsReviewDueAfterHint": {
+    "description": "Settings: explanation under Due again after."
+  },
+  "settingsDays": "{days, plural, =1{1 dag} other{{days} dagen}}",
+  "@settingsDays": {
+    "description": "Settings: a number of days in the Due again after choice.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsWeeks": "{weeks, plural, =1{1 week} other{{weeks} weken}}",
+  "@settingsWeeks": {
+    "description": "Settings: a number of weeks in the Stale after choice.",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsSaveFailed": "Opslaan is mislukt; de keuze geldt tot de app opnieuw start.",
+  "@settingsSaveFailed": {
+    "description": "Settings: storing a choice failed (Stale after, Due again after)."
+  },
+  "reviewEndWaiting": "{count} wacht nog",
+  "@reviewEndWaiting": {
+    "description": "End screen: for how many items you still wait.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "personWorkAdd": "Functie en organisatie toevoegen",
+  "@personWorkAdd": {
+    "description": "Person profile: the line when neither job title nor organisation is set (DD-018 point 9)."
+  },
+  "personWorkTooltip": "Functie en organisatie wijzigen",
+  "@personWorkTooltip": {
+    "description": "Person profile: tooltip of the job title and organisation line."
+  },
+  "personWorkSemantics": "Functie en organisatie: {value}",
+  "@personWorkSemantics": {
+    "description": "Person profile: what a screen reader says for the job title and organisation line.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "personWork": "{jobTitle} · {organisation}",
+  "@personWork": {
+    "description": "Person profile: job title and organisation on one line, job title first.",
+    "placeholders": {
+      "jobTitle": {
+        "type": "String"
+      },
+      "organisation": {
+        "type": "String"
+      }
+    }
+  },
+  "personWorkTitle": "Functie en organisatie",
+  "@personWorkTitle": {
+    "description": "Title of the dialog for job title and organisation."
+  },
+  "personJobTitle": "Functie",
+  "@personJobTitle": {
+    "description": "Field: the job title of a person (REQ-038)."
+  },
+  "personOrganisation": "Organisatie",
+  "@personOrganisation": {
+    "description": "Field: the organisation of a person (REQ-038)."
+  },
+  "contactSection": "Contactgegevens",
+  "@contactSection": {
+    "description": "Person profile: header of the phone numbers and email addresses (REQ-038, DD-018 point 9)."
+  },
+  "contactKindPhone": "Telefoonnummer",
+  "@contactKindPhone": {
+    "description": "A phone number: the add button, the field label and the kind a screen reader says."
+  },
+  "contactKindEmail": "E-mailadres",
+  "@contactKindEmail": {
+    "description": "An email address: the add button, the field label and the kind a screen reader says."
+  },
+  "contactAddPhone": "Telefoonnummer toevoegen",
+  "@contactAddPhone": {
+    "description": "Title of the sheet, and tooltip of the button, for a new phone number."
+  },
+  "contactAddEmail": "E-mailadres toevoegen",
+  "@contactAddEmail": {
+    "description": "Title of the sheet, and tooltip of the button, for a new email address."
+  },
+  "contactEditPhone": "Telefoonnummer wijzigen",
+  "@contactEditPhone": {
+    "description": "Title of the sheet for changing a phone number."
+  },
+  "contactEditEmail": "E-mailadres wijzigen",
+  "@contactEditEmail": {
+    "description": "Title of the sheet for changing an email address."
+  },
+  "contactStandardLabel": "{label, select, work{Werk} mobile{Mobiel} private{Privé} other{Anders}}",
+  "@contactStandardLabel": {
+    "description": "A standard label of a contact detail, shown translated (PO decision 02-10-2026).",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "contactOwnLabel": "Eigen label…",
+  "@contactOwnLabel": {
+    "description": "Sheet: the chip that opens a text field for an own label."
+  },
+  "contactOwnLabelField": "Label",
+  "@contactOwnLabelField": {
+    "description": "Sheet: the text field of an own label."
+  },
+  "contactInvalidPhone": "Dit lijkt geen telefoonnummer.",
+  "@contactInvalidPhone": {
+    "description": "Sheet: the value is not a phone number (digits, spaces and + ( ) . / - only, at least three digits)."
+  },
+  "contactInvalidEmail": "Dit lijkt geen e-mailadres.",
+  "@contactInvalidEmail": {
+    "description": "Sheet: the value is not an email address."
+  },
+  "contactEmpty": "Vul iets in.",
+  "@contactEmpty": {
+    "description": "Sheet: the value is empty."
+  },
+  "contactMenuTooltip": "Acties",
+  "@contactMenuTooltip": {
+    "description": "Tooltip of ⋮ on a contact detail."
+  },
+  "contactCopy": "Kopiëren",
+  "@contactCopy": {
+    "description": "Menu of a contact detail: copy the value."
+  },
+  "contactCopied": "Gekopieerd",
+  "@contactCopied": {
+    "description": "Message after copying a contact detail."
+  },
+  "contactEdit": "Wijzigen…",
+  "@contactEdit": {
+    "description": "Menu of a contact detail: change it."
+  },
+  "contactDelete": "Verwijderen",
+  "@contactDelete": {
+    "description": "Menu of a contact detail: delete it, with undo."
+  },
+  "contactDeletedPhone": "Telefoonnummer verwijderd",
+  "@contactDeletedPhone": {
+    "description": "Message with undo after deleting a phone number."
+  },
+  "contactDeletedEmail": "E-mailadres verwijderd",
+  "@contactDeletedEmail": {
+    "description": "Message with undo after deleting an email address."
+  },
+  "contactSaveFailed": "Opslaan is mislukt.",
+  "@contactSaveFailed": {
+    "description": "A contact detail could not be saved."
+  },
+  "contactUndoFailed": "Het gegeven kon niet terugkomen.",
+  "@contactUndoFailed": {
+    "description": "Undo of a deleted contact detail failed, for example because the person was merged meanwhile."
+  },
+  "contactRowSemantics": "{value}, {kind}",
+  "@contactRowSemantics": {
+    "description": "What a screen reader says for a contact detail without a label.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "contactRowSemanticsWithLabel": "{value}, {label}, {kind}",
+  "@contactRowSemanticsWithLabel": {
+    "description": "What a screen reader says for a contact detail with a label.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "contactCall": "Bellen",
+  "@contactCall": {
+    "description": "Menu of a phone number: open it in the dialler (the user still calls)."
+  },
+  "contactMail": "Mailen",
+  "@contactMail": {
+    "description": "Menu of an email address: start a message to it in the mail app."
+  },
+  "contactLaunchFailed": "Geen app gevonden om dit te openen.",
+  "@contactLaunchFailed": {
+    "description": "No dialler or mail app took a phone number or address."
+  },
+  "horizonTitle": "Komende {weeks} weken",
+  "@horizonTitle": {
+    "description": "Overview, Horizon: title of the timeline card (T10.7).",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "horizonSummary": "{lanes, plural, =1{1 baan} other{{lanes} banen}} · {items, plural, =1{1 item} other{{items} items}}",
+  "@horizonSummary": {
+    "description": "Overview, Horizon: how many lanes (projects) and items the timeline shows.",
+    "placeholders": {
+      "lanes": {
+        "type": "int"
+      },
+      "items": {
+        "type": "int"
+      }
+    }
+  },
+  "horizonWeekColumn": "week",
+  "@horizonWeekColumn": {
+    "description": "Overview, Horizon: label above the lane names, left of the week numbers."
+  },
+  "horizonDay": "{date}",
+  "@horizonDay": {
+    "description": "Overview, Horizon: the first day of a week column, short (day and month).",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "Md"
+      }
+    }
+  },
+  "horizonBusy": "druk",
+  "@horizonBusy": {
+    "description": "Overview, Horizon: label of a week with at least \"Busy from\" items to deliver; text, not only colour (DD-017)."
+  },
+  "horizonNoProject": "Geen project",
+  "@horizonNoProject": {
+    "description": "Overview, Horizon: the lane of items without a project, the last lane."
+  },
+  "horizonEmpty": "Niets met een datum in de komende {weeks} weken.",
+  "@horizonEmpty": {
+    "description": "Overview, Horizon: shown instead of the lanes when nothing has a deadline or expected day.",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "horizonLegendDeliver": "ik lever",
+  "@horizonLegendDeliver": {
+    "description": "Overview, Horizon legend: a filled blue dot, a deadline of mine."
+  },
+  "horizonLegendWaiting": "wacht op ander",
+  "@horizonLegendWaiting": {
+    "description": "Overview, Horizon legend: a blue ring, waiting with an expected day."
+  },
+  "horizonLegendOverdue": "verlopen",
+  "@horizonLegendOverdue": {
+    "description": "Overview, Horizon legend: a filled orange dot, a deadline that has passed."
+  },
+  "horizonLegendLate": "te laat binnen",
+  "@horizonLegendLate": {
+    "description": "Overview, Horizon legend: an orange ring, waiting past its expected day."
+  },
+  "horizonWeekRange": "Week {number} · {from} – {to}",
+  "@horizonWeekRange": {
+    "description": "Overview, Horizon: header of the list of one week.",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "from": {
+        "type": "DateTime",
+        "format": "MMMd"
+      },
+      "to": {
+        "type": "DateTime",
+        "format": "MMMd"
+      }
+    }
+  },
+  "horizonWeekFrom": "Week {number} · vanaf {from}",
+  "@horizonWeekFrom": {
+    "description": "Overview, Horizon: header of the list of the first week, which starts today.",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "from": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "horizonToDeliver": "{count} te leveren",
+  "@horizonToDeliver": {
+    "description": "Overview, Horizon: label in the header of a week list, the items I deliver that week.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "horizonToDeliverBusy": "{count} te leveren · druk",
+  "@horizonToDeliverBusy": {
+    "description": "Overview, Horizon: the same label for a busy week.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "horizonWeekEmpty": "Niets in deze week.",
+  "@horizonWeekEmpty": {
+    "description": "Overview, Horizon: the list of a week without items."
+  },
+  "horizonEntryDue": "Deadline {date}",
+  "@horizonEntryDue": {
+    "description": "Overview, Horizon list: an item I deliver, with its deadline.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "horizonEntryOverdue": "Verlopen · {date}",
+  "@horizonEntryOverdue": {
+    "description": "Overview, Horizon list: an item whose deadline has passed.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "horizonEntryWaiting": "Wacht op {person} · verwacht {date}",
+  "@horizonEntryWaiting": {
+    "description": "Overview, Horizon list: a waiting item with its person and expected day.",
+    "placeholders": {
+      "person": {
+        "type": "String"
+      },
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "horizonEntryWaitingNobody": "Wacht · verwacht {date}",
+  "@horizonEntryWaitingNobody": {
+    "description": "Overview, Horizon list: a waiting item without a person, with its expected day.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "horizonEntryLate": "Had binnen moeten zijn · {date}",
+  "@horizonEntryLate": {
+    "description": "Overview, Horizon list: a waiting item past its expected day (as the group on Today).",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "horizonEntryFor": "voor {person}",
+  "@horizonEntryFor": {
+    "description": "Overview, Horizon list: who asked for the item (the requester).",
+    "placeholders": {
+      "person": {
+        "type": "String"
+      }
+    }
+  },
+  "horizonEntryMore": "{text} · {more}",
+  "@horizonEntryMore": {
+    "description": "Overview, Horizon list: joins the parts of the line under an item (date, project, person).",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      },
+      "more": {
+        "type": "String"
+      }
+    }
+  },
+  "horizonWeekSemantics": "Week {number}, {from} tot {to}: {deliver, plural, =0{niets te leveren} =1{1 te leveren} other{{deliver} te leveren}}{busy, select, true{, druk} other{}}; {waiting, plural, =0{niets wachtend} =1{1 wachtend} other{{waiting} wachtend}}",
+  "@horizonWeekSemantics": {
+    "description": "Overview, Horizon: what a screen reader says for one week column (DD-017: a textual equivalent).",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "from": {
+        "type": "DateTime",
+        "format": "MMMMd"
+      },
+      "to": {
+        "type": "DateTime",
+        "format": "MMMMd"
+      },
+      "deliver": {
+        "type": "int"
+      },
+      "busy": {
+        "type": "String"
+      },
+      "waiting": {
+        "type": "int"
+      }
+    }
+  },
+  "standstillTitle": "Wat ligt er stil?",
+  "@standstillTitle": {
+    "description": "Overview, Standstill: title of the treemap card (T10.7)."
+  },
+  "standstillSizeHint": "grootte = open items",
+  "@standstillSizeHint": {
+    "description": "Overview, Standstill: what the size of a tile means."
+  },
+  "standstillOpen": "{count} open",
+  "@standstillOpen": {
+    "description": "Overview, Standstill: the open items of a project, on a large tile.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "standstillStill": "stil {age}",
+  "@standstillStill": {
+    "description": "Overview, Standstill: how long a project has stood still, on a large tile, e.g. \"stil 4 wk\".",
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "standstillTileShort": "{count} · {age}",
+  "@standstillTileShort": {
+    "description": "Overview, Standstill: count and age on a small tile, e.g. \"6 · 2 wk\".",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "standstillAgeDays": "{days} d",
+  "@standstillAgeDays": {
+    "description": "Overview, Standstill: an age shorter than two weeks, in days.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "standstillAgeWeeks": "{weeks} wk",
+  "@standstillAgeWeeks": {
+    "description": "Overview, Standstill: an age of two weeks or more, in weeks.",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "standstillAgeSpokenDays": "{days, plural, =1{1 dag} other{{days} dagen}}",
+  "@standstillAgeSpokenDays": {
+    "description": "Overview, Standstill: an age in days, for a screen reader.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "standstillAgeSpokenWeeks": "{weeks, plural, =1{1 week} other{{weeks} weken}}",
+  "@standstillAgeSpokenWeeks": {
+    "description": "Overview, Standstill: an age in weeks, for a screen reader.",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "standstillTileSemantics": "{project}: {count} open, {age} stil",
+  "@standstillTileSemantics": {
+    "description": "Overview, Standstill: what a screen reader says for one tile (DD-017: a textual equivalent).",
+    "placeholders": {
+      "project": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      },
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "standstillLevel": "{level, select, fresh{< 1 wk} weeks{1–3 wk} longer{3–6 wk} other{> 6 wk}}",
+  "@standstillLevel": {
+    "description": "Overview, Standstill legend: the four classes of time since the last touch.",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "standstillOldest": "Langst niet aangeraakt",
+  "@standstillOldest": {
+    "description": "Overview, Standstill: header of the list of the three items untouched the longest."
+  },
+  "standstillToReview": "Naar weekoverzicht →",
+  "@standstillToReview": {
+    "description": "Overview, Standstill: link that starts the weekly review (not shown inside it)."
+  },
+  "standstillProjectItems": "{project} · {count} open",
+  "@standstillProjectItems": {
+    "description": "Overview, Standstill: header of the list of one tapped tile.",
+    "placeholders": {
+      "project": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "standstillOpenProject": "Project openen →",
+  "@standstillOpenProject": {
+    "description": "Overview, Standstill: link that opens the project of the tapped tile."
+  },
+  "standstillShowOldest": "Terug naar langst niet aangeraakt",
+  "@standstillShowOldest": {
+    "description": "Overview, Standstill: tooltip of the button that leaves a tapped tile."
+  },
+  "standstillEmpty": "Niets open: er ligt niets stil.",
+  "@standstillEmpty": {
+    "description": "Overview, Standstill: shown instead of the tiles when nothing is open."
+  },
+  "navInsights": "Inzicht",
+  "@navInsights": {
+    "description": "Navigation: the fifth destination, the Overview (T10.7, SPEC Q27)."
+  },
+  "insightsDate": "{date} · wk {week}",
+  "@insightsDate": {
+    "description": "Insights: today and its ISO week number in the top bar.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      },
+      "week": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSegment": "{segment, select, horizon{Horizon} standstill{Stilstand} both{Horizon en stilstand} connections{Verbanden} other{Personen}}",
+  "@insightsSegment": {
+    "description": "Insights: the segments; \"both\" is Horizon and Standstill side by side on Windows.",
+    "placeholders": {
+      "segment": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewStepInsights": "Inzicht",
+  "@reviewStepInsights": {
+    "description": "Weekly review: the first step, the Overview (DD-018 point 12 (g))."
+  },
+  "reviewInsightsSummary": "Wat komt eraan, wat ligt stil, hoe sta je ervoor met wie",
+  "@reviewInsightsSummary": {
+    "description": "Weekly review start screen: what the Insights step shows."
+  },
+  "reviewContinue": "Verder",
+  "@reviewContinue": {
+    "description": "Weekly review: the button after the Insights step."
+  },
+  "settingsInsightsHeader": "Inzicht",
+  "@settingsInsightsHeader": {
+    "description": "Settings: header of the section of the Overview."
+  },
+  "settingsBusyFrom": "Druk vanaf",
+  "@settingsBusyFrom": {
+    "description": "Settings: from how many items to deliver a week is busy on the Horizon."
+  },
+  "settingsBusyFromHint": "Een week met zo veel items met een deadline, of meer, heet druk in de Horizon.",
+  "@settingsBusyFromHint": {
+    "description": "Settings: explanation under Busy from."
+  },
+  "settingsItemCount": "{count, plural, =1{1 item} other{{count} items}}",
+  "@settingsItemCount": {
+    "description": "Settings: a number of items in the Busy from choice.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "standstillTileTooltip": "{project} · {count} open · {age}",
+  "@standstillTileTooltip": {
+    "description": "Overview, Standstill on Windows: the tooltip of a tile (name, open items, age).",
+    "placeholders": {
+      "project": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      },
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "whereWasI": "Waar was ik?",
+  "@whereWasI": {
+    "description": "Button in the item detail and a project, and the title of its form (T10.3, REQ-049)."
+  },
+  "whereWasITooltipWithKey": "Waar was ik? (Ctrl+Shift+P)",
+  "@whereWasITooltipWithKey": {
+    "description": "Windows: tooltip of the Where was I button, with its key."
+  },
+  "whereWasINextStep": "Volgende stap",
+  "@whereWasINextStep": {
+    "description": "Where was I form: the first field."
+  },
+  "whereWasIInMind": "Wat ik in mijn hoofd had",
+  "@whereWasIInMind": {
+    "description": "Where was I form: the second field."
+  },
+  "whereWasIInMindHint": "Bijv. waarom, wat je wilde checken…",
+  "@whereWasIInMindHint": {
+    "description": "Where was I form: hint in the second field."
+  },
+  "whereWasIClose": "Sluiten",
+  "@whereWasIClose": {
+    "description": "Where was I form: closes it and keeps what was typed (not Cancel, PO 02-10-2026)."
+  },
+  "whereWasISave": "Opslaan",
+  "@whereWasISave": {
+    "description": "Where was I form: saves."
+  },
+  "whereWasISaveFailed": "Waar was ik? is niet opgeslagen.",
+  "@whereWasISaveFailed": {
+    "description": "Message when the Where was I note could not be saved."
+  },
+  "resumeCardTitle": "Waar was ik",
+  "@resumeCardTitle": {
+    "description": "Resume card at the top of an item or project: its header."
+  },
+  "resumeUpdate": "Bijwerken",
+  "@resumeUpdate": {
+    "description": "Resume card: opens the form filled in."
+  },
+  "resumeResume": "Hervat",
+  "@resumeResume": {
+    "description": "Resume card: closes the note."
+  },
+  "connectionsFocusKind": "{kind, select, person{Focus · persoon} project{Focus · project} other{Focus}}",
+  "@connectionsFocusKind": {
+    "description": "Connections: the label above the focus title; kind is item, person or project.",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionsChange": "Wijzig",
+  "@connectionsChange": {
+    "description": "Connections: button that opens the sheet to choose another focus."
+  },
+  "connectionsOneStep": "1 stap",
+  "@connectionsOneStep": {
+    "description": "Connections: depth switch, only the direct connections."
+  },
+  "connectionsTwoSteps": "2 stappen",
+  "@connectionsTwoSteps": {
+    "description": "Connections: depth switch, also what is linked to those."
+  },
+  "connectionsLegendDirect": "direct gekoppeld",
+  "@connectionsLegendDirect": {
+    "description": "Connections legend: a solid line."
+  },
+  "connectionsLegendThrough": "via tussenstap",
+  "@connectionsLegendThrough": {
+    "description": "Connections legend: a dotted line, the second step."
+  },
+  "connectionsHint": "Tik om te focussen · lang indrukken voor een voorbeeld · knijp om te zoomen",
+  "@connectionsHint": {
+    "description": "Connections: hint below the graph on a phone."
+  },
+  "connectionsHintDesktop": "Klik om te focussen · wijs aan voor een voorbeeld · Ctrl+scrollen zoomt",
+  "@connectionsHintDesktop": {
+    "description": "Connections: hint below the graph on Windows."
+  },
+  "connectionsFit": "Passend",
+  "@connectionsFit": {
+    "description": "Connections: button that zooms the graph so all of it shows."
+  },
+  "connectionsMore": "+{count} meer",
+  "@connectionsMore": {
+    "description": "Connections: the node for direct connections that are not drawn; opens the list.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "connectionsEmptyTitle": "Hoe hangt het samen?",
+  "@connectionsEmptyTitle": {
+    "description": "Connections without a focus: title."
+  },
+  "connectionsEmptyBody": "Kies een item, persoon of project; je ziet wat ermee verbonden is.",
+  "@connectionsEmptyBody": {
+    "description": "Connections without a focus: explanation."
+  },
+  "connectionsChoose": "Kies een item",
+  "@connectionsChoose": {
+    "description": "Connections without a focus: button that opens the sheet to choose one."
+  },
+  "connectionsNothing": "Nog niets gekoppeld",
+  "@connectionsNothing": {
+    "description": "Connections: the focus has no connections."
+  },
+  "connectionsChooseTitle": "Focus kiezen",
+  "@connectionsChooseTitle": {
+    "description": "Connections: title of the sheet to choose a focus."
+  },
+  "connectionsChooseHint": "Zoek een item, persoon of project",
+  "@connectionsChooseHint": {
+    "description": "Connections: hint in the search field of the focus sheet."
+  },
+  "connectionsRecent": "Recent geopend",
+  "@connectionsRecent": {
+    "description": "Connections focus sheet: header above what was opened last."
+  },
+  "connectionsChooseItems": "Items",
+  "@connectionsChooseItems": {
+    "description": "Connections focus sheet: header above the items found."
+  },
+  "connectionsChoosePeople": "Personen",
+  "@connectionsChoosePeople": {
+    "description": "Connections focus sheet: header above the people found."
+  },
+  "connectionsChooseProjects": "Projecten",
+  "@connectionsChooseProjects": {
+    "description": "Connections focus sheet: header above the projects found."
+  },
+  "connectionsNoResults": "Niets gevonden",
+  "@connectionsNoResults": {
+    "description": "Connections focus sheet: nothing matches."
+  },
+  "connectionsAllTitle": "Verbanden van {name} · {count}",
+  "@connectionsAllTitle": {
+    "description": "Connections: title of the list of all direct connections.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "connectionsDirectHeader": "Direct gekoppeld · {count}",
+  "@connectionsDirectHeader": {
+    "description": "Connections list: header.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "connectionsFocusAction": "Focussen",
+  "@connectionsFocusAction": {
+    "description": "Connections preview: makes the node the focus."
+  },
+  "connectionsOpenAction": "Openen",
+  "@connectionsOpenAction": {
+    "description": "Connections preview: opens the item, person or project."
+  },
+  "connectionsPreviewAction": "Voorbeeld",
+  "@connectionsPreviewAction": {
+    "description": "Connections: screen reader action that shows the preview of a node."
+  },
+  "connectionsShow": "Verbanden tonen",
+  "@connectionsShow": {
+    "description": "Menu of an item, person or project: opens Insights → Connections with it as the focus."
+  },
+  "connectionsKind": "{kind, select, project{Project} person{Persoon} other{Item}}",
+  "@connectionsKind": {
+    "description": "Connections: the type line of a project, a person, or an item without a type.",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionsUrgency": "{urgency, select, today{vandaag} other{verlopen}}",
+  "@connectionsUrgency": {
+    "description": "Connections: added to the type line of an item due today or overdue.",
+    "placeholders": {
+      "urgency": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionsDone": "af",
+  "@connectionsDone": {
+    "description": "Connections: added to the type line of a done item."
+  },
+  "connectionsArchived": "gearchiveerd",
+  "@connectionsArchived": {
+    "description": "Connections: added to the type line of an archived item or project."
+  },
+  "connectionsReason": "{reason, select, linksTo{koppeling} linkedFrom{verwijst hiernaar} project{project} inProject{in dit project} parent{hoofdproject} other{subproject}}",
+  "@connectionsReason": {
+    "description": "Connections: why a node is linked to the focus.",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionsReasonPerson": "{reason, select, requester{gevraagd door {name}} waitingOn{wacht op {name}} other{noemt {name}}}",
+  "@connectionsReasonPerson": {
+    "description": "Connections: how an item and a person are linked; name is the person.",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionsFocusSemantics": "Focus: {kind} {title}. {direct} direct gekoppeld, {through} via een tussenstap.",
+  "@connectionsFocusSemantics": {
+    "description": "Connections, screen reader: the focus with its counts.",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "direct": {
+        "type": "int"
+      },
+      "through": {
+        "type": "int"
+      }
+    }
+  },
+  "connectionsDirectSemantics": "Direct gekoppeld: {kind} {title}, {reasons}",
+  "@connectionsDirectSemantics": {
+    "description": "Connections, screen reader: a direct node.",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "reasons": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionsThroughSemantics": "Via tussenstap {via}: {kind} {title}",
+  "@connectionsThroughSemantics": {
+    "description": "Connections, screen reader: a second-step node; via is the node it goes through.",
+    "placeholders": {
+      "via": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionsBehindSemantics": "nog {count} via {title}",
+  "@connectionsBehindSemantics": {
+    "description": "Connections, screen reader: more second-step nodes behind a node than are drawn.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionsMoreSemantics": "Nog {count} verbanden, opent de lijst",
+  "@connectionsMoreSemantics": {
+    "description": "Connections, screen reader: the \"+n more\" node.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "connectionsPreviewProject": "Project",
+  "@connectionsPreviewProject": {
+    "description": "Connections preview: the project of the item."
+  },
+  "connectionsPreviewDeadline": "Deadline",
+  "@connectionsPreviewDeadline": {
+    "description": "Connections preview: the deadline of the item."
+  },
+  "connectionsPreviewPeople": "Personen",
+  "@connectionsPreviewPeople": {
+    "description": "Connections preview: the people of the item."
+  },
+  "connectionsPreviewDate": "{date}",
+  "@connectionsPreviewDate": {
+    "description": "Connections preview: a deadline.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMEd"
+      }
+    }
+  },
+  "connectionsPreviewOpenItems": "{count, plural, =0{Geen open items} =1{1 open item} other{{count} open items}}",
+  "@connectionsPreviewOpenItems": {
+    "description": "Connections preview of a person or project: how many open items are linked.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "connectionsJoin": "{first} · {second}",
+  "@connectionsJoin": {
+    "description": "Connections: two parts of a line, such as the type and the status.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionsList": "{first}, {second}",
+  "@connectionsList": {
+    "description": "Connections: items of a list, such as names or reasons.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderChannelName": "Herinneringen",
+  "@reminderChannelName": {
+    "description": "Name of the notification channel in Android's settings (deadlines and Revisit on)."
+  },
+  "reminderTitleOne": "Deadline vandaag",
+  "@reminderTitleOne": {
+    "description": "Reminder notification for one item due today: its title."
+  },
+  "reminderTitleMany": "{count} deadlines vandaag",
+  "@reminderTitleMany": {
+    "description": "Reminder notification for more items due today: its title.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderMore": "en nog {count}",
+  "@reminderMore": {
+    "description": "Reminder notification: the last line when there are more than five items.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderRefused": "Zonder meldingen zie je deadlines en teruggekomen items op Vandaag.",
+  "@reminderRefused": {
+    "description": "Message after the notification permission was refused."
+  },
+  "reminderRefusedAction": "Instellingen",
+  "@reminderRefusedAction": {
+    "description": "Action of the refusal message: opens the Android notification settings of the app."
+  },
+  "settingsRemindersHeader": "Herinneringen",
+  "@settingsRemindersHeader": {
+    "description": "Settings: section header."
+  },
+  "settingsRemindersOn": "Meldingen bij deadlines en terugzien",
+  "@settingsRemindersOn": {
+    "description": "Settings: switch for the reminders of deadlines and of items back from Revisit on."
+  },
+  "settingsRemindersOnHint": "Op de dag zelf; één melding per dag.",
+  "@settingsRemindersOnHint": {
+    "description": "Settings: explanation under the switch."
+  },
+  "settingsReminderTime": "Tijdstip",
+  "@settingsReminderTime": {
+    "description": "Settings: when the reminder of a day comes."
+  },
+  "settingsReminderTimeHint": "Wanneer de melding van die dag komt.",
+  "@settingsReminderTimeHint": {
+    "description": "Settings: explanation under the time."
+  },
+  "settingsRemindersBlocked": "Meldingen staan uit in Android",
+  "@settingsRemindersBlocked": {
+    "description": "Settings: notifications for the app are off in the system."
+  },
+  "settingsRemindersBlockedHint": "Deadlines en teruggekomen items staan wel op Vandaag.",
+  "@settingsRemindersBlockedHint": {
+    "description": "Settings: explanation when notifications are off in the system."
+  },
+  "settingsRemindersAllow": "Meldingen toestaan",
+  "@settingsRemindersAllow": {
+    "description": "Settings: opens the system's notification settings of the app."
+  },
+  "revisitAction": "Terugzien op…",
+  "@revisitAction": {
+    "description": "Item detail menu, triage and review: parks the item until a date (REQ-021, DD-018 point 17)."
+  },
+  "revisitSheetTitle": "Terugzien op",
+  "@revisitSheetTitle": {
+    "description": "Title of the sheet (dialog on Windows) with the dates to revisit an item on."
+  },
+  "revisitTomorrow": "Morgen",
+  "@revisitTomorrow": {
+    "description": "Revisit sheet: the quick choice tomorrow."
+  },
+  "revisitNextWeek": "Volgende week",
+  "@revisitNextWeek": {
+    "description": "Revisit sheet: the quick choice next Monday."
+  },
+  "revisitInAMonth": "Over een maand",
+  "@revisitInAMonth": {
+    "description": "Revisit sheet: the quick choice the same day next month."
+  },
+  "revisitChooseDate": "Kies datum…",
+  "@revisitChooseDate": {
+    "description": "Revisit sheet: opens the date picker, from tomorrow."
+  },
+  "revisitStop": "Niet meer terugzien",
+  "@revisitStop": {
+    "description": "Revisit sheet and the line in the item detail: the item is no longer parked and becomes active."
+  },
+  "revisitDate": "{date}",
+  "@revisitDate": {
+    "description": "A revisit date, short (e.g. 'ma 12 okt'): next to a quick choice and on the chip of a parked card.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "revisitLine": "Terugzien op {date}",
+  "@revisitLine": {
+    "description": "Item detail of a parked item, under the status; also what a screen reader reads for its chip on a card.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "revisitBackOn": "Terug op {date}",
+  "@revisitBackOn": {
+    "description": "Message after parking an item, with Undo.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "revisitLater": "Later…",
+  "@revisitLater": {
+    "description": "Triage and weekly review (step Stale): parks the card until a date."
+  },
+  "revisitLaterWithKey": "Later…  {key}",
+  "@revisitLaterWithKey": {
+    "description": "Triage on Windows: the Later button with its key.",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewHandledParked": "✓ Terug op {date}",
+  "@reviewHandledParked": {
+    "description": "Weekly review: what was done with a card parked with Later.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "reviewEndParked": "{count} later terugzien",
+  "@reviewEndParked": {
+    "description": "Weekly review end screen: how many items were parked with Later.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayBackSection": "Terug in je inbox · {count}",
+  "@todayBackSection": {
+    "description": "Today: the group of items that came back from Revisit on and are still in the inbox.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderBackOne": "Terug in je inbox",
+  "@reminderBackOne": {
+    "description": "Reminder notification for one item back from Revisit on, and nothing due: its title (the item's title below)."
+  },
+  "reminderBackMany": "{count} terug in je inbox",
+  "@reminderBackMany": {
+    "description": "Reminder notification for more items back from Revisit on, and nothing due: its title.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderTitleBoth": "{deadlines, plural, =1{1 deadline} other{{deadlines} deadlines}} · {back} terug in je inbox",
+  "@reminderTitleBoth": {
+    "description": "Reminder notification for a day with deadlines and items back from Revisit on: its title.",
+    "placeholders": {
+      "deadlines": {
+        "type": "int"
+      },
+      "back": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderBackLine": "Terug: {title}",
+  "@reminderBackLine": {
+    "description": "A line in the reminder notification for an item back from Revisit on, under the deadlines.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsReviewReminderOn": "Herinnering weekoverzicht",
+  "@settingsReviewReminderOn": {
+    "description": "Settings → Reminders: switch for the weekly-review reminder (REQ-022)."
+  },
+  "settingsReviewReminderOnHint": "Alleen als het weekoverzicht aan de beurt is.",
+  "@settingsReviewReminderOnHint": {
+    "description": "Settings → Reminders: under the weekly-review reminder switch."
+  },
+  "settingsReviewReminderDay": "Dag",
+  "@settingsReviewReminderDay": {
+    "description": "Settings → Reminders: the weekday of the weekly-review reminder."
+  },
+  "settingsReviewReminderDayName": "{date}",
+  "@settingsReviewReminderDayName": {
+    "description": "A weekday written out (e.g. 'vrijdag'), in the choice of the weekly-review reminder's day.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "EEEE"
+      }
+    }
+  },
+  "reviewReminderTitle": "Weekoverzicht aan de beurt",
+  "@reviewReminderTitle": {
+    "description": "Weekly-review reminder notification: its title (also on the lock screen)."
+  },
+  "reviewReminderLast": "{days, plural, =1{Laatste keer 1 dag geleden} other{Laatste keer {days} dagen geleden}}",
+  "@reviewReminderLast": {
+    "description": "Weekly-review reminder notification: the line under the title, days since the last completed review.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewReminderNever": "Nog niet gedaan",
+  "@reviewReminderNever": {
+    "description": "Weekly-review reminder notification: the line under the title when no review was completed yet."
+  },
+  "birthdayReminderOne": "{name} is vandaag jarig",
+  "@birthdayReminderOne": {
+    "description": "Birthday reminder notification for one person: its title.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "birthdayReminderTurns": "wordt {age}",
+  "@birthdayReminderTurns": {
+    "description": "Birthday reminder notification for one person whose year is known: the line under the title.",
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "birthdayReminderMany": "{count} verjaardagen vandaag",
+  "@birthdayReminderMany": {
+    "description": "Birthday reminder notification for more people: its title, and the lock screen's.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "birthdayReminderPersonAge": "{name} ({age})",
+  "@birthdayReminderPersonAge": {
+    "description": "Birthday reminder notification for more people: a line with a name and the age reached.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "birthdayReminderPublic": "Verjaardag vandaag",
+  "@birthdayReminderPublic": {
+    "description": "Birthday reminder for one person on the lock screen: never the name."
+  },
+  "todayBirthday": "{name} is vandaag jarig",
+  "@todayBirthday": {
+    "description": "Today: the line for a person whose birthday is today, year unknown; a tap opens the person.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "todayBirthdayAge": "{name} wordt vandaag {age}",
+  "@todayBirthdayAge": {
+    "description": "Today: the line for a person whose birthday is today, with the age reached; a tap opens the person.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsBirthdayRemindersOn": "Verjaardagen",
+  "@settingsBirthdayRemindersOn": {
+    "description": "Settings → Reminders: switch for the birthday reminders (REQ-031)."
+  },
+  "settingsBirthdayRemindersOnHint": "Op de dag zelf, op het tijdstip van de dagmelding.",
+  "@settingsBirthdayRemindersOnHint": {
+    "description": "Settings → Reminders: under the birthday switch."
+  },
+  "nudgeSilentDays": "{days, plural, =1{1 dag stil} other{{days} dagen stil}}",
+  "@nudgeSilentDays": {
+    "description": "A waiting item that stays silent: how many days without a touch (chip on Today, line in the item).",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "nudgeReminderOne": "Wacht nog op {person} · {days, plural, =1{1 dag stil} other{{days} dagen stil}}",
+  "@nudgeReminderOne": {
+    "description": "Nudge notification for one silent waiting item: its title (the item's title below).",
+    "placeholders": {
+      "person": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "nudgeReminderOneNobody": "Wacht nog · {days, plural, =1{1 dag stil} other{{days} dagen stil}}",
+  "@nudgeReminderOneNobody": {
+    "description": "Nudge notification for one silent waiting item without a person: its title.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "nudgeReminderMany": "{count} wacht-items blijven stil",
+  "@nudgeReminderMany": {
+    "description": "Nudge notification for more silent waiting items: its title, also on the lock screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nudgeReminderPublic": "Wacht-item blijft stil",
+  "@nudgeReminderPublic": {
+    "description": "Nudge notification for one item on the lock screen: never the title or the person."
+  },
+  "todaySilentSection": "Blijft stil · {count}",
+  "@todaySilentSection": {
+    "description": "Today: the group of waiting items without a touch for X days (AC REQ-047).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nudgeReceived": "Ontvangen",
+  "@nudgeReceived": {
+    "description": "Today, group Blijft stil: completes the waiting item as received."
+  },
+  "todayNotesSection": "Waar was ik · {count}",
+  "@todayNotesSection": {
+    "description": "Today: the group of open 'Where was I' notes at the top (T4b.2, DD-018 point 13 (e)).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayNotesMore": "+{count} meer",
+  "@todayNotesMore": {
+    "description": "Today: button under the first three 'Where was I' notes that shows the rest in place.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayNoteInMind": "In mijn hoofd: {text}",
+  "@todayNoteInMind": {
+    "description": "Today: second line of a 'Where was I' note without a next step: what was in mind.",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "todayNoteProject": "Project",
+  "@todayNoteProject": {
+    "description": "Today: what a screen reader says for the project icon on a 'Where was I' note of a project."
+  },
+  "settingsTodayHeader": "Vandaag",
+  "@settingsTodayHeader": {
+    "description": "Settings: header of the section about the Today screen."
+  },
+  "settingsTodayNotes": "Waar was ik op Vandaag",
+  "@settingsTodayNotes": {
+    "description": "Settings: switch that shows the open 'Where was I' notes at the top of Today (T4b.2); a setting of this device."
+  },
+  "settingsTodayNotesHint": "Je open notities bovenaan Vandaag, nieuwste eerst.",
+  "@settingsTodayNotesHint": {
+    "description": "Settings: second line of the switch Waar was ik op Vandaag."
+  },
+  "nudgeChased": "Nagevraagd",
+  "@nudgeChased": {
+    "description": "Today, group Blijft stil, and the item's commitment block: records that you chased it; the period starts again."
+  },
+  "nudgeChasedMessage": "Nagevraagd",
+  "@nudgeChasedMessage": {
+    "description": "Message after Chased (no undo: putting the moment back would be a touch too)."
+  },
+  "settingsNudgeOn": "Wacht-items die stil blijven",
+  "@settingsNudgeOn": {
+    "description": "Settings → Reminders: switch for the nudge notification (AC REQ-047)."
+  },
+  "settingsNudgeOnHint": "Eén melding op de dag dat een item stil wordt.",
+  "@settingsNudgeOnHint": {
+    "description": "Settings → Reminders: under the nudge switch."
+  },
+  "settingsNudgeAfter": "Navragen na",
+  "@settingsNudgeAfter": {
+    "description": "Settings → Reminders: after how many days without a touch a waiting item is silent."
+  },
+  "settingsNudgeAfterHint": "Zo lang niets veranderd: dan staat het item op Vandaag.",
+  "@settingsNudgeAfterHint": {
+    "description": "Settings → Reminders: under Chase after."
+  },
+  "tokenRepeatDaily": "dagelijks",
+  "@tokenRepeatDaily": {
+    "description": "Repeat word of the inline syntax after '!' (DD-004 point 14, REQ-061), in lowercase without spaces. Several words may be given, separated by commas; the last is the one the suggestion list inserts. The words of every app language are recognised, whatever language is shown. Means: every day."
+  },
+  "tokenRepeatWeekly": "wekelijks",
+  "@tokenRepeatWeekly": {
+    "description": "Repeat word of the inline syntax after '!' (DD-004 point 14, REQ-061), in lowercase without spaces. Several words may be given, separated by commas; the last is the one the suggestion list inserts. The words of every app language are recognised, whatever language is shown. Means: every week, on the weekday of the first time."
+  },
+  "tokenRepeatMonthly": "maandelijks",
+  "@tokenRepeatMonthly": {
+    "description": "Repeat word of the inline syntax after '!' (DD-004 point 14, REQ-061), in lowercase without spaces. Several words may be given, separated by commas; the last is the one the suggestion list inserts. The words of every app language are recognised, whatever language is shown. Means: every month, on the day of the month of the first time."
+  },
+  "tokenRepeatLabel": "herhalen",
+  "@tokenRepeatLabel": {
+    "description": "Name of the repeat token (!dagelijks, !wekelijks, !maandelijks) for chips, screen readers, the prefix bar and the syntax overview (REQ-061)."
+  },
+  "tokenRepeatExample": "Hardlopen !wekelijks !di, ook !dagelijks of !maandelijks",
+  "@tokenRepeatExample": {
+    "description": "Example line for the repeat token in the syntax overview; use this language's repeat words (tokenRepeatDaily, tokenRepeatWeekly, tokenRepeatMonthly) and a date word."
+  },
+  "itemCompletedNextTime": "Afgerond · volgende keer {date}",
+  "@itemCompletedNextTime": {
+    "description": "Message after completing a time of a recurring task (REQ-061), with an Undo button; date is the next time.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "repeatRhythm": "{code, select, D{dagelijks} W{wekelijks} M{maandelijks} other{herhaalt}}",
+  "@repeatRhythm": {
+    "description": "The rhythm of a recurring task on cards, in lowercase (REQ-061). code is 1-letter: D daily, W weekly, M monthly.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "repeatRhythmTitle": "{code, select, D{Dagelijks} W{Wekelijks} M{Maandelijks} other{Herhaalt}}",
+  "@repeatRhythmTitle": {
+    "description": "The rhythm of a recurring task as a chip while typing and as a choice in 'Complete and repeat' (REQ-061). code: D daily, W weekly, M monthly.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "repeatEvery": "{code, select, D{elke dag} W{elke week} M{elke maand} other{herhaalt}}",
+  "@repeatEvery": {
+    "description": "Second line of a repeat word in the suggestion list (REQ-061). code: D daily, W weekly, M monthly.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "repeatSinceDaily": "Dagelijks · sinds {since}",
+  "@repeatSinceDaily": {
+    "description": "Chip of a daily recurring task in the item detail; since is its first time.",
+    "placeholders": {
+      "since": {
+        "type": "DateTime",
+        "format": "MMMd"
+      }
+    }
+  },
+  "repeatSinceWeekly": "Wekelijks · elke {weekday}, sinds {since}",
+  "@repeatSinceWeekly": {
+    "description": "Chip of a weekly recurring task in the item detail; weekday is the day of the week it repeats on, since its first time.",
+    "placeholders": {
+      "weekday": {
+        "type": "DateTime",
+        "format": "E"
+      },
+      "since": {
+        "type": "DateTime",
+        "format": "MMMd"
+      }
+    }
+  },
+  "repeatSinceMonthly": "Maandelijks · op de {day}e, sinds {since}",
+  "@repeatSinceMonthly": {
+    "description": "Chip of a monthly recurring task in the item detail; day is the day of the month (shorter months: their last day), since its first time.",
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "since": {
+        "type": "DateTime",
+        "format": "MMMd"
+      }
+    }
+  },
+  "repeatNotForType": "{rhythm} · herhaalt alleen bij een taak",
+  "@repeatNotForType": {
+    "description": "Chip of a repeat word on an idea, request or note, which does not repeat (decision 6b, REQ-061); rhythm is repeatRhythmTitle.",
+    "placeholders": {
+      "rhythm": {
+        "type": "String"
+      }
+    }
+  },
+  "repeatThisTime": "Deze keer: {date}",
+  "@repeatThisTime": {
+    "description": "Chip of a recurring task in the item detail: the date of the current time.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      }
+    }
+  },
+  "completionsTitle": "Gedaan · {count}×",
+  "@completionsTitle": {
+    "description": "Header of the history of a recurring task in the item detail (REQ-061): how many times it was done.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "completionOnTime": "op tijd",
+  "@completionOnTime": {
+    "description": "A time of a recurring task done on or before its date, in the history."
+  },
+  "completionLate": "keer van {date} · {days, plural, =1{1 dag te laat} other{{days} dagen te laat}}",
+  "@completionLate": {
+    "description": "A time of a recurring task done after its date, in the history: the date of that time and how late.",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "completionsShowAll": "Alles tonen ({count})",
+  "@completionsShowAll": {
+    "description": "Button under the five newest times in the history; shows all.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "completeAndRepeat": "Afronden en herhalen…",
+  "@completeAndRepeat": {
+    "description": "Menu entry in the item detail for a task that does not repeat yet (REQ-061): completes it and lets it come back."
+  },
+  "completeAndRepeatTitle": "Afronden en herhalen",
+  "@completeAndRepeatTitle": {
+    "description": "Title of the sheet or dialog of 'Complete and repeat'."
+  },
+  "completeAndRepeatQuestion": "Deze keer is klaar. Wanneer komt hij terug?",
+  "@completeAndRepeatQuestion": {
+    "description": "Line under the title of 'Complete and repeat'."
+  },
+  "completeAndRepeatNote": "Zet het woord in de tekst; weghalen stopt de herhaling.",
+  "@completeAndRepeatNote": {
+    "description": "Note at the foot of 'Complete and repeat': the choice adds the repeat word to the text."
+  },
+  "stopRepeating": "Herhaling stoppen",
+  "@stopRepeating": {
+    "description": "Menu entry in the item detail of a recurring task: removes the repeat word and completes the item (REQ-061)."
+  },
+  "repeatStopped": "Herhaling gestopt · afgerond",
+  "@repeatStopped": {
+    "description": "Message after 'Stop repeating', with an Undo button."
+  },
+  "androidBarName": "Offload-balk",
+  "@androidBarName": {
+    "description": "Name of the second home-screen widget in the widget picker (REQ-063): buttons to capture, open Today and (wider) Insights."
+  },
+  "androidBarDescription": "Vastleggen, Vandaag en Inzicht met één tik",
+  "@androidBarDescription": {
+    "description": "Description of the Offload bar widget in the widget picker (REQ-063)."
+  },
+  "androidOpenToday": "Vandaag openen",
+  "@androidOpenToday": {
+    "description": "Screen-reader label of the Today button on the Offload bar widget, and the long label of the app shortcut (REQ-063)."
+  },
+  "androidOpenInsights": "Inzicht openen",
+  "@androidOpenInsights": {
+    "description": "Screen-reader label of the Insights button on the Offload bar widget, and the long label of the app shortcut (REQ-063)."
+  },
+  "helpTitle": "Help",
+  "@helpTitle": {
+    "description": "Title of the help screen and of its row in Settings (REQ-065)."
+  },
+  "helpOpenRow": "De handleiding: hoe Offload werkt",
+  "@helpOpenRow": {
+    "description": "Second line of the Help row in Settings (REQ-065)."
+  },
+  "helpTooltip": "Help",
+  "@helpTooltip": {
+    "description": "Tooltip of the \"?\" button in the title bar of a screen (REQ-065)."
+  },
+  "helpTooltipWithKey": "Help (F1)",
+  "@helpTooltipWithKey": {
+    "description": "Tooltip of the \"?\" button on Windows, teaching its key (REQ-065)."
+  },
+  "helpContents": "Inhoud",
+  "@helpContents": {
+    "description": "Button on the help screen that opens the table of contents of the manual (REQ-065)."
+  },
+  "helpInEnglish": "De handleiding is in het Engels.",
+  "@helpInEnglish": {
+    "description": "Note at the top of the help screen when the app language has no manual of its own (REQ-065, DD-020)."
+  },
+  "helpLoadFailed": "Dit deel van de handleiding kon niet worden geopend.",
+  "@helpLoadFailed": {
+    "description": "Shown on the help screen when a chapter cannot be read (REQ-065)."
+  },
+  "helpExternalLink": "Offload opent geen internetadressen: {address}",
+  "@helpExternalLink": {
+    "description": "Message after tapping a link to an internet address in the manual: the app shows it, never opens it (REQ-003, REQ-065).",
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "helpCopy": "Kopiëren",
+  "@helpCopy": {
+    "description": "Action of the message about an internet address: copies it (REQ-065)."
+  },
+  "syntaxOverviewManual": "Meer in de handleiding",
+  "@syntaxOverviewManual": {
+    "description": "Button at the bottom of the syntax overview that opens the part of the manual about the signs (REQ-065)."
+  },
+  "storageAttachments": "Bijlagen",
+  "@storageAttachments": {
+    "description": "Row in Settings → Storage: the encrypted attachments, with their total size (T5.1)."
+  },
+  "storageAttachmentKind": "{kind, select, photo{Foto's} audio{Audio} other{Overig}} {size}",
+  "@storageAttachmentKind": {
+    "description": "One kind of attachment with its size, in the Attachments row of Settings → Storage (T5.1).",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "photoAdd": "Foto toevoegen",
+  "@photoAdd": {
+    "description": "Button in the item detail that adds a photo to the item (T5.3, DD-018 point 19); on Android it opens a sheet with camera and gallery."
+  },
+  "photoAddOpen": "Foto toevoegen…",
+  "@photoAddOpen": {
+    "description": "The same button where it opens the Open window directly (Windows: no camera)."
+  },
+  "photoTake": "Foto maken",
+  "@photoTake": {
+    "description": "Choice in the Add photo sheet: take a photo with the device's camera app."
+  },
+  "photoFromGallery": "Uit galerij",
+  "@photoFromGallery": {
+    "description": "Choice in the Add photo sheet: choose a photo with Android's photo picker."
+  },
+  "photoFileTypeName": "Afbeeldingen",
+  "@photoFileTypeName": {
+    "description": "Name of the file filter for pictures in the Windows Open window."
+  },
+  "photosHeader": "Foto's · {count}",
+  "@photosHeader": {
+    "description": "Heading above the row of photos of an item.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "photoProcessing": "Foto verwerken…",
+  "@photoProcessing": {
+    "description": "Tile at the end of the row while a new photo is made small and encrypted."
+  },
+  "photoUnreadable": "Deze foto kan Offload niet lezen.",
+  "@photoUnreadable": {
+    "description": "Message when a chosen picture cannot be decoded; nothing is kept."
+  },
+  "photoTooLarge": "Deze foto is te groot.",
+  "@photoTooLarge": {
+    "description": "Message when a chosen picture is larger than Offload reads."
+  },
+  "photoSourceFailed": "De foto kon niet worden geopend.",
+  "@photoSourceFailed": {
+    "description": "Message when the camera app, the photo picker or the file could not be opened or read."
+  },
+  "photoSaveFailed": "De foto is niet opgeslagen.",
+  "@photoSaveFailed": {
+    "description": "Message when storing a photo failed."
+  },
+  "photoSemantics": "Foto {index} van {count}",
+  "@photoSemantics": {
+    "description": "What a screen reader says for a thumbnail in the row.",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "photoView": "Bekijken",
+  "@photoView": {
+    "description": "Menu entry on a thumbnail: open the photo full screen."
+  },
+  "photoDelete": "Verwijderen",
+  "@photoDelete": {
+    "description": "Menu entry on a thumbnail and button in the photo viewer: delete the photo (asks first)."
+  },
+  "photoDeleteTitle": "Foto verwijderen?",
+  "@photoDeleteTitle": {
+    "description": "Title of the question before deleting a photo."
+  },
+  "photoDeleteBody": "De foto verdwijnt uit dit item. Dit kun je niet ongedaan maken.",
+  "@photoDeleteBody": {
+    "description": "Text of the question before deleting a photo; there is no undo."
+  },
+  "photoDeleteCancel": "Annuleren",
+  "@photoDeleteCancel": {
+    "description": "Button that keeps the photo."
+  },
+  "photoDeleteFailed": "De foto is niet verwijderd.",
+  "@photoDeleteFailed": {
+    "description": "Message when deleting a photo failed."
+  },
+  "photoMissing": "Bijlage niet in deze back-up",
+  "@photoMissing": {
+    "description": "Shown instead of a photo whose file was not in the restored backup (DD-007 point 7a)."
+  }
+}

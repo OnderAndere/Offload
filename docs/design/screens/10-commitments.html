@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Commitments – sketch, screen 10</title>
+<style>
+  :root {
+    --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --blue: #245A8C; --chip: #EAE6DE;
+    --blue-chip: #E3ECF5; --orange-chip: #F6E1CC;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1320px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; max-width: 1320px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col p.note { width: 390px; min-height: 96px; }
+
+  .phone { width: 390px; height: 760px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 8px 0 16px; }
+  .appbar .back { font-size: 20px; flex: 1; }
+  .icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 18px; color: var(--muted); }
+  .who { display: flex; gap: 14px; align-items: center; margin: 2px 16px 0; }
+  .av { width: 46px; height: 46px; border-radius: 50%; background: #E6E0F3; color: #4A3C7A; display: grid;
+        place-items: center; font-size: 18px; font-weight: 600; flex: none; }
+  .who .nm { font-size: 24px; }
+  .work { display: flex; gap: 8px; align-items: center; margin: 6px 16px 0 76px; color: var(--muted); }
+  .line { display: flex; gap: 10px; align-items: center; padding: 9px 16px; }
+  .line .i { width: 20px; text-align: center; color: var(--muted); }
+  .line.add { color: var(--muted); }
+  .sec { margin: 14px 16px 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+         color: var(--muted); display: flex; gap: 6px; align-items: center; }
+  .cd { display: flex; align-items: center; gap: 12px; padding: 7px 4px 7px 16px; }
+  .cd .i { width: 20px; text-align: center; color: var(--blue); }
+  .cd .v { flex: 1; }
+  .cd .v small { display: block; color: var(--muted); font-size: 12px; }
+  .cd .m { width: 36px; height: 36px; display: grid; place-items: center; color: var(--muted); }
+  .cd.sel { background: var(--blue-chip); box-shadow: inset 3px 0 0 var(--blue); }
+  .adds { display: flex; gap: 8px; padding: 4px 16px 6px; flex-wrap: wrap; }
+  .tb { color: var(--blue); font-weight: 600; padding: 6px 10px; border-radius: 16px; }
+  .field { margin: 10px 16px; border: 1px solid #8E8A84; border-radius: 6px; padding: 14px; min-height: 64px; color: var(--text); }
+  .field.empty { color: var(--muted); }
+  .r { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+       padding: 10px 12px; display: flex; }
+  .r .t { flex: 1; font-weight: 600; }
+  .r .w { color: var(--muted); font-size: 12px; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 64px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .nav .on { color: var(--text); font-weight: 600; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 8px; }
+
+  .scrim { position: absolute; inset: 0; background: #0005; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: 20px 20px 0 0;
+           padding: 8px 0 14px; box-shadow: 0 -2px 10px #0003; }
+  .grab { width: 36px; height: 4px; background: var(--line); border-radius: 2px; margin: 4px auto 10px; }
+  .st { font-size: 17px; font-weight: 600; padding: 0 20px 10px; }
+  .inp { margin: 0 16px; border: 2px solid var(--blue); border-radius: 6px; padding: 10px 12px; font-size: 16px; position: relative; }
+  .inp.err { border-color: #B3261E; }
+  .inp label { position: absolute; top: -9px; left: 10px; background: #fff; padding: 0 4px; font-size: 12px; color: var(--blue); }
+  .inp.err label { color: #B3261E; }
+  .help { margin: 4px 20px 0; font-size: 12px; color: var(--muted); }
+  .help.err { color: #B3261E; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 16px 4px; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; font-size: 13px; }
+  .chip.on { background: var(--blue-chip); border-color: transparent; color: #1D4A73; font-weight: 600; }
+  .bar { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px 0; }
+  .btn { border-radius: 20px; padding: 8px 18px; color: var(--blue); font-weight: 600; }
+  .btn.filled { background: var(--blue); color: #fff; }
+  .kbd { position: absolute; left: 0; right: 0; bottom: 0; height: 210px; background: #E8EAED; display: grid;
+         grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 10px; font-size: 20px; }
+  .kbd span { background: #fff; border-radius: 6px; display: grid; place-items: center; }
+  .menu { position: absolute; background: var(--surface); border-radius: 8px; box-shadow: 0 3px 12px #0003;
+          padding: 6px 0; width: 200px; z-index: 3; }
+  .menu div { padding: 10px 16px; }
+  .snack { position: absolute; left: 12px; right: 12px; bottom: 76px; background: #313033; color: #F4EFF4; border-radius: 6px;
+           padding: 12px 14px; display: flex; font-size: 14px; }
+  .snack b { margin-left: auto; color: #CFBCFF; }
+
+  .desk { width: 1280px; height: 620px; background: var(--bg); border: 8px solid #1B1D20;
+          border-radius: 10px; display: flex; overflow: hidden; position: relative; }
+  .rail { width: 88px; background: #ECE8E0; padding-top: 12px; display: flex; flex-direction: column;
+          align-items: center; gap: 14px; font-size: 11px; color: var(--muted); flex: none; }
+  .rail .fabr { background: #E6E0F3; border-radius: 14px; width: 56px; height: 56px; display: grid; place-items: center; font-size: 22px; }
+  .rail .on { color: var(--text); font-weight: 600; }
+  .pane { width: 440px; border-right: 1px solid var(--line); padding-top: 6px; position: relative; flex: none; overflow: hidden; }
+  .search { margin: 8px 12px 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+            padding: 8px 14px; color: var(--muted); }
+  .detail { flex: 1; display: grid; place-items: center; color: var(--muted); }
+  .callout { position: absolute; background: #FFF6D8; border: 1px solid #E2C766; border-radius: 6px;
+             padding: 4px 7px; font-size: 11px; color: #5A4A10; max-width: 230px; z-index: 4; }
+  kbd { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 12px; }
+  .legend { margin-top: 28px; max-width: 1320px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>Commitments (T10.1, without the nudge) – sketch, screen 10</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb). <b>Already
+decided</b> (PO, 02-10-2026; AC REQ-046/047, DD-015): one commitment per item, as fields of the item; <i>by when I
+promised</i> is the item's deadline (<code>!datum</code> in the text), never a second date; the moment of asking is the
+capture moment unless changed; what I promised is an own short text, empty = the item's title; a waiting item can have an
+<i>expected by</i> date, also chosen in "Wacht op…"; a waiting item past its expected date shows on <b>Vandaag</b> in a
+group of its own. The nudge after X silent days comes with the reminders (M4). Sample data is fictional. Orange outline =
+new. <b>Open for the PO</b> were (a) to (e), in the notes and the legend.<br><b>Decided (PO, 02-10-2026): (a) to (e) all as proposed.</b> See DESIGN.md, DD-018 point 10.</p>
+
+<h2>Phone</h2>
+<div class="row">
+<div class="col">
+<h3>A request: the block "Toezegging"</h3>
+<p class="note">(a) In the item detail, under the person chips, a block <b>Toezegging</b> with three lines. Each line is
+tappable. A grey value is the default (capture moment, the title); a black one was set. <i>Voor</i> is the deadline from
+the text; without one: <i>Datum toevoegen</i>.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="icon">↗</span><span class="icon">⋮</span></div>
+  <div class="chips" style="padding-top:0"><span class="chip on">Actief ▾</span><span class="chip">Verzoek ▾</span><span class="chip">📁 Verbouwing ▾</span></div>
+  <div class="field">Offerte dakkapel nakijken @Jan !vr</div>
+  <div class="chips" style="padding-top:2px"><span class="chip">👤 Jan</span><span class="chip">📅 vr 9 okt</span></div>
+  <div class="chips" style="padding-top:2px"><span class="chip">👤 Gevraagd door Jan ▾</span></div>
+  <div class="new" style="margin:8px 8px 0">
+    <div class="sec" style="margin-top:6px">Toezegging</div>
+    <div class="line"><span class="i">🗓</span><span>Gevraagd op <span style="color:var(--muted)">ma 28 sep</span></span></div>
+    <div class="line"><span class="i">✎</span><span>Beloofd: <span style="color:var(--muted)">Offerte dakkapel nakijken</span></span></div>
+    <div class="line"><span class="i">⏱</span><span>Voor: vr 9 okt</span></div>
+  </div>
+  <div class="field empty">Notitie</div>
+  <div class="bar" style="justify-content:flex-start"><span class="btn filled">Afronden</span><span class="btn">Wacht op…</span></div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span class="on">Projecten</span><span>Personen</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>Changing what I promised</h3>
+<p class="note">(b) <i>Beloofd</i> opens a small dialog with one field, empty by default ("Leeg: de titel van het
+item"). <i>Gevraagd op</i> opens the date picker (no time). <i>Voor</i> opens the date picker and puts
+<code>!9-10-2026</code> in the text, as the date chip does now (DD-018 point 1).</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="icon">↗</span><span class="icon">⋮</span></div>
+  <div class="chips" style="padding-top:0"><span class="chip on">Actief ▾</span><span class="chip">Verzoek ▾</span></div>
+  <div class="field">Offerte dakkapel nakijken @Jan !vr</div>
+  <div class="scrim"></div>
+  <div class="sheet" style="bottom:auto; top:190px; left:24px; right:24px; border-radius:20px; padding:18px 0 12px">
+    <div class="st">Wat heb je beloofd?</div>
+    <div class="inp new"><label>Beloofd</label>Prijs en planning sturen</div>
+    <div class="help">Leeg: de titel van het item.</div>
+    <div class="bar"><span class="btn">Annuleren</span><span class="btn filled">Opslaan</span></div>
+  </div>
+</div>
+</div>
+
+<div class="col">
+<h3>Waiting: "Verwacht op"</h3>
+<p class="note">(c) For a waiting item the block shows <b>Wacht op Petra</b> and <b>Verwacht</b>, a date of its own
+(not the deadline). Past it, the line turns orange with a warning icon. Without one: <i>Verwacht op toevoegen</i>. The
+card gets the same date as a chip.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="icon">↗</span><span class="icon">⋮</span></div>
+  <div class="chips" style="padding-top:0"><span class="chip on">Wacht op ▾</span><span class="chip">Taak ▾</span></div>
+  <div class="field">Tekeningen van de aannemer</div>
+  <div class="chips" style="padding-top:2px"><span class="chip">⏳ Wacht op Petra ▾</span></div>
+  <div class="new" style="margin:8px 8px 0">
+    <div class="sec" style="margin-top:6px">Toezegging</div>
+    <div class="line"><span class="i">⏳</span><span>Wacht op Petra</span></div>
+    <div class="line" style="color:var(--orange)"><span class="i" style="color:var(--orange)">⚠</span><span>Verwacht: di 29 sep · 3 dagen te laat</span></div>
+  </div>
+  <div class="field empty">Notitie</div>
+  <div class="bar" style="justify-content:flex-start"><span class="btn filled">Afronden</span></div>
+  <div class="nav"><span class="on">Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span></div>
+</div>
+</div>
+</div>
+
+<div class="row" style="margin-top:28px">
+<div class="col">
+<h3>"Wacht op…": with an expected date</h3>
+<p class="note">(d) The sheet that asks whom you wait for gets one optional line under the names: <b>Verwacht op…</b>
+(date picker). Skipping it is fine: no date, no group on Vandaag.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span></div>
+  <div class="field">Tekeningen van de aannemer</div>
+  <div class="scrim"></div>
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="st">Op wie wacht je?</div>
+    <div class="inp"><label>Naam</label>Pet</div>
+    <div class="cd"><span class="i">👤</span><span class="v">Petra</span></div>
+    <div class="cd"><span class="i">＋</span><span class="v">Nieuw: Pet</span></div>
+    <div class="cd new"><span class="i">🗓</span><span class="v">Verwacht op… <small>optioneel</small></span></div>
+    <div class="bar"><span class="btn">Overslaan</span></div>
+  </div>
+</div>
+</div>
+
+<div class="col">
+<h3>Vandaag: "Had binnen moeten zijn"</h3>
+<p class="note">(e) A third group under <i>Verlopen</i> and <i>Vandaag</i>: waiting items past their expected date,
+oldest first, with whom and how late. Header in the darker orange (DD-017). Swipe right = <i>Afronden</i> (received),
+as on Today now.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back" style="font-size:22px">Vandaag</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="r" style="background:#E6E0F3; border:0"><span class="t">3 in je inbox</span><span class="w" style="color:#4A3C7A">Verwerken ›</span></div>
+  <div class="sec" style="color:#8F430E">Verlopen · 1</div>
+  <div class="r"><span class="t">Factuur betalen</span><span class="w">⚠ do 1 okt</span></div>
+  <div class="sec">Vandaag · 1</div>
+  <div class="r"><span class="t">Gemeente terugbellen</span><span class="w">vandaag</span></div>
+  <div class="new" style="margin:8px 4px 0">
+    <div class="sec" style="color:#8F430E">⏳ Had binnen moeten zijn · 1</div>
+    <div class="r"><span class="t">Tekeningen van de aannemer</span><span class="w">Petra · 3 d te laat</span></div>
+  </div>
+  <div class="nav"><span class="on">Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span></div>
+</div>
+</div>
+</div>
+
+<h2>Windows</h2>
+<p class="note">The same block in the detail pane, under the person chips. The lines are in the Tab order; <kbd>Enter</kbd>
+opens the dialog or date picker of the focused line.</p>
+<div class="desk">
+  <div class="rail"><div class="fabr">＋</div><span>Vandaag</span><span>Inbox</span><span class="on">Projecten</span><span>Personen</span></div>
+  <div class="pane">
+    <div class="search">Zoek in items en personen</div>
+    <div class="sec" style="font-size:18px; text-transform:none; letter-spacing:0; color:var(--text)">Projecten › Verbouwing</div>
+    <div class="sec">Actief · 1</div>
+    <div class="r cd sel" style="margin:6px 12px"><span class="t">Offerte dakkapel nakijken</span></div>
+    <div class="sec">Wacht op · 1</div>
+    <div class="r"><span class="t">Tekeningen van de aannemer</span><span class="w">Petra · ⚠ 3 d te laat</span></div>
+  </div>
+  <div style="flex:1; padding:12px 18px">
+    <div class="chips" style="padding:0"><span class="chip on">Actief ▾</span><span class="chip">Verzoek ▾</span><span class="chip">📁 Verbouwing ▾</span></div>
+    <div class="field" style="margin:10px 0">Offerte dakkapel nakijken @Jan !vr</div>
+    <div class="chips" style="padding:0"><span class="chip">👤 Gevraagd door Jan ▾</span></div>
+    <div class="new" style="margin:10px 0 0; max-width:520px">
+      <div class="sec" style="margin:6px 12px">Toezegging</div>
+      <div class="line"><span class="i">🗓</span><span>Gevraagd op <span style="color:var(--muted)">ma 28 sep</span></span></div>
+      <div class="line cd sel" style="padding:9px 16px"><span class="i">✎</span><span>Beloofd: <span style="color:var(--muted)">Offerte dakkapel nakijken</span></span></div>
+      <div class="line"><span class="i">⏱</span><span>Voor: vr 9 okt</span></div>
+    </div>
+    <div class="callout" style="left:860px; top:330px">Focus on a line: Enter opens its dialog</div>
+  </div>
+</div>
+
+<ol class="legend" type="a">
+  <li><b>The block Toezegging</b> under the person chips in the item detail: the request part for an item with a requester or of type <i>Verzoek</i>, the waiting part for a waiting item (DD-018 point 10, which items).</li>
+  <li><b>Editing:</b> each line opens its own small dialog or date picker; <i>Voor</i> writes <code>!datum</code> into the text.</li>
+  <li><b>Waiting:</b> <i>Verwacht</i> as a date of its own; orange with a warning icon once past, also as a chip on the card.</li>
+  <li><b>"Wacht op…"</b> gets an optional line <i>Verwacht op…</i>.</li>
+  <li><b>Vandaag:</b> a third group "Had binnen moeten zijn" for waiting items past their expected date.</li>
+</ol>
+</body>
+</html>

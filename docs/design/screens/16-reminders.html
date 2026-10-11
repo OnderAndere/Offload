@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Deadline reminders – sketch, screen 16</title>
+<style>
+  :root {
+    --bg: #FBF8FC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --orange-text: #8F430E; --blue: #245A8C;
+    --blue-chip: #E3ECF5; --purple: #6750A4; --purple-chip: #EADDFF;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1320px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; max-width: 1320px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col p.note { width: 390px; min-height: 112px; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 8px; }
+  .phone { width: 390px; height: 760px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .phone.dark { background: #20242B; color: #E8EAED; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .dark .status { color: #B9BEC6; }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; font-size: 22px; }
+  .sec { margin: 16px 20px 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .set { display: flex; align-items: center; gap: 12px; padding: 10px 20px; }
+  .set .t { flex: 1; } .set .t small { display: block; color: var(--muted); font-size: 12px; }
+  .switch { width: 44px; height: 24px; border-radius: 12px; background: var(--purple); position: relative; }
+  .switch::after { content: ""; position: absolute; right: 3px; top: 3px; width: 18px; height: 18px; border-radius: 9px; background: #fff; }
+  .drop { border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-family: "IBM Plex Mono", Consolas, monospace; }
+  .warn { margin: 4px 20px 0; background: var(--blue-chip); border-radius: 10px; padding: 10px 12px; font-size: 13px; }
+  .warn b { display: block; }
+  .warn .a { color: var(--purple); font-weight: 600; margin-top: 4px; display: inline-block; }
+  .card { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 2px 8px; font-size: 12px; background: var(--surface); }
+  .scrim { position: absolute; inset: 0; background: #0006; }
+  .sysdlg { position: absolute; left: 30px; right: 30px; top: 230px; background: #ECE6F0; border-radius: 26px; padding: 22px 22px 14px; }
+  .sysdlg .i { text-align: center; font-size: 22px; }
+  .sysdlg .q { text-align: center; font-size: 18px; margin: 10px 0 18px; }
+  .sysdlg .b { background: #fff; border-radius: 18px; padding: 12px; text-align: center; margin-top: 6px; font-weight: 600; color: #4A4458; }
+  .snack { position: absolute; left: 12px; right: 12px; bottom: 76px; background: #313033; color: #F4EFF4; border-radius: 6px; padding: 12px 14px; font-size: 13px; display: flex; gap: 10px; }
+  .snack span { flex: 1; } .snack b { color: #D0BCFF; }
+  .notif { margin: 8px 12px; background: #2D3138; border-radius: 18px; padding: 12px 14px; color: #E8EAED; }
+  .notif .h { font-size: 12px; color: #B9BEC6; display: flex; gap: 6px; align-items: center; }
+  .notif .h .ic { width: 16px; height: 16px; border-radius: 4px; background: #245A8C; display: inline-block; }
+  .notif .t { font-weight: 600; margin-top: 4px; }
+  .notif ul { margin: 4px 0 0; padding-left: 18px; color: #D5D8DD; font-size: 13px; }
+  .clock { text-align: center; font-size: 64px; font-weight: 300; margin: 50px 0 20px; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .legend { margin-top: 28px; max-width: 1320px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>Deadline reminders (T4.1) – sketch, screen 16</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb). Sample data is
+fictional; today is Friday 9 October 2026. Orange outline = new. <b>Already decided</b> (PO, 04-10-2026; AC REQ-020,
+DD-005): a deadline is a date (Q24), the reminder comes on that day at a set time, by default 09:00, through an
+inexact alarm (window 10 minutes, SPEC Q38; no exact-alarm permission); <b>one notification per day</b>, with the titles
+(at most five) or, for one item, its title; titles are shown in the notification, never written to disk; no repeated
+reminders for overdue items (they are on <i>Vandaag</i>); a tap opens the item, or <i>Vandaag</i> when there are more;
+the notification permission is asked only at the first deadline. Android only for now; Windows follows in T4.5.
+<b>Decided (PO, 04-10-2026):</b> (a)–(d) all as proposed; see DESIGN.md, DD-005 and DD-018 point 16.</p>
+
+<h2>Phone</h2>
+<div class="row">
+<div class="col">
+<h3>1 · Settings → Herinneringen</h3>
+<p class="note">A section of its own: on/off and the time of day. (c) On by default; off removes every planned
+reminder. A change applies at once to what is planned.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">← Instellingen</div>
+  <div class="sec">Weekoverzicht</div>
+  <div class="set"><span class="t">Stilgevallen na</span><span class="drop">3 weken ▾</span></div>
+  <div class="new">
+    <div class="sec">Herinneringen</div>
+    <div class="set"><span class="t">Meldingen bij deadlines<small>Op de dag van een deadline; één melding per dag.</small></span><span class="switch"></span></div>
+    <div class="set"><span class="t">Tijdstip<small>Wanneer de melding van die dag komt.</small></span><span class="drop">09:00 ▾</span></div>
+  </div>
+  <div class="sec">Personen</div>
+  <div class="set"><span class="t">Oud na</span><span class="drop">21 dagen ▾</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>2 · The first deadline: Android asks</h3>
+<p class="note">Saving the first item with a deadline (here <code>!vandaag</code>) brings up Android's own question, once.
+(b) After "Niet toestaan" a short message says where deadlines still show; the app never asks again by itself.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">Inbox</div>
+  <div class="card">Offerte dakgoot opvragen <span class="chip" style="color:var(--orange-text)">⚠ vandaag</span></div>
+  <div class="scrim"></div>
+  <div class="sysdlg">
+    <div class="i">🔔</div>
+    <div class="q">Toestaan dat <b>Offload</b> je meldingen stuurt?</div>
+    <div class="b">Toestaan</div>
+    <div class="b">Niet toestaan</div>
+  </div>
+  <div class="snack new"><span>Zonder meldingen zie je deadlines op Vandaag.</span><b>Instellingen</b></div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span>Inzicht</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>3 · Settings when Android says no</h3>
+<p class="note">When notifications are off in Android, the section says so, with a button to Android's settings for
+Offload. The switch keeps its own choice.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">← Instellingen</div>
+  <div class="sec">Herinneringen</div>
+  <div class="set"><span class="t">Meldingen bij deadlines<small>Op de dag van een deadline; één melding per dag.</small></span><span class="switch"></span></div>
+  <div class="warn new"><b>Meldingen staan uit in Android</b>Deadlines staan wel op Vandaag.<br><span class="a">Meldingen toestaan</span></div>
+  <div class="set"><span class="t">Tijdstip<small>Wanneer de melding van die dag komt.</small></span><span class="drop">09:00 ▾</span></div>
+</div>
+</div>
+</div>
+
+<div class="row" style="margin-top:28px">
+<div class="col">
+<h3>4 · The notification, one item</h3>
+<p class="note">One deadline today: its title. A tap opens the item.</p>
+<div class="phone dark" style="height:380px">
+  <div class="status">9:00</div>
+  <div class="notif new"><div class="h"><span class="ic"></span>Offload · nu</div>
+    <div class="t">Deadline vandaag</div><div>Offerte dakgoot opvragen</div></div>
+</div>
+</div>
+
+<div class="col">
+<h3>5 · The notification, more items</h3>
+<p class="note">Three deadlines today: the count, and the titles below it, at most five ("en nog 2"). A tap opens
+<i>Vandaag</i>.</p>
+<div class="phone dark" style="height:380px">
+  <div class="status">9:00</div>
+  <div class="notif new"><div class="h"><span class="ic"></span>Offload · nu</div>
+    <div class="t">3 deadlines vandaag</div>
+    <ul><li>Offerte dakgoot opvragen</li><li>Contributie vereniging overmaken</li><li>Tegels bestellen</li></ul></div>
+</div>
+</div>
+
+<div class="col">
+<h3>6 · On the lock screen</h3>
+<p class="note">(a) On a locked phone the notification shows only the count, never a title: "3 deadlines vandaag".
+The titles appear after unlocking.</p>
+<div class="phone dark" style="height:380px">
+  <div class="status">9:00</div>
+  <div class="clock">9:00</div>
+  <div class="notif new"><div class="h"><span class="ic"></span>Offload</div><div class="t">3 deadlines vandaag</div></div>
+</div>
+</div>
+</div>
+
+<ol class="legend" type="a">
+  <li><b>Lock screen (decided):</b> a public version with only the count ("3 deadlines vandaag", or "Deadline vandaag").</li>
+  <li><b>After a refusal (decided):</b> once a message "Zonder meldingen zie je deadlines op Vandaag" with <i>Instellingen</i> (Android's settings for Offload). The app never asks again by itself; Settings shows the state (3).</li>
+  <li><b>Default (decided):</b> on. The question comes only at the first deadline, so nobody gets a notification without having said yes.</li>
+  <li><b>Windows (decided):</b> the section is not shown on Windows until T4.5, so it promises nothing it cannot do yet.</li>
+</ol>
+</body>
+</html>

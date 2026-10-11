@@ -1,0 +1,15 @@
+# Android permissions the release APK may request (checked by
+# tool/check_permissions.sh). Adding a line needs product-owner approval.
+# INTERNET and the exact-alarm permissions can never be added (CLAUDE.md).
+
+# Added by androidx.core to protect the app's own non-exported dynamic
+# receivers; signature-level, grants no access to anything outside the app.
+eu.marandos.offload.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+
+# Deadline reminders (T4.1, DD-005, AC REQ-020): asked once, at the first
+# deadline. Approved by the product owner 04-10-2026.
+android.permission.POST_NOTIFICATIONS
+
+# Reminders planned again after a restart (T4.3, DD-005): a normal permission,
+# granted at install. Approved by the product owner 04-10-2026.
+android.permission.RECEIVE_BOOT_COMPLETED

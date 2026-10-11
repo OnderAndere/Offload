@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Today – Q5b sketch</title>
+<style>
+  :root {
+    --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --blue: #245A8C; --chip: #EAE6DE;
+    --blue-chip: #E3ECF5; --orange-chip: #F6E1CC;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  .lead { color: var(--muted); max-width: 1300px; margin: 0 0 20px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col h3 { font-size: 16px; margin: 0 0 4px; }
+  .col p.note { color: var(--muted); margin: 0 0 10px; width: 390px; min-height: 58px; }
+  .phone { width: 390px; height: 844px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 56px; display: flex; align-items: center; padding: 0 8px 0 16px; }
+  .appbar .title { flex: 1; font-size: 20px; }
+  .appbar .date { color: var(--muted); font-size: 13px; margin-right: 8px; }
+  .icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 18px; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 64px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px;
+         color: var(--muted); }
+  .nav .on { color: var(--blue); font-weight: 700; }
+  .fab { position: absolute; right: 16px; bottom: 76px; background: #D9E4F0; color: var(--blue);
+         border-radius: 16px; padding: 16px 20px; font-weight: 600; box-shadow: 0 2px 6px #0002; }
+  .inboxline { margin: 4px 12px 8px; background: #E3ECF5; border-radius: 12px; padding: 10px 14px;
+               display: flex; align-items: center; gap: 10px; color: #1D4A73; }
+  .inboxline b { flex: 1; font-weight: 600; }
+  .sec { margin: 14px 16px 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+         color: var(--muted); display: flex; gap: 6px; }
+  .sec.late { color: #8F430E; } /* darker than #B35712 for contrast on the page (DD-017) */
+  .r { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line);
+       border-radius: 12px; padding: 10px 12px; }
+  .h { display: flex; gap: 8px; align-items: baseline; }
+  .h .t { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .when { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .cs { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 3px; border-radius: 6px;
+          padding: 1px 7px; font-size: 12px; background: var(--chip); }
+  .chip.p, .chip.d { background: var(--blue-chip); color: #1D4A73; }
+  .chip.late { background: var(--orange-chip); color: #7A3A0B; }
+  .chip.today { background: var(--orange-chip); color: #7A3A0B; }
+  .status-chip { font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 6px;
+                 padding: 0 6px; }
+  .empty { text-align: center; padding: 120px 30px 0; }
+  .empty .big { font-size: 48px; color: var(--blue); }
+  .empty h4 { font-size: 18px; margin: 8px 0; }
+  .empty p { color: var(--muted); }
+  .swipe { display: flex; margin: 6px 12px; border-radius: 12px; overflow: hidden; }
+  .swipe .under { width: 120px; color: #fff; display: grid; place-items: center; font-size: 12px; }
+  .swipe .under.done { background: var(--blue); }
+  .swipe .under.trash { background: #6B7078; }
+  .swipe .r { margin: 0; flex: 1; border-radius: 0; }
+  .snack { position: absolute; left: 12px; right: 12px; bottom: 76px; background: #2B2F35; color: #fff;
+           border-radius: 10px; padding: 12px 14px; display: flex; justify-content: space-between; }
+  .snack b { color: #9CC3EA; }
+  .desk { width: 1280px; height: 520px; background: var(--bg); border: 8px solid #1B1D20;
+          border-radius: 10px; display: flex; overflow: hidden; }
+  .rail { width: 84px; background: #ECE8E0; padding-top: 16px; display: flex; flex-direction: column;
+          align-items: center; gap: 14px; font-size: 11px; color: var(--muted); }
+  .rail .on { color: var(--blue); font-weight: 600; }
+  .pane { width: 440px; border-right: 1px solid var(--line); padding-top: 8px; }
+  .pane .ph { display: flex; align-items: center; padding: 8px 16px; font-size: 18px; }
+  .pane .ph span { margin-left: auto; color: var(--muted); font-size: 13px; }
+  .detail { flex: 1; padding: 24px; color: var(--muted); }
+  .sel { background: #E3ECF5 !important; box-shadow: inset 3px 0 0 var(--blue); }
+  kbd { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 12px; }
+  .legend { margin-top: 28px; max-width: 1300px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>Today (T2.6) – Q5b sketch, screen 4</h1>
+<p class="lead">The start screen once navigation arrives (REQ-030, DD-011). Indicative, not a pixel specification. Screen texts are
+Dutch, as in the app (app_nl.arb); colours follow DD-017. <b>PO decisions already made (28-09-2026):</b> only today and what is
+overdue, no week ahead (looking ahead is the Overview's Horizon); a line for the inbox with a way into triage; nothing about
+waiting-for yet (no expected dates until T10.1). "Revisit on" items join here once the reminders exist (M4). The two variants
+differ in how overdue and today are separated. Swipes: right = <i>Afronden</i>, left =
+<i>Prullenbak</i>, so "left = away" is the same everywhere. Today in the samples: Monday 28 September.<br><b>Decided (PO, 28-09-2026): variant A (two sections), and the swipes as proposed (right = complete, left = trash).</b> See DESIGN.md, DD-018 point 4.</p>
+
+<div class="row">
+
+<div class="col">
+<h3>A · Two sections</h3>
+<p class="note">"Verlopen" and "Vandaag" as headers with a count; the cards as in the inbox (DD-018 point 2). The status
+shows on the card, because items from several places meet here.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><div class="title">Vandaag</div><div class="date">ma 28 sep</div><div class="icon">⌕</div><div class="icon">⚙</div></div>
+  <div class="inboxline"><span>📥</span><b>5 in je inbox</b><span>Verwerken ›</span></div>
+  <div class="sec late">⚠ Verlopen · 2</div>
+  <div class="r"><div class="h"><div class="t">Rapport moestuin afronden</div><span class="status-chip">Wacht op</span></div>
+    <div class="cs"><span class="chip p">👤 Petra</span><span class="chip late">⚠ vr 25 sep</span></div></div>
+  <div class="r"><div class="h"><div class="t">Offerte afvoer nakijken</div><span class="status-chip">Actief</span></div>
+    <div class="cs"><span class="chip late">⚠ zo 27 sep</span></div></div>
+  <div class="sec">Vandaag · 2</div>
+  <div class="r"><div class="h"><div class="t">Bel Jan over de renovatieplanning</div><span class="status-chip">Actief</span></div>
+    <div class="cs"><span class="chip p">👤 Jan</span><span class="chip today">📅 vandaag</span><span class="chip"># renovatie</span></div></div>
+  <div class="r"><div class="h"><div class="t">Ketel keuren</div><span class="status-chip">Inbox</span></div>
+    <div class="cs"><span class="chip today">📅 vandaag</span></div></div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><span class="on">Vandaag</span><span>Inbox</span><span>Overzicht</span><span>Projecten</span><span>Mensen</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>B · One list, overdue first</h3>
+<p class="note">No headers: one list, oldest deadline first; the orange date chip says what is overdue. Calmer, but
+"overdue" is less of a block of its own.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><div class="title">Vandaag</div><div class="date">ma 28 sep</div><div class="icon">⌕</div><div class="icon">⚙</div></div>
+  <div class="inboxline"><span>📥</span><b>5 in je inbox</b><span>Verwerken ›</span></div>
+  <div class="r"><div class="h"><div class="t">Rapport moestuin afronden</div><span class="status-chip">Wacht op</span></div>
+    <div class="cs"><span class="chip p">👤 Petra</span><span class="chip late">⚠ vr 25 sep · verlopen</span></div></div>
+  <div class="r"><div class="h"><div class="t">Offerte afvoer nakijken</div><span class="status-chip">Actief</span></div>
+    <div class="cs"><span class="chip late">⚠ zo 27 sep · verlopen</span></div></div>
+  <div class="r"><div class="h"><div class="t">Bel Jan over de renovatieplanning</div><span class="status-chip">Actief</span></div>
+    <div class="cs"><span class="chip p">👤 Jan</span><span class="chip today">📅 vandaag</span><span class="chip"># renovatie</span></div></div>
+  <div class="r"><div class="h"><div class="t">Ketel keuren</div><span class="status-chip">Inbox</span></div>
+    <div class="cs"><span class="chip today">📅 vandaag</span></div></div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><span class="on">Vandaag</span><span>Inbox</span><span>Overzicht</span><span>Projecten</span><span>Mensen</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>Both: nothing for today</h3>
+<p class="note">A positive confirmation, never a blank screen (SPEC §5). The inbox line stays when the inbox has items;
+with an empty inbox it goes too.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><div class="title">Vandaag</div><div class="date">ma 28 sep</div><div class="icon">⌕</div><div class="icon">⚙</div></div>
+  <div class="inboxline"><span>📥</span><b>2 in je inbox</b><span>Verwerken ›</span></div>
+  <div class="empty"><div class="big">☀</div><h4>Niets voor vandaag</h4><p>Geen deadlines vandaag en niets verlopen.</p></div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><span class="on">Vandaag</span><span>Inbox</span><span>Overzicht</span><span>Projecten</span><span>Mensen</span></div>
+</div>
+</div>
+</div>
+
+<h2>Swiping: right = complete, left = trash; Windows</h2>
+<div class="row">
+  <div class="col">
+    <h3>Android: swipe a card</h3>
+    <p class="note">Right completes the item (status <i>afgerond</i>), left sends it to the trash; both with
+    <i>Ongedaan maken</i>. Screen readers get both as actions on the card.</p>
+    <div class="phone">
+      <div class="status">9:41</div>
+      <div class="appbar"><div class="title">Vandaag</div><div class="date">ma 28 sep</div><div class="icon">⌕</div><div class="icon">⚙</div></div>
+      <div class="inboxline"><span>📥</span><b>5 in je inbox</b><span>Verwerken ›</span></div>
+      <div class="sec late">⚠ Verlopen · 2</div>
+      <div class="swipe"><div class="under done">✓ Afronden</div><div class="r" style="margin-right:-120px"><div class="h"><div class="t">Offerte afvoer nakijken</div><span class="status-chip">Actief</span></div><div class="cs"><span class="chip late">⚠ zo 27 sep</span></div></div></div>
+      <div class="swipe"><div class="r" style="margin-left:-120px"><div class="h"><div class="t">Rapport moestuin afronden</div><span class="status-chip">Wacht op</span></div><div class="cs"><span class="chip p">👤 Petra</span><span class="chip late">⚠ vr 25 sep</span></div></div><div class="under trash">🗑 Prullenbak</div></div>
+      <div class="snack"><span>Afgerond</span><b>Ongedaan maken</b></div>
+      <div class="nav"><span class="on">Vandaag</span><span>Inbox</span><span>Overzicht</span><span>Projecten</span><span>Mensen</span></div>
+    </div>
+  </div>
+  <div class="col">
+    <h3>Windows: list pane with the detail beside it (T2.6)</h3>
+    <p class="note" style="width:820px">No swiping. <kbd>↑</kbd>/<kbd>↓</kbd> select, <kbd>Enter</kbd> puts the focus in the detail,
+    <kbd>Ctrl</kbd>+<kbd>Enter</kbd> completes (as in the detail, DD-018), <kbd>Del</kbd> sends to the trash; both with undo.</p>
+    <div class="desk" style="width:820px">
+      <div class="rail"><div class="on">Vandaag</div><div>Inbox</div><div>Overzicht</div><div>Projecten</div><div>Mensen</div></div>
+      <div class="pane"><div class="ph">Vandaag <span>ma 28 sep</span></div>
+        <div class="inboxline"><span>📥</span><b>5 in je inbox</b><span>Verwerken ›</span></div>
+        <div class="sec late">⚠ Verlopen · 2</div>
+        <div class="r sel"><div class="h"><div class="t">Rapport moestuin afronden</div><span class="status-chip">Wacht op</span></div><div class="cs"><span class="chip p">👤 Petra</span><span class="chip late">⚠ vr 25 sep</span></div></div>
+        <div class="r"><div class="h"><div class="t">Offerte afvoer nakijken</div><span class="status-chip">Actief</span></div><div class="cs"><span class="chip late">⚠ zo 27 sep</span></div></div>
+        <div class="sec">Vandaag · 2</div>
+        <div class="r"><div class="h"><div class="t">Bel Jan over de renovatieplanning</div><span class="status-chip">Actief</span></div></div>
+      </div>
+      <div class="detail">(item detail, DD-018 point 1)</div>
+    </div>
+  </div>
+</div>
+
+<ul class="legend">
+  <li><b>What is on Today:</b> every live item that is not done or archived and whose deadline (<code>due_at</code>, from the
+  first date in the text, DD-018 point 1) is today or earlier; any status, the inbox included. Items without a deadline are not
+  here. Later: "revisit on" items (M4) and waiting-for items past their expected date (T10.1).</li>
+  <li><b>Order:</b> oldest deadline first. The time since capturing is left out here: the deadline is what counts.</li>
+  <li><b>The inbox line:</b> the number of inbox items and <i>Verwerken</i>, which starts triage (DD-018 point 3); tapping the
+  line itself goes to the Inbox tab. Hidden when the inbox is empty.</li>
+  <li><b>Colours:</b> an overdue or today date is orange with its own icon (DD-017); the swipe to complete is blue (calm, done),
+  the trash grey.</li>
+  <li><b>Until navigation exists (T2.6)</b> the app keeps opening on the inbox; Today comes with the navigation.</li>
+</ul>
+<p class="lead" style="margin-top:20px"><i>Made with the help of AI (Claude); reviewed by the product owner.</i></p>
+</body>
+</html>

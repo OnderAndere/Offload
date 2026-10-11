@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Triage card – Q5b sketch</title>
+<style>
+  :root {
+    --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --blue: #245A8C; --chip: #EAE6DE;
+    --blue-chip: #E3ECF5; --orange-chip: #F6E1CC; --trash: #5A5F66;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  .lead { color: var(--muted); max-width: 1300px; margin: 0 0 20px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col h3 { font-size: 16px; margin: 0 0 4px; }
+  .col p.note { color: var(--muted); margin: 0 0 10px; width: 390px; min-height: 76px; }
+  .phone { width: 390px; height: 844px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 56px; display: flex; align-items: center; padding: 0 8px; gap: 4px; }
+  .appbar .title { flex: 1; font-size: 18px; padding-left: 4px; }
+  .appbar .prog { color: var(--muted); font-size: 13px; padding-right: 8px; }
+  .icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 18px; }
+  .bar { height: 4px; background: var(--line); margin: 0 16px; border-radius: 2px; }
+  .bar div { height: 4px; width: 25%; background: var(--blue); border-radius: 2px; }
+  .stage { position: relative; height: 420px; margin: 18px 16px 0; }
+  .card, .card2 { position: absolute; left: 26px; right: 26px; border-radius: 16px;
+                  background: var(--surface); border: 1px solid var(--line); }
+  .card2 { top: 12px; bottom: -8px; left: 38px; right: 38px; background: #FBFAF7; }
+  .card { top: 0; bottom: 0; padding: 16px; box-shadow: 0 3px 10px #0001; }
+  .card .t { font-size: 17px; font-weight: 600; }
+  .card .body { margin-top: 8px; color: var(--text); font-size: 14px; white-space: pre-line; }
+  .card .cs { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .card .meta { position: absolute; bottom: 14px; left: 16px; right: 16px; color: var(--muted);
+                font-size: 12px; display: flex; justify-content: space-between; }
+  .chip { display: inline-flex; align-items: center; gap: 3px; border-radius: 6px;
+          padding: 1px 7px; font-size: 12px; background: var(--chip); }
+  .chip.p, .chip.d { background: var(--blue-chip); color: #1D4A73; }
+  .dup { color: var(--blue); font-size: 12px; margin-top: 10px; }
+  .edge { position: absolute; font-size: 12px; font-weight: 600; color: var(--muted);
+          display: flex; align-items: center; gap: 2px; }
+  .edge.l { left: -6px; top: 45%; writing-mode: vertical-rl; transform: rotate(180deg); }
+  .edge.r { right: -6px; top: 45%; writing-mode: vertical-rl; color: var(--blue); }
+  .edge.u { top: -16px; left: 50%; transform: translateX(-50%); color: var(--blue); }
+  .edge.d { bottom: -22px; left: 50%; transform: translateX(-50%); color: var(--blue); }
+  .btns6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin: 26px 10px 0; }
+  .btns6 div { text-align: center; font-size: 11px; padding: 8px 0 6px; border-radius: 10px;
+               background: var(--surface); border: 1px solid var(--line); min-height: 56px; }
+  .btns6 div b, .grid div b { display: block; font-size: 18px; font-weight: 400; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 22px 16px 0; }
+  .grid div { text-align: center; font-size: 13px; padding: 10px 0; border-radius: 12px;
+              background: var(--surface); border: 1px solid var(--line); min-height: 64px; }
+  .num { display: inline-block; font-size: 10px; color: var(--muted); border: 1px solid var(--line);
+         border-radius: 3px; padding: 0 3px; margin-left: 2px; }
+  .skip { text-align: center; color: var(--blue); font-weight: 600; margin-top: 14px; }
+  .trashbtn { color: var(--trash); }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface);
+           border-radius: 20px 20px 0 0; box-shadow: 0 -4px 14px #0002; padding: 12px 16px 20px; }
+  .sheet .grab { width: 36px; height: 4px; background: var(--line); border-radius: 2px; margin: 0 auto 10px; }
+  .sheet h4 { margin: 0 0 8px; font-size: 16px; }
+  .field { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+           font-size: 15px; }
+  .sugg { margin-top: 6px; border: 1px solid var(--line); border-radius: 10px; }
+  .sugg div { padding: 10px 12px; border-top: 1px solid var(--line); }
+  .sugg div:first-child { border-top: 0; background: var(--blue-chip); }
+  .sheet .acts { display: flex; justify-content: space-between; margin-top: 12px; color: var(--blue);
+                 font-weight: 600; }
+  .snack { position: absolute; left: 12px; right: 12px; bottom: 20px; background: #2B2F35; color: #fff;
+           border-radius: 10px; padding: 12px 14px; display: flex; justify-content: space-between; }
+  .snack b { color: #9CC3EA; }
+  .scrim { position: absolute; inset: 0; background: #0003; }
+  .empty { text-align: center; padding: 150px 30px 0; }
+  .empty .big { font-size: 56px; color: var(--blue); }
+  .empty h4 { font-size: 20px; margin: 8px 0; }
+  .empty p { color: var(--muted); }
+  .empty .btn { display: inline-block; margin-top: 18px; border-radius: 20px; padding: 9px 18px;
+                background: var(--blue); color: #fff; }
+  /* inbox swipe (Q26) */
+  .ilist .r { margin: 8px 12px; background: var(--surface); border: 1px solid var(--line);
+              border-radius: 12px; padding: 10px 12px; position: relative; }
+  .ilist .h { display: flex; gap: 8px; }
+  .ilist .h .t { flex: 1; font-weight: 600; }
+  .when { color: var(--muted); font-size: 12px; }
+  .swiped { display: flex; margin: 8px 12px; border-radius: 12px; overflow: hidden; background: #6B7078; }
+  .swiped .under { width: 110px; color: #fff; display: grid; place-items: center; font-size: 12px; order: 2; }
+  .swiped .r { margin: 0; flex: 1; border-radius: 0; transform: none; }
+  /* Windows */
+  .desk { width: 1280px; height: 560px; background: var(--bg); border: 8px solid #1B1D20;
+          border-radius: 10px; display: flex; overflow: hidden; }
+  .rail { width: 84px; background: #ECE8E0; padding-top: 16px; display: flex; flex-direction: column;
+          align-items: center; gap: 14px; font-size: 11px; color: var(--muted); }
+  .rail .on { color: var(--blue); font-weight: 600; }
+  .wmain { flex: 1; display: flex; flex-direction: column; align-items: center; padding-top: 18px; }
+  .wtop { width: 720px; display: flex; justify-content: space-between; color: var(--muted); }
+  .wcard { width: 720px; min-height: 300px; background: var(--surface); border: 1px solid var(--line);
+           border-radius: 16px; padding: 20px; margin-top: 12px; position: relative; }
+  .wcard .t { font-size: 18px; font-weight: 600; }
+  .wbtns { width: 720px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 16px; }
+  .wbtns div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 0;
+               text-align: center; }
+  .keys { width: 720px; color: var(--muted); font-size: 12px; margin-top: 12px; text-align: center; }
+  kbd { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 12px; }
+  .legend { margin-top: 28px; max-width: 1300px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>Triage card (T2.4) – Q5b sketch, screen 3</h1>
+<p class="lead">Triage mode: the inbox card by card, each card to one of six destinations (AC REQ-010): task, idea, request,
+waiting for, reference, trash. Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb);
+colours follow DD-017. <b>PO decisions already made (28-09-2026):</b> on Windows the number keys
+1–5 for the destinations and <kbd>Del</kbd> for the trash (as in the detail); skipping a card is allowed (the item stays in
+the inbox); swiping in the inbox list (Q26) goes the same way as here: left = trash. The PO's first feeling was that <i>task</i> is the
+most used destination, hence <i>Taak</i> under the right swipe in A and C. The three variants differ in the swipes. Sample card: the shared mail from screen 2.<br><b>Decided (PO, 28-09-2026): variant B</b> (swipe right = skip, swipe left = trash, the six destinations as a 3×2 grid of buttons), with the common parts below. See DESIGN.md, DD-018 point 3.</p>
+
+<div class="row">
+
+<!-- ============ A ============ -->
+<div class="col">
+<h3>A · Two swipes + a row of buttons</h3>
+<p class="note">Right = <i>Taak</i>, left = <i>Prullenbak</i>. Below the card one row with all six destinations; <i>Overslaan</i>
+as a text button. The most common choice is one swipe, everything else one tap.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><div class="icon">✕</div><div class="title">Triage</div><div class="prog">3 van 12</div></div>
+  <div class="bar"><div></div></div>
+  <div class="stage">
+    <div class="card2"></div>
+    <div class="card">
+      <div class="t">RE: Keuring cv-ketel vrijdag</div>
+      <div class="body">Hoi Sam,
+Kun jij vrijdag de ketel keuren? Petra heeft hem tot en met donderdag nodig voor de verbouwing van de keuken.
+Groet, Jan</div>
+      <div class="dup">⧉ Lijkt op een ander item</div>
+      <div class="meta"><span>12 min geleden</span><span>Openen ›</span></div>
+    </div>
+    <div class="edge l">🗑 Prullenbak ←</div>
+    <div class="edge r">Taak →</div>
+  </div>
+  <div class="btns6">
+    <div><b>☑</b>Taak</div><div><b>💡</b>Idee</div><div><b>🙋</b>Verzoek</div>
+    <div><b>⏳</b>Wacht op</div><div><b>📄</b>Referentie</div><div class="trashbtn"><b>🗑</b>Prullen­bak</div>
+  </div>
+  <div class="skip">Overslaan</div>
+</div>
+</div>
+
+<!-- ============ B ============ -->
+<div class="col">
+<h3>B · Swipes only to move on</h3>
+<p class="note">Right = <i>Overslaan</i> (next card), left = <i>Prullenbak</i>. The six destinations as a 3×2 grid of large
+buttons. Calm and explicit: every destination is one tap, no swipe to remember; <i>Taak</i> is not faster than the rest.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><div class="icon">✕</div><div class="title">Triage</div><div class="prog">3 van 12</div></div>
+  <div class="bar"><div></div></div>
+  <div class="stage" style="height:390px">
+    <div class="card2"></div>
+    <div class="card">
+      <div class="t">RE: Keuring cv-ketel vrijdag</div>
+      <div class="body">Hoi Sam,
+Kun jij vrijdag de ketel keuren? Petra heeft hem tot en met donderdag nodig voor de verbouwing van de keuken.
+Groet, Jan</div>
+      <div class="dup">⧉ Lijkt op een ander item</div>
+      <div class="meta"><span>12 min geleden</span><span>Openen ›</span></div>
+    </div>
+    <div class="edge l">🗑 Prullenbak ←</div>
+    <div class="edge r">Overslaan →</div>
+  </div>
+  <div class="grid">
+    <div><b>☑</b>Taak</div><div><b>💡</b>Idee</div><div><b>🙋</b>Verzoek</div>
+    <div><b>⏳</b>Wacht op</div><div><b>📄</b>Referentie</div><div class="trashbtn"><b>🗑</b>Prullenbak</div>
+  </div>
+</div>
+</div>
+
+<!-- ============ C ============ -->
+<div class="col">
+<h3>C · Four directions</h3>
+<p class="note">Right = <i>Taak</i>, left = <i>Prullenbak</i>, up = <i>Idee</i>, down = <i>Wacht op</i>; buttons for
+<i>Verzoek</i>, <i>Referentie</i> and <i>Overslaan</i>. The fastest once learned, but four directions to remember, and up/down
+can clash with scrolling a long text.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><div class="icon">✕</div><div class="title">Triage</div><div class="prog">3 van 12</div></div>
+  <div class="bar"><div></div></div>
+  <div class="stage" style="margin-top:36px; height:400px">
+    <div class="card2"></div>
+    <div class="card">
+      <div class="t">RE: Keuring cv-ketel vrijdag</div>
+      <div class="body">Hoi Sam,
+Kun jij vrijdag de ketel keuren? Petra heeft hem tot en met donderdag nodig voor de verbouwing van de keuken.
+Groet, Jan</div>
+      <div class="dup">⧉ Lijkt op een ander item</div>
+      <div class="meta"><span>12 min geleden</span><span>Openen ›</span></div>
+    </div>
+    <div class="edge l">🗑 Prullenbak ←</div>
+    <div class="edge r">Taak →</div>
+    <div class="edge u">↑ Idee</div>
+    <div class="edge d">↓ Wacht op</div>
+  </div>
+  <div class="grid" style="margin-top:40px">
+    <div><b>🙋</b>Verzoek</div><div><b>📄</b>Referentie</div><div><b>⏭</b>Overslaan</div>
+  </div>
+</div>
+</div>
+</div>
+
+<h2>Common to all variants: asking who, undo, the end, and swiping in the inbox (Q26)</h2>
+<div class="row">
+  <div class="col">
+    <h3>"Wie vroeg dit?" after <i>Verzoek</i></h3>
+    <p class="note">A sheet with the suggestion list of people (REQ-033); typing filters, <i>Nieuw: …</i> creates. For
+    <i>Wacht op</i> the question is "Op wie wacht je?". Skipping is allowed; the destination is set either way.</p>
+    <div class="phone">
+      <div class="status">9:41</div>
+      <div class="appbar"><div class="icon">✕</div><div class="title">Triage</div><div class="prog">3 van 12</div></div>
+      <div class="bar"><div></div></div>
+      <div class="scrim"></div>
+      <div class="sheet">
+        <div class="grab"></div>
+        <h4>Wie vroeg dit?</h4>
+        <div class="field">Ja<span style="color:var(--blue)">|</span></div>
+        <div class="sugg"><div>👤 Jan</div><div>👤 Janneke</div><div>＋ Nieuw: Ja</div></div>
+        <div class="acts"><span style="color:var(--muted)">Overslaan</span><span>Klaar</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <h3>Undo, and swiping in the inbox (Q26)</h3>
+    <p class="note">After every choice the next card comes, with a message and <i>Ongedaan maken</i> (the card comes back).
+    In the inbox list (screen 2) a card swiped left goes to the trash, with the same message; no swipe right there.</p>
+    <div class="phone">
+      <div class="status">9:41</div>
+      <div class="appbar"><div class="title" style="font-size:20px; padding-left:8px">Inbox</div><div class="icon">⌕</div><div class="icon">⚙</div></div>
+      <div class="ilist">
+        <div class="r"><div class="h"><div class="t">RE: Keuring cv-ketel vrijdag</div><div class="when">12 min</div></div>
+          <div class="when">+ 3 regels</div></div>
+        <div class="swiped"><div class="under">🗑 Prullenbak</div><div class="r" style="margin-left:-110px"><div class="h"><div class="t">Offerte afvoer nakijken</div><div class="when">2 d</div></div></div></div>
+        <div class="r"><div class="h"><div class="t">Idee: logboek per moestuin</div><div class="when">3 d</div></div></div>
+      </div>
+      <div class="snack"><span>Naar de prullenbak verplaatst</span><b>Ongedaan maken</b></div>
+    </div>
+  </div>
+  <div class="col">
+    <h3>The end: every card handled</h3>
+    <p class="note">After the last card a positive confirmation, never a blank screen (SPEC §5 edge cases). Skipped items stay
+    in the inbox; the count says so.</p>
+    <div class="phone">
+      <div class="status">9:41</div>
+      <div class="appbar"><div class="icon">✕</div><div class="title">Triage</div><div class="prog">12 van 12</div></div>
+      <div class="bar"><div style="width:100%"></div></div>
+      <div class="empty">
+        <div class="big">✓</div>
+        <h4>Alles heeft een plek</h4>
+        <p>10 verwerkt · 2 overgeslagen, die staan nog in je inbox.</p>
+        <div class="btn">Terug naar de inbox</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>Windows: triage in the main pane, fully with the keyboard</h2>
+<p class="lead">No mouse swipes (AC REQ-010). Number keys for the destinations, the same in every language; the number is
+shown on each button. <kbd>Del</kbd> = trash as in the detail; <kbd>→</kbd> or <kbd>Space</kbd> = skip; <kbd>Ctrl</kbd>+<kbd>Z</kbd> =
+undo the last choice; <kbd>Enter</kbd> = open the item; <kbd>Esc</kbd> = stop triage. The person question is the same
+suggestion list, operated with arrows/Enter/Esc (DD-004 point 9).</p>
+<div class="desk">
+  <div class="rail"><div>Vandaag</div><div class="on">Inbox</div><div>Overzicht</div><div>Projecten</div><div>Mensen</div></div>
+  <div class="wmain">
+    <div class="wtop"><span>Triage · 3 van 12</span><span><kbd>Esc</kbd> stoppen</span></div>
+    <div class="wcard">
+      <div class="t">RE: Keuring cv-ketel vrijdag</div>
+      <div style="margin-top:8px; white-space:pre-line">Hoi Sam,
+Kun jij vrijdag de ketel keuren? Petra heeft hem tot en met donderdag nodig voor de verbouwing van de keuken.
+Groet, Jan</div>
+      <div class="dup">⧉ Lijkt op een ander item</div>
+      <div style="position:absolute; bottom:16px; left:20px; color:var(--muted); font-size:12px">12 min geleden · <kbd>Enter</kbd> openen</div>
+    </div>
+    <div class="wbtns">
+      <div>☑ Taak <span class="num">1</span></div><div>💡 Idee <span class="num">2</span></div>
+      <div>🙋 Verzoek <span class="num">3</span></div><div>⏳ Wacht op <span class="num">4</span></div>
+      <div>📄 Referentie <span class="num">5</span></div><div class="trashbtn">🗑 Prullenbak <span class="num">Del</span></div>
+    </div>
+    <div class="keys"><kbd>→</kbd> / <kbd>Space</kbd> overslaan · <kbd>Ctrl</kbd>+<kbd>Z</kbd> ongedaan maken</div>
+  </div>
+</div>
+
+<ul class="legend">
+  <li><b>The card</b> shows the whole text (a long text scrolls inside the card), the chips from the stored tokens, the
+  relative time and the duplicate hint (REQ-053). <i>Openen</i> goes to the item detail and comes back to the same card.</li>
+  <li><b>Destinations</b> (AC REQ-010): Taak → type task, status active; Idee → type idea, active; Verzoek → type request,
+  active, asks who; Wacht op → status waiting, asks for whom, type unchanged; Referentie → type note, active; Prullenbak →
+  tombstone. <i>Referentie</i> is only the label of the button.</li>
+  <li><b>Undo</b> is always possible right after a choice; a trashed item is never deleted for good (tombstone, DD-003).</li>
+  <li><b>Progress</b> "3 van 12" counts the inbox at the start; new captures during triage come at the end.</li>
+  <li><b>Trash is grey, not orange:</b> orange means "needs attention now" (DD-017); throwing away is calm.</li>
+</ul>
+<p class="lead" style="margin-top:20px"><i>Made with the help of AI (Claude); reviewed by the product owner.</i></p>
+</body>
+</html>

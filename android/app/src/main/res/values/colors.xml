@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Colours of the capture widget (DD-019), from the Offload branding (branding/widget/). -->
+<resources>
+    <!-- Navy tile, same gradient as the app icon. -->
+    <color name="widget_background_top">#22304F</color>
+    <color name="widget_background_bottom">#151E33</color>
+    <!-- Slightly lighter square behind the glyph in the wide widget. -->
+    <color name="widget_icon_well">#26355A</color>
+    <!-- Tint of the monochrome glyph ic_widget_capture. -->
+    <color name="widget_glyph">#F1F5FB</color>
+    <!-- Hint text in the wide widget. -->
+    <color name="widget_hint">#AEB9CF</color>
+    <!-- Thin line between the buttons of the Offload bar (REQ-063). -->
+    <color name="widget_divider">#3A4A6E</color>
+</resources>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Offload bar – sketch, screen 21</title>
+<style>
+  :root {
+    --bg: #FBF8FC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --blue: #245A8C; --purple: #6750A4;
+    --navy1: #22304F; --navy2: #151E33; --tray: #F1F5FB; --amber: #E9A23B;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1680px; margin: 0 0 20px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col p.note { color: var(--muted); margin: 0 0 10px; width: 390px; min-height: 132px; }
+  .new { outline: 2px solid var(--orange); outline-offset: 2px; }
+  .phone { width: 390px; height: 760px; border-radius: 28px; border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .home.light { background: linear-gradient(160deg, #DCE7F3, #F6EEDF); }
+  .home.dark { background: linear-gradient(160deg, #1A2230, #2B2A35); }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .dark .status { color: #B9BEC6; }
+  .grid { position: absolute; left: 14px; right: 14px; top: 60px; display: grid;
+          grid-template-columns: repeat(4, 80px); grid-auto-rows: 86px; gap: 6px; justify-content: space-between; }
+  .cell { display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; color: #3A3F46; }
+  .dark .cell { color: #D5D8DD; }
+  .appicon { width: 54px; height: 54px; border-radius: 27px; background: #C9D3DF; margin-bottom: 4px; }
+  .dark .appicon { background: #4A5160; }
+  .appicon.offload { background: linear-gradient(160deg, var(--navy1), var(--navy2)); display: flex; align-items: center; justify-content: center; }
+  .w { border-radius: 22px; background: linear-gradient(160deg, var(--navy1), var(--navy2)); display: flex;
+       align-items: stretch; justify-content: space-around; padding: 6px; color: var(--tray); }
+  .w.one { align-items: center; justify-content: center; margin: 6px; }
+  .w .b { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+          border-radius: 16px; font-size: 11px; min-width: 48px; min-height: 48px; }
+  .w .b + .b { border-left: 1px solid #FFFFFF22; border-radius: 0 16px 16px 0; }
+  .span2 { grid-column: span 2; } .span3 { grid-column: span 3; } .span4 { grid-column: span 4; }
+  .dock { position: absolute; left: 0; right: 0; bottom: 40px; display: flex; justify-content: space-around; }
+  svg.ic { width: 26px; height: 26px; }
+  .zoom { display: flex; gap: 22px; align-items: flex-end; }
+  .zoom .w { height: 96px; border-radius: 28px; }
+  .zoom .w .b { font-size: 13px; }
+  .dim { font-size: 12px; color: var(--muted); margin-top: 6px; text-align: center; }
+  .picker { position: absolute; left: 0; right: 0; bottom: 0; top: 180px; background: #F7F2FA; border-radius: 26px 26px 0 0; padding: 18px 20px; }
+  .picker .app { display: flex; gap: 10px; align-items: center; font-weight: 600; margin-bottom: 14px; }
+  .picker .opt { display: flex; gap: 16px; margin-bottom: 18px; align-items: center; }
+  .picker .opt small { display: block; color: var(--muted); }
+  .scrim { position: absolute; inset: 0; background: #0005; }
+  .menu { position: absolute; left: 30px; top: 300px; width: 260px; background: #F3EDF7; border-radius: 18px;
+          box-shadow: 0 4px 14px #0004; padding: 8px 0; }
+  .menu div { padding: 12px 16px; display: flex; gap: 14px; align-items: center; }
+  .menu svg.ic { width: 22px; height: 22px; }
+  .screen { background: var(--bg); position: absolute; inset: 0; }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; font-size: 22px; }
+  .appbar .sp { flex: 1; }
+  .card { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  .field { margin: 4px 16px; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface); min-height: 70px; }
+  .btn { border-radius: 20px; padding: 6px 14px; font-weight: 600; font-size: 13px; background: var(--purple); color: #fff; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .nav .on { color: var(--text); font-weight: 600; }
+  .seg { display: flex; gap: 6px; margin: 4px 12px; } .seg span { border: 1px solid var(--line); border-radius: 16px; padding: 4px 10px; font-size: 12px; background: var(--surface); }
+  .seg span.on { background: #E8DEF8; }
+  .arrow { font-size: 28px; color: var(--muted); align-self: center; }
+  .mini { width: 250px; height: 420px; }
+  .tray { width: 260px; background: #2B2B2B; color: #EEE; border-radius: 8px; padding: 6px 0; font-family: "Segoe UI", sans-serif; font-size: 13px; }
+  .tray div { padding: 8px 16px; } .tray hr { border: 0; border-top: 1px solid #444; margin: 4px 0; }
+  .tray .new { outline-offset: -2px; }
+  .legend { margin-top: 28px; max-width: 1680px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="glyph" viewBox="0 0 24 24">
+      <path d="M3 12 v4.5 a3.5 3.5 0 0 0 3.5 3.5 h11 a3.5 3.5 0 0 0 3.5 -3.5 v-4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M6.5 9.5 a5.5 5.5 0 1 0 11.0 0 a5.5 5.5 0 1 0 -11.0 0 Z M11.05 6.75 H12.95 V8.55 H14.75 V10.45 H12.95 V12.25 H11.05 V10.45 H9.25 V8.55 H11.05 Z" fill="#E9A23B" fill-rule="evenodd"/>
+    </symbol>
+    <symbol id="sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/>
+      <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="12" y1="2.5" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="21.5"/>
+        <line x1="2.5" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="21.5" y2="12"/>
+        <line x1="5.3" y1="5.3" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="18.7" y2="18.7"/>
+        <line x1="5.3" y1="18.7" x2="6.7" y2="17.3"/><line x1="17.3" y1="6.7" x2="18.7" y2="5.3"/>
+      </g>
+    </symbol>
+    <symbol id="insights" viewBox="0 0 24 24">
+      <polyline points="3,17 8.5,11 13,14.5 20,7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="3" cy="17" r="1.6" fill="currentColor"/><circle cx="8.5" cy="11" r="1.6" fill="currentColor"/>
+      <circle cx="13" cy="14.5" r="1.6" fill="currentColor"/><circle cx="20" cy="7" r="1.6" fill="currentColor"/>
+      <path d="M17.5 2.5 l.6 1.4 1.4.6 -1.4.6 -.6 1.4 -.6 -1.4 -1.4 -.6 1.4 -.6z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<h1>Offload bar (REQ-063, NL "Offload-balk") – sketch, screen 21</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb). <b>Recorded,
+not decided</b> (PO request 05-10-2026; draft AC REQ-063, DD-010, DD-019; open SPEC Q39–Q42). A second widget next to the
+1×1 capture widget, which stays unchanged: 2×1 with <i>Vastleggen</i> and <i>Vandaag</i>, made wider 3×1 with
+<i>Inzicht</i> too. The same navy tile as the capture widget, on a light and a dark home screen alike; the glyph of
+DD-019 and the icons of the navigation bar, each with its word below. No counts, no content: the widget reads nothing.
+Orange outline = new.</p>
+
+<div class="row">
+<div class="col">
+<h3>1 · Home screen, light</h3>
+<p class="note">From the top: the existing 1×1 capture widget, the new bar in 2×1, and in 3×1. The whole width of a
+button is its touch target (at least 48 × 48 dp); a thin line separates the buttons.</p>
+<div class="phone home light">
+  <div class="status">9:41</div>
+  <div class="grid">
+    <div class="cell"><div class="w one" style="width:66px;height:66px"><svg class="ic" style="width:34px;height:34px"><use href="#glyph"/></svg></div></div>
+    <div class="cell"><div class="appicon"></div>Agenda</div>
+    <div class="cell"><div class="appicon"></div>Foto's</div>
+    <div class="cell"><div class="appicon"></div>Klok</div>
+    <div class="span2 w new"><div class="b"><svg class="ic"><use href="#glyph"/></svg>Vastleggen</div><div class="b"><svg class="ic"><use href="#sun"/></svg>Vandaag</div></div>
+    <div class="cell"><div class="appicon"></div>Notities</div>
+    <div class="cell"><div class="appicon"></div>Weer</div>
+    <div class="span3 w new"><div class="b"><svg class="ic"><use href="#glyph"/></svg>Vastleggen</div><div class="b" style="border-radius:0"><svg class="ic"><use href="#sun"/></svg>Vandaag</div><div class="b"><svg class="ic"><use href="#insights"/></svg>Inzicht</div></div>
+    <div class="cell"><div class="appicon offload"><svg class="ic" style="color:#F1F5FB"><use href="#glyph"/></svg></div>Offload</div>
+  </div>
+  <div class="dock"><div class="appicon"></div><div class="appicon"></div><div class="appicon"></div><div class="appicon"></div></div>
+</div>
+</div>
+
+<div class="col">
+<h3>2 · Home screen, dark</h3>
+<p class="note">The same tile: navy in both themes, as the capture widget (DD-019). Following the system colours
+(Material You) waits for T8.1, for all widgets at once.</p>
+<div class="phone home dark">
+  <div class="status">9:41</div>
+  <div class="grid">
+    <div class="cell"><div class="w one" style="width:66px;height:66px"><svg class="ic" style="width:34px;height:34px"><use href="#glyph"/></svg></div></div>
+    <div class="cell"><div class="appicon"></div>Agenda</div>
+    <div class="cell"><div class="appicon"></div>Foto's</div>
+    <div class="cell"><div class="appicon"></div>Klok</div>
+    <div class="span2 w new"><div class="b"><svg class="ic"><use href="#glyph"/></svg>Vastleggen</div><div class="b"><svg class="ic"><use href="#sun"/></svg>Vandaag</div></div>
+    <div class="cell"><div class="appicon"></div>Notities</div>
+    <div class="cell"><div class="appicon"></div>Weer</div>
+    <div class="span3 w new"><div class="b"><svg class="ic"><use href="#glyph"/></svg>Vastleggen</div><div class="b" style="border-radius:0"><svg class="ic"><use href="#sun"/></svg>Vandaag</div><div class="b"><svg class="ic"><use href="#insights"/></svg>Inzicht</div></div>
+    <div class="cell"><div class="appicon offload"><svg class="ic" style="color:#F1F5FB"><use href="#glyph"/></svg></div>Offload</div>
+  </div>
+  <div class="dock"><div class="appicon"></div><div class="appicon"></div><div class="appicon"></div><div class="appicon"></div></div>
+</div>
+</div>
+
+<div class="col">
+<h3>3 · The widget picker</h3>
+<p class="note">Two entries under Offload: the existing capture widget (1×1) and the bar (2×1, resizable to 3×1). The
+preview is the real layout, so it follows the language.</p>
+<div class="phone home light">
+  <div class="status">9:41</div>
+  <div class="scrim"></div>
+  <div class="picker">
+    <div class="app"><div class="appicon offload" style="width:36px;height:36px;margin:0"><svg class="ic" style="color:#F1F5FB;width:20px;height:20px"><use href="#glyph"/></svg></div>Offload</div>
+    <div class="opt"><div class="w one" style="width:64px;height:64px;margin:0"><svg class="ic" style="width:32px;height:32px"><use href="#glyph"/></svg></div><div>Vastleggen<small>1 × 1 · leg iets vast</small></div></div>
+    <div class="opt new"><div class="w" style="width:150px;height:64px"><div class="b"><svg class="ic"><use href="#glyph"/></svg>Vastleggen</div><div class="b"><svg class="ic"><use href="#sun"/></svg>Vandaag</div></div><div>Offload-balk<small>2 × 1 · breder: ook Inzicht</small></div></div>
+  </div>
+</div>
+</div>
+
+<div class="col">
+<h3>4 · App shortcuts (Q41a, proposal)</h3>
+<p class="note">A long press on the app icon offers the same three actions (static shortcuts, no permission). Advice: in
+the same task; the actions and their texts are shared with the bar.</p>
+<div class="phone home light">
+  <div class="status">9:41</div>
+  <div class="scrim"></div>
+  <div class="menu new">
+    <div><svg class="ic"><use href="#glyph"/></svg>Vastleggen</div>
+    <div><svg class="ic"><use href="#sun"/></svg>Vandaag</div>
+    <div><svg class="ic"><use href="#insights"/></svg>Inzicht</div>
+  </div>
+  <div style="position:absolute;left:150px;top:470px" class="cell"><div class="appicon offload"><svg class="ic" style="color:#F1F5FB"><use href="#glyph"/></svg></div>Offload</div>
+</div>
+</div>
+</div>
+
+<h2>5 · The buttons up close</h2>
+<div class="zoom">
+  <div><div class="w" style="width:260px"><div class="b"><svg class="ic" style="width:32px;height:32px"><use href="#glyph"/></svg>Vastleggen</div><div class="b"><svg class="ic" style="width:32px;height:32px"><use href="#sun"/></svg>Vandaag</div></div><div class="dim">2 × 1 · two buttons of ≥ 48 dp</div></div>
+  <div><div class="w" style="width:390px"><div class="b"><svg class="ic" style="width:32px;height:32px"><use href="#glyph"/></svg>Vastleggen</div><div class="b" style="border-radius:0"><svg class="ic" style="width:32px;height:32px"><use href="#sun"/></svg>Vandaag</div><div class="b"><svg class="ic" style="width:32px;height:32px"><use href="#insights"/></svg>Inzicht</div></div><div class="dim">3 × 1 · from about 180 dp wide, as the wide capture variant</div></div>
+  <div style="max-width:560px;color:var(--muted)">TalkBack reads each button by its label: "Vastleggen, knop", "Vandaag openen, knop", "Inzicht
+  openen, knop" (EN "Capture", "Open Today", "Open Insights"). Icons: the capture glyph of DD-019 (amber dot), the sun of
+  <i>Vandaag</i> and the chart of <i>Inzicht</i> as in the navigation bar (Material Icons as VectorDrawables).</div>
+</div>
+
+<h2>6 · Opening a destination while the app is open (Q40, proposal)</h2>
+<div class="row">
+<div class="col">
+<p class="note"><b>a)</b> The app is in triage (or the weekly review, or an item). A tap on <i>Inzicht</i> in the bar ends
+the mode, as a tap on a reminder does now: what was chosen is saved, an item saves on leaving, an unfinished review does
+not count as done. The app shows <i>Inzicht</i>.</p>
+<div class="row" style="gap:10px">
+  <div class="phone mini"><div class="screen"><div class="status">9:41</div><div class="appbar">✕ <span style="font-size:15px">3 van 12</span></div><div class="card" style="height:150px">Schuur opruimen voor de winter</div></div></div>
+  <div class="arrow">→</div>
+  <div class="phone mini new"><div class="screen"><div class="status">9:41</div><div class="appbar" style="font-size:17px">Inzicht</div><div class="seg"><span class="on">Horizon</span><span>Stilstand</span></div><div class="card" style="height:120px;color:var(--muted)">Horizon …</div><div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on">Inzicht</span></div></div></div>
+</div>
+</div>
+<div class="col">
+<p class="note"><b>b)</b> A capture screen inside the app with typed text is <b>not</b> closed: nothing typed is lost. The
+destination changes underneath; after saving or closing the capture screen, <i>Vandaag</i> is there. (The bar's own
+<i>Vastleggen</i> opens the native window, never this screen.)</p>
+<div class="row" style="gap:10px">
+  <div class="phone mini"><div class="screen"><div class="status">9:41</div><div class="appbar">✕<span class="sp"></span><span class="btn">Opslaan</span></div><div class="field">Fietsband plakken voor za</div></div></div>
+  <div class="arrow">→</div>
+  <div class="phone mini new"><div class="screen"><div class="status">9:41</div><div class="appbar">✕<span class="sp"></span><span class="btn">Opslaan</span></div><div class="field">Fietsband plakken voor za</div><div style="margin:12px 16px;color:var(--muted);font-size:12px">Unchanged on top; <i>Vandaag</i> waits underneath.</div></div></div>
+</div>
+</div>
+<div class="col">
+<p class="note"><b>Q41b · Windows tray (advice: not needed).</b> The tray menu keeps <i>Nieuw item</i>, <i>Openen</i>
+and <i>Afsluiten</i>; inside the app <kbd>Ctrl</kbd>+<kbd>1</kbd> and <kbd>Ctrl</kbd>+<kbd>5</kbd> already go to
+<i>Vandaag</i> and <i>Inzicht</i>. If wanted, the dashed lines show where they would go.</p>
+<div class="tray">
+  <div>Nieuw item</div>
+  <div style="border:1px dashed #888;margin:2px 6px;color:#AAA">Vandaag</div>
+  <div style="border:1px dashed #888;margin:2px 6px;color:#AAA">Inzicht</div>
+  <div>Openen</div>
+  <hr>
+  <div>Afsluiten</div>
+</div>
+</div>
+</div>
+
+<ul class="legend">
+  <li><b>Vastleggen</b> opens the native input window of the 1×1 widget (source <i>widget</i>); Flutter is not started (REQ-001, hard rule 7).</li>
+  <li><b>Vandaag</b> and <b>Inzicht</b> start the app (cold) or bring it to the front on that destination, through the path a reminder tap uses. Opened any other way, the app still starts on <i>Vandaag</i> (DD-018 point 5).</li>
+  <li><b>Q42:</b> the layouts are built from a list of actions, so a fourth button (e.g. Inbox on 4×1) is a small change later; advice: decide after the weeks of use (M4b).</li>
+</ul>
+</body>
+</html>

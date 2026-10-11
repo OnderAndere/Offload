@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Capture widget (REQ-001, DD-019): 1x1 by default; made wider it shows the wide variant with a
+     hint (CaptureWidgetProvider picks the layout by size). previewImage is only the fallback for
+     launchers without previewLayout. -->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/widget_description"
+    android:initialLayout="@layout/widget_capture"
+    android:previewLayout="@layout/widget_capture"
+    android:previewImage="@drawable/widget_preview"
+    android:minWidth="40dp"
+    android:minHeight="40dp"
+    android:minResizeWidth="40dp"
+    android:targetCellWidth="1"
+    android:targetCellHeight="1"
+    android:resizeMode="horizontal"
+    android:updatePeriodMillis="0"
+    android:widgetCategory="home_screen" />

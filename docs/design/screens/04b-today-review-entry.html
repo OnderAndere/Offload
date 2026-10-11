@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Weekly review entry on Today – sketch, screen 4b</title>
+<style>
+  :root {
+    --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --blue: #245A8C; --chip: #EAE6DE;
+    --blue-chip: #E3ECF5; --orange-chip: #F6E1CC; --sec: #DCE6F0;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 36px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1320px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; max-width: 1320px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+  .col p.note { width: 390px; min-height: 76px; }
+  .pc { display: flex; gap: 28px; max-width: 1340px; margin: 8px 0 4px; }
+  .pc div { flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
+  .pc b { display: block; margin-bottom: 4px; }
+  .pc ul { margin: 0; padding-left: 18px; }
+
+  /* phone */
+  .phone { width: 390px; height: 560px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 56px; display: flex; align-items: center; padding: 0 4px 0 16px; gap: 0; }
+  .appbar .title { font-size: 20px; }
+  .appbar .date { flex: 1; text-align: right; color: var(--muted); font-size: 13px; margin-right: 6px; }
+  .icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 17px; color: var(--muted); }
+  .icon.new, .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 20px; }
+  .icon.gone { opacity: .35; text-decoration: line-through; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 64px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .nav .d { text-align: center; position: relative; width: 80px; }
+  .nav .d .i { display: block; font-size: 16px; }
+  .nav .on { color: var(--blue); font-weight: 700; }
+  .nav .on .i { background: #D9E4F0; border-radius: 14px; width: 56px; margin: 0 auto; }
+  .badge { position: absolute; top: -2px; right: 14px; background: var(--blue); color: #fff; font-size: 10px;
+           border-radius: 8px; padding: 0 5px; font-weight: 600; }
+  .fab { position: absolute; right: 16px; bottom: 76px; background: #D9E4F0; color: var(--blue);
+         border-radius: 16px; padding: 14px 18px; font-weight: 600; box-shadow: 0 2px 6px #0002; }
+
+  /* today content */
+  .inbox { margin: 4px 12px 8px; background: var(--sec); border-radius: 12px; padding: 8px 8px 8px 14px;
+           display: flex; align-items: center; gap: 10px; color: #1D3550; font-weight: 600; }
+  .inbox .go { margin-left: auto; color: var(--blue); font-weight: 600; }
+  .review { margin: 4px 12px 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+            padding: 8px 8px 8px 14px; display: flex; align-items: center; gap: 10px; }
+  .review .go { margin-left: auto; color: var(--blue); font-weight: 600; }
+  .review .sub { color: var(--muted); font-weight: 400; }
+  .actrow { display: flex; gap: 8px; margin: 4px 12px 8px; align-items: center; }
+  .pill { border-radius: 18px; padding: 7px 12px; font-weight: 600; white-space: nowrap; }
+  .pill.inb { background: var(--sec); color: #1D3550; }
+  .pill.inb .go { color: var(--blue); margin-left: 4px; }
+  .pill.rev { border: 1px solid var(--line); background: var(--surface); color: var(--blue); }
+  .sec { margin: 12px 16px 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .sec.late { color: #8F430E; }
+  .r { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line);
+       border-radius: 12px; padding: 9px 12px; }
+  .r.sel { background: var(--blue-chip); box-shadow: inset 3px 0 0 var(--blue); }
+  .h { display: flex; gap: 8px; align-items: baseline; }
+  .h .t { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cs { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 3px; border-radius: 6px; border: 1px solid var(--line);
+          padding: 0 7px; font-size: 12px; background: var(--surface); }
+  .chip.late { background: var(--orange-chip); color: #7A3A0B; border-color: transparent; }
+  .chip.proj { background: var(--chip); border-color: transparent; }
+  .chip.st { font-size: 11px; }
+  .tip { position: absolute; background: #3B3F45; color: #fff; font-size: 12px; border-radius: 4px; padding: 4px 8px;
+         white-space: nowrap; z-index: 5; }
+
+  /* Windows window */
+  .desk { width: 1280px; height: 420px; background: var(--bg); border: 8px solid #1B1D20;
+          border-radius: 10px; display: flex; overflow: hidden; position: relative; }
+  .rail { width: 88px; background: #ECE8E0; padding-top: 12px; display: flex; flex-direction: column;
+          align-items: center; gap: 12px; font-size: 11px; color: var(--muted); flex: none; }
+  .rail .d { text-align: center; position: relative; width: 64px; padding: 4px 0; }
+  .rail .d .i { font-size: 18px; display: block; }
+  .rail .on { color: var(--blue); font-weight: 600; }
+  .rail .on .i { background: #D9E4F0; border-radius: 14px; width: 52px; margin: 0 auto; }
+  .rail .fabr { background: #D9E4F0; color: var(--blue); border-radius: 14px; width: 56px; height: 56px;
+                display: grid; place-items: center; font-size: 22px; margin-bottom: 6px; box-shadow: 0 1px 3px #0002; }
+  .rail .grow { flex: 1; }
+  .rail .foot { margin-bottom: 14px; }
+  .rail .badge { right: 6px; top: 0; }
+  .pane { width: 440px; border-right: 1px solid var(--line); padding-top: 6px; position: relative; flex: none; }
+  .search { margin: 8px 12px 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+            padding: 8px 14px; color: var(--muted); display: flex; gap: 8px; }
+  .search kbd { margin-left: auto; }
+  .ph { display: flex; align-items: center; padding: 6px 4px 6px 16px; font-size: 18px; gap: 4px; }
+  .ph .date { flex: 1; text-align: right; color: var(--muted); font-size: 13px; margin-right: 4px; }
+  .detail { flex: 1; padding: 0 24px; display: grid; place-items: center; color: var(--muted); }
+
+  .callout { position: absolute; background: #FFF6D8; border: 1px solid #E2C766; border-radius: 6px;
+             padding: 4px 7px; font-size: 11px; color: #5A4A10; max-width: 230px; z-index: 4; }
+  kbd { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 12px; color: var(--text); }
+  .legend { margin-top: 28px; max-width: 1320px; }
+  .legend li { margin: 4px 0; }
+  .names { display: flex; gap: 28px; flex-wrap: wrap; margin: 8px 0; }
+  .names .box { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px; width: 390px; }
+  .names .box .lbl { font-size: 12px; color: var(--muted); margin: 0 0 6px 4px; }
+  .rec { background: #E7F0E4; border: 1px solid #A9C7A0; border-radius: 10px; padding: 10px 14px; max-width: 1320px; }
+</style>
+</head>
+<body>
+<h1>Weekly review entry on Today – sketch, screen 4b</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb); colours follow
+DD-017. <b>Why:</b> PO feedback 01-10-2026: ⋮ → <i>Weekoverzicht</i> on <i>Vandaag</i> feels hidden. This revisits DD-018
+point 4 (Today) and point 8 (start of the review). Three variants, each on the phone and on Windows. The screen keeps its
+current name <b>Weekoverzicht</b> (renaming is SPEC Q27, decided before T10.7); at the bottom, how the entry looks with
+the candidate names. <b>Unchanged:</b> the inbox line hides itself when the inbox is empty (point 4), so the review never
+hangs on it; <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> keeps starting the review on Windows. Today in the samples:
+Friday 2 October. Sample data is fictional. Orange outline = what is new.<br><b>Decided (PO, 02-10-2026): variant C, with "last completed review" as local state (not synchronised) and a device setting for when a review is due again (3–28 days, 7 by default); ⋮ on Vandaag goes, because nothing else is in it.</b> See DESIGN.md, DD-018 points 4 and 8.</p>
+
+<!-- ============================ Variant A ============================ -->
+<h2>Variant A: an icon in the top bar of Vandaag</h2>
+<p class="note">A review icon (Material <code>fact_check</code>) next to search and settings; long-press on the phone and
+hover on Windows show the tooltip. ⋮ then holds nothing else, so it goes (or stays with the same entry, PO choice).</p>
+<div class="row">
+<div class="col">
+<h3>Phone</h3>
+<p class="note">The icon sits where ⋮ was. Long-press shows "Weekoverzicht". The rest of Vandaag is unchanged.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="title">Vandaag</span><span class="date">vr 2 okt</span>
+    <span class="icon">🔍</span><span class="icon">⚙</span><span class="icon new">☑</span></div>
+  <div class="tip" style="right:10px;top:84px">Weekoverzicht</div>
+  <div class="inbox">📥 5 in je inbox<span class="go">Verwerken ›</span></div>
+  <div class="sec late">⚠ Verlopen · 1</div>
+  <div class="r"><div class="h"><div class="t">Offerte schilder bekijken</div><span class="chip st">Actief</span></div>
+    <div class="cs"><span class="chip">☑ Taak</span><span class="chip proj">📁 Verbouwing</span><span class="chip late">⚠ wo 30 sep</span></div></div>
+  <div class="sec">Vandaag · 1</div>
+  <div class="r"><div class="h"><div class="t">Contributie tennisclub betalen</div><span class="chip st">Actief</span></div>
+    <div class="cs"><span class="chip">☑ Taak</span><span class="chip late">📅 vandaag</span></div></div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><div class="d on"><span class="i">☀</span>Vandaag</div><div class="d"><span class="i">📥</span>Inbox<span class="badge">5</span></div>
+    <div class="d"><span class="i">📁</span>Projecten</div><div class="d"><span class="i">👥</span>Personen</div></div>
+</div>
+</div>
+<div class="col" style="flex:1">
+<h3>Windows</h3>
+<p class="note">The same icon in the header of the list pane, next to the date. Hover: "Weekoverzicht (Ctrl+Shift+W)", so
+the key is learnt where the button is. <kbd>Tab</kbd> reaches it; <kbd>Enter</kbd>/<kbd>Space</kbd> starts. The rail does not
+change: the review is a mode, not a destination (DD-018 point 8).</p>
+<div class="desk" style="width:820px">
+  <div class="rail"><div class="fabr">＋</div><div class="d on"><span class="i">☀</span>Vandaag</div>
+    <div class="d"><span class="i">📥</span>Inbox<span class="badge">5</span></div><div class="d"><span class="i">📁</span>Projecten</div>
+    <div class="d"><span class="i">👥</span>Personen</div><div class="grow"></div><div class="d foot"><span class="i">⚙</span>Instellingen</div></div>
+  <div class="pane">
+    <div class="search">🔍 Zoeken<kbd>Ctrl+F</kbd></div>
+    <div class="ph">Vandaag<span class="date">vr 2 okt</span><span class="icon new">☑</span></div>
+    <div class="tip" style="left:250px;top:108px">Weekoverzicht (Ctrl+Shift+W)</div>
+    <div class="inbox">📥 5 in je inbox<span class="go">Verwerken ›</span></div>
+    <div class="sec late">⚠ Verlopen · 1</div>
+    <div class="r sel"><div class="h"><div class="t">Offerte schilder bekijken</div><span class="chip st">Actief</span></div></div>
+    <div class="sec">Vandaag · 1</div>
+    <div class="r"><div class="h"><div class="t">Contributie tennisclub betalen</div><span class="chip st">Actief</span></div></div>
+  </div>
+  <div class="detail">Kies een item</div>
+</div>
+</div>
+</div>
+<div class="pc">
+  <div><b>For</b><ul><li>Always there, always in the same place; nothing on Today moves.</li>
+    <li>Smallest change; no data needed. The tooltip teaches the Windows key.</li></ul></div>
+  <div><b>Against</b><ul><li>An icon alone is still easy to overlook and to misread (what is ☑?); it does not say when a review is
+    due, so it does not invite.</li><li>The name stays out of sight (only in the tooltip).</li></ul></div>
+</div>
+
+<!-- ============================ Variant B ============================ -->
+<h2>Variant B: a fixed action row at the top of Vandaag</h2>
+<p class="note">The inbox line becomes a chip in a row; next to it always a button <b>Weekoverzicht</b>. With an empty inbox
+the chip goes and the button stays. ⋮ goes.</p>
+<div class="row">
+<div class="col">
+<h3>Phone, with inbox items</h3>
+<p class="note">The chip "5 in je inbox · Verwerken" keeps its two parts: the text goes to Inbox, <i>Verwerken</i> starts
+triage (point 4). The button opens the review.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="title">Vandaag</span><span class="date">vr 2 okt</span>
+    <span class="icon">🔍</span><span class="icon">⚙</span><span class="icon gone">⋮</span></div>
+  <div class="actrow"><span class="pill inb">📥 5 in je inbox · <span class="go">Verwerken ›</span></span><span class="pill rev new">☑ Weekoverzicht</span></div>
+  <div class="sec late">⚠ Verlopen · 1</div>
+  <div class="r"><div class="h"><div class="t">Offerte schilder bekijken</div><span class="chip st">Actief</span></div>
+    <div class="cs"><span class="chip">☑ Taak</span><span class="chip proj">📁 Verbouwing</span><span class="chip late">⚠ wo 30 sep</span></div></div>
+  <div class="sec">Vandaag · 1</div>
+  <div class="r"><div class="h"><div class="t">Contributie tennisclub betalen</div><span class="chip st">Actief</span></div>
+    <div class="cs"><span class="chip">☑ Taak</span><span class="chip late">📅 vandaag</span></div></div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><div class="d on"><span class="i">☀</span>Vandaag</div><div class="d"><span class="i">📥</span>Inbox<span class="badge">5</span></div>
+    <div class="d"><span class="i">📁</span>Projecten</div><div class="d"><span class="i">👥</span>Personen</div></div>
+</div>
+</div>
+<div class="col">
+<h3>Phone, inbox empty</h3>
+<p class="note">Only the button. The row costs a line of height every day, also when no review is due.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="title">Vandaag</span><span class="date">vr 2 okt</span>
+    <span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="actrow"><span class="pill rev new">☑ Weekoverzicht</span></div>
+  <div class="sec">Vandaag · 1</div>
+  <div class="r"><div class="h"><div class="t">Contributie tennisclub betalen</div><span class="chip st">Actief</span></div>
+    <div class="cs"><span class="chip">☑ Taak</span><span class="chip late">📅 vandaag</span></div></div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><div class="d on"><span class="i">☀</span>Vandaag</div><div class="d"><span class="i">📥</span>Inbox</div>
+    <div class="d"><span class="i">📁</span>Projecten</div><div class="d"><span class="i">👥</span>Personen</div></div>
+</div>
+</div>
+<div class="col">
+<h3>Windows</h3>
+<p class="note">The same row at the top of the list pane. <kbd>Tab</kbd> goes chip → <i>Verwerken</i> → <i>Weekoverzicht</i>;
+the button's tooltip names <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd>. Rail unchanged.</p>
+<div class="desk" style="width:536px">
+  <div class="rail"><div class="fabr">＋</div><div class="d on"><span class="i">☀</span>Vandaag</div>
+    <div class="d"><span class="i">📥</span>Inbox<span class="badge">5</span></div><div class="d"><span class="i">📁</span>Projecten</div>
+    <div class="d"><span class="i">👥</span>Personen</div><div class="grow"></div><div class="d foot"><span class="i">⚙</span>Instellingen</div></div>
+  <div class="pane">
+    <div class="search">🔍 Zoeken<kbd>Ctrl+F</kbd></div>
+    <div class="ph">Vandaag<span class="date">vr 2 okt</span></div>
+    <div class="actrow"><span class="pill inb">📥 5 in je inbox · <span class="go">Verwerken ›</span></span><span class="pill rev new">☑ Weekoverzicht</span></div>
+    <div class="sec late">⚠ Verlopen · 1</div>
+    <div class="r sel"><div class="h"><div class="t">Offerte schilder bekijken</div><span class="chip st">Actief</span></div></div>
+    <div class="sec">Vandaag · 1</div>
+    <div class="r"><div class="h"><div class="t">Contributie tennisclub betalen</div><span class="chip st">Actief</span></div></div>
+  </div>
+</div>
+</div>
+</div>
+<div class="pc">
+  <div><b>For</b><ul><li>The most visible: a word, not an icon; the name of the review is on screen every day.</li>
+    <li>No data needed. One place for "things to go through" (inbox, review).</li></ul></div>
+  <div><b>Against</b><ul><li>Always takes a row on the start screen, also on the six days a review is not due: Today was meant to
+    show only today (point 4).</li><li>The inbox line becomes a smaller chip with two tap targets; "5 in je inbox · Verwerken" and a long
+    name ("Weekafsluiting") barely fit side by side at 360 dp, so the row may wrap.</li></ul></div>
+</div>
+
+<!-- ============================ Variant C ============================ -->
+<h2>Variant C: the icon of A, plus a line when a review is due</h2>
+<p class="note">As A, and when the last completed review is 7 days or longer ago, or there never was one, a line below the
+inbox line: "Weekoverzicht · laatste 9 d geleden ›" (never: "Weekoverzicht · nog niet gedaan ›"). The whole line starts the
+review. After a completed review the line goes until 7 days later.</p>
+<div class="row">
+<div class="col">
+<h3>Phone, review due</h3>
+<p class="note">Below the inbox line, calm (not orange: a review is not overdue work, DD-017). The age as text.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="title">Vandaag</span><span class="date">vr 2 okt</span>
+    <span class="icon">🔍</span><span class="icon">⚙</span><span class="icon new">☑</span></div>
+  <div class="inbox">📥 5 in je inbox<span class="go">Verwerken ›</span></div>
+  <div class="review new">☑ <span>Weekoverzicht <span class="sub">· laatste 9 d geleden</span></span><span class="go">›</span></div>
+  <div class="sec late">⚠ Verlopen · 1</div>
+  <div class="r"><div class="h"><div class="t">Offerte schilder bekijken</div><span class="chip st">Actief</span></div>
+    <div class="cs"><span class="chip">☑ Taak</span><span class="chip proj">📁 Verbouwing</span><span class="chip late">⚠ wo 30 sep</span></div></div>
+  <div class="sec">Vandaag · 1</div>
+  <div class="r"><div class="h"><div class="t">Contributie tennisclub betalen</div><span class="chip st">Actief</span></div>
+    <div class="cs"><span class="chip">☑ Taak</span><span class="chip late">📅 vandaag</span></div></div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><div class="d on"><span class="i">☀</span>Vandaag</div><div class="d"><span class="i">📥</span>Inbox<span class="badge">5</span></div>
+    <div class="d"><span class="i">📁</span>Projecten</div><div class="d"><span class="i">👥</span>Personen</div></div>
+  <div class="callout" style="left:120px;top:196px">screen reader: "Weekoverzicht, laatste keer 9 dagen geleden, knop"</div>
+</div>
+</div>
+<div class="col">
+<h3>Phone, not due</h3>
+<p class="note">Reviewed 3 days ago: only the icon in the top bar, as in A. Today shows only today.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="title">Vandaag</span><span class="date">vr 2 okt</span>
+    <span class="icon">🔍</span><span class="icon">⚙</span><span class="icon new">☑</span></div>
+  <div class="inbox">📥 5 in je inbox<span class="go">Verwerken ›</span></div>
+  <div class="sec late">⚠ Verlopen · 1</div>
+  <div class="r"><div class="h"><div class="t">Offerte schilder bekijken</div><span class="chip st">Actief</span></div>
+    <div class="cs"><span class="chip">☑ Taak</span><span class="chip proj">📁 Verbouwing</span><span class="chip late">⚠ wo 30 sep</span></div></div>
+  <div class="sec">Vandaag · 1</div>
+  <div class="r"><div class="h"><div class="t">Contributie tennisclub betalen</div><span class="chip st">Actief</span></div>
+    <div class="cs"><span class="chip">☑ Taak</span><span class="chip late">📅 vandaag</span></div></div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><div class="d on"><span class="i">☀</span>Vandaag</div><div class="d"><span class="i">📥</span>Inbox<span class="badge">5</span></div>
+    <div class="d"><span class="i">📁</span>Projecten</div><div class="d"><span class="i">👥</span>Personen</div></div>
+</div>
+</div>
+<div class="col">
+<h3>Windows, review due</h3>
+<p class="note">Icon in the pane header as in A (tooltip with the key), the line in the list pane; <kbd>Tab</kbd> reaches
+both. When due, <kbd>↑</kbd> from the first card does not go into the lines: they are buttons, not cards.</p>
+<div class="desk" style="width:536px">
+  <div class="rail"><div class="fabr">＋</div><div class="d on"><span class="i">☀</span>Vandaag</div>
+    <div class="d"><span class="i">📥</span>Inbox<span class="badge">5</span></div><div class="d"><span class="i">📁</span>Projecten</div>
+    <div class="d"><span class="i">👥</span>Personen</div><div class="grow"></div><div class="d foot"><span class="i">⚙</span>Instellingen</div></div>
+  <div class="pane">
+    <div class="search">🔍 Zoeken<kbd>Ctrl+F</kbd></div>
+    <div class="ph">Vandaag<span class="date">vr 2 okt</span><span class="icon new">☑</span></div>
+    <div class="inbox">📥 5 in je inbox<span class="go">Verwerken ›</span></div>
+    <div class="review new">☑ <span>Weekoverzicht <span class="sub">· laatste 9 d geleden</span></span><span class="go">›</span></div>
+    <div class="sec late">⚠ Verlopen · 1</div>
+    <div class="r sel"><div class="h"><div class="t">Offerte schilder bekijken</div><span class="chip st">Actief</span></div></div>
+    <div class="sec">Vandaag · 1</div>
+    <div class="r"><div class="h"><div class="t">Contributie tennisclub betalen</div><span class="chip st">Actief</span></div></div>
+  </div>
+</div>
+</div>
+</div>
+<div class="pc">
+  <div><b>For</b><ul><li>Always findable (icon) <i>and</i> an invitation at the moment it matters, with the name in words.</li>
+    <li>Today stays "only today" on the other six days. The same rule "due" can drive the weekly reminder of T4.4.</li></ul></div>
+  <div><b>Against</b><ul><li>Needs a new fact, "last completed review" (see below), so a schema step; the most work of the three.</li>
+    <li>The line can feel like a nag when you skip a week on purpose (it stays until you review; no "later" button proposed).</li></ul></div>
+</div>
+
+<!-- ============================ Names ============================ -->
+<h2>With the candidate names (SPEC Q27)</h2>
+<p class="note">A button or line with text (B, C) puts the name on screen every day, so the choice of name weighs more there
+than in A, where it only shows in the tooltip and the review's own title. Lengths at 360–390 dp:</p>
+<div class="names">
+  <div class="box"><div class="lbl">Variant B, action row</div>
+    <div class="actrow" style="flex-wrap:wrap;margin:4px 0"><span class="pill rev">☑ Weekoverzicht</span><span class="pill rev">☑ Weekreview</span><span class="pill rev">☑ Weekafsluiting</span><span class="pill rev">☑ Weekcheck</span></div></div>
+  <div class="box"><div class="lbl">Variant C, line when due</div>
+    <div class="review" style="margin:4px 0">☑ <span>Weekoverzicht <span class="sub">· laatste 9 d geleden</span></span><span class="go">›</span></div>
+    <div class="review" style="margin:4px 0">☑ <span>Weekreview <span class="sub">· laatste 9 d geleden</span></span><span class="go">›</span></div>
+    <div class="review" style="margin:4px 0">☑ <span>Weekafsluiting <span class="sub">· laatste 9 d geleden</span></span><span class="go">›</span></div>
+    <div class="review" style="margin:4px 0">☑ <span>Weekcheck <span class="sub">· laatste 9 d geleden</span></span><span class="go">›</span></div></div>
+  <div class="box"><div class="lbl">Variant A/C, tooltip</div>
+    <p style="margin:4px">"Weekoverzicht (Ctrl+Shift+W)" · "Weekreview (Ctrl+Shift+W)" · "Weekafsluiting (Ctrl+Shift+W)" · "Weekcheck (Ctrl+Shift+W)"</p>
+    <p style="margin:4px;color:var(--muted)">All four fit. "Weekafsluiting" is the longest and in B would push the inbox chip to a second row when both are there.</p></div>
+</div>
+
+<div class="legend">
+  <h2>Behaviour, data and accessibility</h2>
+  <ul>
+    <li><b>Same in every variant:</b> the review itself does not change (DD-018 point 8); <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd>
+      stays; the rail gets nothing (the review is a mode). ⋮ on Today goes, or stays with the same entry, as the PO decides; it is
+      removed only after the new entry is built.</li>
+    <li><b>Accessibility (REQ-016):</b> the icon has a tooltip and a semantic label "Weekoverzicht" (on Windows the tooltip adds the key);
+      B's button and C's line have visible text; C's line reads the age in words ("laatste keer 9 dagen geleden", "nog niet gedaan"),
+      not "9 d". All are reachable with <kbd>Tab</kbd> on Windows and work with TalkBack and Narrator.</li>
+    <li><b>C: "last completed review".</b> Completed = the end screen "Klaar ✓" was reached (also when every step was empty);
+      ending with ✕ halfway does not count. <i>Due</i> = never, or 7 days or longer ago; one pure function in <code>domain/</code>.
+      Two ways to store it:
+      <ul>
+        <li><b>Synchronised fact (proposal):</b> a new table <code>weekly_reviews</code> (UUID, <code>completed_at</code>, HLC,
+          tombstone) written through <code>ChangeLogWriter</code> (DD-003), one row per completed review, insert-only, so two
+          devices never conflict; "last" = the newest row. A review on the phone then also quiets the PC (after sync, M9), and the
+          rows are a history for later (the Overview, T10.7). Schema v7 with a migration; T3.5 then becomes v8.</li>
+        <li><b>Local state:</b> one key <code>last_review_completed_at</code> in <code>local_state</code>; no migration, but per
+          device: after reviewing on the phone, the PC keeps saying "due".</li>
+      </ul></li>
+    <li><b>T4.4 (weekly reminder, REQ-022):</b> the reminder uses the same "due" function: on the chosen day and time it only
+      notifies when a review is due, and the notification opens the review. If T4.4 adds a chosen weekday, "due" may become
+      "the chosen day has passed since the last review"; that is decided with T4.4, the line follows it.</li>
+    <li><b>Windows list keys:</b> in B and C the action row and the line are buttons above the list; <kbd>↑</kbd>/<kbd>↓</kbd> keep
+      moving between cards only (as the inbox line now, DD-018 point 5).</li>
+  </ul>
+  <div class="rec"><b>Recommendation (variant taken; the PO chose local state instead of the synchronised fact): variant C, with the synchronised fact.</b> The icon solves "hidden" for good, and the line
+    turns the entry into an invitation only in the week it is due, without taking room on Today the other days. The data is a
+    small insert-only table that fits DD-003 and gives T4.4 its rule. Cheaper fallback: C with local state (no schema step), to be
+    moved to the table with M9. B is the most visible but costs a row every day and pushes the inbox line into a chip.</div>
+</div>
+</body>
+</html>

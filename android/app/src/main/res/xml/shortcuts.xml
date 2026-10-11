@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- App shortcuts on a long press of the app icon (REQ-063, Q41a): the actions of the Offload
+     bar. Capture opens the native input window; Today and Insights go through
+     OpenDestinationActivity, which brings the running app forward instead of restarting it (the
+     launcher clears the task of a static shortcut). No permission. -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_capture"
+        android:shortcutId="capture"
+        android:shortcutLongLabel="@string/widget_button"
+        android:shortcutShortLabel="@string/widget_button">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="eu.marandos.offload.capture.QuickCaptureActivity"
+            android:targetPackage="eu.marandos.offload" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_today"
+        android:shortcutId="today"
+        android:shortcutLongLabel="@string/open_today"
+        android:shortcutShortLabel="@string/bar_today">
+        <intent
+            android:action="eu.marandos.offload.OPEN_DESTINATION"
+            android:targetClass="eu.marandos.offload.OpenDestinationActivity"
+            android:targetPackage="eu.marandos.offload">
+            <extra android:name="open" android:value="#today" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_insights"
+        android:shortcutId="insights"
+        android:shortcutLongLabel="@string/open_insights"
+        android:shortcutShortLabel="@string/bar_insights">
+        <intent
+            android:action="eu.marandos.offload.OPEN_DESTINATION"
+            android:targetClass="eu.marandos.offload.OpenDestinationActivity"
+            android:targetPackage="eu.marandos.offload">
+            <extra android:name="open" android:value="#insights" />
+        </intent>
+    </shortcut>
+</shortcuts>

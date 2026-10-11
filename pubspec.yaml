@@ -1,0 +1,65 @@
+name: offload
+description: "Personal, fully offline app to capture thoughts, tasks and requests."
+publish_to: 'none'
+version: 0.6.2+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  crypto: ^3.0.7
+  drift: ^2.35.0
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^2.6.1
+  image: ^4.10.1
+  intl: ^0.20.2
+  markdown: ^7.3.1
+  sqlite3: ^3.5.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.15.1
+  drift_dev: ^2.35.0
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  # gen-l10n: lib/l10n/*.arb -> AppLocalizations (DD-009, l10n.yaml).
+  generate: true
+  # IBM Plex, bundled (DD-017); source, weights and checksums in
+  # assets/fonts/README.md.
+  assets:
+    - assets/fonts/OFL.txt
+    - assets/licenses/
+    # The licence of Offload itself, shown under About Offload (REQ-062).
+    - LICENSE
+    # The user manual, shown under Settings → Help and by "?" (REQ-065, DD-020).
+    - docs/user-manual/en/
+  fonts:
+    - family: IBM Plex Sans
+      fonts:
+        - asset: assets/fonts/IBMPlexSans-Regular.ttf
+        - asset: assets/fonts/IBMPlexSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/IBMPlexSans-Bold.ttf
+          weight: 700
+    - family: IBM Plex Mono
+      fonts:
+        - asset: assets/fonts/IBMPlexMono-Regular.ttf
+        - asset: assets/fonts/IBMPlexMono-SemiBold.ttf
+          weight: 600
+
+# Bundle SQLite3MultipleCiphers instead of plain SQLite, so an unencrypted
+# SQLite never ships (DD-007, docs/spikes/S1-encrypted-db.md).
+hooks:
+  user_defines:
+    sqlite3:
+      source: sqlite3mc

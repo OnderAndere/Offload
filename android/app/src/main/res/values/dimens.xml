@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Height of the widgets (REQ-001, REQ-063, DD-019): the Offload bar, the wide capture bar
+         and the square capture tile. The bar's buttons stay at least 48 dp; no widget fills a
+         tall launcher cell (PO 06-10-2026). -->
+    <dimen name="widget_height">60dp</dimen>
+</resources>

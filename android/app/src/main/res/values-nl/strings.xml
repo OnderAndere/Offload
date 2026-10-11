@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from lib/l10n/app_nl.arb by tool/gen_android_strings.dart. Do not edit. -->
+<resources>
+    <string name="capture_hint">Wat heb je in je hoofd?</string>
+    <string name="capture_save">Opslaan</string>
+    <string name="capture_failed">Opslaan is mislukt. Je tekst staat er nog; probeer het opnieuw.</string>
+    <string name="widget_button">Vastleggen</string>
+    <string name="widget_description">Leg met één tik een gedachte vast</string>
+    <string name="widget_hint">Leg iets vast…</string>
+    <string name="bar_name">Offload-balk</string>
+    <string name="bar_description">Vastleggen, Vandaag en Inzicht met één tik</string>
+    <string name="bar_today">Vandaag</string>
+    <string name="bar_insights">Inzicht</string>
+    <string name="open_today">Vandaag openen</string>
+    <string name="open_insights">Inzicht openen</string>
+</resources>

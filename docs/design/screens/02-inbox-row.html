@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Inbox row – Q5b sketch</title>
+<style>
+  :root {
+    --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --blue: #245A8C; --chip: #EAE6DE;
+    --blue-chip: #E3ECF5; --orange-chip: #F6E1CC;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 28px 0 8px; }
+  .lead { color: var(--muted); max-width: 1300px; margin: 0 0 20px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col h3 { font-size: 16px; margin: 0 0 4px; }
+  .col p.note { color: var(--muted); margin: 0 0 10px; width: 390px; min-height: 76px; }
+  .phone { width: 390px; height: 844px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 56px; display: flex; align-items: center; padding: 0 8px 0 16px; gap: 4px; }
+  .appbar .title { flex: 1; font-size: 20px; }
+  .icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 18px;
+          color: var(--text); }
+  .fab { position: absolute; right: 16px; bottom: 76px; background: #D9E4F0; color: var(--blue);
+         border-radius: 16px; padding: 16px 20px; font-weight: 600; box-shadow: 0 2px 6px #0002; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 64px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px;
+         color: var(--muted); }
+  .nav .on { color: var(--blue); font-weight: 700; }
+  .list { background: var(--surface); }
+  .chip { display: inline-flex; align-items: center; gap: 3px; border-radius: 6px;
+          padding: 1px 7px; font-size: 12px; background: var(--chip); white-space: nowrap; }
+  .chip.p { background: var(--blue-chip); color: #1D4A73; }
+  .chip.d { background: var(--blue-chip); color: #1D4A73; }
+  .chip.late { background: var(--orange-chip); color: #7A3A0B; }
+  .when { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .dup { color: var(--blue); font-size: 12px; margin-top: 4px; }
+  .tok { color: #1D4A73; font-weight: 600; }
+  .tok.late { color: var(--orange); }
+
+  /* A: compact */
+  .a .r { padding: 10px 16px; border-bottom: 1px solid var(--line); }
+  .a .l1 { display: flex; gap: 8px; align-items: baseline; }
+  .a .l1 .t { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .a .l2 { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+
+  /* B: card */
+  .b .r { margin: 8px 12px; background: var(--surface); border: 1px solid var(--line);
+          border-radius: 12px; padding: 10px 12px; }
+  .b .list { background: transparent; }
+  .b .h { display: flex; gap: 8px; align-items: baseline; }
+  .b .h .t { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .b .pv { color: var(--muted); font-size: 13px; margin-top: 2px; display: -webkit-box;
+           -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .b .cs { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+
+  /* C: time column */
+  .c .r { display: flex; gap: 12px; padding: 10px 16px 10px 12px; border-bottom: 1px solid var(--line); }
+  .c .tc { width: 52px; text-align: right; color: var(--muted); font-size: 12px; padding-top: 2px;
+           font-family: "Cascadia Mono", Consolas, monospace; }
+  .c .body { flex: 1; min-width: 0; }
+  .c .t { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .c .cs { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+
+  .callout { background: #FFF6D8; border: 1px solid #E2C766; border-radius: 6px;
+             padding: 3px 6px; font-size: 11px; color: #5A4A10; margin: 6px 16px; }
+
+  /* Windows list panes */
+  .pane { width: 400px; height: 520px; background: var(--surface); border: 8px solid #1B1D20;
+          border-radius: 10px; overflow: hidden; }
+  .pane .ph { height: 44px; display: flex; align-items: center; padding: 0 16px; font-size: 16px;
+              border-bottom: 1px solid var(--line); background: var(--bg); }
+  .pane .ph span { margin-left: auto; color: var(--muted); font-size: 13px; }
+  .sel { background: #E3ECF5 !important; box-shadow: inset 3px 0 0 var(--blue); }
+  .legend { margin-top: 28px; max-width: 1300px; }
+  .legend li { margin: 4px 0; }
+  kbd { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>Inbox row (T2.8) – Q5b sketch, screen 2</h1>
+<p class="lead">Three variants for one row in the inbox list, with the same five sample items: a shared mail of several
+lines, an item with <code>@Jan !vr #renovatie</code>, an overdue date, a possible duplicate and a short idea. Indicative, not a
+pixel specification. Screen texts are Dutch, as in the app (app_nl.arb); colours follow DD-017 (blue = calm,
+orange = needs attention now). <b>PO decisions already made (28-09-2026):</b> no capture source in the row (only in the
+detail); the time is relative; swiping to the trash goes on the backlog, not in this round.
+Today in the samples: Monday 28 September.<br><b>Decided (PO, 28-09-2026): variant B, but a text of several lines (e.g. a shared mail) as in A: only the first line plus "+ 3 regels", no preview lines.</b> See DESIGN.md, DD-018 point 2.</p>
+
+<div class="row">
+
+<!-- ============ A ============ -->
+<div class="col">
+<h3>A · Compact</h3>
+<p class="note">One line of text as typed, tokens coloured inline; below it the chips of person, date and tags and the
+relative time. Most items per screen; a shared mail shows only its first line (the subject).</p>
+<div class="phone a">
+  <div class="status">9:41</div>
+  <div class="appbar"><div class="title">Inbox</div><div class="icon">⌕</div><div class="icon">⚙</div></div>
+  <div class="list">
+    <div class="r"><div class="l1"><div class="t">RE: Keuring cv-ketel vrijdag</div><div class="when">12 min</div></div>
+      <div class="l2"><span class="when">+ 3 regels</span></div></div>
+    <div class="r"><div class="l1"><div class="t">keuring cv-ketel vrijdag</div><div class="when">zojuist</div></div>
+      <div class="dup">⧉ Lijkt op een ander item</div></div>
+    <div class="r"><div class="l1"><div class="t">Bel Jan over de renovatieplanning <span class="tok">@Jan</span> <span class="tok">!vr</span> <span class="tok">#renovatie</span></div><div class="when">1 u</div></div>
+      <div class="l2"><span class="chip p">👤 Jan</span><span class="chip d">📅 vr 2 okt</span><span class="chip"># renovatie</span></div></div>
+    <div class="r"><div class="l1"><div class="t">Offerte afvoer nakijken <span class="tok late">!zo</span></div><div class="when">2 d</div></div>
+      <div class="l2"><span class="chip late">⚠ zo 27 sep · verlopen</span></div></div>
+    <div class="r"><div class="l1"><div class="t">Idee: logboek per moestuin</div><div class="when">3 d</div></div></div>
+  </div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><span>Vandaag</span><span class="on">Inbox</span><span>Overzicht</span><span>Projecten</span><span>Mensen</span></div>
+</div>
+</div>
+
+<!-- ============ B ============ -->
+<div class="col">
+<h3>B · Card</h3>
+<p class="note">First line bold as the title, tokens removed; below it at most two grey preview lines; the chips at the
+bottom. A shared mail reads like a mail: subject plus the start of the body. Fewer items per screen.</p>
+<div class="phone b">
+  <div class="status">9:41</div>
+  <div class="appbar"><div class="title">Inbox</div><div class="icon">⌕</div><div class="icon">⚙</div></div>
+  <div class="list">
+    <div class="r"><div class="h"><div class="t">RE: Keuring cv-ketel vrijdag</div><div class="when">12 min</div></div>
+      <div class="pv">Hoi Sam, kun jij vrijdag de ketel keuren? Petra heeft hem tot en met donderdag nodig voor de
+      verbouwing van de keuken. Groet, Jan</div></div>
+    <div class="r"><div class="h"><div class="t">keuring cv-ketel vrijdag</div><div class="when">zojuist</div></div>
+      <div class="dup">⧉ Lijkt op een ander item</div></div>
+    <div class="r"><div class="h"><div class="t">Bel Jan over de renovatieplanning</div><div class="when">1 u</div></div>
+      <div class="cs"><span class="chip p">👤 Jan</span><span class="chip d">📅 vr 2 okt</span><span class="chip"># renovatie</span></div></div>
+    <div class="r"><div class="h"><div class="t">Offerte afvoer nakijken</div><div class="when">2 d</div></div>
+      <div class="cs"><span class="chip late">⚠ zo 27 sep · verlopen</span></div></div>
+    <div class="r"><div class="h"><div class="t">Idee: logboek per moestuin</div><div class="when">3 d</div></div></div>
+  </div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><span>Vandaag</span><span class="on">Inbox</span><span>Overzicht</span><span>Projecten</span><span>Mensen</span></div>
+</div>
+</div>
+
+<!-- ============ C ============ -->
+<div class="col">
+<h3>C · Time column</h3>
+<p class="note">The relative time as a fixed column on the left (monospace, so it lines up); the text in up to two lines,
+tokens removed, the chips below. Easy to scan by age; a shared mail shows subject plus the first body line.</p>
+<div class="phone c">
+  <div class="status">9:41</div>
+  <div class="appbar"><div class="title">Inbox</div><div class="icon">⌕</div><div class="icon">⚙</div></div>
+  <div class="list">
+    <div class="r"><div class="tc">12 min</div><div class="body"><div class="t">RE: Keuring cv-ketel vrijdag<br>
+      <span style="color:var(--muted)">Hoi Sam, kun jij vrijdag de ketel keuren? Petra heeft…</span></div></div></div>
+    <div class="r"><div class="tc">zojuist</div><div class="body"><div class="t">keuring cv-ketel vrijdag</div>
+      <div class="dup">⧉ Lijkt op een ander item</div></div></div>
+    <div class="r"><div class="tc">1 u</div><div class="body"><div class="t">Bel Jan over de renovatieplanning</div>
+      <div class="cs"><span class="chip p">👤 Jan</span><span class="chip d">📅 vr 2 okt</span><span class="chip"># renovatie</span></div></div></div>
+    <div class="r"><div class="tc">2 d</div><div class="body"><div class="t">Offerte afvoer nakijken</div>
+      <div class="cs"><span class="chip late">⚠ zo 27 sep · verlopen</span></div></div></div>
+    <div class="r"><div class="tc">3 d</div><div class="body"><div class="t">Idee: logboek per moestuin</div></div></div>
+  </div>
+  <div class="fab">＋ Vastleggen</div>
+  <div class="nav"><span>Vandaag</span><span class="on">Inbox</span><span>Overzicht</span><span>Projecten</span><span>Mensen</span></div>
+</div>
+</div>
+</div>
+
+<h2>Windows: the same rows in the list pane of the two-pane layout (DD-011, T2.6)</h2>
+<p class="lead">List on the left, detail on the right (not drawn). The selected row has a blue bar; <kbd>↑</kbd>/<kbd>↓</kbd> move
+the selection, <kbd>Enter</kbd> puts the focus in the detail, <kbd>Del</kbd> sends to the trash with undo (DD-018).
+The pane is wider than a phone, so B and C show more of each line.</p>
+<div class="row">
+  <div class="pane a"><div class="ph">Inbox <span>5 items</span></div>
+    <div class="r sel"><div class="l1"><div class="t">RE: Keuring cv-ketel vrijdag</div><div class="when">12 min</div></div>
+      <div class="l2"><span class="when">+ 3 regels</span></div></div>
+    <div class="r"><div class="l1"><div class="t">keuring cv-ketel vrijdag</div><div class="when">zojuist</div></div>
+      <div class="dup">⧉ Lijkt op een ander item</div></div>
+    <div class="r"><div class="l1"><div class="t">Bel Jan over de renovatieplanning <span class="tok">@Jan</span> <span class="tok">!vr</span> <span class="tok">#renovatie</span></div><div class="when">1 u</div></div>
+      <div class="l2"><span class="chip p">👤 Jan</span><span class="chip d">📅 vr 2 okt</span><span class="chip"># renovatie</span></div></div>
+    <div class="r"><div class="l1"><div class="t">Offerte afvoer nakijken <span class="tok late">!zo</span></div><div class="when">2 d</div></div>
+      <div class="l2"><span class="chip late">⚠ zo 27 sep · verlopen</span></div></div>
+    <div class="r"><div class="l1"><div class="t">Idee: logboek per moestuin</div><div class="when">3 d</div></div></div>
+  </div>
+  <div class="pane b" style="background:var(--bg)"><div class="ph">Inbox <span>5 items</span></div>
+    <div class="r sel"><div class="h"><div class="t">RE: Keuring cv-ketel vrijdag</div><div class="when">12 min</div></div>
+      <div class="pv">Hoi Sam, kun jij vrijdag de ketel keuren? Petra heeft hem tot en met donderdag nodig voor de verbouwing van de keuken.</div></div>
+    <div class="r"><div class="h"><div class="t">keuring cv-ketel vrijdag</div><div class="when">zojuist</div></div>
+      <div class="dup">⧉ Lijkt op een ander item</div></div>
+    <div class="r"><div class="h"><div class="t">Bel Jan over de renovatieplanning</div><div class="when">1 u</div></div>
+      <div class="cs"><span class="chip p">👤 Jan</span><span class="chip d">📅 vr 2 okt</span><span class="chip"># renovatie</span></div></div>
+    <div class="r"><div class="h"><div class="t">Offerte afvoer nakijken</div><div class="when">2 d</div></div>
+      <div class="cs"><span class="chip late">⚠ zo 27 sep · verlopen</span></div></div>
+  </div>
+  <div class="pane c"><div class="ph">Inbox <span>5 items</span></div>
+    <div class="r sel"><div class="tc">12 min</div><div class="body"><div class="t">RE: Keuring cv-ketel vrijdag<br>
+      <span style="color:var(--muted)">Hoi Sam, kun jij vrijdag de ketel keuren? Petra heeft hem tot…</span></div></div></div>
+    <div class="r"><div class="tc">zojuist</div><div class="body"><div class="t">keuring cv-ketel vrijdag</div>
+      <div class="dup">⧉ Lijkt op een ander item</div></div></div>
+    <div class="r"><div class="tc">1 u</div><div class="body"><div class="t">Bel Jan over de renovatieplanning</div>
+      <div class="cs"><span class="chip p">👤 Jan</span><span class="chip d">📅 vr 2 okt</span><span class="chip"># renovatie</span></div></div></div>
+    <div class="r"><div class="tc">2 d</div><div class="body"><div class="t">Offerte afvoer nakijken</div>
+      <div class="cs"><span class="chip late">⚠ zo 27 sep · verlopen</span></div></div></div>
+    <div class="r"><div class="tc">3 d</div><div class="body"><div class="t">Idee: logboek per moestuin</div></div></div>
+  </div>
+</div>
+
+<h2>Decided (PO, 28-09-2026): card B, a text of several lines as in A</h2>
+<p class="lead">The cards of B; a text of several lines (the shared mail) shows only its first line plus "+ 3 regels", no
+preview lines. Phone on the left, Windows list pane on the right.</p>
+<div class="row">
+  <div class="phone b">
+    <div class="status">9:41</div>
+    <div class="appbar"><div class="title">Inbox</div><div class="icon">⌕</div><div class="icon">⚙</div></div>
+    <div class="list">
+      <div class="r"><div class="h"><div class="t">RE: Keuring cv-ketel vrijdag</div><div class="when">12 min</div></div>
+        <div class="pv" style="font-size:12px">+ 3 regels</div></div>
+      <div class="r"><div class="h"><div class="t">keuring cv-ketel vrijdag</div><div class="when">zojuist</div></div>
+        <div class="dup">⧉ Lijkt op een ander item</div></div>
+      <div class="r"><div class="h"><div class="t">Bel Jan over de renovatieplanning</div><div class="when">1 u</div></div>
+        <div class="cs"><span class="chip p">👤 Jan</span><span class="chip d">📅 vr 2 okt</span><span class="chip"># renovatie</span></div></div>
+      <div class="r"><div class="h"><div class="t">Offerte afvoer nakijken</div><div class="when">2 d</div></div>
+        <div class="cs"><span class="chip late">⚠ zo 27 sep · verlopen</span></div></div>
+      <div class="r"><div class="h"><div class="t">Idee: logboek per moestuin</div><div class="when">3 d</div></div></div>
+    </div>
+    <div class="fab">＋ Vastleggen</div>
+    <div class="nav"><span>Vandaag</span><span class="on">Inbox</span><span>Overzicht</span><span>Projecten</span><span>Mensen</span></div>
+  </div>
+  <div class="pane b" style="background:var(--bg)"><div class="ph">Inbox <span>5 items</span></div>
+    <div class="r sel"><div class="h"><div class="t">RE: Keuring cv-ketel vrijdag</div><div class="when">12 min</div></div>
+      <div class="pv" style="font-size:12px">+ 3 regels</div></div>
+    <div class="r"><div class="h"><div class="t">keuring cv-ketel vrijdag</div><div class="when">zojuist</div></div>
+      <div class="dup">⧉ Lijkt op een ander item</div></div>
+    <div class="r"><div class="h"><div class="t">Bel Jan over de renovatieplanning</div><div class="when">1 u</div></div>
+      <div class="cs"><span class="chip p">👤 Jan</span><span class="chip d">📅 vr 2 okt</span><span class="chip"># renovatie</span></div></div>
+    <div class="r"><div class="h"><div class="t">Offerte afvoer nakijken</div><div class="when">2 d</div></div>
+      <div class="cs"><span class="chip late">⚠ zo 27 sep · verlopen</span></div></div>
+    <div class="r"><div class="h"><div class="t">Idee: logboek per moestuin</div><div class="when">3 d</div></div></div>
+  </div>
+</div>
+
+<ul class="legend">
+  <li><b>Common to all variants:</b> tapping a row opens the item detail (DD-018); the duplicate hint stays under the
+  newer item of a pair (REQ-053); a date chip is orange with a warning icon only when the date is today or overdue,
+  otherwise calm blue (DD-017); chips come from the stored tokens, never from a separate field (DD-004).</li>
+  <li><b>Relative time</b> (PO decision): <i>zojuist</i> (&lt; 1 min), <i>12 min</i>, <i>1 u</i> (hours), <i>gisteren</i>,
+  <i>2 d</i> … up to a week, then the date (<i>ma 21 sep</i>). The exact moment stays in the item detail. Text for
+  screen readers written out ("12 minuten geleden").</li>
+  <li><b>Tokens in the text:</b> A shows the text as typed with the tokens coloured (you see what you typed);
+  B and C hide the tokens in the text and show them only as chips (calmer, but the text differs from what you typed).</li>
+  <li><b>Shared mail:</b> A shows only the subject plus "+ 3 regels"; B shows subject plus two preview lines; C subject
+  plus one line.</li>
+  <li><b>Later, not in this round:</b> swiping to the trash (backlog); the triage card (screen 3) gets its own layout.</li>
+</ul>
+<p class="lead" style="margin-top:20px"><i>Made with the help of AI (Claude); reviewed by the product owner.</i></p>
+</body>
+</html>

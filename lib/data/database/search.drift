@@ -1,0 +1,74 @@
+-- Full-text search (REQ-011, DD-016; T2.5). Derived, device-local data like
+-- `tokens`: no HLC, tombstone or change log, never in a sync package, and
+-- rebuilt from the source tables at any time.
+
+import 'tables.dart';
+
+-- The index, with its own copy of the text so later search can show
+-- snippets (T10.13). Diacritics are folded ("cafe" finds "café"); the
+-- prefix index keeps prefix search ("keur*") fast.
+CREATE VIRTUAL TABLE search_index USING fts5(
+  title,
+  body,
+  tokenize = 'unicode61 remove_diacritics 2',
+  prefix = '2 3'
+);
+
+-- Which entity each index row belongs to. The source tables have text UUID
+-- keys and an implicit rowid that VACUUM may renumber, so the index never
+-- points at a source rowid (DD-016); this own INTEGER key is the index rowid.
+CREATE TABLE search_map (
+  row_id INTEGER NOT NULL PRIMARY KEY,
+  entity TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  UNIQUE (entity, entity_id)
+);
+
+-- Rows changed since they were last indexed. The triggers only note the id
+-- inside the saving transaction; the indexing itself happens after saving
+-- (hard rule 7, REQ-001).
+CREATE TABLE search_pending (
+  entity TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  PRIMARY KEY (entity, entity_id)
+) WITHOUT ROWID;
+
+CREATE TRIGGER items_search_insert AFTER INSERT ON items BEGIN
+  INSERT OR IGNORE INTO search_pending (entity, entity_id) VALUES ('items', new.id);
+END;
+
+CREATE TRIGGER items_search_update
+AFTER UPDATE OF raw_text, title, body, deleted_at ON items BEGIN
+  INSERT OR IGNORE INTO search_pending (entity, entity_id) VALUES ('items', new.id);
+END;
+
+CREATE TRIGGER people_search_insert AFTER INSERT ON people BEGIN
+  INSERT OR IGNORE INTO search_pending (entity, entity_id) VALUES ('people', new.id);
+END;
+
+CREATE TRIGGER people_search_update
+AFTER UPDATE OF name, note, organisation, job_title, deleted_at ON people BEGIN
+  INSERT OR IGNORE INTO search_pending (entity, entity_id) VALUES ('people', new.id);
+END;
+
+-- A person is also found by their aliases (PO decision 27-09-2026).
+CREATE TRIGGER person_aliases_search_insert AFTER INSERT ON person_aliases BEGIN
+  INSERT OR IGNORE INTO search_pending (entity, entity_id) VALUES ('people', new.person_id);
+END;
+
+CREATE TRIGGER person_aliases_search_update
+AFTER UPDATE OF alias, person_id, deleted_at ON person_aliases BEGIN
+  INSERT OR IGNORE INTO search_pending (entity, entity_id) VALUES ('people', old.person_id);
+  INSERT OR IGNORE INTO search_pending (entity, entity_id) VALUES ('people', new.person_id);
+END;
+
+-- A person is also found by their contact details (REQ-038, AC REQ-011).
+CREATE TRIGGER contact_details_search_insert AFTER INSERT ON contact_details BEGIN
+  INSERT OR IGNORE INTO search_pending (entity, entity_id) VALUES ('people', new.person_id);
+END;
+
+CREATE TRIGGER contact_details_search_update
+AFTER UPDATE OF value, label, person_id, deleted_at ON contact_details BEGIN
+  INSERT OR IGNORE INTO search_pending (entity, entity_id) VALUES ('people', old.person_id);
+  INSERT OR IGNORE INTO search_pending (entity, entity_id) VALUES ('people', new.person_id);
+END;

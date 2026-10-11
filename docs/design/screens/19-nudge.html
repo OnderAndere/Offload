@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Waiting nudge – sketch, screen 19</title>
+<style>
+  :root {
+    --bg: #FBF8FC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --orange-text: #8F430E; --blue: #245A8C;
+    --blue-chip: #E3ECF5; --purple: #6750A4;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1320px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; width: 390px; min-height: 112px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 8px; }
+  .phone { width: 390px; height: 760px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .phone.dark { background: #20242B; color: #E8EAED; height: 420px; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .dark .status { color: #B9BEC6; }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 12px; gap: 10px; font-size: 22px; }
+  .line { margin: 4px 12px; padding: 10px 12px; border-radius: 10px; background: #E9E1F5; display: flex; }
+  .line span { flex: 1; } .line b { color: var(--purple); }
+  .group { margin: 14px 16px 2px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .group.late { color: var(--orange-text); }
+  .card { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  .meta { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 2px 8px; font-size: 12px; background: var(--surface); }
+  .chip.late { color: var(--orange-text); border-color: var(--orange); }
+  .btns { display: flex; gap: 8px; margin-top: 8px; }
+  .btn { border-radius: 20px; padding: 6px 14px; font-weight: 600; font-size: 13px; border: 1px solid var(--line); color: var(--purple); }
+  .field { margin: 4px 16px; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface); min-height: 60px; }
+  .block { margin: 10px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  .block .h { padding: 8px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .block .r { padding: 8px 12px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 8px; }
+  .block .r span { flex: 1; } .block .r small { color: var(--muted); }
+  .sec { margin: 16px 20px 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .set { display: flex; align-items: center; gap: 12px; padding: 10px 20px; }
+  .set .t { flex: 1; } .set .t small { display: block; color: var(--muted); font-size: 12px; }
+  .switch { width: 44px; height: 24px; border-radius: 12px; background: var(--purple); position: relative; flex: none; }
+  .switch::after { content: ""; position: absolute; right: 3px; top: 3px; width: 18px; height: 18px; border-radius: 9px; background: #fff; }
+  .drop { border-bottom: 1px solid var(--muted); padding: 4px 6px; font-size: 15px; }
+  .notif { margin: 8px 12px; background: #2D3138; border-radius: 18px; padding: 12px 14px; color: #E8EAED; }
+  .notif .h { font-size: 12px; color: #B9BEC6; display: flex; gap: 6px; align-items: center; }
+  .notif .h .ic { width: 16px; height: 16px; border-radius: 4px; background: #245A8C; display: inline-block; }
+  .notif .t { font-weight: 600; margin-top: 4px; }
+  .notif ul { margin: 4px 0 0; padding-left: 18px; color: #D5D8DD; font-size: 13px; }
+  .legend { margin-top: 28px; max-width: 1320px; }
+  .legend li { margin: 4px 0; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+<h1>Waiting nudge (T10.1, the nudge) – sketch, screen 19</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb). Sample data is
+fictional; today is Friday 9 October 2026. Orange outline = new. <b>Decided</b> (PO, 04-10-2026; AC REQ-047, DD-005,
+DD-015): a waiting item <b>without an expected date</b> that has not been touched for X days (7 by default, "Navragen
+na") is "silent": it shows on <i>Vandaag</i> in a group "Blijft stil" and gets one notification on the day it becomes
+silent, at the time of the day's reminder (its own notification, like birthdays; a switch under <i>Herinneringen</i>).
+<i>Ontvangen</i> completes it (with undo); <i>Nagevraagd</i> counts as a touch, so the period starts again. An item with
+an expected date is handled by that date ("Had binnen moeten zijn"), never also by silence. Windows: the same, through
+the tray.</p>
+
+<div class="row">
+<div>
+<h3>1 · Vandaag: the group "Blijft stil"</h3>
+<p class="note">Under "Had binnen moeten zijn". Each card says whom it waits for and how long it has been silent, with
+<i>Ontvangen</i> and <i>Nagevraagd</i>. Swiping right is received, as elsewhere on <i>Vandaag</i>. After
+<i>Nagevraagd</i> the card leaves the group, with a short message; no undo, as <i>Houden</i> in the weekly review
+(putting the moment back would be a touch too; revised while building).</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">Vandaag</div>
+  <div class="line"><span>2 in je inbox</span><b>Verwerken ›</b></div>
+  <div class="group late">⚠ Had binnen moeten zijn · 1</div>
+  <div class="card">Offerte kozijnen<div class="meta"><span class="chip">Wacht op Petra</span><span class="chip late">⚠ 3 d te laat</span></div></div>
+  <div class="new" style="margin:0 4px;padding-bottom:6px">
+    <div class="group">Blijft stil · 2</div>
+    <div class="card">Sleutel tuinhuis terugkrijgen<div class="meta"><span class="chip">Wacht op Joris</span><span class="chip">12 dagen stil</span></div>
+      <div class="btns"><span class="btn">Ontvangen</span><span class="btn">Nagevraagd</span></div></div>
+    <div class="card">Foto's van het buurtfeest<div class="meta"><span class="chip">Wacht op Sanne</span><span class="chip">8 dagen stil</span></div>
+      <div class="btns"><span class="btn">Ontvangen</span><span class="btn">Nagevraagd</span></div></div>
+  </div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span>Inzicht</span></div>
+</div>
+</div>
+
+<div>
+<h3>2 · In the item: the block "Toezegging"</h3>
+<p class="note">While the item is silent, the waiting line says so and offers <i>Nagevraagd</i>. Not silent (touched
+recently, or with an expected date): no button, as now.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar">←</div>
+  <div class="field">Sleutel tuinhuis terugkrijgen @Joris</div>
+  <div class="block">
+    <div class="h">Toezegging</div>
+    <div class="r"><span>Wacht op Joris</span></div>
+    <div class="r new"><span>12 dagen stil</span><span class="btn">Nagevraagd</span></div>
+    <div class="r"><span style="color:var(--muted)">Verwacht op toevoegen</span></div>
+  </div>
+</div>
+</div>
+
+<div>
+<h3>3 · Settings → Herinneringen</h3>
+<p class="note">A switch for the nudge and the number of days, under the other reminders. The number counts for the
+group on <i>Vandaag</i> too, also with the switch off or without notifications.</p>
+<div class="phone" style="height:520px">
+  <div class="status">9:41</div>
+  <div class="appbar">← Instellingen</div>
+  <div class="sec">Herinneringen</div>
+  <div class="set"><span class="t">Meldingen bij deadlines en terugzien</span><span class="switch"></span></div>
+  <div class="set"><span class="t">Verjaardagen</span><span class="switch"></span></div>
+  <div class="new">
+    <div class="set"><span class="t">Wacht-items die stil blijven<small>Eén melding op de dag dat een item stil wordt.</small></span><span class="switch"></span></div>
+    <div class="set"><span class="t">Navragen na<small>Zo lang niets veranderd: dan staat het item op Vandaag.</small></span><span class="drop">7 dagen ▾</span></div>
+  </div>
+  <div class="set"><span class="t">Herinnering weekoverzicht</span><span class="switch" style="background:#79747E"></span></div>
+</div>
+</div>
+
+<div>
+<h3>4 · The notification</h3>
+<p class="note">On the day an item becomes silent, at the day's time. One: whom and how long, the title below; a tap opens
+the item. More: the count with the titles; a tap opens <i>Vandaag</i>. Lock screen: only "Wacht-item blijft stil" or
+the count.</p>
+<div class="phone dark">
+  <div class="status">9:00</div>
+  <div class="notif new"><div class="h"><span class="ic"></span>Offload · nu</div>
+    <div class="t">Wacht nog op Joris · 7 dagen stil</div><div>Sleutel tuinhuis terugkrijgen</div></div>
+  <div class="notif new"><div class="h"><span class="ic"></span>Offload · nu</div>
+    <div class="t">2 wacht-items blijven stil</div>
+    <ul><li>Sleutel tuinhuis terugkrijgen</li><li>Foto's van het buurtfeest</li></ul></div>
+</div>
+</div>
+</div>
+
+<ul class="legend">
+  <li><b>Silent</b> = status <i>waiting</i>, no expected date, last touch (a change, <i>Wacht nog</i> in the weekly review, or <i>Nagevraagd</i>) X days ago or longer. No new column: <i>Nagevraagd</i> records the touch as <i>Wacht nog</i> does (<code>reviewed_at</code>).</li>
+  <li><b>One notification per silence:</b> on the day the item becomes silent; afterwards it stays on <i>Vandaag</i> without repeats. After <i>Nagevraagd</i> the next comes X days later, if still silent.</li>
+</ul>
+</body>
+</html>

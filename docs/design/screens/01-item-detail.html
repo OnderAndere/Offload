@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Item detail – Q5b sketch</title>
+<style>
+  :root {
+    --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --blue: #245A8C; --chip: #EAE6DE;
+    --accent: #245A8C;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1000px; margin: 0 0 20px; }
+  .row { display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap; }
+  .col h2 { font-size: 16px; margin: 0 0 4px; }
+  .col p.note { color: var(--muted); margin: 0 0 10px; max-width: 390px; }
+  .phone { width: 390px; height: 844px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 56px; display: flex; align-items: center; padding: 0 8px; gap: 4px; }
+  .appbar .title { flex: 1; font-size: 18px; padding-left: 8px; }
+  .icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 20px;
+          color: var(--text); border-radius: 20px; }
+  .content { padding: 0 16px; }
+  .chiprow { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 12px; }
+  .chip { background: var(--chip); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .chip.select::after { content: " ▾"; color: var(--muted); }
+  .chip.token { background: #E3ECF5; }
+  .chip.orange { background: #F6E1CC; }
+  .field { background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+           padding: 12px; min-height: 96px; font-size: 16px; }
+  .field .cursor { display: inline-block; width: 2px; height: 18px; background: var(--accent);
+                   vertical-align: -3px; }
+  .label { font-size: 12px; color: var(--muted); margin: 14px 0 4px; text-transform: uppercase;
+           letter-spacing: .04em; }
+  .list { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  .item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; min-height: 48px;
+          border-top: 1px solid var(--line); }
+  .item:first-child { border-top: 0; }
+  .item .k { width: 116px; color: var(--muted); font-size: 13px; }
+  .item .v { flex: 1; }
+  .item .v.empty { color: #9AA0A6; }
+  .item .chev { color: var(--muted); }
+  .hint { display: flex; align-items: center; gap: 8px; color: var(--blue); margin: 12px 0; }
+  .hint b { font-weight: 600; }
+  .meta { color: var(--muted); font-size: 12px; margin: 16px 0; }
+  .primary { display: flex; gap: 8px; margin: 12px 0; }
+  .btn { border-radius: 20px; padding: 9px 16px; font-size: 14px; border: 1px solid var(--line);
+         background: var(--surface); }
+  .btn.filled { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .bar { position: absolute; bottom: 0; left: 0; right: 0; height: 48px; background: #ECE8E0;
+         display: flex; align-items: center; padding: 0 12px; gap: 18px; color: var(--blue);
+         font-weight: 600; }
+  .bar .q { margin-left: auto; }
+  .callout { position: absolute; background: #FFF6D8; border: 1px solid #E2C766; border-radius: 6px;
+             padding: 4px 6px; font-size: 11px; color: #5A4A10; max-width: 170px; }
+  .desk { width: 1280px; height: 760px; background: var(--bg); border: 8px solid #1B1D20;
+          border-radius: 10px; display: flex; overflow: hidden; }
+  .rail { width: 84px; background: #ECE8E0; padding-top: 16px; display: flex; flex-direction: column;
+          align-items: center; gap: 14px; font-size: 11px; color: var(--muted); }
+  .rail div { text-align: center; }
+  .rail .on { color: var(--blue); font-weight: 600; }
+  .listpane { width: 380px; border-right: 1px solid var(--line); background: var(--surface); }
+  .listpane .li { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .listpane .li.sel { background: #E3ECF5; }
+  .listpane .li small { color: var(--muted); }
+  .detailpane { flex: 1; padding: 0 24px; }
+  .legend { margin-top: 28px; max-width: 1100px; }
+  .legend li { margin: 4px 0; }
+  kbd { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>Item detail (T2.3) – Q5b sketch</h1>
+<p class="lead">Two variants for opening and editing one item. Example: an item from the widget, still in
+the inbox. Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb);
+colours follow DD-017 (blue = calm, orange = needs attention now). <b>Decided (PO, 27-09-2026): variant A.</b>
+The rules are in DESIGN.md, DD-018.</p>
+
+<div class="row">
+
+  <!-- Variant A -->
+  <div class="col">
+    <h2>A · Text first — chosen</h2>
+    <p class="note">The typed text stays the source (DD-004). You edit it as in quick capture: chips,
+    suggestions and the prefix bar. Deadline, people and tags follow from the text; picking one with a
+    button inserts the token into the text. Only status and type are separate choices.</p>
+    <div class="phone">
+      <div class="status">17:20</div>
+      <div class="appbar">
+        <div class="icon">←</div><div class="title"></div>
+        <div class="icon">⇪</div><div class="icon">⋮</div>
+      </div>
+      <div class="content">
+        <div class="chiprow">
+          <span class="chip select">Inbox</span>
+          <span class="chip select">Geen type</span>
+        </div>
+        <div class="field">Offerte renovatie opvragen bij @Jan !vr #renovatie<span class="cursor"></span></div>
+        <div class="chiprow" style="margin-top:8px">
+          <span class="chip token">👤 Jan</span>
+          <span class="chip token">📅 vr 2 okt</span>
+          <span class="chip token"># renovatie</span>
+        </div>
+        <div style="height:22px"></div>
+        <div class="label">Notitie</div>
+        <div class="field" style="min-height:64px;font-size:14px;color:#5A5F66">Vorige offerte was €12k;
+          ook naar levertijd vragen.</div>
+        <div class="hint">⧉ <b>Lijkt op een ander item</b> · Openen</div>
+        <div class="primary">
+          <span class="btn filled">✓ Afronden</span>
+          <span class="btn">Wachten op…</span>
+        </div>
+        <div class="meta">Vastgelegd 27 sep 2026, 17:15 via de widget</div>
+      </div>
+      <div class="bar"><span>@ persoon</span><span># tag</span><span>! datum</span><span class="q">?</span></div>
+      <div class="callout" style="top:92px;right:6px">⇪ share (T2.7) · ⋮ trash, project</div>
+      <div class="callout" style="top:282px;left:16px;max-width:300px">↑ chips live from the text, as in quick capture</div>
+    </div>
+  </div>
+
+  <!-- Variant B -->
+  <div class="col">
+    <h2>B · Fields — rejected</h2>
+    <p class="note">A title and a picker per field; the original text is collapsed at the bottom. Clear,
+    but text and fields can diverge (e.g. <code>!vr</code> in the text and another deadline in the field).</p>
+    <div class="phone">
+      <div class="status">17:20</div>
+      <div class="appbar">
+        <div class="icon">←</div><div class="title"></div>
+        <div class="icon">⇪</div><div class="icon">⋮</div>
+      </div>
+      <div class="content">
+        <div class="field" style="min-height:0;font-size:18px">Offerte renovatie opvragen</div>
+        <div class="label">Details</div>
+        <div class="list">
+          <div class="item"><span class="k">Status</span><span class="v">Inbox</span><span class="chev">›</span></div>
+          <div class="item"><span class="k">Type</span><span class="v empty">Geen</span><span class="chev">›</span></div>
+          <div class="item"><span class="k">Deadline</span><span class="v">vr 2 okt</span><span class="chev">›</span></div>
+          <div class="item"><span class="k">Bekijk opnieuw</span><span class="v empty">—</span><span class="chev">›</span></div>
+          <div class="item"><span class="k">Gevraagd door</span><span class="v empty">—</span><span class="chev">›</span></div>
+          <div class="item"><span class="k">Wacht op</span><span class="v empty">—</span><span class="chev">›</span></div>
+          <div class="item"><span class="k">Project</span><span class="v empty">—</span><span class="chev">›</span></div>
+          <div class="item"><span class="k">Tags</span><span class="v"># renovatie</span><span class="chev">›</span></div>
+        </div>
+        <div class="label">Notitie</div>
+        <div class="field" style="min-height:52px;font-size:14px;color:#5A5F66">Vorige offerte was €12k…</div>
+        <div class="label">Oorspronkelijke tekst ▸</div>
+        <div class="meta">Vastgelegd 27 sep 2026, 17:15 via de widget</div>
+      </div>
+      <div class="callout" style="top:132px;right:6px">each row opens a picker</div>
+    </div>
+  </div>
+
+</div>
+
+<h2 style="margin-top:36px;font-size:16px">Windows · two panes (variant A)</h2>
+<p class="note" style="color:#5A5F66;margin:0 0 10px">List left, detail right (DD-011). The same detail as on the
+phone; the prefix bar sits under the text field. <kbd>Enter</kbd> adds a line, <kbd>Ctrl</kbd>+<kbd>Enter</kbd> completes,
+<kbd>Esc</kbd> first closes an open suggestion list and then goes back to the list, <kbd>Del</kbd> moves to the
+trash (with undo) only when the focus is outside a text field.</p>
+<div class="desk">
+  <div class="rail">
+    <div>☀<br>Vandaag</div><div class="on">📥<br>Inbox</div><div>▦<br>Overzicht</div>
+    <div>📁<br>Projecten</div><div>👥<br>Mensen</div>
+  </div>
+  <div class="listpane">
+    <div class="appbar"><div class="title">Inbox</div><div class="icon">🔍</div></div>
+    <div class="li sel">Offerte renovatie opvragen bij @Jan !vr #renovatie<br><small>27 sep, 17:15 · ⧉ lijkt op een ander item</small></div>
+    <div class="li">Keuring van de afvoer in het café<br><small>27 sep, 17:15</small></div>
+    <div class="li">Offerte renovatie<br><small>Hoi, … · 27 sep, 16:09</small></div>
+  </div>
+  <div class="detailpane">
+    <div class="appbar"><div class="title"></div><div class="icon">⇪</div><div class="icon">⋮</div></div>
+    <div class="chiprow"><span class="chip select">Inbox</span><span class="chip select">Geen type</span></div>
+    <div class="field">Offerte renovatie opvragen bij @Jan !vr #renovatie<span class="cursor"></span></div>
+    <div class="chiprow" style="margin-top:8px;align-items:center">
+      <span style="color:#245A8C;font-weight:600">@ persoon &nbsp; # tag &nbsp; ! datum &nbsp; ?</span>
+    </div>
+    <div class="chiprow"><span class="chip token">👤 Jan</span><span class="chip token">📅 vr 2 okt</span><span class="chip token"># renovatie</span></div>
+    <div class="label">Notitie</div>
+    <div class="field" style="min-height:64px;font-size:14px;color:#5A5F66">Vorige offerte was €12k; ook naar levertijd vragen.</div>
+    <div class="hint">⧉ <b>Lijkt op een ander item</b> · Openen</div>
+    <div class="primary"><span class="btn filled">✓ Afronden</span><span class="btn">Wachten op…</span></div>
+    <div class="meta">Vastgelegd 27 sep 2026, 17:15 via de widget</div>
+  </div>
+</div>
+
+<div class="legend">
+  <h2 style="font-size:16px">Decisions (PO, 27-09-2026) — details in DESIGN.md, DD-018</h2>
+  <ol>
+    <li><b>Variant A</b>, text first: one source, edited like quick capture.</li>
+    <li><b>Autosave</b> after a 2-second pause and when leaving the screen; no save button.</li>
+    <li><b>No separate title field</b>; lists show the first line.</li>
+    <li><b>Status:</b> one button for the next logical step (<i>Afronden</i>) plus <i>Wachten op…</i>; all
+      statuses through the status chip.</li>
+    <li><b>Trash</b> in the ⋮ menu, with an undo message.</li>
+    <li><b>Editing and tokens:</b> the deadline follows the text; a date already in the text keeps its date,
+      a newly typed relative date counts from the edit; a date picked with a button goes in as a fixed date.</li>
+    <li><b>Enter</b> adds a new line in the detail; a date chip is orange only for today or overdue.</li>
+  </ol>
+</div>
+</body>
+</html>

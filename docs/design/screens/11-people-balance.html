@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>People balance – sketch, screen 11</title>
+<style>
+  :root {
+    --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --blue: #245A8C; --chip: #EAE6DE;
+    --blue-chip: #E3ECF5; --orange-chip: #F6E1CC;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1320px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; max-width: 1320px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col p.note { width: 390px; min-height: 96px; }
+
+  .phone { width: 390px; height: 760px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 8px 0 16px; }
+  .appbar .back { font-size: 20px; flex: 1; }
+  .icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 18px; color: var(--muted); }
+  .who { display: flex; gap: 14px; align-items: center; margin: 2px 16px 0; }
+  .av { width: 46px; height: 46px; border-radius: 50%; background: #E6E0F3; color: #4A3C7A; display: grid;
+        place-items: center; font-size: 18px; font-weight: 600; flex: none; }
+  .who .nm { font-size: 24px; }
+  .work { display: flex; gap: 8px; align-items: center; margin: 6px 16px 0 76px; color: var(--muted); }
+  .line { display: flex; gap: 10px; align-items: center; padding: 9px 16px; }
+  .line .i { width: 20px; text-align: center; color: var(--muted); }
+  .line.add { color: var(--muted); }
+  .sec { margin: 14px 16px 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+         color: var(--muted); display: flex; gap: 6px; align-items: center; }
+  .cd { display: flex; align-items: center; gap: 12px; padding: 7px 4px 7px 16px; }
+  .cd .i { width: 20px; text-align: center; color: var(--blue); }
+  .cd .v { flex: 1; }
+  .cd .v small { display: block; color: var(--muted); font-size: 12px; }
+  .cd .m { width: 36px; height: 36px; display: grid; place-items: center; color: var(--muted); }
+  .cd.sel { background: var(--blue-chip); box-shadow: inset 3px 0 0 var(--blue); }
+  .adds { display: flex; gap: 8px; padding: 4px 16px 6px; flex-wrap: wrap; }
+  .tb { color: var(--blue); font-weight: 600; padding: 6px 10px; border-radius: 16px; }
+  .field { margin: 10px 16px; border: 1px solid #8E8A84; border-radius: 6px; padding: 14px; min-height: 64px; color: var(--text); }
+  .field.empty { color: var(--muted); }
+  .r { margin: 6px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+       padding: 10px 12px; display: flex; }
+  .r .t { flex: 1; font-weight: 600; }
+  .r .w { color: var(--muted); font-size: 12px; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 64px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .nav .on { color: var(--text); font-weight: 600; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 8px; }
+
+  .scrim { position: absolute; inset: 0; background: #0005; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: 20px 20px 0 0;
+           padding: 8px 0 14px; box-shadow: 0 -2px 10px #0003; }
+  .grab { width: 36px; height: 4px; background: var(--line); border-radius: 2px; margin: 4px auto 10px; }
+  .st { font-size: 17px; font-weight: 600; padding: 0 20px 10px; }
+  .inp { margin: 0 16px; border: 2px solid var(--blue); border-radius: 6px; padding: 10px 12px; font-size: 16px; position: relative; }
+  .inp.err { border-color: #B3261E; }
+  .inp label { position: absolute; top: -9px; left: 10px; background: #fff; padding: 0 4px; font-size: 12px; color: var(--blue); }
+  .inp.err label { color: #B3261E; }
+  .help { margin: 4px 20px 0; font-size: 12px; color: var(--muted); }
+  .help.err { color: #B3261E; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 16px 4px; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; font-size: 13px; }
+  .chip.on { background: var(--blue-chip); border-color: transparent; color: #1D4A73; font-weight: 600; }
+  .bar { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px 0; }
+  .btn { border-radius: 20px; padding: 8px 18px; color: var(--blue); font-weight: 600; }
+  .btn.filled { background: var(--blue); color: #fff; }
+  .kbd { position: absolute; left: 0; right: 0; bottom: 0; height: 210px; background: #E8EAED; display: grid;
+         grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 10px; font-size: 20px; }
+  .kbd span { background: #fff; border-radius: 6px; display: grid; place-items: center; }
+  .menu { position: absolute; background: var(--surface); border-radius: 8px; box-shadow: 0 3px 12px #0003;
+          padding: 6px 0; width: 200px; z-index: 3; }
+  .menu div { padding: 10px 16px; }
+  .snack { position: absolute; left: 12px; right: 12px; bottom: 76px; background: #313033; color: #F4EFF4; border-radius: 6px;
+           padding: 12px 14px; display: flex; font-size: 14px; }
+  .snack b { margin-left: auto; color: #CFBCFF; }
+
+  .desk { width: 1280px; height: 620px; background: var(--bg); border: 8px solid #1B1D20;
+          border-radius: 10px; display: flex; overflow: hidden; position: relative; }
+  .rail { width: 88px; background: #ECE8E0; padding-top: 12px; display: flex; flex-direction: column;
+          align-items: center; gap: 14px; font-size: 11px; color: var(--muted); flex: none; }
+  .rail .fabr { background: #E6E0F3; border-radius: 14px; width: 56px; height: 56px; display: grid; place-items: center; font-size: 22px; }
+  .rail .on { color: var(--text); font-weight: 600; }
+  .pane { width: 440px; border-right: 1px solid var(--line); padding-top: 6px; position: relative; flex: none; overflow: hidden; }
+  .search { margin: 8px 12px 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+            padding: 8px 14px; color: var(--muted); }
+  .detail { flex: 1; display: grid; place-items: center; color: var(--muted); }
+  .callout { position: absolute; background: #FFF6D8; border: 1px solid #E2C766; border-radius: 6px;
+             padding: 4px 7px; font-size: 11px; color: #5A4A10; max-width: 230px; z-index: 4; }
+  kbd { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 12px; }
+  .legend { margin-top: 28px; max-width: 1320px; }
+  .legend li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>People with commitment balance (T10.2) – sketch, screen 11</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb). <b>Already
+decided</b> (PO, 02-10-2026; AC REQ-048, DD-015, DD-017): two totals at the top; per person a bar from a central axis,
+left orange what I deliver, right blue what I wait for, the count in the bar; the age of the oldest open item, marked
+from a threshold on (21 days by default, Settings "Oud na"); people with open items first, most open items (deliver + wait) on top, alphabetical when equal, then the others
+subdued, alphabetical; a tap opens the person as the 1-on-1 preparation (the existing person screen: late and oldest first,
+date and project on the cards, the note on top); on Windows the person opens in the right pane next to the list. Age:
+what I deliver since it was asked, what I wait for since it was captured. Sample data is fictional. Orange outline = new.
+<b>Open for the PO</b> were (a) to (d), in the notes and the legend.<br><b>Decided (PO, 02-10-2026): (a) to (d) all as proposed;</b> (b) to be judged again after use; (c) "Oud na N dagen" means N days or older. See DESIGN.md, DD-018 point 11.</p>
+
+<style>
+  .tot { margin: 4px 12px 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tot div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; font-size: 12px; color: var(--muted); }
+  .tot b { display: block; font-size: 15px; color: var(--text); }
+  .tot .d b { color: #8F430E; } .tot .w b { color: var(--blue); }
+  .pr { display: grid; grid-template-columns: 92px 1fr 64px; align-items: center; gap: 6px; padding: 7px 12px; }
+  .pr .n { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bars { display: grid; grid-template-columns: 1fr 2px 1fr; align-items: center; height: 22px; }
+  .bars .axis { background: #8E8A84; height: 22px; }
+  .bars .wl { display: flex; justify-content: flex-end; }
+  .bars .wl span { background: var(--orange); color: #fff; font-size: 11px; font-weight: 600; border-radius: 4px 0 0 4px; padding: 2px 5px; text-align: left; }
+  .bars .wr span { background: var(--blue); color: #fff; font-size: 11px; font-weight: 600; border-radius: 0 4px 4px 0; padding: 2px 5px; display: inline-block; text-align: right; }
+  .age { font-size: 12px; color: var(--muted); text-align: right; }
+  .age.old { color: #8F430E; font-weight: 700; }
+  .pr.quiet { opacity: .55; }
+  .pr.quiet .bars { visibility: hidden; }
+  .legendrow { display: grid; grid-template-columns: 92px 1fr 64px; gap: 6px; padding: 0 12px; font-size: 11px; color: var(--muted); }
+  .legendrow span:nth-child(2) { display: flex; justify-content: space-between; }
+</style>
+
+<h2>Phone</h2>
+<div class="row">
+<div class="col">
+<h3>Personen: the balance</h3>
+<p class="note">(a) Totals, then a row per person: name, the bar, the oldest age. People with open items first, the most open
+items on top and alphabetical when equal; then the others subdued, alphabetical (PO). From 21 days on the age is orange, bold and gets ⏱.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back" style="font-size:22px">Personen</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="search" style="margin:4px 12px 8px">🔍 Zoek een persoon</div>
+  <div class="tot new"><div class="d">Ik moet nog leveren<b>5 aan 3 personen</b></div><div class="w">Ik wacht nog op<b>4 van 2 personen</b></div></div>
+  <div class="legendrow"><span></span><span><span>◀ ik lever</span><span>ik wacht ▶</span></span><span style="text-align:right">oudste</span></div>
+  <div class="new" style="margin:4px 4px 0">
+    <div class="pr"><span class="n">Jan Bakker</span><div class="bars"><div class="wl"><span style="width:80%">3</span></div><div class="axis"></div><div class="wr"><span style="width:30%">1</span></div></div><span class="age old">⏱ 25 d</span></div>
+    <div class="pr"><span class="n">Petra</span><div class="bars"><div class="wl"><span style="width:30%">1</span></div><div class="axis"></div><div class="wr"><span style="width:80%">3</span></div></div><span class="age">12 d</span></div>
+    <div class="pr"><span class="n">Anna</span><div class="bars"><div class="wl"><span style="width:30%">1</span></div><div class="axis"></div><div class="wr"></div></div><span class="age">4 d</span></div>
+    <div class="pr quiet"><span class="n">Kees</span><div class="bars"></div><span class="age">–</span></div>
+    <div class="pr quiet"><span class="n">Olena</span><div class="bars"></div><span class="age">–</span></div>
+  </div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span class="on">Personen</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>A person: the 1-on-1 preparation</h3>
+<p class="note">(b) The existing person screen, reordered: the note right under the name; <i>Gevraagd door</i> and
+<i>Wacht op</i> with late and overdue first, then the oldest; each card with its date and project; <i>Genoemd in</i>
+below. Birthday and contact details stay where they are, under the note.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">←</span><span class="icon">⋮</span></div>
+  <div class="who"><span class="av">JB</span><span class="nm">Jan Bakker</span></div>
+  <div class="field new" style="min-height:44px">Wil de offertes graag op papier.</div>
+  <div class="sec new">✋ Gevraagd door · 3</div>
+  <div class="r"><span class="t">Offerte dakkapel</span><span class="w" style="color:#8F430E">⚠ do 1 okt · Verbouwing</span></div>
+  <div class="r"><span class="t">Planning keuken</span><span class="w">25 d · Verbouwing</span></div>
+  <div class="r"><span class="t">Kozijnen meten</span><span class="w">vr 9 okt · Verbouwing</span></div>
+  <div class="sec">⏳ Wacht op · 1</div>
+  <div class="r"><span class="t">Getekende opdracht</span><span class="w">verwacht di 6 okt</span></div>
+  <div class="sec">@ Genoemd in · 1</div>
+  <div class="r"><span class="t">Etentje plannen</span><span class="w">Inbox</span></div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span class="on">Personen</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>Settings: "Oud na"</h3>
+<p class="note">(c) Under <i>Stilgevallen na</i> and <i>Aan de beurt na</i>: <b>Oud na</b>, 7 to 60 days, 21 by default,
+a setting of this device.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="back">← Instellingen</span></div>
+  <div class="sec">Weekoverzicht</div>
+  <div class="cd"><span class="v">Stilgevallen na<small>Items die zo lang niet zijn veranderd…</small></span><span class="chip">3 weken ▾</span></div>
+  <div class="cd"><span class="v">Aan de beurt na<small>Zo lang na het laatste weekoverzicht…</small></span><span class="chip">7 dagen ▾</span></div>
+  <div class="sec new" style="padding:4px">Personen</div>
+  <div class="cd new"><span class="v">Oud na<small>Vanaf zo veel dagen is een open item bij een persoon oud: het valt op in de balans.</small></span><span class="chip">21 dagen ▾</span></div>
+</div>
+</div>
+</div>
+
+<h2>Windows</h2>
+<p class="note">(d) The balance stays in the list pane; the person (the 1-on-1 preparation) opens in the right pane. An
+item from the person's lists opens as a screen of its own. Keys in the list as now: <kbd>↑</kbd>/<kbd>↓</kbd> select a
+person, <kbd>Enter</kbd> puts the focus in the person pane.</p>
+<div class="desk">
+  <div class="rail"><div class="fabr">＋</div><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span class="on">Personen</span></div>
+  <div class="pane">
+    <div class="search">Zoek een persoon</div>
+    <div class="tot"><div class="d">Ik moet nog leveren<b>5 aan 3 personen</b></div><div class="w">Ik wacht nog op<b>4 van 2 personen</b></div></div>
+    <div class="pr cd sel" style="padding:7px 12px"><span class="n">Jan Bakker</span><div class="bars"><div class="wl"><span style="width:80%">3</span></div><div class="axis"></div><div class="wr"><span style="width:30%">1</span></div></div><span class="age old">⏱ 25 d</span></div>
+    <div class="pr"><span class="n">Petra</span><div class="bars"><div class="wl"><span style="width:30%">1</span></div><div class="axis"></div><div class="wr"><span style="width:80%">3</span></div></div><span class="age">12 d</span></div>
+    <div class="pr"><span class="n">Anna</span><div class="bars"><div class="wl"><span style="width:30%">1</span></div><div class="axis"></div><div class="wr"></div></div><span class="age">4 d</span></div>
+    <div class="pr quiet"><span class="n">Kees</span><div class="bars"></div><span class="age">–</span></div>
+  </div>
+  <div class="new" style="flex:1; padding:12px 18px; margin:6px">
+    <div class="who" style="margin:0"><span class="av">JB</span><span class="nm">Jan Bakker</span></div>
+    <div class="field" style="margin:10px 0; min-height:40px">Wil de offertes graag op papier.</div>
+    <div class="sec" style="margin:8px 0 4px">✋ Gevraagd door · 3</div>
+    <div class="r" style="margin:6px 0"><span class="t">Offerte dakkapel</span><span class="w" style="color:#8F430E">⚠ do 1 okt · Verbouwing</span></div>
+    <div class="r" style="margin:6px 0"><span class="t">Planning keuken</span><span class="w">25 d · Verbouwing</span></div>
+    <div class="r" style="margin:6px 0"><span class="t">Kozijnen meten</span><span class="w">vr 9 okt · Verbouwing</span></div>
+    <div class="sec" style="margin:8px 0 4px">⏳ Wacht op · 1</div>
+    <div class="r" style="margin:6px 0"><span class="t">Getekende opdracht</span><span class="w">verwacht di 6 okt</span></div>
+  </div>
+</div>
+
+<ol class="legend" type="a">
+  <li><b>The balance:</b> totals, a bar per person from a central axis (left = I deliver, orange; right = I wait for, blue; the count in the bar), the oldest age (orange, bold and ⏱ from the threshold on); with open items first, the most open items on top and alphabetical when equal; then the others subdued, alphabetical.</li>
+  <li><b>The person = 1-on-1 preparation:</b> the note on top; late and oldest first; date and project on each card.</li>
+  <li><b>Settings "Oud na":</b> 7–60 days, 21 by default, per device.</li>
+  <li><b>Windows:</b> the person in the right pane next to the balance.</li>
+</ol>
+</body>
+</html>

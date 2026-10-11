@@ -1,0 +1,19 @@
+# Native libraries that may ship with the app, checked by
+# tool/check_dependencies.sh (DD-008). Android: file names under lib/<abi>/
+# in the APK. Windows: every .dll and .exe in the release bundle, including
+# subdirectories (e.g. native_assets/).
+# Adding one needs product-owner approval (native code can bring network
+# access or data collection that no manifest shows).
+
+# Android: Flutter engine and the AOT-compiled app.
+libflutter.so
+libapp.so
+
+# Windows: the app itself and the Flutter engine.
+offload.exe
+flutter_windows.dll
+
+# SQLite3MultipleCiphers via the sqlite3 build hook (DD-007); approved
+# 2026-09-25 (T1.3). Prebuilt, sha256-verified download (DD-008).
+libsqlite3mc.so
+sqlite3mc.dll

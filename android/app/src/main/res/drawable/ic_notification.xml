@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Small icon of a reminder notification (T4.1): the app icon's monochrome
+     drawing (DD-019) without the safe-zone margin; Android colours it. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="68"
+    android:viewportHeight="68">
+    <group
+        android:translateX="-20"
+        android:translateY="-14">
+        <path
+            android:pathData="M28,54 v12 a11,11 0 0,0 11,11 h30 a11,11 0 0,0 11,-11 v-12"
+            android:strokeWidth="8"
+            android:strokeColor="#FFFFFFFF"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M46.5,43 a7.5,7.5 0 1,0 15,0 a7.5,7.5 0 1,0 -15,0 Z M40,31 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0 Z M53.8,22.5 a3.2,3.2 0 1,0 6.4,0 a3.2,3.2 0 1,0 -6.4,0 Z" />
+    </group>
+</vector>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Insights – sketch, screen 12</title>
+<style>
+  :root {
+    --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66;
+    --line: #DAD6CE; --orange: #B35712; --orange-text: #8F430E; --blue: #245A8C; --chip: #EAE6DE;
+    --blue-chip: #E3ECF5; --orange-chip: #F6E1CC; --seg: #E6E1D8;
+    --s1: #DCE6F0; --s2: #F6E1CC; --s3: #E3A46C; --s4: #A34A12;
+    --mono: "IBM Plex Mono", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: #E4E1DA; color: var(--text);
+         font: 14px/1.4 "IBM Plex Sans", "Segoe UI", Roboto, system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 32px 0 8px; }
+  h3 { font-size: 16px; margin: 0 0 4px; }
+  .lead { color: var(--muted); max-width: 1320px; margin: 0 0 20px; }
+  p.note { color: var(--muted); margin: 0 0 10px; max-width: 1320px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; }
+  .col p.note { width: 390px; min-height: 116px; }
+  .new { outline: 2px solid var(--orange); outline-offset: 1px; border-radius: 8px; }
+  kbd { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; font-size: 12px; }
+
+  .phone { width: 390px; height: 800px; background: var(--bg); border-radius: 28px;
+           border: 8px solid #1B1D20; overflow: hidden; position: relative; }
+  .status { height: 28px; font-size: 12px; padding: 6px 20px; color: var(--muted); }
+  .appbar { height: 52px; display: flex; align-items: center; padding: 0 8px 0 16px; }
+  .appbar .ttl { font-size: 22px; flex: 1; }
+  .appbar .date { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-right: 6px; }
+  .icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 18px; color: var(--muted); }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 64px; background: #ECE8E0;
+         display: flex; justify-content: space-around; align-items: center; font-size: 11px; color: var(--muted); }
+  .nav .on { color: var(--text); font-weight: 600; }
+
+  .segs { margin: 2px 12px 10px; background: var(--seg); border-radius: 12px; display: flex; padding: 4px; }
+  .segs span { flex: 1; text-align: center; padding: 8px 0; font-size: 13px; border-radius: 9px; }
+  .segs .on { background: #1B1D20; color: #fff; }
+  .card { margin: 0 12px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px 10px 10px; }
+  .ct { display: flex; align-items: baseline; padding: 0 4px; gap: 8px; }
+  .ct b { font-size: 15px; flex: 1; }
+  .ct span { color: var(--muted); font-size: 11px; }
+
+  /* Horizon */
+  .grid { display: grid; grid-template-columns: 78px repeat(6, 1fr); margin-top: 6px; }
+  .wk { text-align: center; font-family: var(--mono); font-size: 12px; padding-bottom: 6px; align-self: end; }
+  .wk i { display: block; font-style: normal; color: var(--muted); font-size: 10px; }
+  .wk .n { display: block; font-size: 10px; color: var(--muted); }
+  .bar { display: block; margin: 0 auto 2px; width: 14px; border-radius: 3px; background: #A9BBD0; }
+  .wk.busy { color: var(--orange-text); font-weight: 600; }
+  .wk.busy .bar { background: var(--orange); }
+  .wk.busy .n { color: var(--orange-text); font-weight: 600; }
+  .wk .tag { display: block; font-family: "IBM Plex Sans", "Segoe UI", sans-serif; font-size: 10px; }
+  .wk.sel { background: var(--blue-chip); border-radius: 8px 8px 0 0; }
+  .lbl { font-size: 11px; color: var(--muted); align-self: end; padding: 0 0 8px 4px; }
+  .lane { font-size: 12px; font-weight: 600; padding: 12px 0 12px 4px; border-top: 1px solid var(--line);
+          white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lane.none { color: var(--muted); font-weight: 400; font-style: italic; }
+  .cell { border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: center; gap: 3px; flex-wrap: wrap; }
+  .cell.sel { background: var(--blue-chip); }
+  .d { width: 9px; height: 9px; border-radius: 50%; background: var(--blue); display: inline-block; flex: none; }
+  .d.o { background: transparent; border: 2px solid var(--blue); }
+  .d.late { background: var(--orange); }
+  .legend { display: flex; gap: 12px; font-size: 10px; color: var(--muted); border-top: 1px solid var(--line); padding: 8px 4px 0; align-items: center; flex-wrap: wrap; }
+  .legend .d { margin-right: 4px; vertical-align: -1px; }
+  .wh { display: flex; align-items: center; padding: 0 4px 4px; }
+  .wh b { flex: 1; font-size: 14px; }
+  .busytag { background: var(--orange-chip); color: var(--orange-text); border-radius: 12px; padding: 2px 10px; font-size: 11px; font-weight: 600; }
+  .calmtag { background: var(--blue-chip); color: var(--blue); border-radius: 12px; padding: 2px 10px; font-size: 11px; font-weight: 600; }
+  .it { display: flex; gap: 10px; padding: 4px; }
+  .it .d { margin-top: 5px; }
+  .it b { display: block; font-size: 13px; }
+  .it small { color: var(--muted); font-size: 11px; }
+  .it small.late { color: var(--orange-text); }
+  .more { color: var(--blue); font-size: 12px; font-weight: 600; padding: 4px; }
+
+  /* Standstill */
+  .tm { position: relative; height: 300px; margin: 8px 4px 0; }
+  .tile { position: absolute; border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+  .tile b { font-size: 13px; }
+  .tile .c { font-family: var(--mono); font-size: 12px; }
+  .tile.k1 { background: var(--s1); } .tile.k2 { background: var(--s2); }
+  .tile.k3 { background: var(--s3); } .tile.k4 { background: var(--s4); color: #fff; }
+  .sq { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 4px; vertical-align: -2px; }
+  .old { display: flex; padding: 5px 4px; align-items: baseline; }
+  .old div { flex: 1; }
+  .old b { display: block; font-size: 13px; }
+  .old small { color: var(--muted); font-size: 11px; }
+  .old .a { font-family: var(--mono); color: var(--orange-text); font-weight: 600; font-size: 13px; }
+
+  /* People (from T10.2) */
+  .tot { margin: 0 12px 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tot div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; font-size: 12px; color: var(--muted); }
+  .tot b { display: block; font-size: 15px; color: var(--text); }
+  .tot .dl b { color: var(--orange-text); } .tot .w b { color: var(--blue); }
+  .pr { display: grid; grid-template-columns: 92px 1fr 64px; align-items: center; gap: 6px; padding: 7px 12px; }
+  .pr .n { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bars { display: grid; grid-template-columns: 1fr 2px 1fr; align-items: center; height: 22px; }
+  .bars .axis { background: #8E8A84; height: 22px; }
+  .bars .wl { display: flex; justify-content: flex-end; }
+  .bars .wl span { background: var(--orange); color: #fff; font-size: 11px; font-weight: 600; border-radius: 4px 0 0 4px; padding: 2px 5px; }
+  .bars .wr span { background: var(--blue); color: #fff; font-size: 11px; font-weight: 600; border-radius: 0 4px 4px 0; padding: 2px 5px; display: inline-block; text-align: right; }
+  .age { font-size: 12px; color: var(--muted); text-align: right; }
+  .age.old2 { color: var(--orange-text); font-weight: 700; }
+  .legendrow { display: grid; grid-template-columns: 92px 1fr 64px; gap: 6px; padding: 0 12px; font-size: 11px; color: var(--muted); }
+  .legendrow span:nth-child(2) { display: flex; justify-content: space-between; }
+
+  /* Review and settings */
+  .sec { margin: 14px 16px 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .cd { display: flex; align-items: center; gap: 12px; padding: 7px 16px; }
+  .cd .v { flex: 1; }
+  .cd .v small { display: block; color: var(--muted); font-size: 12px; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; font-size: 13px; white-space: nowrap; }
+  .steps { display: flex; gap: 6px; padding: 2px 16px 10px; }
+  .steps span { flex: 1; height: 4px; border-radius: 2px; background: var(--line); }
+  .steps span.on { background: var(--blue); }
+  .rv { padding: 0 16px 6px; color: var(--muted); font-size: 13px; }
+  .btnrow { position: absolute; left: 0; right: 0; bottom: 76px; display: flex; justify-content: flex-end; gap: 8px; padding: 0 16px; }
+  .btn { border-radius: 20px; padding: 9px 20px; color: var(--blue); font-weight: 600; }
+  .btn.filled { background: var(--blue); color: #fff; }
+
+  /* Windows */
+  .desk { width: 1280px; height: 760px; background: var(--bg); border: 8px solid #1B1D20;
+          border-radius: 10px; display: flex; overflow: hidden; position: relative; }
+  .rail { width: 88px; background: #ECE8E0; padding-top: 12px; display: flex; flex-direction: column;
+          align-items: center; gap: 14px; font-size: 11px; color: var(--muted); flex: none; }
+  .rail .fabr { background: #E6E0F3; border-radius: 14px; width: 56px; height: 56px; display: grid; place-items: center; font-size: 22px; }
+  .rail .on { color: var(--text); font-weight: 600; }
+  .main { flex: 1; padding: 10px 14px; }
+  .search { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 8px 14px; color: var(--muted); width: 416px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px; }
+  .two .card { margin: 0; }
+  .focus { box-shadow: 0 0 0 2px var(--blue); }
+  .callout { position: absolute; background: #FFF6D8; border: 1px solid #E2C766; border-radius: 6px;
+             padding: 4px 7px; font-size: 11px; color: #5A4A10; max-width: 240px; z-index: 4; }
+  .legendlist { margin-top: 28px; max-width: 1320px; }
+  .legendlist li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<h1>Insights (T10.7) – sketch, screen 12</h1>
+<p class="lead">Indicative, not a pixel specification. Screen texts are Dutch, as in the app (app_nl.arb); typeface IBM
+Plex Sans, numbers and week numbers in IBM Plex Mono (DD-017). <b>Already decided</b> (PO, 02-10-2026; AC REQ-052,
+DD-017, SPEC Q27): the tab is called <b>Inzicht</b> (EN "Insights"), the fifth destination (<kbd>Ctrl</kbd>+<kbd>5</kbd>);
+segments Horizon, Stilstand and Personen in v1 (Verbanden comes with T10.14, after v1); orange = needs my attention now,
+blue = calm, the difference between delivering and waiting in the shape; a week is busy from 5 open items with a
+deadline in it (what I deliver only; Settings "Druk vanaf" 3–15); Inzicht is the first step of the weekly review;
+IBM Plex for the whole app. Sample data is fictional; today is Friday 2 October 2026 (week 40). Orange outline = new.
+<b>Open for the PO</b> were (a) to (f), in the notes and the legend.<br><b>Decided (PO, 02-10-2026): (a) to (f) all as proposed.</b> After review, also decided: in the weekly review the start
+screen stays (five steps, Start goes to Inzicht), on Windows the Inzicht step takes both panes and ←/→ select a week or
+tile while the chart has the focus; a tap on a tile shows that project's items in the list below; a waiting item past
+its expected day is an orange ring in the first column and does not count as busy. Not drawn here; see DESIGN.md,
+DD-018 point 12, which wins over this sketch. <b>Letters:</b> this sketch keeps its own (a)–(f); in DESIGN.md the review is (g) and the top bar (e).</p>
+
+<h2>Phone</h2>
+<div class="row">
+<div class="col">
+<h3>Inzicht · Horizon</h3>
+<p class="note">(a) Six columns: this week (from today) and the five after it, the ISO week number and its first day.
+One lane per top-level project (items of a subproject in the lane of its parent), only projects with something in
+these weeks, <i>Geen project</i> last. Overdue items sit orange in the first column and <b>count</b> towards its busy
+bar. Above each week the bar and the count; a busy week also says <i>druk</i>.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span><span class="date">vr 2 okt · wk 40</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="segs new"><span class="on">Horizon</span><span>Stilstand</span><span>Personen</span></div>
+  <div class="card new">
+    <div class="ct"><b>Komende 6 weken</b><span>4 banen · 15 items</span></div>
+    <div class="grid">
+      <div class="lbl">week</div>
+      <div class="wk sel"><span class="n">3</span><span class="bar" style="height:14px"></span>40<i>2/10</i></div>
+      <div class="wk busy"><span class="n">6</span><span class="bar" style="height:40px"></span>41<i>5/10</i><span class="tag">druk</span></div>
+      <div class="wk"><span class="n">1</span><span class="bar" style="height:6px"></span>42<i>12/10</i></div>
+      <div class="wk"><span class="n">2</span><span class="bar" style="height:10px"></span>43<i>19/10</i></div>
+      <div class="wk"><span class="n">0</span><span class="bar" style="height:2px"></span>44<i>26/10</i></div>
+      <div class="wk"><span class="n">1</span><span class="bar" style="height:6px"></span>45<i>2/11</i></div>
+
+      <div class="lane">Verbouwing</div><div class="cell sel"><span class="d late"></span><span class="d"></span></div><div class="cell"><span class="d"></span><span class="d"></span><span class="d o"></span></div>
+      <div class="cell"></div><div class="cell"><span class="d"></span></div><div class="cell"></div><div class="cell"></div>
+      <div class="lane">Tuin</div><div class="cell sel"><span class="d o"></span></div><div class="cell"><span class="d"></span><span class="d"></span></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><span class="d"></span></div>
+      <div class="lane">Vereniging</div><div class="cell sel"></div><div class="cell"><span class="d"></span><span class="d"></span></div>
+      <div class="cell"><span class="d"></span></div><div class="cell"><span class="d"></span></div><div class="cell"></div><div class="cell"></div>
+      <div class="lane none">Geen project</div><div class="cell sel"><span class="d"></span></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    <div class="legend"><span><span class="d"></span>ik lever</span><span><span class="d o"></span>wacht op ander</span><span><span class="d late"></span>verlopen</span></div>
+  </div>
+  <div class="card new">
+    <div class="wh"><b>Week 40 · vanaf vr 2 okt</b><span class="calmtag">3 te leveren</span></div>
+    <div class="it"><span class="d late"></span><div><b>Offerte dakkapel</b><small class="late">Verlopen · do 1 okt · Verbouwing · voor Jan</small></div></div>
+    <div class="it"><span class="d"></span><div><b>Tegels bestellen</b><small>Deadline za 3 okt · Verbouwing</small></div></div>
+    <div class="it"><span class="d o"></span><div><b>Snoeischaar terug</b><small>Wacht op Petra · verwacht zo 4 okt · Tuin</small></div></div>
+    <div class="more">Toon alle 4 →</div>
+  </div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on new">Inzicht</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>Horizon: a week tapped</h3>
+<p class="note">(b) Before a tap the list shows this week; a tap on a week (the column or its number) shows that week.
+The list holds what I deliver (deadline) and what I wait for (expected day), deadline order; a tap on an item opens it.
+A waiting item without an expected day is not on the Horizon.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span><span class="date">vr 2 okt · wk 40</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="segs"><span class="on">Horizon</span><span>Stilstand</span><span>Personen</span></div>
+  <div class="card" style="opacity:.55">
+    <div class="ct"><b>Komende 6 weken</b><span>4 banen · 15 items</span></div>
+    <div style="height:160px; display:grid; place-items:center; color:var(--muted)">(the timeline, week 41 selected)</div>
+  </div>
+  <div class="card new">
+    <div class="wh"><b>Week 41 · 5–11 okt</b><span class="busytag">6 te leveren · druk</span></div>
+    <div class="it"><span class="d"></span><div><b>Kozijnen meten</b><small>Deadline ma 5 okt · Verbouwing · voor Jan</small></div></div>
+    <div class="it"><span class="d"></span><div><b>Ledenlijst bijwerken</b><small>Deadline di 6 okt · Vereniging</small></div></div>
+    <div class="it"><span class="d o"></span><div><b>Getekende opdracht</b><small>Wacht op Jan · verwacht di 6 okt · Verbouwing</small></div></div>
+    <div class="it"><span class="d"></span><div><b>Schuur opruimen</b><small>Deadline wo 7 okt · Tuin</small></div></div>
+    <div class="it"><span class="d"></span><div><b>Notulen rondsturen</b><small>Deadline do 8 okt · Vereniging · voor Anna</small></div></div>
+    <div class="it"><span class="d"></span><div><b>Offerte schilder</b><small>Deadline vr 9 okt · Verbouwing</small></div></div>
+    <div class="it"><span class="d"></span><div><b>Plantjes ophalen</b><small>Deadline za 10 okt · Tuin</small></div></div>
+  </div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on">Inzicht</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>Inzicht · Stilstand</h3>
+<p class="note">(c) A tile per top-level project plus <i>Geen project</i>; area = open items, colour = time since the
+<b>most recent</b> touch of any of its open items ("stil 5 wk": nothing in it touched for 5 weeks). Every tile shows
+name, count and age as text. Below: the three items untouched the longest, and <i>Naar weekoverzicht →</i>. For now
+most tiles will be "&lt; 1 wk" (in use since 27-09).</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span><span class="date">vr 2 okt · wk 40</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="segs"><span>Horizon</span><span class="on">Stilstand</span><span>Personen</span></div>
+  <div class="card new">
+    <div class="ct"><b>Wat ligt er stil?</b><span>grootte = open items</span></div>
+    <div class="tm">
+      <div class="tile k1" style="left:0; top:0; width:49%; height:62%"><b>Verbouwing</b><span class="c">12 open<br>stil 2 d</span></div>
+      <div class="tile k3" style="left:51%; top:0; width:49%; height:62%"><b>Vereniging</b><span class="c">9 open<br>stil 4 wk</span></div>
+      <div class="tile k2" style="left:0; top:64%; width:38%; height:36%"><b>Tuin</b><span class="c">6 · 2 wk</span></div>
+      <div class="tile k4" style="left:40%; top:64%; width:30%; height:36%"><b>Fiets</b><span class="c">3 · 7 wk</span></div>
+      <div class="tile k1" style="left:72%; top:64%; width:28%; height:36%"><b style="font-weight:400; font-style:italic">Geen project</b><span class="c">4 · 1 d</span></div>
+    </div>
+    <div class="legend"><span><span class="sq" style="background:var(--s1)"></span>&lt; 1 wk</span><span><span class="sq" style="background:var(--s2)"></span>1–3 wk</span><span><span class="sq" style="background:var(--s3)"></span>3–6 wk</span><span><span class="sq" style="background:var(--s4)"></span>&gt; 6 wk</span></div>
+  </div>
+  <div class="card new">
+    <div class="wh"><b>Langst niet aangeraakt</b><span class="more">Naar weekoverzicht →</span></div>
+    <div class="old"><div><b>Bandenplakset kopen</b><small>Fiets</small></div><span class="a">51 d</span></div>
+    <div class="old"><div><b>Jaarverslag herzien</b><small>Vereniging</small></div><span class="a">30 d</span></div>
+    <div class="old"><div><b>Kascontrole regelen</b><small>Vereniging</small></div><span class="a">28 d</span></div>
+  </div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on">Inzicht</span></div>
+</div>
+</div>
+</div>
+
+<div class="row" style="margin-top:28px">
+<div class="col">
+<h3>Inzicht · Personen</h3>
+<p class="note">(d) The balance of the People tab (T10.2), the same rows, without the filter field. A tap opens the person
+over Inzicht (back returns here). Not a second list to maintain: the same widget.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Inzicht</span><span class="date">vr 2 okt · wk 40</span><span class="icon">🔍</span><span class="icon">⚙</span></div>
+  <div class="segs"><span>Horizon</span><span>Stilstand</span><span class="on">Personen</span></div>
+  <div class="tot"><div class="dl">Ik moet nog leveren<b>5 aan 3 personen</b></div><div class="w">Ik wacht nog op<b>4 van 2 personen</b></div></div>
+  <div class="legendrow"><span></span><span><span>← ik lever</span><span>ik wacht →</span></span><span style="text-align:right">oudste</span></div>
+  <div class="pr"><span class="n">Jan Bakker</span><div class="bars"><div class="wl"><span style="width:80%">3</span></div><div class="axis"></div><div class="wr"><span style="width:30%">1</span></div></div><span class="age old2">⏱ 25 d</span></div>
+  <div class="pr"><span class="n">Petra</span><div class="bars"><div class="wl"><span style="width:30%">1</span></div><div class="axis"></div><div class="wr"><span style="width:80%">3</span></div></div><span class="age">12 d</span></div>
+  <div class="pr"><span class="n">Anna</span><div class="bars"><div class="wl"><span style="width:30%">1</span></div><div class="axis"></div><div class="wr"></div></div><span class="age">4 d</span></div>
+  <div class="nav"><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on">Inzicht</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>Weekoverzicht: Inzicht first</h3>
+<p class="note">(e) The review starts with Inzicht as a step of its own (always shown, also when the other steps are
+empty): the same three segments, then <i>Verder</i> to the steps (inbox, waiting, deadlines, stale). <i>Naar
+weekoverzicht →</i> under Stilstand is not shown inside the review.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">Weekoverzicht</span><span class="icon">✕</span></div>
+  <div class="steps new"><span class="on"></span><span></span><span></span><span></span><span></span></div>
+  <div class="rv new">Eerst het geheel: wat komt eraan, wat ligt stil, hoe sta je ervoor met wie.</div>
+  <div class="segs"><span class="on">Horizon</span><span>Stilstand</span><span>Personen</span></div>
+  <div class="card" style="opacity:.55">
+    <div class="ct"><b>Komende 6 weken</b><span>4 banen · 15 items</span></div>
+    <div style="height:330px; display:grid; place-items:center; color:var(--muted)">(the Horizon, as in the tab)</div>
+  </div>
+  <div class="btnrow new"><span class="btn filled">Verder</span></div>
+</div>
+</div>
+
+<div class="col">
+<h3>Settings: "Druk vanaf"</h3>
+<p class="note">(f) A section <b>Inzicht</b> under <i>Personen</i>: <b>Druk vanaf</b>, 3 to 15 items, 5 by default, a
+setting of this device. The app bar of Inzicht has search and ⚙ like the other tabs.</p>
+<div class="phone">
+  <div class="status">9:41</div>
+  <div class="appbar"><span class="ttl">← Instellingen</span></div>
+  <div class="sec">Weekoverzicht</div>
+  <div class="cd"><span class="v">Stilgevallen na<small>Items die zo lang niet zijn veranderd…</small></span><span class="chip">3 weken ▾</span></div>
+  <div class="cd"><span class="v">Aan de beurt na<small>Zo lang na het laatste weekoverzicht…</small></span><span class="chip">7 dagen ▾</span></div>
+  <div class="sec">Personen</div>
+  <div class="cd"><span class="v">Oud na<small>Vanaf zo veel dagen is een open item bij een persoon oud…</small></span><span class="chip">21 dagen ▾</span></div>
+  <div class="sec new" style="padding:2px">Inzicht</div>
+  <div class="cd new"><span class="v">Druk vanaf<small>Een week met zo veel items of meer met een deadline heet druk in de Horizon.</small></span><span class="chip">5 items ▾</span></div>
+</div>
+</div>
+</div>
+
+<h2>Windows</h2>
+<p class="note">(f, continued) A wide window: Inzicht takes both panes (no list and detail); the search field stays at the
+top. Segments <i>Horizon en stilstand</i> (side by side, DD-017) and <i>Personen</i> (the balance left, the person in the
+right pane, as in the People tab). Keys: <kbd>Tab</kbd> moves between the Horizon, its list, the Stilstand and its list;
+in the Horizon <kbd>←</kbd>/<kbd>→</kbd> select a week; in the Stilstand <kbd>←</kbd>/<kbd>→</kbd> select a tile (reading
+order); in a list <kbd>↑</kbd>/<kbd>↓</kbd> and <kbd>Enter</kbd> open an item as a screen of its own (<kbd>Esc</kbd>
+back). The mouse pointer on a dot or tile shows its title (hover instead of a long press).</p>
+<div class="desk">
+  <div class="rail"><div class="fabr">＋</div><span>Vandaag</span><span>Inbox</span><span>Projecten</span><span>Personen</span><span class="on new" style="padding:2px 4px">Inzicht</span></div>
+  <div class="main">
+    <div style="display:flex; gap:14px; align-items:center">
+      <div class="search">Zoek in items en personen</div>
+      <div class="segs new" style="margin:0; width:360px"><span class="on">Horizon en stilstand</span><span>Personen</span></div>
+      <span style="font-family:var(--mono); font-size:12px; color:var(--muted)">vr 2 okt · wk 40</span>
+    </div>
+    <div class="two new">
+      <div>
+        <div class="card focus">
+          <div class="ct"><b>Komende 6 weken</b><span>4 banen · 15 items</span></div>
+          <div class="grid" style="grid-template-columns: 110px repeat(6, 1fr)">
+            <div class="lbl">week</div>
+            <div class="wk"><span class="n">3</span><span class="bar" style="height:14px"></span>40<i>2/10</i></div>
+            <div class="wk busy sel"><span class="n">6</span><span class="bar" style="height:40px"></span>41<i>5/10</i><span class="tag">druk</span></div>
+            <div class="wk"><span class="n">1</span><span class="bar" style="height:6px"></span>42<i>12/10</i></div>
+            <div class="wk"><span class="n">2</span><span class="bar" style="height:10px"></span>43<i>19/10</i></div>
+            <div class="wk"><span class="n">0</span><span class="bar" style="height:2px"></span>44<i>26/10</i></div>
+            <div class="wk"><span class="n">1</span><span class="bar" style="height:6px"></span>45<i>2/11</i></div>
+            <div class="lane">Verbouwing</div><div class="cell"><span class="d late"></span><span class="d"></span></div><div class="cell sel"><span class="d"></span><span class="d"></span><span class="d o"></span></div><div class="cell"></div><div class="cell"><span class="d"></span></div><div class="cell"></div><div class="cell"></div>
+            <div class="lane">Tuin</div><div class="cell"><span class="d o"></span></div><div class="cell sel"><span class="d"></span><span class="d"></span></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"><span class="d"></span></div>
+            <div class="lane">Vereniging</div><div class="cell"></div><div class="cell sel"><span class="d"></span><span class="d"></span></div><div class="cell"><span class="d"></span></div><div class="cell"><span class="d"></span></div><div class="cell"></div><div class="cell"></div>
+            <div class="lane none">Geen project</div><div class="cell"><span class="d"></span></div><div class="cell sel"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          </div>
+          <div class="legend"><span><span class="d"></span>ik lever</span><span><span class="d o"></span>wacht op ander</span><span><span class="d late"></span>verlopen</span></div>
+        </div>
+        <div class="card" style="margin-top:10px">
+          <div class="wh"><b>Week 41 · 5–11 okt</b><span class="busytag">6 te leveren · druk</span></div>
+          <div class="it"><span class="d"></span><div><b>Kozijnen meten</b><small>Deadline ma 5 okt · Verbouwing · voor Jan</small></div></div>
+          <div class="it"><span class="d"></span><div><b>Ledenlijst bijwerken</b><small>Deadline di 6 okt · Vereniging</small></div></div>
+          <div class="it"><span class="d o"></span><div><b>Getekende opdracht</b><small>Wacht op Jan · verwacht di 6 okt · Verbouwing</small></div></div>
+          <div class="more">Toon alle 7 →</div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="ct"><b>Wat ligt er stil?</b><span>grootte = open items</span></div>
+          <div class="tm" style="height:236px">
+            <div class="tile k1" style="left:0; top:0; width:49%; height:60%"><b>Verbouwing</b><span class="c">12 open · stil 2 d</span></div>
+            <div class="tile k3" style="left:51%; top:0; width:49%; height:60%"><b>Vereniging</b><span class="c">9 open · stil 4 wk</span></div>
+            <div class="tile k2" style="left:0; top:63%; width:38%; height:37%"><b>Tuin</b><span class="c">6 · 2 wk</span></div>
+            <div class="tile k4" style="left:40%; top:63%; width:30%; height:37%"><b>Fiets</b><span class="c">3 · 7 wk</span></div>
+            <div class="tile k1" style="left:72%; top:63%; width:28%; height:37%"><b style="font-weight:400; font-style:italic">Geen project</b><span class="c">4 · 1 d</span></div>
+          </div>
+          <div class="legend"><span><span class="sq" style="background:var(--s1)"></span>&lt; 1 wk</span><span><span class="sq" style="background:var(--s2)"></span>1–3 wk</span><span><span class="sq" style="background:var(--s3)"></span>3–6 wk</span><span><span class="sq" style="background:var(--s4)"></span>&gt; 6 wk</span></div>
+        </div>
+        <div class="card" style="margin-top:10px">
+          <div class="wh"><b>Langst niet aangeraakt</b><span class="more">Naar weekoverzicht →</span></div>
+          <div class="old"><div><b>Bandenplakset kopen</b><small>Fiets</small></div><span class="a">51 d</span></div>
+          <div class="old"><div><b>Jaarverslag herzien</b><small>Vereniging</small></div><span class="a">30 d</span></div>
+          <div class="old"><div><b>Kascontrole regelen</b><small>Vereniging</small></div><span class="a">28 d</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout" style="left:230px; top:56px">← / → select a week; the list below follows</div>
+</div>
+
+<ol class="legendlist" type="a">
+  <li><b>Horizon:</b> this week from today plus five weeks; a lane per top-level project (subprojects in their parent's lane), only lanes with something in them, <i>Geen project</i> last; overdue items orange in the first column and counted in its busy bar; the count above every bar, "druk" as text.</li>
+  <li><b>The week list:</b> this week until a week is tapped; what I deliver and what I wait for (with an expected day), deadline order; waiting without an expected day is not on the Horizon.</li>
+  <li><b>Stilstand:</b> tiles per top-level project plus <i>Geen project</i>; the age of a tile = since the most recent touch of its open items; name, count and age on every tile; the three oldest items below with <i>Naar weekoverzicht →</i>.</li>
+  <li><b>Personen:</b> the balance of T10.2, the same widget, without the filter field; a tap opens the person over Inzicht.</li>
+  <li><b>Weekly review:</b> Inzicht as the first step, always shown, then <i>Verder</i>.</li>
+  <li><b>Settings and Windows:</b> Settings → Inzicht → <i>Druk vanaf</i>; on Windows Inzicht takes both panes, Horizon and Stilstand side by side, the keys above.</li>
+</ol>
+</body>
+</html>

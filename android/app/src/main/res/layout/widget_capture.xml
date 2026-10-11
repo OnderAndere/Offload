@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Home-screen widget (CaptureWidgetProvider, REQ-001, DD-019), small variant: a square tile with
+     the capture glyph in the middle of the cell, as high as the Offload bar; filling a tall
+     launcher cell made a tall block (PO 06-10-2026). The whole tile is the button. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@android:id/background"
+        android:layout_width="@dimen/widget_height"
+        android:layout_height="@dimen/widget_height"
+        android:layout_gravity="center"
+        android:background="@drawable/widget_background"
+        android:clipToOutline="true"
+        android:contentDescription="@string/widget_button">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_widget_capture"
+            android:tint="@color/widget_glyph" />
+    </FrameLayout>
+</FrameLayout>

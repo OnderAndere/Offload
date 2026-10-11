@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Overview – Horizon (reference sketch)</title>
+<style>
+  :root { --bg: #F3F1EC; --surface: #FFFFFF; --text: #1B1D20; --muted: #5A5F66; --line: #DAD6CE;
+          --orange: #B35712; --blue: #245A8C; --seg: #E6E1D8; --mono: "IBM Plex Mono", Consolas, monospace; }
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 390px; height: 844px; background: var(--bg); color: var(--text); position: relative;
+         font: 14px/1.35 "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; overflow: hidden; }
+  .top { padding: 18px 16px 0; position: relative; }
+  .date { font-family: var(--mono); color: var(--muted); font-size: 13px; letter-spacing: .02em; }
+  h1 { margin: 2px 0 0; font-size: 28px; }
+  .filter { position: absolute; right: 16px; top: 32px; width: 44px; height: 44px; border-radius: 50%;
+            border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; font-size: 18px; }
+  .segs { margin: 16px 16px 12px; background: var(--seg); border-radius: 12px; display: flex; padding: 4px; }
+  .segs span { flex: 1; text-align: center; padding: 10px 0; font-size: 13px; border-radius: 9px; }
+  .segs .on { background: #1B1D20; color: #fff; }
+  .card { margin: 0 16px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px 12px 12px; }
+  .ct { display: flex; align-items: baseline; padding: 0 4px; }
+  .ct b { font-size: 15px; flex: 1; }
+  .ct span { color: var(--muted); font-size: 11px; }
+  .grid { display: grid; grid-template-columns: 82px repeat(6, 1fr); margin-top: 6px; }
+  .wk { text-align: center; font-family: var(--mono); font-size: 12px; padding-bottom: 6px; align-self: end; }
+  .wk i { display: block; font-style: normal; color: var(--muted); font-size: 10px; }
+  .bar { display: block; margin: 0 auto 3px; width: 14px; border-radius: 3px; background: #A9BBD0; }
+  .wk.busy { color: var(--orange); font-weight: 600; }
+  .wk.busy .bar { background: var(--orange); }
+  .lbl { font-size: 11px; color: var(--muted); align-self: end; padding: 0 0 8px 4px; }
+  .lane { font-size: 12px; font-weight: 600; padding: 15px 0 15px 4px; border-top: 1px solid var(--line); }
+  .cell { border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: center; gap: 3px; }
+  .cell.busy { background: #F6E9DD; }
+  .d { width: 9px; height: 9px; border-radius: 50%; background: var(--blue); }
+  .d.o { background: transparent; border: 2px solid var(--blue); }
+  .d.late { background: var(--orange); }
+  .legend { display: flex; gap: 14px; font-size: 10px; color: var(--muted); border-top: 1px solid var(--line); padding: 8px 4px 0; align-items: center; }
+  .legend .d { display: inline-block; margin-right: 4px; vertical-align: -1px; }
+  .wh { display: flex; align-items: center; padding: 0 4px 6px; }
+  .wh b { flex: 1; font-size: 15px; }
+  .busytag { background: #F6E1CC; color: #8F430E; border-radius: 12px; padding: 2px 10px; font-size: 11px; font-weight: 600; }
+  .it { display: flex; gap: 10px; padding: 5px 4px; }
+  .it .d { margin-top: 5px; flex: none; }
+  .it b { display: block; font-size: 13px; }
+  .it small { color: var(--muted); font-size: 11px; }
+  .more { color: var(--blue); font-size: 12px; font-weight: 600; padding: 4px; }
+  .nav { position: absolute; bottom: 0; left: 0; right: 0; height: 70px; border-top: 1px solid var(--line); background: var(--bg);
+         display: flex; justify-content: space-around; align-items: center; font-size: 10px; color: var(--muted); }
+  .nav div { text-align: center; width: 70px; }
+  .nav .i { display: block; font-size: 17px; margin: 0 auto 2px; width: 50px; border-radius: 12px; padding: 2px 0; }
+  .nav .on { color: var(--blue); font-weight: 600; }
+  .nav .on .i { background: #DCE6F0; }
+</style>
+</head>
+<body>
+<div class="top"><div class="date">za 26 sep · wk 39</div><h1>Overzicht</h1><div class="filter">☰</div></div>
+<div class="segs"><span class="on">Horizon</span><span>Stilstand</span><span>Personen</span><span>Samenhang</span></div>
+<div class="card">
+  <div class="ct"><b>Komende 6 weken</b><span>4 projecten · 15 items</span></div>
+  <div class="grid">
+    <div class="lbl">week</div>
+    <div class="wk"><span class="bar" style="height:11px"></span>39<i>26/9</i></div>
+    <div class="wk"><span class="bar" style="height:11px"></span>40<i>28/9</i></div>
+    <div class="wk busy"><span class="bar" style="height:42px"></span>41<i>5/10</i></div>
+    <div class="wk"><span class="bar" style="height:5px"></span>42<i>12/10</i></div>
+    <div class="wk"><span class="bar" style="height:11px"></span>43<i>19/10</i></div>
+    <div class="wk"><span class="bar" style="height:5px"></span>44<i>26/10</i></div>
+
+    <div class="lane">Verbouwing</div><div class="cell"><span class="d late"></span></div><div class="cell"><span class="d"></span></div>
+    <div class="cell busy"><span class="d"></span><span class="d o"></span></div><div class="cell"></div><div class="cell"><span class="d"></span></div><div class="cell"></div>
+    <div class="lane">Tuin</div><div class="cell"></div><div class="cell"><span class="d o"></span></div>
+    <div class="cell busy"><span class="d"></span><span class="d"></span></div><div class="cell"></div><div class="cell"></div><div class="cell"><span class="d"></span></div>
+    <div class="lane">Verzoeken</div><div class="cell"><span class="d"></span></div><div class="cell"></div>
+    <div class="cell busy"><span class="d"></span><span class="d o"></span></div><div class="cell"><span class="d o"></span></div><div class="cell"></div><div class="cell"></div>
+    <div class="lane">Vereniging</div><div class="cell"></div><div class="cell"></div>
+    <div class="cell busy"><span class="d"></span></div><div class="cell"></div><div class="cell"><span class="d"></span></div><div class="cell"></div>
+  </div>
+  <div class="legend"><span><span class="d"></span>ik lever</span><span><span class="d o"></span>wacht op ander</span><span><span class="d late"></span>verlopen</span></div>
+</div>
+<div class="card">
+  <div class="wh"><b>Week 41 · 5–11 okt</b><span class="busytag">7 items · druk</span></div>
+  <div class="it"><span class="d"></span><div><b>Offerte v2 naar Jan</b><small>Toezegging aan Jan · do 8 okt · Verbouwing</small></div></div>
+  <div class="it"><span class="d o"></span><div><b>Tegelmonsters van Marieke</b><small>Wacht op Marieke · gevraagd 12 d geleden</small></div></div>
+  <div class="it"><span class="d"></span><div><b>Snoeiplan afronden</b><small>Deadline vr 9 okt · Tuin</small></div></div>
+  <div class="more">Toon alle 7 →</div>
+</div>
+<div class="nav"><div><span class="i">📥</span>Inbox</div><div><span class="i">☀</span>Vandaag</div><div class="on"><span class="i">▦</span>Overzicht</div><div><span class="i">👥</span>Personen</div><div><span class="i">🔍</span>Zoeken</div></div>
+</body>
+</html>

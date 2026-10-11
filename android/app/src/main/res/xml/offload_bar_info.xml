@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The Offload bar (REQ-063, DD-019): 2x1 by default (Capture, Today); made wider it shows the
+     three-button layout with Insights too (OffloadBarWidgetProvider picks it by size). It reads
+     nothing and shows no counts (DD-007). -->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/bar_description"
+    android:initialLayout="@layout/widget_bar"
+    android:previewLayout="@layout/widget_bar"
+    android:minWidth="110dp"
+    android:minHeight="40dp"
+    android:minResizeWidth="110dp"
+    android:targetCellWidth="2"
+    android:targetCellHeight="1"
+    android:resizeMode="horizontal"
+    android:updatePeriodMillis="0"
+    android:widgetCategory="home_screen" />

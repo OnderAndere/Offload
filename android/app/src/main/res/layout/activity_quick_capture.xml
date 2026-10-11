@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Quick capture from the widget and the share sheet (QuickCaptureActivity, REQ-001, REQ-002). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/capture_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:hint="@string/capture_hint"
+        android:importantForAutofill="no"
+        android:imeOptions="actionDone"
+        android:inputType="textCapSentences|textMultiLine" />
+
+    <TextView
+        android:id="@+id/capture_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:text="@string/capture_failed"
+        android:textColor="?android:attr/colorError"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/capture_save"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:minHeight="48dp"
+        android:text="@string/capture_save" />
+</LinearLayout>
