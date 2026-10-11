@@ -24,7 +24,7 @@ import '../photos/card_photo.dart';
 import '../projects/project_look.dart';
 import '../projects/project_providers.dart';
 import '../search/duplicate_hint.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import '../tokens/token_display.dart';
 import '../tokens/token_editor.dart';
 
@@ -147,7 +147,12 @@ class InboxCard extends ConsumerWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             border: selected
-                ? const Border(left: BorderSide(color: calmColor, width: 3))
+                ? Border(
+                    left: BorderSide(
+                      color: context.offloadColors.calm,
+                      width: 3,
+                    ),
+                  )
                 : null,
           ),
           child: InkWell(
@@ -269,7 +274,7 @@ class StoredTokenChips extends ConsumerWidget {
         ProjectChip(projectId: projectId),
       // A waiting item's expected day; late: orange with a warning icon and
       // how late, never by colour alone (DD-018 point 10 (c)).
-      ?_expectedChip(item, today, l10n),
+      ?_expectedChip(item, today, l10n, context.offloadColors),
       // A parked item's day back, calm (DD-018 point 17).
       ?_revisitChip(item, l10n),
       // High, normal and low (PO decision 02-10-2026, DD-004 point 11).
@@ -385,7 +390,12 @@ Widget? _revisitChip(Item item, AppLocalizations l10n) {
 
 /// The expected day of a waiting item as a chip (T10.1): calm while ahead,
 /// orange with a warning icon and "3 d te laat" once past.
-Widget? _expectedChip(Item item, LocalDate today, AppLocalizations l10n) {
+Widget? _expectedChip(
+  Item item,
+  LocalDate today,
+  AppLocalizations l10n,
+  OffloadColors colors,
+) {
   final expected = item.expectedAt;
   if (!hasWaitingPart(item) || expected == null) return null;
   final late = daysLate(item, today);
@@ -399,13 +409,13 @@ Widget? _expectedChip(Item item, LocalDate today, AppLocalizations l10n) {
       avatar: Icon(
         late == null ? Icons.event_outlined : Icons.warning_amber,
         size: 16,
-        color: late == null ? null : attentionColor,
+        color: late == null ? null : colors.attention,
       ),
       label: Text(
         text,
-        style: late == null ? null : const TextStyle(color: attentionColor),
+        style: late == null ? null : TextStyle(color: colors.attention),
       ),
-      side: late == null ? null : const BorderSide(color: attentionColor),
+      side: late == null ? null : BorderSide(color: colors.attention),
       visualDensity: VisualDensity.compact,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       labelPadding: const EdgeInsetsDirectional.only(end: 4),

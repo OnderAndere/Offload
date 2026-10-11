@@ -11,7 +11,7 @@ import '../home/destination_actions.dart';
 import '../inbox/inbox_card.dart';
 import '../people/people_screen.dart';
 import '../people/person_screen.dart';
-import '../theme/design_tokens.dart';
+import '../theme/typography.dart';
 import 'connections_view.dart';
 import 'horizon_view.dart';
 import 'standstill_view.dart';

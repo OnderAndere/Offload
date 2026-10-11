@@ -8,6 +8,7 @@ import 'package:offload/domain/time/local_date.dart';
 import 'package:offload/l10n/app_localizations.dart';
 import 'package:offload/presentation/inbox/inbox_card.dart';
 import 'package:offload/presentation/items/item_type_look.dart';
+import 'package:offload/presentation/theme/app_theme.dart';
 
 /// The type of an item on its card: icon and name, never colour alone
 /// (T2.10, DD-018 point 2, REQ-016).
@@ -29,6 +30,7 @@ void main() {
   }) => tester.pumpWidget(
     ProviderScope(
       child: MaterialApp(
+        theme: offloadTheme(),
         locale: const Locale('nl'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

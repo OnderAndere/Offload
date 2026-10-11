@@ -14,7 +14,7 @@ import '../../l10n/app_localizations.dart';
 import '../messages.dart';
 import '../people/people_providers.dart';
 import '../reminders/reminder_providers.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import '../tokens/token_display.dart';
 import 'chase.dart';
 import 'item_providers.dart';
@@ -132,7 +132,7 @@ class CommitmentBlock extends ConsumerWidget {
             ),
           _Line(
             icon: late != null ? Icons.warning_amber : Icons.event_outlined,
-            color: late != null ? attentionTextColor : null,
+            color: late != null ? context.offloadColors.attentionText : null,
             text: Text(
               expected == null
                   ? l10n.commitmentExpectedAdd
@@ -143,7 +143,7 @@ class CommitmentBlock extends ConsumerWidget {
                     )
                   : l10n.commitmentExpected(expected.toLocalDateTime()),
               style: late != null
-                  ? const TextStyle(color: attentionTextColor)
+                  ? TextStyle(color: context.offloadColors.attentionText)
                   : null,
             ),
             onTap: () => _pickExpected(context, ref),

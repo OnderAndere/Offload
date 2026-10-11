@@ -26,7 +26,7 @@ import '../people/person_actions.dart';
 import '../projects/project_providers.dart';
 import '../repeats/repeat_providers.dart';
 import '../revisit/revisit_sheet.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import '../tokens/token_editor.dart';
 import '../triage/triage_screen.dart';
 import 'review_providers.dart';
@@ -679,7 +679,9 @@ class _WeeklyReviewScreenState extends ConsumerState<WeeklyReviewScreen> {
               if (d.overdue.isNotEmpty)
                 _Header(
                   text: l10n.reviewOverdue(d.overdue.length).toUpperCase(),
-                  style: header?.copyWith(color: attentionTextColor),
+                  style: header?.copyWith(
+                    color: context.offloadColors.attentionText,
+                  ),
                 ),
               for (final item in d.overdue) dated(item),
               if (d.upcoming.isNotEmpty)
@@ -866,7 +868,7 @@ class _Actions extends StatelessWidget {
             Text(
               age,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: old ? attentionTextColor : null,
+                color: old ? context.offloadColors.attentionText : null,
                 fontWeight: old ? FontWeight.w600 : null,
               ),
             ),

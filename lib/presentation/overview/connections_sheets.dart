@@ -17,7 +17,7 @@ import '../items/item_type_look.dart';
 import '../people/person_screen.dart';
 import '../projects/project_providers.dart';
 import '../search/search_providers.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import 'connections_look.dart';
 import 'connections_providers.dart';
 
@@ -143,8 +143,8 @@ class _Preview extends StatelessWidget {
                   storedToDateOnly(dueAt).toLocalDateTime(),
                 ),
           style: urgent
-              ? const TextStyle(
-                  color: attentionTextColor,
+              ? TextStyle(
+                  color: context.offloadColors.attentionText,
                   fontWeight: FontWeight.w600,
                 )
               : null,
@@ -154,10 +154,10 @@ class _Preview extends StatelessWidget {
           urgent
               ? Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.warning_amber_rounded,
                       size: 16,
-                      color: attentionTextColor,
+                      color: context.offloadColors.attentionText,
                     ),
                     const SizedBox(width: 4),
                     date,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 
 /// What shows under a card being swiped left: the trash, grey and calm
 /// (throwing away needs no attention, DD-017). "Left = away" is the same
@@ -34,8 +34,10 @@ class SwipeToComplete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => _SwipeBackground(
-    color: calmColor,
+    color: context.offloadColors.calm,
     alignment: AlignmentDirectional.centerStart,
+    // White on a meaning colour: check the contrast again with the dark
+    // variant (T8.1).
     children: [
       const Icon(Icons.check, color: Colors.white),
       const SizedBox(width: 8),

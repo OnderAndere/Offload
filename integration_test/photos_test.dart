@@ -16,6 +16,7 @@ import 'package:offload/presentation/photos/item_photos.dart';
 import 'package:offload/presentation/photos/photo_providers.dart';
 import 'package:offload/presentation/photos/photo_viewer.dart';
 import 'package:offload/presentation/startup/app_storage_provider.dart';
+import 'package:offload/presentation/theme/app_theme.dart';
 
 import '../test/fakes/fake_photo_source.dart';
 
@@ -93,6 +94,7 @@ void main() {
           photoSourceProvider.overrideWithValue(source),
         ],
         child: MaterialApp(
+          theme: offloadTheme(),
           locale: const Locale('nl'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

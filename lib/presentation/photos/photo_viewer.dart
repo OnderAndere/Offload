@@ -89,6 +89,8 @@ class _PhotoViewerState extends State<PhotoViewer> {
       },
       child: Focus(
         autofocus: true,
+        // Black in every theme, as any photo viewer: the photo is what
+        // shows; the controls and texts on it are white.
         child: Scaffold(
           backgroundColor: Colors.black,
           appBar: AppBar(

@@ -17,7 +17,7 @@ import '../projects/project_look.dart';
 import '../projects/project_providers.dart';
 import '../snapshots/where_was_i.dart';
 import '../startup/app_storage_provider.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import '../tokens/token_display.dart';
 
 /// Whether the open "Where was I" notes show on *Today* (T4b.2): a setting
@@ -88,13 +88,17 @@ class _TodayNotesState extends ConsumerState<TodayNotes> {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
             child: Row(
               children: [
-                const Icon(whereWasIIcon, size: 16, color: calmColor),
+                Icon(
+                  whereWasIIcon,
+                  size: 16,
+                  color: context.offloadColors.calm,
+                ),
                 const SizedBox(width: 6),
                 Flexible(
                   child: Text(
                     l10n.todayNotesSection(notes.length),
                     style: theme.textTheme.titleSmall?.copyWith(
-                      color: calmColor,
+                      color: context.offloadColors.calm,
                     ),
                   ),
                 ),
@@ -153,7 +157,7 @@ class _NoteCard extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       child: Material(
-        color: calmChipColor,
+        color: context.offloadColors.calmChip,
         clipBehavior: Clip.antiAlias,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -161,8 +165,10 @@ class _NoteCard extends ConsumerWidget {
         child: InkWell(
           onTap: () => _open(context, ref),
           child: Container(
-            decoration: const BoxDecoration(
-              border: Border(left: BorderSide(color: calmColor, width: 4)),
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(color: context.offloadColors.calm, width: 4),
+              ),
             ),
             padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
             child: Column(

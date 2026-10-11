@@ -18,7 +18,7 @@ import '../../domain/tokens/token_types.dart';
 import '../../l10n/app_localizations.dart';
 import '../projects/project_look.dart';
 import '../projects/project_providers.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import 'link_choices.dart';
 
 /// The inline syntax of this version (DD-004).
@@ -586,18 +586,18 @@ class TokenChip extends StatelessWidget {
     final avatar = Icon(
       icon,
       size: dense ? 16 : 18,
-      color: attention ? attentionColor : accentColor,
+      color: attention ? context.offloadColors.attention : accentColor,
     );
     final label = Text(
       text,
       style: attention
-          ? const TextStyle(color: attentionColor)
+          ? TextStyle(color: context.offloadColors.attention)
           : accentColor == null
           ? null
           : TextStyle(color: accentColor),
     );
     final side = attention
-        ? const BorderSide(color: attentionColor)
+        ? BorderSide(color: context.offloadColors.attention)
         : accentColor == null
         ? null
         : BorderSide(color: accentColor);

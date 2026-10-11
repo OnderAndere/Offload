@@ -16,6 +16,7 @@ import 'package:offload/l10n/app_localizations.dart';
 import 'package:offload/presentation/items/item_detail_screen.dart';
 import 'package:offload/presentation/overview/horizon_view.dart';
 import 'package:offload/presentation/startup/app_storage_provider.dart';
+import 'package:offload/presentation/theme/app_theme.dart';
 
 import '../../fakes/drift_widgets.dart';
 import '../../fakes/test_storage.dart';
@@ -74,6 +75,7 @@ void main() {
       ProviderScope(
         overrides: [appStorageProvider.overrideWith((ref) => storage)],
         child: MaterialApp(
+          theme: offloadTheme(),
           locale: const Locale('nl'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

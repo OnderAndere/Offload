@@ -18,6 +18,7 @@ import 'package:offload/presentation/inbox/inbox_screen.dart';
 import 'package:offload/presentation/photos/card_photo.dart';
 import 'package:offload/presentation/photos/photo_providers.dart';
 import 'package:offload/presentation/startup/app_storage_provider.dart';
+import 'package:offload/presentation/theme/app_theme.dart';
 
 /// Scrolling through a list of items that each have a photo (T5.4, DD-006
 /// point 5, measurable: ≥ 100 items at 60 fps, without jank while the
@@ -76,6 +77,7 @@ void main() {
       UncontrolledProviderScope(
         container: container,
         child: MaterialApp(
+          theme: offloadTheme(),
           locale: const Locale('nl'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

@@ -11,7 +11,7 @@ import '../help/help_scope.dart';
 import '../home/destination_actions.dart';
 import '../home/item_panes.dart';
 import '../inbox/inbox_card.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import '../tokens/token_editor.dart';
 import 'people_providers.dart';
 import 'person_look.dart';
@@ -256,13 +256,13 @@ class _Totals extends StatelessWidget {
           box(
             l10n.peopleDeliverTitle,
             l10n.peopleDeliverTotal(totals.deliver, totals.deliverPeople),
-            attentionTextColor,
+            context.offloadColors.attentionText,
           ),
           const SizedBox(width: 8),
           box(
             l10n.peopleWaitTitle,
             l10n.peopleWaitTotal(totals.waiting, totals.waitingPeople),
-            calmColor,
+            context.offloadColors.calm,
           ),
         ],
       ),
@@ -380,6 +380,7 @@ class _PersonRow extends StatelessWidget {
         color: highlighted
             ? colors.secondaryContainer
             : quiet
+            // Fixed in every theme: a quiet row has no card of its own.
             ? Colors.transparent
             : null,
         elevation: quiet ? 0 : null,
@@ -422,10 +423,10 @@ class _PersonRow extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             if (old) ...[
-                              const Icon(
+                              Icon(
                                 Icons.timer_outlined,
                                 size: 14,
-                                color: attentionTextColor,
+                                color: context.offloadColors.attentionText,
                               ),
                               const SizedBox(width: 2),
                             ],
@@ -436,7 +437,7 @@ class _PersonRow extends StatelessWidget {
                                 softWrap: false,
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: old
-                                      ? attentionTextColor
+                                      ? context.offloadColors.attentionText
                                       : colors.onSurfaceVariant,
                                   fontWeight: old ? FontWeight.w700 : null,
                                 ),
@@ -491,6 +492,8 @@ class _Bar extends StatelessWidget {
             ),
             child: Text(
               '$count', // l10n-ignore: a number
+              // White on a meaning colour: check the contrast again with
+              // the dark variant (T8.1).
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,
@@ -503,9 +506,17 @@ class _Bar extends StatelessWidget {
     );
     return Row(
       children: [
-        Expanded(child: part(balance.deliver, attentionColor, left: true)),
+        Expanded(
+          child: part(
+            balance.deliver,
+            context.offloadColors.attention,
+            left: true,
+          ),
+        ),
         Container(width: 2, height: 22, color: outline),
-        Expanded(child: part(balance.waiting, calmColor, left: false)),
+        Expanded(
+          child: part(balance.waiting, context.offloadColors.calm, left: false),
+        ),
       ],
     );
   }

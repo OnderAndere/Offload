@@ -12,6 +12,7 @@ import 'package:offload/platform/photo_source/photo_source.dart';
 import 'package:offload/presentation/photos/item_photos.dart';
 import 'package:offload/presentation/photos/photo_providers.dart';
 import 'package:offload/presentation/photos/photo_viewer.dart';
+import 'package:offload/presentation/theme/app_theme.dart';
 
 import '../../fakes/fake_photo_source.dart';
 
@@ -39,6 +40,7 @@ void main() {
           itemPhotosProvider.overrideWith((ref, id) => photos.watch()),
         ],
         child: MaterialApp(
+          theme: offloadTheme(),
           locale: const Locale('nl'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

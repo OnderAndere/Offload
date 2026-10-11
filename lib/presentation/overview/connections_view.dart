@@ -13,7 +13,7 @@ import '../../domain/connections/connection_layout.dart';
 import '../../domain/people/person.dart';
 import '../../l10n/app_localizations.dart';
 import '../home/item_panes.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import '../tokens/token_editor.dart';
 import 'connections_look.dart';
 import 'connections_providers.dart';
@@ -227,7 +227,12 @@ class _LegendLine extends StatelessWidget {
       children: [
         CustomPaint(
           size: const Size(22, 10),
-          painter: _LegendPainter(dashed: dashed),
+          painter: _LegendPainter(
+            dashed: dashed,
+            color: dashed
+                ? context.offloadColors.connectionFarLine
+                : context.offloadColors.connectionLine,
+          ),
         ),
         const SizedBox(width: 6),
         Text(
@@ -242,14 +247,15 @@ class _LegendLine extends StatelessWidget {
 }
 
 class _LegendPainter extends CustomPainter {
-  const _LegendPainter({required this.dashed});
+  const _LegendPainter({required this.dashed, required this.color});
 
   final bool dashed;
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = dashed ? connectionFarLineColor : connectionLineColor
+      ..color = color
       ..strokeWidth = dashed ? 1.6 : 2;
     final y = size.height / 2;
     if (dashed) {
@@ -260,7 +266,8 @@ class _LegendPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_LegendPainter old) => old.dashed != dashed;
+  bool shouldRepaint(_LegendPainter old) =>
+      old.dashed != dashed || old.color != color;
 }
 
 void _dashed(Canvas canvas, Offset a, Offset b, Paint paint) {
@@ -634,7 +641,13 @@ class _GraphState extends State<_Graph> {
             children: [
               Positioned.fill(
                 child: ExcludeSemantics(
-                  child: CustomPaint(painter: _LinesPainter(lines)),
+                  child: CustomPaint(
+                    painter: _LinesPainter(
+                      lines,
+                      near: context.offloadColors.connectionLine,
+                      far: context.offloadColors.connectionFarLine,
+                    ),
+                  ),
                 ),
               ),
               Positioned(
@@ -795,30 +808,35 @@ class _GraphState extends State<_Graph> {
 }
 
 class _LinesPainter extends CustomPainter {
-  const _LinesPainter(this.lines);
+  const _LinesPainter(this.lines, {required this.near, required this.far});
 
   /// From, to, and whether it is the second step.
   final List<(Offset, Offset, bool)> lines;
 
+  /// The colours of a direct line and of a second-step line.
+  final Color near;
+  final Color far;
+
   @override
   void paint(Canvas canvas, Size size) {
-    final near = Paint()
-      ..color = connectionLineColor
+    final nearPaint = Paint()
+      ..color = near
       ..strokeWidth = 2;
-    final far = Paint()
-      ..color = connectionFarLineColor
+    final farPaint = Paint()
+      ..color = far
       ..strokeWidth = 1.6;
     for (final (a, b, isFar) in lines) {
       if (isFar) {
-        _dashed(canvas, a, b, far);
+        _dashed(canvas, a, b, farPaint);
       } else {
-        canvas.drawLine(a, b, near);
+        canvas.drawLine(a, b, nearPaint);
       }
     }
   }
 
   @override
-  bool shouldRepaint(_LinesPainter old) => !listEquals(old.lines, lines);
+  bool shouldRepaint(_LinesPainter old) =>
+      !listEquals(old.lines, lines) || old.near != near || old.far != far;
 }
 
 /// The focus in the middle: dark, with its title.
@@ -982,7 +1000,7 @@ class _NodeTile extends StatelessWidget {
                     backgroundColor: theme.colorScheme.surface,
                     fontWeight: urgent ? FontWeight.w600 : null,
                     color: urgent
-                        ? attentionTextColor
+                        ? context.offloadColors.attentionText
                         : theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
@@ -1045,8 +1063,11 @@ class _NodeTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
-            BoxShadow(blurRadius: 12, color: Color(0x40000000)),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 12,
+              color: context.offloadColors.previewShadow,
+            ),
           ],
         ),
         excludeFromSemantics: true,
@@ -1079,18 +1100,22 @@ class _Shape extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final outline = urgent
-        ? attentionColor
+        ? context.offloadColors.attention
         : far
-        ? connectionFarNodeColor
-        : calmColor;
+        ? context.offloadColors.connectionFarNode
+        : context.offloadColors.calm;
     final width = urgent ? 2.5 : 2.0;
     switch (look.node.kind) {
       case NodeKind.project:
         return DecoratedBox(
           decoration: BoxDecoration(
-            color: far ? connectionFarProjectColor : calmColor,
+            color: far
+                ? context.offloadColors.connectionFarProject
+                : context.offloadColors.calm,
             borderRadius: BorderRadius.circular(5),
           ),
+          // White on a meaning colour: check the contrast again with the
+          // dark variant (T8.1).
           child: const Icon(
             Icons.folder_outlined,
             size: 14,
@@ -1101,7 +1126,7 @@ class _Shape extends StatelessWidget {
         final initials = initialsOf(look.title);
         return DecoratedBox(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.offloadColors.connectionNodeFill,
             shape: BoxShape.circle,
             border: Border.all(color: outline, width: width),
           ),
@@ -1112,7 +1137,7 @@ class _Shape extends StatelessWidget {
               style: TextStyle(
                 fontSize: far ? 8.5 : 10,
                 fontWeight: FontWeight.w600,
-                color: const Color(0xFF1B1D20),
+                color: context.offloadColors.connectionNodeText,
               ),
             ),
           ),
@@ -1122,6 +1147,7 @@ class _Shape extends StatelessWidget {
         return CustomPaint(
           painter: _SquarePainter(
             color: outline,
+            fill: context.offloadColors.connectionNodeFill,
             width: width,
             dashed: untyped,
           ),
@@ -1129,7 +1155,9 @@ class _Shape extends StatelessWidget {
             child: Icon(
               nodeIcon(look),
               size: far ? 13 : 16,
-              color: far ? connectionFarNodeColor : calmColor,
+              color: far
+                  ? context.offloadColors.connectionFarNode
+                  : context.offloadColors.calm,
             ),
           ),
         );
@@ -1140,11 +1168,13 @@ class _Shape extends StatelessWidget {
 class _SquarePainter extends CustomPainter {
   const _SquarePainter({
     required this.color,
+    required this.fill,
     required this.width,
     required this.dashed,
   });
 
   final Color color;
+  final Color fill;
   final double width;
   final bool dashed;
 
@@ -1153,7 +1183,7 @@ class _SquarePainter extends CustomPainter {
     final rect = (Offset.zero & size).deflate(width / 2);
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, const Radius.circular(5)),
-      Paint()..color = Colors.white,
+      Paint()..color = fill,
     );
     final paint = Paint()
       ..color = color
@@ -1178,7 +1208,10 @@ class _SquarePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_SquarePainter old) =>
-      old.color != color || old.width != width || old.dashed != dashed;
+      old.color != color ||
+      old.fill != fill ||
+      old.width != width ||
+      old.dashed != dashed;
 }
 
 /// "+7": second-step nodes behind a direct node that are not drawn.
@@ -1191,16 +1224,16 @@ class _Badge extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
     decoration: BoxDecoration(
-      color: const Color(0xFF1B1D20),
+      color: context.offloadColors.connectionBadge,
       borderRadius: BorderRadius.circular(9),
     ),
     child: Text(
       '+$count', // l10n-ignore: a number
       textScaler: TextScaler.noScaling,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 9,
         fontWeight: FontWeight.w600,
-        color: Colors.white,
+        color: context.offloadColors.connectionBadgeText,
       ),
     ),
   );
@@ -1232,7 +1265,7 @@ class _HoverCard extends StatelessWidget {
               style: look.urgency == Urgency.none
                   ? muted
                   : muted?.copyWith(
-                      color: attentionTextColor,
+                      color: context.offloadColors.attentionText,
                       fontWeight: FontWeight.w600,
                     ),
             ),

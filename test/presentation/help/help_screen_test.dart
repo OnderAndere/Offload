@@ -9,6 +9,7 @@ import 'package:offload/domain/help/help_topics.dart';
 import 'package:offload/l10n/app_localizations.dart';
 import 'package:offload/presentation/help/help_scope.dart';
 import 'package:offload/presentation/help/help_screen.dart';
+import 'package:offload/presentation/theme/app_theme.dart';
 
 /// The help screen (REQ-065, DD-020): the manual from the app's bundle, with
 /// links, anchors, Back, and internet addresses only shown.
@@ -44,6 +45,7 @@ void main() {
             manualAsset('en', key): value,
         }),
         child: MaterialApp(
+          theme: offloadTheme(),
           navigatorKey: key,
           locale: locale,
           supportedLocales: AppLocalizations.supportedLocales,

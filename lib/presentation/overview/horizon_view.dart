@@ -10,7 +10,8 @@ import '../inbox/inbox_card.dart';
 import '../items/item_detail_screen.dart';
 import '../people/people_providers.dart';
 import '../projects/project_providers.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
+import '../theme/typography.dart';
 import '../tokens/token_display.dart';
 import '../tokens/token_editor.dart';
 import 'list_arrows.dart';
@@ -116,7 +117,7 @@ class _Timeline extends ConsumerWidget {
 
     Widget week(int index) {
       final w = weeks[index];
-      final color = w.busy ? attentionTextColor : null;
+      final color = w.busy ? context.offloadColors.attentionText : null;
       return Expanded(
         child: Semantics(
           button: true,
@@ -133,7 +134,7 @@ class _Timeline extends ConsumerWidget {
           child: InkWell(
             onTap: () => onSelect(index),
             child: Container(
-              color: index == selected ? calmChipColor : null,
+              color: index == selected ? context.offloadColors.calmChip : null,
               padding: const EdgeInsets.only(top: 4, bottom: 6),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -152,8 +153,8 @@ class _Timeline extends ConsumerWidget {
                     height: 2 + 38 * w.toDeliver / most,
                     decoration: BoxDecoration(
                       color: w.busy
-                          ? attentionColor
-                          : calmColor.withValues(alpha: 0.4),
+                          ? context.offloadColors.attention
+                          : context.offloadColors.calm.withValues(alpha: 0.4),
                       borderRadius: BorderRadius.circular(3),
                     ),
                   ),
@@ -172,7 +173,7 @@ class _Timeline extends ConsumerWidget {
                   Text(
                     w.busy ? l10n.horizonBusy : '',
                     style: theme.textTheme.labelSmall?.copyWith(
-                      color: attentionTextColor,
+                      color: context.offloadColors.attentionText,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -220,7 +221,9 @@ class _Timeline extends ConsumerWidget {
                       entries: weeks[i].inLane(id).toList(),
                       child: Container(
                         constraints: const BoxConstraints(minHeight: 42),
-                        color: i == selected ? calmChipColor : null,
+                        color: i == selected
+                            ? context.offloadColors.calmChip
+                            : null,
                         alignment: Alignment.center,
                         child: _Marks([
                           for (final e in weeks[i].inLane(id)) e.mark,
@@ -240,7 +243,7 @@ class _Timeline extends ConsumerWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-          color: focused ? calmColor : theme.dividerColor,
+          color: focused ? context.offloadColors.calm : theme.dividerColor,
           width: focused ? 2 : 1,
         ),
       ),
@@ -406,8 +409,9 @@ class _Mark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = switch (mark) {
-      HorizonMark.overdue || HorizonMark.late => attentionColor,
-      HorizonMark.deliver || HorizonMark.waiting => calmColor,
+      HorizonMark.overdue ||
+      HorizonMark.late => context.offloadColors.attention,
+      HorizonMark.deliver || HorizonMark.waiting => context.offloadColors.calm,
     };
     return Container(
       width: 10,
@@ -523,7 +527,9 @@ class _WeekList extends ConsumerWidget {
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: week.busy ? attentionChipColor : calmChipColor,
+                        color: week.busy
+                            ? context.offloadColors.attentionChip
+                            : context.offloadColors.calmChip,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
@@ -531,7 +537,9 @@ class _WeekList extends ConsumerWidget {
                             ? l10n.horizonToDeliverBusy(count)
                             : l10n.horizonToDeliver(count),
                         style: theme.textTheme.labelSmall?.copyWith(
-                          color: week.busy ? attentionTextColor : calmColor,
+                          color: week.busy
+                              ? context.offloadColors.attentionText
+                              : context.offloadColors.calm,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -591,7 +599,7 @@ class _WeekList extends ConsumerWidget {
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: row.every((e) => e.mark.isCalm)
                                       ? muted
-                                      : attentionTextColor,
+                                      : context.offloadColors.attentionText,
                                 ),
                               ),
                             ],

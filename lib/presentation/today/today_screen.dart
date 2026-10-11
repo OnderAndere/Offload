@@ -30,7 +30,7 @@ import '../projects/project_providers.dart';
 import '../reminders/reminder_providers.dart';
 import '../review/review_providers.dart';
 import '../review/weekly_review_screen.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import '../tokens/token_editor.dart';
 import '../triage/triage_screen.dart';
 import 'today_notes.dart';
@@ -629,7 +629,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color = overdue
-        ? attentionTextColor
+        ? context.offloadColors.attentionText
         : theme.colorScheme.onSurfaceVariant;
     return Semantics(
       header: true,
@@ -668,7 +668,11 @@ class _NothingForToday extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(32, 96, 32, 0),
       child: Column(
         children: [
-          const Icon(Icons.wb_sunny_outlined, size: 48, color: calmColor),
+          Icon(
+            Icons.wb_sunny_outlined,
+            size: 48,
+            color: context.offloadColors.calm,
+          ),
           const SizedBox(height: 12),
           Text(l10n.todayEmptyTitle, style: theme.textTheme.titleLarge),
           const SizedBox(height: 8),

@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:offload/domain/markdown/markdown_document.dart';
 import 'package:offload/presentation/markdown/markdown_view.dart';
 import 'package:offload/presentation/theme/app_theme.dart';
-import 'package:offload/presentation/theme/design_tokens.dart';
+import 'package:offload/presentation/theme/typography.dart';
 
 /// The Markdown renderer (DD-020, REQ-065): the manual's subset in the
 /// app's typeface, theme and text size.

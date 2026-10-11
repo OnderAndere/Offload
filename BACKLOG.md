@@ -797,9 +797,21 @@ Order from `photo-resize-port-spec.md`: first the service, then the capture flow
 
 ## M8 · Finishing
 
+- [x] **T8.1a** Colour tokens through a `ThemeExtension` (DD-017, REQ-016; *PO 11-10-2026: after S6*): a refactor
+      without visible change, preparing the dark theme; the light theme stays pixel for pixel the same
+      — *done 11-10-2026:* `OffloadColors` (light instance only) in `offloadTheme()`, `context.offloadColors` in all
+      18 users, painters get colours through the constructor, `design_tokens.dart` gone (typefaces in `typography.dart`),
+      a source test guards it; Windows screenshots before and after compared (Today, Inbox, Projects, Insights:
+      Horizon/Standstill, People, Connections 1 and 2 steps, a person): 0 differing pixels
 - [ ] **T8.1** Light/dark theme, dynamic colours, design system (SPEC Q6) — the chosen
       fonts must contain Cyrillic (AC REQ-005, preparation T8.6)
       — typeface and colour tokens come earlier already, in M4b (T10.7, DD-017)
+      — *left after T8.1a:* a dark `OffloadColors` instance with a contrast calculation (REQ-016; including white on
+      a meaning colour, see the comments), `darkTheme` + `themeMode`, a `ThemeChoice` (system/light/dark) on the model
+      of `LanguageChoice`, and optionally dynamic colours (a new dependency, PO approval)
+      — *from the review of T8.1a:* let the source test also fail on a raw `Color(0x…)` / `Colors.…` outside `theme/`,
+      with an allowlist for the colours that are fixed on purpose; give the dark instance the same length check of
+      the standstill lists (`lerp` goes per entry)
 - [ ] **T8.2** Accessibility: scalable text, TalkBack/Narrator, contrast (REQ-016)
       — *found 29-09-2026:* the Flutter Windows embedder only reports high contrast, never
       `accessibleNavigation` (`FlutterWindowsEngine::SendAccessibilityFeatures`), so with Narrator

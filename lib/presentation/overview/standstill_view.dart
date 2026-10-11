@@ -14,7 +14,8 @@ import '../inbox/inbox_card.dart';
 import '../items/item_detail_screen.dart';
 import '../projects/project_providers.dart';
 import '../review/weekly_review_screen.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
+import '../theme/typography.dart';
 import '../tokens/token_display.dart';
 import '../tokens/token_editor.dart';
 import 'list_arrows.dart';
@@ -166,7 +167,7 @@ class _Treemap extends ConsumerWidget {
 
     Widget tileAt(int index, TreemapRect rect) {
       final t = tiles[index];
-      final fg = standstillTextColors[t.level.index];
+      final fg = context.offloadColors.standstillText[t.level.index];
       final age = standstillAge(l10n, t.ageDays);
       final large = rect.width >= 110 && rect.height >= 80;
       final title = Text(
@@ -197,11 +198,11 @@ class _Treemap extends ConsumerWidget {
           child: _TileTitle(
             text: l10n.standstillTileTooltip(name(t.project), t.open, age),
             child: Material(
-              color: standstillColors[t.level.index],
+              color: context.offloadColors.standstill[t.level.index],
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
                 side: index == selected
-                    ? const BorderSide(color: calmColor, width: 3)
+                    ? BorderSide(color: context.offloadColors.calm, width: 3)
                     : BorderSide.none,
               ),
               clipBehavior: Clip.antiAlias,
@@ -256,7 +257,7 @@ class _Treemap extends ConsumerWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-          color: focused ? calmColor : theme.dividerColor,
+          color: focused ? context.offloadColors.calm : theme.dividerColor,
           width: focused ? 2 : 1,
         ),
       ),
@@ -323,7 +324,7 @@ class _Treemap extends ConsumerWidget {
                         width: 12,
                         height: 12,
                         decoration: BoxDecoration(
-                          color: standstillColors[level.index],
+                          color: context.offloadColors.standstill[level.index],
                           borderRadius: BorderRadius.circular(3),
                         ),
                       ),
@@ -494,7 +495,7 @@ class _ItemList extends ConsumerWidget {
                             color:
                                 StandstillLevel.of(entry.ageDays) ==
                                     StandstillLevel.longest
-                                ? attentionTextColor
+                                ? context.offloadColors.attentionText
                                 : muted,
                           ),
                         ),

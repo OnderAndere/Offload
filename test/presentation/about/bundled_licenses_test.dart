@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:offload/domain/app/bundled_licenses.dart';
 import 'package:offload/presentation/about/bundled_licenses.dart';
-import 'package:offload/presentation/theme/design_tokens.dart';
+import 'package:offload/presentation/theme/typography.dart';
 
 /// The licences Flutter does not collect itself (T8.10, REQ-062). These
 /// tests keep *About Offload* current: a native library or a typeface that

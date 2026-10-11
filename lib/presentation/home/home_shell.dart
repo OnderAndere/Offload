@@ -26,7 +26,7 @@ import '../review/weekly_review_screen.dart';
 import '../search/search_screen.dart';
 import '../settings/settings_screen.dart';
 import '../snapshots/where_was_i.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import '../today/today_screen.dart';
 import '../tokens/token_display.dart';
 import '../tokens/token_editor.dart';
@@ -63,7 +63,9 @@ class HomeShell extends ConsumerWidget {
       child: Badge.count(
         count: inboxCount,
         isLabelVisible: inboxCount > 0,
-        backgroundColor: calmColor,
+        backgroundColor: context.offloadColors.calm,
+        // White on a meaning colour: check the contrast again with the
+        // dark variant (T8.1).
         textColor: Colors.white,
         child: const Icon(Icons.inbox_outlined),
       ),

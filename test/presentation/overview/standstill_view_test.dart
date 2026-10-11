@@ -12,6 +12,7 @@ import 'package:offload/presentation/inbox/inbox_card.dart';
 import 'package:offload/presentation/overview/overview_providers.dart';
 import 'package:offload/presentation/overview/standstill_view.dart';
 import 'package:offload/presentation/projects/project_providers.dart';
+import 'package:offload/presentation/theme/app_theme.dart';
 
 /// The Standstill (T10.7 step C, REQ-052, DD-018 point 12 (c)). The ages
 /// need a last touch weeks ago, which the app cannot make: the view gets
@@ -74,6 +75,7 @@ void main() {
           minuteClockProvider.overrideWith((ref) => Stream.value(now)),
         ],
         child: MaterialApp(
+          theme: offloadTheme(),
           locale: const Locale('nl'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

@@ -6,7 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/items/nudge.dart';
 import '../../l10n/app_localizations.dart';
 import '../messages.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
+import '../theme/typography.dart';
 import 'reminder_providers.dart';
 
 /// Settings → Reminders (NL "Herinneringen", DD-018 point 16): the switch,
@@ -126,7 +127,7 @@ class _ReminderSettingsSectionState
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: calmChipColor,
+                color: context.offloadColors.calmChip,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Padding(

@@ -9,7 +9,7 @@ import '../../l10n/app_localizations.dart';
 import '../help/help_scope.dart';
 import '../home/destination_actions.dart';
 import '../home/item_panes.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import '../tokens/token_editor.dart';
 import 'project_actions.dart';
 import 'project_look.dart';
@@ -224,6 +224,7 @@ class _ProjectRow extends StatelessWidget {
         color: highlighted
             ? colors.secondaryContainer
             : project == null || archived
+            // Fixed in every theme: no card of its own.
             ? Colors.transparent
             : null,
         elevation: project == null || archived ? 0 : null,
@@ -262,12 +263,14 @@ class _ProjectRow extends StatelessWidget {
                   Icon(
                     Icons.warning_amber,
                     size: 16,
-                    color: attentionTextColor,
+                    color: context.offloadColors.attentionText,
                   ),
                   const SizedBox(width: 2),
                   Text(
                     '$overdue', // l10n-ignore: a number
-                    style: muted?.copyWith(color: attentionTextColor),
+                    style: muted?.copyWith(
+                      color: context.offloadColors.attentionText,
+                    ),
                   ),
                   const SizedBox(width: 12),
                 ],

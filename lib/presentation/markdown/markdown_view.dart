@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/markdown/markdown_document.dart';
-import '../theme/design_tokens.dart';
+import '../theme/typography.dart';
 
 /// Draws Markdown [blocks] (DD-020, REQ-065; shared with notes, T10.10) in
 /// the app's typeface, theme and text size. A tap on a link calls

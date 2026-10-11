@@ -12,7 +12,7 @@ import '../inbox/inbox_card.dart';
 import '../items/item_providers.dart';
 import '../messages.dart';
 import '../startup/app_storage_provider.dart';
-import '../theme/design_tokens.dart';
+import '../theme/offload_colors.dart';
 import '../tokens/token_editor.dart';
 
 /// "Where was I" (T10.3, REQ-049, DD-018 point 13).
@@ -306,10 +306,12 @@ class ResumeCard extends ConsumerWidget {
     return Container(
       margin: margin,
       padding: const EdgeInsets.fromLTRB(12, 10, 4, 0),
-      decoration: const BoxDecoration(
-        color: calmChipColor,
-        borderRadius: BorderRadius.all(Radius.circular(14)),
-        border: Border(left: BorderSide(color: calmColor, width: 4)),
+      decoration: BoxDecoration(
+        color: context.offloadColors.calmChip,
+        borderRadius: const BorderRadius.all(Radius.circular(14)),
+        border: Border(
+          left: BorderSide(color: context.offloadColors.calm, width: 4),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -318,7 +320,11 @@ class ResumeCard extends ConsumerWidget {
             padding: const EdgeInsets.only(right: 8),
             child: Row(
               children: [
-                const Icon(whereWasIIcon, size: 16, color: calmColor),
+                Icon(
+                  whereWasIIcon,
+                  size: 16,
+                  color: context.offloadColors.calm,
+                ),
                 const SizedBox(width: 6),
                 Expanded(
                   child: Semantics(
@@ -326,7 +332,7 @@ class ResumeCard extends ConsumerWidget {
                     child: Text(
                       l10n.resumeCardTitle.toUpperCase(),
                       style: theme.textTheme.labelMedium?.copyWith(
-                        color: calmColor,
+                        color: context.offloadColors.calm,
                         letterSpacing: 0.6,
                       ),
                     ),

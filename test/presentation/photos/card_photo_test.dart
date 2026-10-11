@@ -10,6 +10,7 @@ import 'package:offload/l10n/app_localizations.dart';
 import 'package:offload/presentation/photos/attachment_image.dart';
 import 'package:offload/presentation/photos/card_photo.dart';
 import 'package:offload/presentation/photos/photo_providers.dart';
+import 'package:offload/presentation/theme/app_theme.dart';
 
 /// The newest photo of an item on its card in a list (T5.4, DD-006 point
 /// 5): the thumbnail at the size shown, the number when there are more, a
@@ -43,6 +44,7 @@ void main() {
           ),
         ],
         child: MaterialApp(
+          theme: offloadTheme(),
           locale: const Locale('nl'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
