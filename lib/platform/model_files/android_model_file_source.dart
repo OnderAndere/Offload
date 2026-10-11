@@ -19,7 +19,9 @@ class AndroidModelFileSource implements ModelFileSource {
   /// How often progress and [ModelFileCancel] are looked at while copying.
   final Duration pollInterval;
 
-  static int _nextJob = 0;
+  /// Copy ids: unique across engines too (the native side is process-wide
+  /// and outlives a closed app, review T6a.3 step A).
+  static int _nextJob = DateTime.now().microsecondsSinceEpoch;
 
   @override
   Future<List<PickedModelFile>> pickFiles({

@@ -63,6 +63,8 @@ class WindowsModelFileSource implements ModelFileSource {
           control = port;
         case final int copied:
           onProgress?.call(copied);
+          // At once, not only at the next tick of the watch.
+          if (cancel?.isCancelled ?? false) control?.send(true);
         case final String hash:
           done.complete(hash);
         case final ModelFileFailure failure:

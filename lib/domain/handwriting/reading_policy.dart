@@ -11,7 +11,11 @@ enum ReadingSpeed {
 
   /// At most 512 image tokens: about half the time, sometimes reads small
   /// signs less well.
-  faster,
+  faster;
+
+  /// The speed stored as [name]; [accurate] for anything else.
+  static ReadingSpeed parse(String? name) =>
+      values.where((s) => s.name == name).firstOrNull ?? accurate;
 }
 
 class ReadingPolicy {

@@ -6,6 +6,7 @@ import 'package:drift/drift.dart' show Variable;
 import 'package:flutter/foundation.dart' show visibleForTesting;
 
 import '../../domain/backup/backup.dart';
+import '../../domain/handwriting/reading_policy.dart';
 import '../../domain/ids/uuid_v7.dart';
 import '../../domain/items/nudge.dart';
 import '../../domain/overview/horizon.dart';
@@ -115,6 +116,7 @@ class AppStorage {
   static const nudgeAfterDaysKey = 'nudge_after_days';
   static const todayNotesOnKey = 'today_notes_on';
   static const oldPartialFilesClearedKey = 'old_partial_files_cleared';
+  static const readingSpeedKey = 'reading_speed';
   static const _systemLanguage = 'system';
   static const _true = 'true';
   static const _false = 'false';
@@ -513,6 +515,14 @@ class AppStorage {
     await _localState.write(reviewReminderOnKey, on ? _true : _false);
     _reviewReminderOn = on;
   }
+
+  /// How handwriting is read on this device (DD-021, T6a.3): read when
+  /// needed, not at start, as quick capture never needs it (REQ-001).
+  Future<ReadingSpeed> readingSpeed() async =>
+      ReadingSpeed.parse(await _localState.read(readingSpeedKey));
+
+  Future<void> saveReadingSpeed(ReadingSpeed speed) =>
+      _localState.write(readingSpeedKey, speed.name);
 
   Future<void> saveNudgeOn(bool on) async {
     await _localState.write(nudgeOnKey, on ? _true : _false);

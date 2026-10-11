@@ -16,6 +16,13 @@ void main() {
     expect(policy.imageTokensFor(ReadingSpeed.faster), 512);
   });
 
+  test('a stored speed reads back; anything else is accurate', () {
+    expect(ReadingSpeed.parse('faster'), ReadingSpeed.faster);
+    expect(ReadingSpeed.parse('accurate'), ReadingSpeed.accurate);
+    expect(ReadingSpeed.parse(null), ReadingSpeed.accurate);
+    expect(ReadingSpeed.parse('turbo'), ReadingSpeed.accurate);
+  });
+
   test('the prompt is prompt B of spike S6, literally', () {
     expect(
       readingPrompt,

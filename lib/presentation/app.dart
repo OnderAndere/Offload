@@ -15,6 +15,7 @@ import 'help/help_scope.dart';
 import 'home/home_shell.dart';
 import 'inbox/inbox_card.dart';
 import 'items/item_providers.dart';
+import 'models/model_providers.dart';
 import 'reminders/reminder_sync.dart';
 import 'search/search_providers.dart';
 import 'settings/app_locale.dart';
@@ -95,6 +96,7 @@ class _StartedAppState extends ConsumerState<_StartedApp> {
       _returnRevisited();
       unawaited(_tellRestoreUndone());
       unawaited(_removeOldPartialFiles());
+      unawaited(_removeModelLeftovers());
     });
     // The search index follows every saved change, after saving (DD-016).
     ref.read(searchIndexingProvider);
@@ -124,6 +126,18 @@ class _StartedAppState extends ConsumerState<_StartedApp> {
     if (_captureRoutes.captureOpen) await _captureRoutes.whenClosed();
     try {
       await ref.read(storageProvider).removeOldPartialFiles();
+    } catch (_) {
+      // Next start.
+    }
+  }
+
+  /// Half copies of a model import the app stopped during (T6a.3): never
+  /// counted, removed after the start, after a capture asked for at start
+  /// (REQ-001). A failure tries again at the next start.
+  Future<void> _removeModelLeftovers() async {
+    if (_captureRoutes.captureOpen) await _captureRoutes.whenClosed();
+    try {
+      await ref.read(modelStoreProvider).removeLeftovers();
     } catch (_) {
       // Next start.
     }

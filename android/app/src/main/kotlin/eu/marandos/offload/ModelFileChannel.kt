@@ -35,12 +35,13 @@ class ModelFileChannel(private val activity: Activity) : MethodChannel.MethodCal
         when (call.method) {
             "pickFiles" -> pick(result)
             "copy" -> {
-                val job = call.argument<Int>("job")!!
+                val job = jobId(call)
                 val source = Uri.parse(call.argument<String>("uri")!!)
                 val target = File(call.argument<String>("target")!!)
                 val progress = AtomicLong(0)
                 val cancel = AtomicBoolean(false)
-                jobs[job] = Job(progress, cancel)
+                val entry = Job(progress, cancel)
+                jobs[job] = entry
                 copies.execute {
                     try {
                         val hash = copy(source, target, progress, cancel)
@@ -53,14 +54,16 @@ class ModelFileChannel(private val activity: Activity) : MethodChannel.MethodCal
                     } catch (e: Exception) {
                         main.post { result.error("unavailable", e.javaClass.simpleName, null) }
                     } finally {
-                        jobs.remove(job)
+                        // Only its own entry: an id is unique per engine,
+                        // not per process.
+                        jobs.remove(job, entry)
                     }
                 }
             }
             // The bytes a running copy has written; null when it has ended.
-            "progress" -> result.success(jobs[call.argument<Int>("job")!!]?.progress?.get())
+            "progress" -> result.success(jobs[jobId(call)]?.progress?.get())
             "cancel" -> {
-                jobs[call.argument<Int>("job")!!]?.cancel?.set(true)
+                jobs[jobId(call)]?.cancel?.set(true)
                 result.success(null)
             }
             else -> result.notImplemented()
@@ -105,8 +108,9 @@ class ModelFileChannel(private val activity: Activity) : MethodChannel.MethodCal
         } else {
             data.data?.let { uris += it }
         }
-        // Names and sizes come from the provider (a NAS may be slow): off main.
-        copies.execute {
+        // Names and sizes come from the provider (a NAS may be slow): off main,
+        // and not behind a running copy.
+        lookups.execute {
             try {
                 val files = uris.map { describe(it) }
                 main.post { result.success(files) }
@@ -154,6 +158,9 @@ class ModelFileChannel(private val activity: Activity) : MethodChannel.MethodCal
         return digest.digest().joinToString("") { "%02x".format(it) }
     }
 
+    /** The copy's id from Dart: an Int or a Long, depending on its size. */
+    private fun jobId(call: MethodCall): Long = call.argument<Number>("job")!!.toLong()
+
     private class Job(val progress: AtomicLong, val cancel: AtomicBoolean)
 
     private class CancelledException : Exception()
@@ -166,7 +173,8 @@ class ModelFileChannel(private val activity: Activity) : MethodChannel.MethodCal
         // Process-wide, so a copy and its progress outlive a recreated
         // activity; one copy at a time.
         private val copies = Executors.newSingleThreadExecutor()
-        private val jobs = ConcurrentHashMap<Int, Job>()
+        private val lookups = Executors.newSingleThreadExecutor()
+        private val jobs = ConcurrentHashMap<Long, Job>()
 
         /** Whether [e] means the drive is full. */
         fun isNoSpace(e: IOException): Boolean {

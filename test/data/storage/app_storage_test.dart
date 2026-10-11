@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:offload/data/attachments/attachment_store.dart';
 import 'package:offload/data/database/app_database.dart';
 import 'package:offload/data/storage/app_storage.dart';
+import 'package:offload/domain/handwriting/reading_policy.dart';
 import 'package:offload/domain/items/item_enums.dart';
 import 'package:offload/domain/settings/language_choice.dart';
 import 'package:offload/domain/settings/prefix_bar_mode.dart';
@@ -428,6 +429,18 @@ void main() {
       final second = await open(keys);
       addTearDown(second.close);
       expect(second.todayNotesOn, isFalse);
+    });
+
+    test('reading handwriting: accurate by default; kept (T6a.3)', () async {
+      final keys = FakeKeyStore();
+      final first = await open(keys);
+      expect(await first.readingSpeed(), ReadingSpeed.accurate);
+      await first.saveReadingSpeed(ReadingSpeed.faster);
+      await first.close();
+
+      final second = await open(keys);
+      addTearDown(second.close);
+      expect(await second.readingSpeed(), ReadingSpeed.faster);
     });
   });
 }
