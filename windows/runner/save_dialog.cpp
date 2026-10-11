@@ -6,6 +6,7 @@
 
 #include <optional>
 #include <string>
+#include <vector>
 
 #include "utils.h"
 
@@ -113,6 +114,58 @@ PickResult PickOpenFile(HWND owner, const std::wstring& type_name,
   return {result, S_OK};
 }
 
+// Shows the open window over [owner] for one or more files of type
+// [type_name] with [extensions] ("all files" too): the files of a model
+// (T6a.3), network drives included. Empty when cancelled; an error in
+// [error].
+std::vector<std::wstring> PickOpenFiles(HWND owner,
+                                        const std::wstring& type_name,
+                                        const std::wstring& extensions,
+                                        HRESULT* error) {
+  *error = S_OK;
+  ComPtr<IFileOpenDialog> dialog;
+  HRESULT hr = ::CoCreateInstance(CLSID_FileOpenDialog, nullptr,
+                                  CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dialog));
+  if (FAILED(hr)) {
+    *error = hr;
+    return {};
+  }
+  const std::wstring pattern = PatternOf(extensions);
+  const COMDLG_FILTERSPEC filters[] = {{type_name.c_str(), pattern.c_str()},
+                                       {L"*.*", L"*.*"}};
+  DWORD options = 0;
+  if (FAILED(hr = dialog->SetFileTypes(2, filters)) ||
+      FAILED(hr = dialog->GetOptions(&options)) ||
+      FAILED(hr = dialog->SetOptions(options | FOS_FORCEFILESYSTEM |
+                                     FOS_FILEMUSTEXIST | FOS_PATHMUSTEXIST |
+                                     FOS_ALLOWMULTISELECT))) {
+    *error = hr;
+    return {};
+  }
+  hr = dialog->Show(owner);
+  if (hr == HRESULT_FROM_WIN32(ERROR_CANCELLED)) return {};
+  ComPtr<IShellItemArray> items;
+  DWORD count = 0;
+  if (FAILED(hr) || FAILED(hr = dialog->GetResults(&items)) ||
+      FAILED(hr = items->GetCount(&count))) {
+    *error = hr;
+    return {};
+  }
+  std::vector<std::wstring> paths;
+  for (DWORD i = 0; i < count; i++) {
+    ComPtr<IShellItem> item;
+    PWSTR path = nullptr;
+    if (FAILED(hr = items->GetItemAt(i, &item)) ||
+        FAILED(hr = item->GetDisplayName(SIGDN_FILESYSPATH, &path))) {
+      *error = hr;
+      return {};
+    }
+    paths.emplace_back(path);
+    ::CoTaskMemFree(path);
+  }
+  return paths;
+}
+
 }  // namespace
 
 SaveDialog::SaveDialog(HWND window, flutter::BinaryMessenger* messenger)
@@ -131,7 +184,8 @@ void SaveDialog::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue>& call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
   const bool open = call.method_name() == "pickOpenFile";
-  if (!open && call.method_name() != "pickSaveFile") {
+  const bool open_several = call.method_name() == "pickOpenFiles";
+  if (!open && !open_several && call.method_name() != "pickSaveFile") {
     result->NotImplemented();
     return;
   }
@@ -143,6 +197,23 @@ void SaveDialog::HandleMethodCall(
   const std::wstring extension = StringArgument(*arguments, "extension");
   if (extension.empty()) {
     result->Error("invalid", "Missing extension");
+    return;
+  }
+  if (open_several) {
+    HRESULT error = S_OK;
+    const std::vector<std::wstring> paths = PickOpenFiles(
+        window_, StringArgument(*arguments, "fileTypeName"), extension,
+        &error);
+    if (FAILED(error)) {
+      result->Error("unavailable",
+                    "File window failed: " + std::to_string(error));
+      return;
+    }
+    flutter::EncodableList list;
+    for (const auto& path : paths) {
+      list.emplace_back(Utf8FromUtf16(path.c_str()));
+    }
+    result->Success(flutter::EncodableValue(list));
     return;
   }
   const PickResult picked =

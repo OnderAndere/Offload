@@ -9,9 +9,10 @@
 #include <memory>
 
 // "Save as…" and "Open" (REQ-043, DD-014; backups T7.2, DD-007; a photo for
-// an item, T5.3): the Windows save and open windows, owned by the app window,
-// on the method channel `eu.marandos.offload/save_dialog`
-// (WindowsShareChannel, WindowsBackupFilePicker and WindowsPhotoSource in
+// an item, T5.3; the files of a model, T6a.3): the Windows save and open
+// windows, owned by the app window, on the method channel
+// `eu.marandos.offload/save_dialog` (WindowsShareChannel,
+// WindowsBackupFilePicker, WindowsPhotoSource and WindowsModelFileSource in
 // Dart). They only pick the path; the app reads or writes the file itself.
 // Shown from the platform thread, like any modal window, so the app keeps
 // drawing meanwhile.

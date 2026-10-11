@@ -682,6 +682,13 @@ first; the order follows the gate.
       when there is too little room
       — *PO 11-10-2026:* under the handwriting model a choice *Nauwkeurig / Sneller* (EN "Accurate / Faster"),
       *Accurate* by default, per device, never in a backup (DD-021); the reading of T6a.4 uses it
+      — *PO decisions 11-10-2026 (plan):* one pick may hold one or both files, recognised by content (SHA-256), not by
+      name; missing files are named. Room is checked before copying (files + 200 MB margin, "needed X, free Y",
+      nothing copied); a disk that fills up during the copy stops it and removes the half copy. After a restore the
+      message suggests importing the model again when this device has none (option a; the backup format stays). The
+      screen shows source and licence name (Apache-2.0) in one line; the full text is in the manual. Version 0.6.4.
+      Steps A (platform picker + copy with SHA-256), B (catalogue, `ModelStore`, choice in `local_state`), C (screens,
+      Storage row, restore message), each reviewed
 - [ ] **T6a.4** The photo screen: take or choose a photo, optional straightening with four draggable corners
       (SPEC Q45), reading with progress, the clean-up of DD-021
 - [ ] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`

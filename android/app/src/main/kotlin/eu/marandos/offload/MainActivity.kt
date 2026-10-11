@@ -12,6 +12,7 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : FlutterActivity() {
     private val backupFiles = BackupFileChannel(this)
     private val photos = PhotoChannel(this)
+    private val modelFiles = ModelFileChannel(this)
     private val shares = ShareChannel(this)
     private val aead = AeadChannel()
     private var captureQueue: CaptureQueueChannel? = null
@@ -83,6 +84,9 @@ class MainActivity : FlutterActivity() {
         // Taking or choosing a photo for an item (AndroidPhotoSource, T5.3).
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, PhotoChannel.CHANNEL)
             .setMethodCallHandler(photos)
+        // Importing the files of a model (AndroidModelFileSource, T6a.3).
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ModelFileChannel.CHANNEL)
+            .setMethodCallHandler(modelFiles)
         // Deadline reminders (AndroidReminderScheduler, T4.1).
         reminderChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ReminderChannel.CHANNEL)
             .also { it.setMethodCallHandler(reminders) }
@@ -135,10 +139,11 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    // Results of the document picker (BackupFileChannel), the camera app and
-    // the photo picker (PhotoChannel).
+    // Results of the document picker (BackupFileChannel, ModelFileChannel),
+    // the camera app and the photo picker (PhotoChannel).
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (!backupFiles.onActivityResult(requestCode, resultCode, data) &&
+            !modelFiles.onActivityResult(requestCode, resultCode, data) &&
             !photos.onActivityResult(requestCode, resultCode, data)
         ) {
             super.onActivityResult(requestCode, resultCode, data)
