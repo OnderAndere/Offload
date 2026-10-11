@@ -178,6 +178,35 @@ The same two files serve Android and Windows; only the native library differs pe
   The model is not bundled, so its licence (Apache-2.0) belongs in the import screen and the manual, not in
   *About Offload*.
 
+## Phone (T6a.1, 11-10-2026)
+
+The gate of M6a on the Fairphone 6 (Snapdragon 7s Gen 3, 8 cores, Adreno 810, 7.2 GB RAM of which 3.4–4.1 GB
+available, Android 16). Prebuilt llama.cpp b11526 for Android arm64 (SHA-256 checked against the GitHub release
+digest), the same model and settings, four of the photos at 1280 px. First from the shell, then inside a spike app
+with its own package (the prebuilt `.so` files plus a small C shim through `dart:ffi` in an isolate); the real
+Offload on the phone was not touched, and the spike app and files were removed afterwards.
+
+| Run | Notebook 1 | Notebook 2 | Whiteboard 1 | Whiteboard 2 | Peak memory |
+|---|---|---|---|---|---|
+| Shell, memory-mapped | 119 s | 115 s | 72 s | 47 s | 3.2–3.4 GB |
+| App, memory-mapped | 128 s | 110 s | 55 s | 45 s | 3.20–3.35 GB |
+| **App, read into memory** | **138 s** | **130 s** | **56 s** | **46 s** | **2.39–2.59 GB** |
+| App, read + `--image-max-tokens 512` | 75 s | 45 s | 34 s | 35 s | 2.38–2.40 GB |
+
+- **Gate passed:** Android never killed the app; its low-memory killer reported "critical pressure" and chose not
+  to. The PO raised the time limit to about 3 minutes once the first figures were in (DD-021).
+- **Read into memory, not memory-mapped:** a mapped model is held twice (the file pages and the CPU's repacked copy),
+  and under memory pressure Android paged it out; one shell run then crawled for more than 9 minutes and was stopped.
+  Read into memory it takes 0.75 GB less at about the same speed and cannot be paged out to storage.
+- **Threads:** 6 is best (4: 159 s, 8: 130 s on notebook 1, as the slow efficiency cores join in).
+- **GPU:** the Snapdragon build of llama.cpp (OpenCL on the Adreno) gave wrong output with the whole model on the
+  GPU, and 139 s instead of 119 s with only the image encoder on it. CPU only. A GPU or NPU would need no Android
+  permission, only a `<uses-native-library>` entry in the manifest.
+- **Leaving the app:** about 70 s after the user switches away, Android freezes the app (the cached-app freezer);
+  reading pauses and goes on when the user returns (that photo took 204 s instead of 128 s). Reading on in the
+  background would need a foreground service and new permissions; the PO chose a clear message first.
+- **Text:** the same as on the PC, with the same misreadings.
+
 ## Business cards (Q14)
 
 Not tested. A model that reads handwriting at this level should read printed cards better, so S5 could start
@@ -185,8 +214,7 @@ from Qwen3-VL-2B instead of a separate OCR engine. A guess, not a result.
 
 ## Not tested
 
-- The phone (speed, memory, whether Android kills the app at 3 GB). The emulator says nothing about this
-  (S4: 30–50× slower than the PC).
+- Phones other than the Fairphone 6 (see *Phone*; the Samsung S23 is expected to be faster).
 - Other hands, long pages, tables or drawings, poor light at night, a photo upside down.
 - Straightening on all photos, and automatic corner detection: corners were picked by hand.
 - Prompts other than B on the real photos; quantisations other than Q4_K_M for Qwen3-VL-2B.

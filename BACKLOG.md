@@ -650,15 +650,30 @@ or M6.
 neither T5.1 nor M5: the photo is discarded after confirming (AC REQ-064 d). Each task is planned
 first; the order follows the gate.
 
-- [ ] **T6a.1** Phone gate: llama.cpp for Android arm64 (C shim + `dart:ffi`, as in S4) in a spike app, the model
+- [x] **T6a.1** Phone gate: llama.cpp for Android arm64 (C shim + `dart:ffi`, as in S4) in a spike app, the model
       on the Fairphone; measure time per photo and peak memory at 1280 px, context 2048. Pass: not killed, at most
       about 2 minutes per photo; else try `--image-max-tokens 512`; NO-GO if that fails too (DD-021). Whisper
       waits for T6.1 (PO 11-10-2026)
+      — *done 11-10-2026, gate passed (PO raised it to about 3 minutes the same day):* shell (prebuilt b11526) and a
+      spike app (`spikes/s6_app`, own package, prebuilt `.so` + a C shim): 46–138 s per photo at 2.4–2.6 GB with the
+      model read into memory, 34–75 s with the fallback, never killed; memory-mapped took 3.2–3.35 GB and once stalled
+      (paged out). CPU only, 6 threads; the GPU build gave no gain. Android freezes the app ~70 s after leaving it:
+      reading pauses and resumes. PO decisions: read into memory; message + progress + screen on, a foreground service
+      only if missed in use; the 5-minute stop. Details in DD-021 and the S6 report (*Phone*). The spike app and files
+      were removed from the phone
 - [ ] **T6a.2** The native library in the app on Android and Windows: shim, isolate, `tool/allowed_native_libs.txt`
       and `bundledLicenses` (MIT, PO 11-10-2026), the network check of DD-008
 - [ ] **T6a.3** Settings → *Models*, shared with speech: import of several files at once, free-space check,
       progress, SHA-256 against a list in the app, remove, the source and licence as text; the model as a row in
       Settings → *Storage*; never in a backup, and the message after a restore (DD-007). Replaces the import of T6.1
+      — *PO 11-10-2026:* the files are chosen with the system's document picker, as for *Restore a backup*: on Android
+      the Storage Access Framework, so a NAS or cloud app that offers documents (Synology, Nextcloud, an SMB app) works
+      too; on Windows the Open window, network drives included. The app copies the files into its own private storage
+      (llama.cpp needs a local file) and computes the SHA-256 while copying, so a wrong or damaged file is refused at
+      once; it needs room for the copy (about 1.5 GB). To settle in the plan: both files in one pick, and what happens
+      when there is too little room
+      — *PO 11-10-2026:* under the handwriting model a choice *Nauwkeurig / Sneller* (EN "Accurate / Faster"),
+      *Accurate* by default, per device, never in a backup (DD-021); the reading of T6a.4 uses it
 - [ ] **T6a.4** The photo screen: take or choose a photo, optional straightening with four draggable corners
       (SPEC Q45), reading with progress, the clean-up of DD-021
 - [ ] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`
