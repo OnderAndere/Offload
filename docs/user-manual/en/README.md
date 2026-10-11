@@ -39,4 +39,4 @@ encrypted and without internet.
 
 ## Settings and your data
 
-- [Settings](settings.md): language, input, reminders, backup and export, storage.
+- [Settings](settings.md): language, input, reminders, models, backup and export, storage.

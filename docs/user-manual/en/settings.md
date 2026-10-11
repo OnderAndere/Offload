@@ -157,6 +157,54 @@ Android** ("Deadlines and returned items are still on Today.") in this place, wi
 switch notifications off in Windows itself (**Settings** → **System** → **Notifications**). These
 settings apply per device.
 
+## Models
+
+A model is a file that lets Offload do something smart, such as reading handwriting, without
+internet and on this device only. Under **Models** ("For reading handwriting; on this device
+only") you manage them. Offload downloads nothing: you choose the files yourself, for example from
+your computer, a NAS or a cloud app. Models are never part of a backup.
+
+### The handwriting model
+
+**Reading handwriting** is the model Qwen3-VL-2B-Instruct, about 1.6 GB. It consists of two files.
+The screen shows its state:
+
+- **Ready to use**: both files are there.
+- **Not imported**: neither file is there yet.
+- **Still needed: ...**: one file is there; the screen names the one that is missing.
+
+Under the name you see the source, for example "Hugging Face, Qwen/Qwen3-VL-2B-Instruct-GGUF @
+52d6c8f", and the licence (Apache-2.0).
+
+### Importing the model
+
+1. Choose **Import...**. Offload opens the file window of your system. On Android that is the
+   document picker, which also shows a NAS or cloud apps that offer documents; press and hold to
+   select both files at once. On Windows it is the Open window, where network drives work too;
+   the filter shows **Model files** (`*.gguf`).
+2. Choose one file or both. Offload recognises a file by its checksum, not by its name, so a
+   renamed file is fine.
+3. Offload first checks the free space. If there is not enough you see "Not enough free space:
+   about X needed, Y free. Nothing was copied."
+4. A file of the wrong size is refused without being copied. After copying, Offload checks the
+   file; a damaged file is refused.
+5. While it copies and checks you see "Copying and checking the model..." with progress. Choose
+   **Stop** to cancel. If you stop, or if the storage fills up, the partial copy is removed.
+6. At the end you see a message: "The model is ready to use.", "Still needed: ...", "Not
+   recognised as a file of this model, not kept: ..." or "Already there: ...".
+
+You can import the second file later.
+
+### Removing the model
+
+Choose **Remove**. Offload asks **Remove model?** ("... will be removed from this device. You can
+import it again later."). Confirm to remove it.
+
+### Reading handwriting: Accurate or Faster
+
+Under the model you choose how handwriting is read: **Accurate** (the default) or **Faster**.
+"Faster sometimes reads small signs less well." This setting applies per device.
+
 ## Backup and export
 
 At the bottom of **Settings** is the section **Backup and export**, with four rows:
@@ -229,6 +277,10 @@ written.
    keeps its own files of the restored items. Choose **Restore** to continue.
 4. Offload restarts with the data from the backup. Your settings on this device stay.
 
+If this device does not have the handwriting model, the confirmation also says: do you read
+handwriting from photos? The model is not part of a backup, so import it again after restoring,
+through **Settings** → **Models**.
+
 Before restoring, Offload checks that there is room for about twice the size of the backup file.
 If not, you see "Not enough free space: about X needed, Y free." and nothing changes. A large
 restore also shows a progress bar, without a cancel button.
@@ -294,6 +346,8 @@ MB and GB, in steps of 1000, as Android shows them too.
   [Making a backup](#making-a-backup). If Offload cannot measure it, you see **Cannot be
   determined**. There is no button to delete them: they disappear by themselves after a day. This
   row is only on Android; on Windows Offload keeps no temporary files.
+- **Models** ("Imported; not in a backup") — on the right is how big the imported models are.
+  This row only appears when a model is imported.
 - **Content** — how much you have captured, for example "8 items, 1 of them in the trash · 2
   projects · 3 people". Items in the trash count, because they are still in the database. Archived
   projects count as a project. People who have been merged do not count separately.

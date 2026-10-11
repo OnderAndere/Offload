@@ -694,6 +694,10 @@ first; the order follows the gate.
       ~60 MB/s, so the 1.5 GB model takes a quarter to half a minute from local storage
 - [ ] **T6a.4** The photo screen: take or choose a photo, optional straightening with four draggable corners
       (SPEC Q45), reading with progress, the clean-up of DD-021
+      — *from the reviews of T6a.2/T6a.3 (11-10-2026):* a failed *Remove* in Settings → *Models* (Windows: a model
+      file in use) needs a message instead of an unhandled error; a failed status read should say "state unknown",
+      not the import text; dispose the import progress notifier; check `ol_alloc` of the status block for null;
+      a test of the bad-image check that runs without the native library
 - [ ] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`
       items after confirming (AC REQ-064 c); the button in capture only with a verified model
 

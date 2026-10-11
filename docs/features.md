@@ -126,3 +126,7 @@ status and type, complete it and move it to the trash
   lists (Inbox, Today, projects, people, Weekly review) and in search results, with a number when
   there are more; see
   [Photos on the cards](user-manual/en/item-detail.md#photos-on-the-cards).
+- **Models** under **Settings**: import the handwriting model (Qwen3-VL-2B-Instruct, about 1.6 GB)
+  from files you choose yourself, with a free-space check, progress and **Stop**; remove it again,
+  and choose **Accurate** or **Faster** for reading handwriting. Offload downloads nothing and
+  models are not part of a backup; see [Settings](user-manual/en/settings.md#models).
