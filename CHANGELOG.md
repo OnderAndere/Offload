@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.6.4] – 2026-10-11
+
+### Added
+
+- **Settings → Models**: import the model for reading handwriting (Qwen3-VL-2B-Instruct, about 1.6 GB) with the
+  system's file window: on Android also from a NAS or cloud app, on Windows also from a network drive. Pick one or
+  both files at once; Offload recognises them by their checksum, not by name, copies them into its own storage with
+  progress and a *Stop* button, and refuses a wrong or damaged file. It checks the free space first. The screen
+  shows the source and licence, removes the model on request, and offers *Accurate / Faster* for reading
+  handwriting on this device. Nothing is downloaded, and models never go into a backup.
+- *Settings → Storage* shows the imported models as a row of their own.
+- Restoring a backup on a device without the handwriting model says to import it again afterwards.
+
 ## [0.6.3] – 2026-10-11
 
 ### Added

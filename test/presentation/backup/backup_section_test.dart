@@ -15,12 +15,12 @@ import 'package:offload/domain/items/item_enums.dart';
 import 'package:offload/l10n/app_localizations.dart';
 import 'package:offload/platform/share/share_channel.dart';
 import 'package:offload/presentation/app.dart';
+import 'package:offload/presentation/app_directory_provider.dart';
 import 'package:offload/presentation/backup/backup_file_picker_provider.dart';
 import 'package:offload/presentation/backup/backup_section.dart';
 import 'package:offload/presentation/backup/busy_dialog.dart';
 import 'package:offload/presentation/capture/pending_captures.dart';
 import 'package:offload/presentation/settings/settings_screen.dart';
-import 'package:offload/presentation/settings/storage_section.dart';
 import 'package:offload/presentation/share_channel_provider.dart';
 import 'package:offload/presentation/startup/app_storage_provider.dart';
 
@@ -414,6 +414,18 @@ void main() {
             deviceHasAttachments: true,
             l10n: l10n,
           ),
+          isNull,
+        );
+      });
+
+      test('a device without the handwriting model hears it is imported '
+          'again; one with it hears nothing (T6a.3)', () {
+        expect(
+          BackupSection.restoreModelLine(deviceHasModel: false, l10n: l10n),
+          l10n.backupRestoreModelHint,
+        );
+        expect(
+          BackupSection.restoreModelLine(deviceHasModel: true, l10n: l10n),
           isNull,
         );
       });

@@ -15,6 +15,10 @@ class FakeModelFileSource implements ModelFileSource {
   ModelFileFailure? failNext;
   ModelFileException? pickError;
   void Function(ModelFileCancel? cancel)? onCopyStart;
+
+  /// When set, a copy waits for it before it reads the cancel: a test can
+  /// press Stop meanwhile.
+  Future<void>? gate;
   final copies = <String>[];
 
   /// Offers [bytes] as a file named [name]; returns it for [picked].
@@ -44,6 +48,7 @@ class FakeModelFileSource implements ModelFileSource {
   }) async {
     copies.add(file.ref);
     onCopyStart?.call(cancel);
+    if (gate case final wait?) await wait;
     final bytes = contents[file.ref]!;
     final failure = failNext;
     failNext = null;

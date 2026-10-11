@@ -4837,6 +4837,204 @@ abstract class AppLocalizations {
   /// In nl, this message translates to:
   /// **'Bijlage niet in deze back-up'**
   String get photoMissing;
+
+  /// Row in Settings that opens the Models screen (T6a.3).
+  ///
+  /// In nl, this message translates to:
+  /// **'Modellen'**
+  String get settingsModels;
+
+  /// Subtitle of the Models row in Settings.
+  ///
+  /// In nl, this message translates to:
+  /// **'Voor het lezen van handschrift; alleen op dit toestel'**
+  String get settingsModelsHint;
+
+  /// Title of the Models screen.
+  ///
+  /// In nl, this message translates to:
+  /// **'Modellen'**
+  String get modelsTitle;
+
+  /// Explanation at the top of the Models screen (DD-002, DD-007).
+  ///
+  /// In nl, this message translates to:
+  /// **'Een model werkt zonder internet, op dit toestel. Offload downloadt niets: je kiest de bestanden zelf, bijvoorbeeld van je computer, een NAS of een cloud-app. Modellen gaan nooit mee in een back-up.'**
+  String get modelsIntro;
+
+  /// What the handwriting model is for, as the title of its section.
+  ///
+  /// In nl, this message translates to:
+  /// **'Handschrift lezen'**
+  String get modelKindHandwriting;
+
+  /// The model's own name and its size, e.g. 'Qwen3-VL-2B-Instruct · 1.6 GB'.
+  ///
+  /// In nl, this message translates to:
+  /// **'{name} · {size}'**
+  String modelNameSize(String name, String size);
+
+  /// Status of a model whose files are all imported and checked.
+  ///
+  /// In nl, this message translates to:
+  /// **'Klaar voor gebruik'**
+  String get modelReady;
+
+  /// Status of a model with no files on this device.
+  ///
+  /// In nl, this message translates to:
+  /// **'Niet geïmporteerd'**
+  String get modelNotImported;
+
+  /// Status of a model with some files imported; the file names still needed.
+  ///
+  /// In nl, this message translates to:
+  /// **'Nog nodig: {files}'**
+  String modelMissing(String files);
+
+  /// Where the model's files are published and the name of its licence.
+  ///
+  /// In nl, this message translates to:
+  /// **'Bron: {source} · licentie {licence}'**
+  String modelSource(String source, String licence);
+
+  /// Button that opens the file window to import a model's files.
+  ///
+  /// In nl, this message translates to:
+  /// **'Importeren…'**
+  String get modelImport;
+
+  /// Button that removes a model's files from this device.
+  ///
+  /// In nl, this message translates to:
+  /// **'Verwijderen'**
+  String get modelRemove;
+
+  /// Title of the confirmation before removing a model.
+  ///
+  /// In nl, this message translates to:
+  /// **'Model verwijderen?'**
+  String get modelRemoveTitle;
+
+  /// Body of the confirmation before removing a model.
+  ///
+  /// In nl, this message translates to:
+  /// **'{name} ({size}) verdwijnt van dit toestel. Je kunt het later opnieuw importeren.'**
+  String modelRemoveBody(String name, String size);
+
+  /// Name of the model file type in the Windows Open window.
+  ///
+  /// In nl, this message translates to:
+  /// **'Modelbestanden'**
+  String get modelFileTypeName;
+
+  /// Shown while a model's files are copied and their checksums computed.
+  ///
+  /// In nl, this message translates to:
+  /// **'Model wordt gekopieerd en gecontroleerd…'**
+  String get modelImporting;
+
+  /// Progress of a model import, e.g. '640 MB van 1.6 GB'.
+  ///
+  /// In nl, this message translates to:
+  /// **'{done} van {total}'**
+  String modelImportProgress(String done, String total);
+
+  /// Button that stops a running model import.
+  ///
+  /// In nl, this message translates to:
+  /// **'Stoppen'**
+  String get modelImportStop;
+
+  /// Title of the message after a model import.
+  ///
+  /// In nl, this message translates to:
+  /// **'Model importeren'**
+  String get modelImportTitle;
+
+  /// After an import that completed the model.
+  ///
+  /// In nl, this message translates to:
+  /// **'Het model is klaar voor gebruik.'**
+  String get modelImportReady;
+
+  /// After an import: files whose size or checksum matches no file of the model.
+  ///
+  /// In nl, this message translates to:
+  /// **'Niet herkend als bestand van dit model, niet bewaard: {files}'**
+  String modelImportUnknown(String files);
+
+  /// After an import: picked files this device has already.
+  ///
+  /// In nl, this message translates to:
+  /// **'Stond er al: {files}'**
+  String modelImportAlready(String files);
+
+  /// Before copying: too little room for the model files plus a margin.
+  ///
+  /// In nl, this message translates to:
+  /// **'Te weinig vrije ruimte: nodig ongeveer {needed}, vrij {free}. Er is niets gekopieerd.'**
+  String modelImportNoRoom(String needed, String free);
+
+  /// The drive filled up during a model import.
+  ///
+  /// In nl, this message translates to:
+  /// **'De opslag raakte vol tijdens het kopiëren. De halve kopie is weggehaald.'**
+  String get modelImportFull;
+
+  /// After the user stopped a model import.
+  ///
+  /// In nl, this message translates to:
+  /// **'Importeren gestopt. De halve kopie is weggehaald.'**
+  String get modelImportStopped;
+
+  /// A picked model file could not be read, or the file window failed.
+  ///
+  /// In nl, this message translates to:
+  /// **'Het bestand kon niet worden gelezen.'**
+  String get modelImportFailed;
+
+  /// Label of the choice Accurate / Faster under the handwriting model (DD-021).
+  ///
+  /// In nl, this message translates to:
+  /// **'Lezen van handschrift'**
+  String get readingSpeedLabel;
+
+  /// Choice: read handwriting with the model's full image detail.
+  ///
+  /// In nl, this message translates to:
+  /// **'Nauwkeurig'**
+  String get readingSpeedAccurate;
+
+  /// Choice: read handwriting faster with less image detail.
+  ///
+  /// In nl, this message translates to:
+  /// **'Sneller'**
+  String get readingSpeedFaster;
+
+  /// Note under the choice Accurate / Faster.
+  ///
+  /// In nl, this message translates to:
+  /// **'Sneller leest kleine tekens soms minder goed.'**
+  String get readingSpeedHint;
+
+  /// Row in Settings → Storage with the size of the imported models.
+  ///
+  /// In nl, this message translates to:
+  /// **'Modellen'**
+  String get storageModels;
+
+  /// Subtitle of the Models row in Settings → Storage.
+  ///
+  /// In nl, this message translates to:
+  /// **'Geïmporteerd; niet in een back-up'**
+  String get storageModelsHint;
+
+  /// Line in the restore confirmation when this device has no handwriting model (DD-007, T6a.3).
+  ///
+  /// In nl, this message translates to:
+  /// **'Lees je handschrift van foto\'s? Het model gaat niet mee in een back-up: importeer het na het terugzetten opnieuw via Instellingen → Modellen.'**
+  String get backupRestoreModelHint;
 }
 
 class _AppLocalizationsDelegate

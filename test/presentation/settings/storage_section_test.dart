@@ -6,19 +6,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:offload/data/database/app_database.dart';
 import 'package:offload/data/items/drift_item_repository.dart';
+import 'package:offload/data/models/model_store.dart';
 import 'package:offload/data/storage/app_storage.dart';
 import 'package:offload/domain/items/item_enums.dart';
+import 'package:offload/domain/models/model_catalog.dart';
 import 'package:offload/l10n/app_localizations.dart';
 import 'package:offload/presentation/app.dart';
+import 'package:offload/presentation/app_directory_provider.dart';
 import 'package:offload/presentation/capture/pending_captures.dart';
+import 'package:offload/presentation/models/model_providers.dart';
 import 'package:offload/presentation/settings/settings_screen.dart';
-import 'package:offload/presentation/settings/storage_section.dart';
 import 'package:offload/presentation/startup/app_storage_provider.dart';
 
 import '../../fakes/drift_widgets.dart';
 import '../../fakes/fake_app_directory.dart';
 import '../../fakes/fake_capture_channel.dart';
 import '../../fakes/fake_desktop_shell.dart';
+import '../../fakes/fake_model_file_source.dart';
 import '../../fakes/test_storage.dart';
 
 /// Settings → Storage (*Opslag*; T7.5, PO decisions 09-10-2026).
@@ -31,6 +35,7 @@ void main() {
     int? temporaryBytes,
     bool failTemporary = false,
     Future<void> Function()? seed,
+    List<Override> extra = const [],
   }) async {
     tester.platformDispatcher.localesTestValue = const [Locale('nl')];
     addTearDown(tester.platformDispatcher.clearLocalesTestValue);
@@ -47,6 +52,7 @@ void main() {
           captureChannelProvider.overrideWith((ref) => FakeCaptureChannel()),
           desktopShellProvider.overrideWith((ref) => FakeDesktopShell()),
           appDirectoryProvider.overrideWith((ref) => directory),
+          ...extra,
         ],
         child: const OffloadApp(),
       ),
@@ -147,5 +153,50 @@ void main() {
 
     expect(find.text(l10n.storageTemporary), findsOneWidget);
     expect(find.text(l10n.storageUnavailable), findsOneWidget);
+  });
+
+  testDriftWidgets('imported models: a row with their size '
+      '(T6a.3)', (tester) async {
+    final models = Directory.systemTemp.createTempSync('storage_models_');
+    addTearDown(() => models.deleteSync(recursive: true));
+    const spec = ModelSpec(
+      id: 'm',
+      kind: ModelKind.handwriting,
+      name: 'M',
+      source: 'here',
+      licence: 'MIT',
+      files: [
+        ModelFileSpec(
+          name: 'm.gguf',
+          role: ModelFileRole.languageModel,
+          sizeBytes: 2500,
+          sha256: 'aa',
+        ),
+      ],
+    );
+    Directory('${models.path}/models/m').createSync(recursive: true);
+    File(
+      '${models.path}/models/m/m.gguf',
+    ).writeAsBytesSync(List.filled(2500, 1));
+    await openStorage(
+      tester,
+      extra: [
+        modelCatalogProvider.overrideWith((ref) => [spec]),
+        modelStoreProvider.overrideWith(
+          (ref) => ModelStore(
+            dataDirectory: () async => models,
+            source: FakeModelFileSource(),
+            freeBytes: (_) async => null,
+          ),
+        ),
+      ],
+    );
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text(l10n.storageModels), findsOneWidget);
+    expect(find.text(l10n.storageModelsHint), findsOneWidget);
+    expect(find.text('3 kB'), findsOneWidget);
   });
 }

@@ -10,7 +10,10 @@ import '../../platform/model_files/model_file_source.dart';
 /// user's data, so they are kept as they are (not encrypted, unlike
 /// attachments). A file is only kept when its SHA-256 is in the
 /// [modelCatalog]; it is copied to a `.partial` name first and renamed when
-/// it checks out, so a half copy never counts.
+/// it checks out, so a half copy never counts. A file counts as present
+/// when it has its catalogue size: its hash was checked when it came in.
+/// One import at a time (the screen allows no second one), and the
+/// leftovers are only removed at start.
 class ModelStore {
   ModelStore({
     required this._dataDirectory,
@@ -133,7 +136,13 @@ class ModelStore {
         alreadyPresent.add(file.name);
         await _delete(partial);
       } else {
-        await partial.rename(_file(folder, match.name).path);
+        try {
+          await partial.rename(_file(folder, match.name).path);
+        } on FileSystemException catch (e) {
+          // Windows: a locked target, say; the import ends as unreadable.
+          await _delete(partial);
+          throw ModelFileException(ModelFileFailure.unavailable, e.message);
+        }
         imported.add(match.name);
       }
     }

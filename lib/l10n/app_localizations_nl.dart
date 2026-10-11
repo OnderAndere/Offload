@@ -3564,4 +3564,125 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get photoMissing => 'Bijlage niet in deze back-up';
+
+  @override
+  String get settingsModels => 'Modellen';
+
+  @override
+  String get settingsModelsHint =>
+      'Voor het lezen van handschrift; alleen op dit toestel';
+
+  @override
+  String get modelsTitle => 'Modellen';
+
+  @override
+  String get modelsIntro =>
+      'Een model werkt zonder internet, op dit toestel. Offload downloadt niets: je kiest de bestanden zelf, bijvoorbeeld van je computer, een NAS of een cloud-app. Modellen gaan nooit mee in een back-up.';
+
+  @override
+  String get modelKindHandwriting => 'Handschrift lezen';
+
+  @override
+  String modelNameSize(String name, String size) {
+    return '$name · $size';
+  }
+
+  @override
+  String get modelReady => 'Klaar voor gebruik';
+
+  @override
+  String get modelNotImported => 'Niet geïmporteerd';
+
+  @override
+  String modelMissing(String files) {
+    return 'Nog nodig: $files';
+  }
+
+  @override
+  String modelSource(String source, String licence) {
+    return 'Bron: $source · licentie $licence';
+  }
+
+  @override
+  String get modelImport => 'Importeren…';
+
+  @override
+  String get modelRemove => 'Verwijderen';
+
+  @override
+  String get modelRemoveTitle => 'Model verwijderen?';
+
+  @override
+  String modelRemoveBody(String name, String size) {
+    return '$name ($size) verdwijnt van dit toestel. Je kunt het later opnieuw importeren.';
+  }
+
+  @override
+  String get modelFileTypeName => 'Modelbestanden';
+
+  @override
+  String get modelImporting => 'Model wordt gekopieerd en gecontroleerd…';
+
+  @override
+  String modelImportProgress(String done, String total) {
+    return '$done van $total';
+  }
+
+  @override
+  String get modelImportStop => 'Stoppen';
+
+  @override
+  String get modelImportTitle => 'Model importeren';
+
+  @override
+  String get modelImportReady => 'Het model is klaar voor gebruik.';
+
+  @override
+  String modelImportUnknown(String files) {
+    return 'Niet herkend als bestand van dit model, niet bewaard: $files';
+  }
+
+  @override
+  String modelImportAlready(String files) {
+    return 'Stond er al: $files';
+  }
+
+  @override
+  String modelImportNoRoom(String needed, String free) {
+    return 'Te weinig vrije ruimte: nodig ongeveer $needed, vrij $free. Er is niets gekopieerd.';
+  }
+
+  @override
+  String get modelImportFull =>
+      'De opslag raakte vol tijdens het kopiëren. De halve kopie is weggehaald.';
+
+  @override
+  String get modelImportStopped =>
+      'Importeren gestopt. De halve kopie is weggehaald.';
+
+  @override
+  String get modelImportFailed => 'Het bestand kon niet worden gelezen.';
+
+  @override
+  String get readingSpeedLabel => 'Lezen van handschrift';
+
+  @override
+  String get readingSpeedAccurate => 'Nauwkeurig';
+
+  @override
+  String get readingSpeedFaster => 'Sneller';
+
+  @override
+  String get readingSpeedHint =>
+      'Sneller leest kleine tekens soms minder goed.';
+
+  @override
+  String get storageModels => 'Modellen';
+
+  @override
+  String get storageModelsHint => 'Geïmporteerd; niet in een back-up';
+
+  @override
+  String get backupRestoreModelHint =>
+      'Lees je handschrift van foto\'s? Het model gaat niet mee in een back-up: importeer het na het terugzetten opnieuw via Instellingen → Modellen.';
 }

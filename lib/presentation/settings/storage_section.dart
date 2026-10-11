@@ -5,14 +5,9 @@ import '../../data/storage/storage_counts.dart';
 import '../../domain/attachments/attachment.dart';
 import '../../domain/storage/storage_use.dart';
 import '../../l10n/app_localizations.dart';
-import '../../platform/app_directory/app_directory.dart';
-import '../../platform/app_directory/platform_app_directory.dart';
+import '../app_directory_provider.dart';
+import '../models/model_providers.dart';
 import '../startup/app_storage_provider.dart';
-
-/// Where Offload keeps its files on this device.
-final appDirectoryProvider = Provider<AppDirectory>(
-  (ref) => createPlatformAppDirectory(),
-);
 
 /// What Offload keeps on this device, worked out each time Settings opens
 /// (T7.5, PO 09-10-2026: not in the background).
@@ -38,12 +33,25 @@ final storageUseProvider = FutureProvider.autoDispose<StorageUse>((ref) async {
   );
 });
 
+/// The imported models (T6a.3), measured on their own so the rest of the
+/// section does not wait for the model folder; 0 when they cannot be
+/// measured (the row then stays away rather than showing a wrong size).
+final modelBytesProvider = FutureProvider.autoDispose<int>((ref) async {
+  try {
+    return await ref
+        .watch(modelStoreProvider)
+        .totalBytes(catalog: ref.watch(modelCatalogProvider));
+  } catch (_) {
+    return 0;
+  }
+});
+
 /// Settings → Storage (*Opslag*; T7.5, DD-006; PO 09-10-2026): the
 /// database, the temporary copies (Android) and how much is in it, the
 /// trash included.
 /// No button to clear anything: the copies go by themselves (PO). The
-/// attachments show per kind once there are any (T5.1); the speech model
-/// joins with T6.1.
+/// attachments show per kind once there are any (T5.1), the imported models
+/// once there are any (T6a.3; removed in Settings → Models).
 class StorageSection extends ConsumerWidget {
   const StorageSection({super.key, required this.headerStyle});
 
@@ -53,12 +61,13 @@ class StorageSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final use = ref.watch(storageUseProvider);
+    final modelBytes = ref.watch(modelBytesProvider).value ?? 0;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ListTile(title: Text(l10n.settingsStorageHeader, style: headerStyle)),
         ...switch (use) {
-          AsyncData(:final value) => _rows(value, l10n),
+          AsyncData(:final value) => _rows(value, modelBytes, l10n),
           AsyncError() => [ListTile(title: Text(l10n.storageUnavailable))],
           _ => const [LinearProgressIndicator()],
         },
@@ -66,7 +75,11 @@ class StorageSection extends ConsumerWidget {
     );
   }
 
-  static List<Widget> _rows(StorageUse use, AppLocalizations l10n) {
+  static List<Widget> _rows(
+    StorageUse use,
+    int modelBytes,
+    AppLocalizations l10n,
+  ) {
     final items = l10n.storageItems(use.items);
     final withTrash = use.trashedItems == 0
         ? items
@@ -109,6 +122,13 @@ class StorageSection extends ConsumerWidget {
               l10n,
             ),
           ),
+        ),
+      if (modelBytes > 0)
+        ListTile(
+          leading: const Icon(Icons.memory),
+          title: Text(l10n.storageModels),
+          subtitle: Text(l10n.storageModelsHint),
+          trailing: Text(sizeText(modelBytes, l10n)),
         ),
       ListTile(
         leading: const Icon(Icons.inventory_2_outlined),

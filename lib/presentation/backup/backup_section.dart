@@ -8,12 +8,15 @@ import '../../data/backup/backup_attachments.dart';
 import '../../data/storage/app_storage.dart';
 import '../../data/storage/storage_counts.dart';
 import '../../domain/backup/backup.dart';
+import '../../domain/models/model_catalog.dart';
 import '../../l10n/app_localizations.dart';
 import '../../platform/app_directory/app_directory.dart';
 import '../../platform/backup_file/backup_file_picker.dart';
 import '../../platform/cipher/platform_aead_cipher.dart';
 import '../../platform/share/share_channel.dart';
+import '../app_directory_provider.dart';
 import '../messages.dart';
+import '../models/model_providers.dart';
 import '../settings/storage_section.dart';
 import '../share_channel_provider.dart';
 import '../startup/app_storage_provider.dart';
@@ -218,6 +221,15 @@ class BackupSection extends ConsumerWidget {
     return deviceHasAttachments ? l10n.backupRestoreNoAttachments : null;
   }
 
+  /// The line about the handwriting model in the restore confirmation, or
+  /// null: a model never comes with a backup (DD-007), so a device without
+  /// it hears how to import it again (T6a.3, PO 11-10-2026 option a).
+  @visibleForTesting
+  static String? restoreModelLine({
+    required bool deviceHasModel,
+    required AppLocalizations l10n,
+  }) => deviceHasModel ? null : l10n.backupRestoreModelHint;
+
   /// Throws [_NoRoom] when the drive of [folder] has less than [needed]
   /// bytes free; goes on when the platform cannot tell.
   static Future<void> _checkRoom(
@@ -281,6 +293,17 @@ class BackupSection extends ConsumerWidget {
           )).attachmentBytes.isNotEmpty,
       l10n: l10n,
     );
+    // Models never come with a backup (DD-007): a device without the
+    // handwriting model hears that it is imported again (T6a.3, PO
+    // 11-10-2026 option a). Unknown counts as absent.
+    var hasModel = false;
+    try {
+      hasModel = !(await ref.read(modelStoreProvider).status(handwritingModel))
+          .isEmpty;
+    } catch (_) {
+      // Then the line shows; it only advises.
+    }
+    final modelLine = restoreModelLine(deviceHasModel: hasModel, l10n: l10n);
     if (!context.mounted) {
       AppStorage.discardRestore(directory);
       return;
@@ -305,6 +328,10 @@ class BackupSection extends ConsumerWidget {
               if (attachmentsLine != null) ...[
                 const SizedBox(height: 12),
                 Text(attachmentsLine),
+              ],
+              if (modelLine != null) ...[
+                const SizedBox(height: 12),
+                Text(modelLine),
               ],
             ],
           ),

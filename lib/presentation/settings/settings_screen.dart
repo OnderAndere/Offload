@@ -17,6 +17,7 @@ import '../backup/backup_section.dart';
 import '../help/help_scope.dart';
 import '../help/help_screen.dart';
 import '../messages.dart';
+import '../models/models_screen.dart';
 import '../overview/overview_providers.dart';
 import '../people/people_providers.dart';
 import '../reminders/reminder_providers.dart';
@@ -413,6 +414,15 @@ class SettingsScreen extends ConsumerWidget {
                   }
                 },
               ),
+            ),
+            const Divider(),
+            // The models for reading handwriting (T6a.3) and later speech.
+            ListTile(
+              leading: const Icon(Icons.memory),
+              title: Text(l10n.settingsModels),
+              subtitle: Text(l10n.settingsModelsHint),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => ModelsScreen.open(context),
             ),
             const Divider(),
             // Backup with a passphrase (T7.1, T7.2), at the end.

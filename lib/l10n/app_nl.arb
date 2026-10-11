@@ -4684,5 +4684,192 @@
   "photoMissing": "Bijlage niet in deze back-up",
   "@photoMissing": {
     "description": "Shown instead of a photo whose file was not in the restored backup (DD-007 point 7a)."
+  },
+  "settingsModels": "Modellen",
+  "@settingsModels": {
+    "description": "Row in Settings that opens the Models screen (T6a.3)."
+  },
+  "settingsModelsHint": "Voor het lezen van handschrift; alleen op dit toestel",
+  "@settingsModelsHint": {
+    "description": "Subtitle of the Models row in Settings."
+  },
+  "modelsTitle": "Modellen",
+  "@modelsTitle": {
+    "description": "Title of the Models screen."
+  },
+  "modelsIntro": "Een model werkt zonder internet, op dit toestel. Offload downloadt niets: je kiest de bestanden zelf, bijvoorbeeld van je computer, een NAS of een cloud-app. Modellen gaan nooit mee in een back-up.",
+  "@modelsIntro": {
+    "description": "Explanation at the top of the Models screen (DD-002, DD-007)."
+  },
+  "modelKindHandwriting": "Handschrift lezen",
+  "@modelKindHandwriting": {
+    "description": "What the handwriting model is for, as the title of its section."
+  },
+  "modelNameSize": "{name} · {size}",
+  "@modelNameSize": {
+    "description": "The model's own name and its size, e.g. 'Qwen3-VL-2B-Instruct · 1.6 GB'.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "modelReady": "Klaar voor gebruik",
+  "@modelReady": {
+    "description": "Status of a model whose files are all imported and checked."
+  },
+  "modelNotImported": "Niet geïmporteerd",
+  "@modelNotImported": {
+    "description": "Status of a model with no files on this device."
+  },
+  "modelMissing": "Nog nodig: {files}",
+  "@modelMissing": {
+    "description": "Status of a model with some files imported; the file names still needed.",
+    "placeholders": {
+      "files": {
+        "type": "String"
+      }
+    }
+  },
+  "modelSource": "Bron: {source} · licentie {licence}",
+  "@modelSource": {
+    "description": "Where the model's files are published and the name of its licence.",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "licence": {
+        "type": "String"
+      }
+    }
+  },
+  "modelImport": "Importeren…",
+  "@modelImport": {
+    "description": "Button that opens the file window to import a model's files."
+  },
+  "modelRemove": "Verwijderen",
+  "@modelRemove": {
+    "description": "Button that removes a model's files from this device."
+  },
+  "modelRemoveTitle": "Model verwijderen?",
+  "@modelRemoveTitle": {
+    "description": "Title of the confirmation before removing a model."
+  },
+  "modelRemoveBody": "{name} ({size}) verdwijnt van dit toestel. Je kunt het later opnieuw importeren.",
+  "@modelRemoveBody": {
+    "description": "Body of the confirmation before removing a model.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "modelFileTypeName": "Modelbestanden",
+  "@modelFileTypeName": {
+    "description": "Name of the model file type in the Windows Open window."
+  },
+  "modelImporting": "Model wordt gekopieerd en gecontroleerd…",
+  "@modelImporting": {
+    "description": "Shown while a model's files are copied and their checksums computed."
+  },
+  "modelImportProgress": "{done} van {total}",
+  "@modelImportProgress": {
+    "description": "Progress of a model import, e.g. '640 MB van 1.6 GB'.",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "modelImportStop": "Stoppen",
+  "@modelImportStop": {
+    "description": "Button that stops a running model import."
+  },
+  "modelImportTitle": "Model importeren",
+  "@modelImportTitle": {
+    "description": "Title of the message after a model import."
+  },
+  "modelImportReady": "Het model is klaar voor gebruik.",
+  "@modelImportReady": {
+    "description": "After an import that completed the model."
+  },
+  "modelImportUnknown": "Niet herkend als bestand van dit model, niet bewaard: {files}",
+  "@modelImportUnknown": {
+    "description": "After an import: files whose size or checksum matches no file of the model.",
+    "placeholders": {
+      "files": {
+        "type": "String"
+      }
+    }
+  },
+  "modelImportAlready": "Stond er al: {files}",
+  "@modelImportAlready": {
+    "description": "After an import: picked files this device has already.",
+    "placeholders": {
+      "files": {
+        "type": "String"
+      }
+    }
+  },
+  "modelImportNoRoom": "Te weinig vrije ruimte: nodig ongeveer {needed}, vrij {free}. Er is niets gekopieerd.",
+  "@modelImportNoRoom": {
+    "description": "Before copying: too little room for the model files plus a margin.",
+    "placeholders": {
+      "needed": {
+        "type": "String"
+      },
+      "free": {
+        "type": "String"
+      }
+    }
+  },
+  "modelImportFull": "De opslag raakte vol tijdens het kopiëren. De halve kopie is weggehaald.",
+  "@modelImportFull": {
+    "description": "The drive filled up during a model import."
+  },
+  "modelImportStopped": "Importeren gestopt. De halve kopie is weggehaald.",
+  "@modelImportStopped": {
+    "description": "After the user stopped a model import."
+  },
+  "modelImportFailed": "Het bestand kon niet worden gelezen.",
+  "@modelImportFailed": {
+    "description": "A picked model file could not be read, or the file window failed."
+  },
+  "readingSpeedLabel": "Lezen van handschrift",
+  "@readingSpeedLabel": {
+    "description": "Label of the choice Accurate / Faster under the handwriting model (DD-021)."
+  },
+  "readingSpeedAccurate": "Nauwkeurig",
+  "@readingSpeedAccurate": {
+    "description": "Choice: read handwriting with the model's full image detail."
+  },
+  "readingSpeedFaster": "Sneller",
+  "@readingSpeedFaster": {
+    "description": "Choice: read handwriting faster with less image detail."
+  },
+  "readingSpeedHint": "Sneller leest kleine tekens soms minder goed.",
+  "@readingSpeedHint": {
+    "description": "Note under the choice Accurate / Faster."
+  },
+  "storageModels": "Modellen",
+  "@storageModels": {
+    "description": "Row in Settings → Storage with the size of the imported models."
+  },
+  "storageModelsHint": "Geïmporteerd; niet in een back-up",
+  "@storageModelsHint": {
+    "description": "Subtitle of the Models row in Settings → Storage."
+  },
+  "backupRestoreModelHint": "Lees je handschrift van foto's? Het model gaat niet mee in een back-up: importeer het na het terugzetten opnieuw via Instellingen → Modellen.",
+  "@backupRestoreModelHint": {
+    "description": "Line in the restore confirmation when this device has no handwriting model (DD-007, T6a.3)."
   }
 }

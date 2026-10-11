@@ -3556,4 +3556,125 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get photoMissing => 'Attachment not in this backup';
+
+  @override
+  String get settingsModels => 'Models';
+
+  @override
+  String get settingsModelsHint =>
+      'For reading handwriting; on this device only';
+
+  @override
+  String get modelsTitle => 'Models';
+
+  @override
+  String get modelsIntro =>
+      'A model works without internet, on this device. Offload downloads nothing: you choose the files yourself, for example from your computer, a NAS or a cloud app. Models are never part of a backup.';
+
+  @override
+  String get modelKindHandwriting => 'Reading handwriting';
+
+  @override
+  String modelNameSize(String name, String size) {
+    return '$name · $size';
+  }
+
+  @override
+  String get modelReady => 'Ready to use';
+
+  @override
+  String get modelNotImported => 'Not imported';
+
+  @override
+  String modelMissing(String files) {
+    return 'Still needed: $files';
+  }
+
+  @override
+  String modelSource(String source, String licence) {
+    return 'Source: $source · licence $licence';
+  }
+
+  @override
+  String get modelImport => 'Import…';
+
+  @override
+  String get modelRemove => 'Remove';
+
+  @override
+  String get modelRemoveTitle => 'Remove model?';
+
+  @override
+  String modelRemoveBody(String name, String size) {
+    return '$name ($size) will be removed from this device. You can import it again later.';
+  }
+
+  @override
+  String get modelFileTypeName => 'Model files';
+
+  @override
+  String get modelImporting => 'Copying and checking the model…';
+
+  @override
+  String modelImportProgress(String done, String total) {
+    return '$done of $total';
+  }
+
+  @override
+  String get modelImportStop => 'Stop';
+
+  @override
+  String get modelImportTitle => 'Import model';
+
+  @override
+  String get modelImportReady => 'The model is ready to use.';
+
+  @override
+  String modelImportUnknown(String files) {
+    return 'Not recognised as a file of this model, not kept: $files';
+  }
+
+  @override
+  String modelImportAlready(String files) {
+    return 'Already there: $files';
+  }
+
+  @override
+  String modelImportNoRoom(String needed, String free) {
+    return 'Not enough free space: about $needed needed, $free free. Nothing was copied.';
+  }
+
+  @override
+  String get modelImportFull =>
+      'Storage filled up while copying. The partial copy was removed.';
+
+  @override
+  String get modelImportStopped =>
+      'Import stopped. The partial copy was removed.';
+
+  @override
+  String get modelImportFailed => 'The file could not be read.';
+
+  @override
+  String get readingSpeedLabel => 'Reading handwriting';
+
+  @override
+  String get readingSpeedAccurate => 'Accurate';
+
+  @override
+  String get readingSpeedFaster => 'Faster';
+
+  @override
+  String get readingSpeedHint =>
+      'Faster sometimes reads small signs less well.';
+
+  @override
+  String get storageModels => 'Models';
+
+  @override
+  String get storageModelsHint => 'Imported; not in a backup';
+
+  @override
+  String get backupRestoreModelHint =>
+      'Do you read handwriting from photos? The model is not part of a backup: import it again after restoring, through Settings → Models.';
 }

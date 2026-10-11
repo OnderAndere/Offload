@@ -671,7 +671,7 @@ first; the order follows the gate.
       now also fails on network imports in native code. Measured: PC (MSVC) 40/22 s per notebook/whiteboard photo
       at 2.2 GB, same text as S6; Fairphone 46–111 s at 2.3–2.5 GB, as fast as the prebuilt or faster. The emulator
       only loads the library (2.5 GB RAM is too little to read). No visible change until T6a.4
-- [ ] **T6a.3** Settings → *Models*, shared with speech: import of several files at once, free-space check,
+- [x] **T6a.3** Settings → *Models*, shared with speech: import of several files at once, free-space check,
       progress, SHA-256 against a list in the app, remove, the source and licence as text; the model as a row in
       Settings → *Storage*; never in a backup, and the message after a restore (DD-007). Replaces the import of T6.1
       — *PO 11-10-2026:* the files are chosen with the system's document picker, as for *Restore a backup*: on Android
@@ -689,6 +689,9 @@ first; the order follows the gate.
       screen shows source and licence name (Apache-2.0) in one line; the full text is in the manual. Version 0.6.4.
       Steps A (platform picker + copy with SHA-256), B (catalogue, `ModelStore`, choice in `local_state`), C (screens,
       Storage row, restore message), each reviewed
+      — *done 11-10-2026:* A 7b3d28a, B 4d972f7, C with version 0.6.4. The restore line sits in the restore
+      confirmation (there is no message after it). Copy speed (debug builds): emulator ~100–200 MB/s, Windows
+      ~60 MB/s, so the 1.5 GB model takes a quarter to half a minute from local storage
 - [ ] **T6a.4** The photo screen: take or choose a photo, optional straightening with four draggable corners
       (SPEC Q45), reading with progress, the clean-up of DD-021
 - [ ] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`
