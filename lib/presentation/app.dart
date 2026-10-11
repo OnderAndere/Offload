@@ -94,6 +94,7 @@ class _StartedAppState extends ConsumerState<_StartedApp> {
       _fetchCaptures();
       _returnRevisited();
       unawaited(_tellRestoreUndone());
+      unawaited(_removeOldPartialFiles());
     });
     // The search index follows every saved change, after saving (DD-016).
     ref.read(searchIndexingProvider);
@@ -114,6 +115,19 @@ class _StartedAppState extends ConsumerState<_StartedApp> {
         .returnRevisited(LocalDate.of(DateTime.now()))
         .then((_) {}, onError: (Object _) {}),
   );
+
+  /// Leftovers of older versions, once per device (DD-006): lists the whole
+  /// attachments folder, so it waits until a capture asked for at start has
+  /// closed (REQ-001); asynchronous, so a capture opened meanwhile is not
+  /// held up. A failure tries again at the next start.
+  Future<void> _removeOldPartialFiles() async {
+    if (_captureRoutes.captureOpen) await _captureRoutes.whenClosed();
+    try {
+      await ref.read(storageProvider).removeOldPartialFiles();
+    } catch (_) {
+      // Next start.
+    }
+  }
 
   /// A restored backup that did not open: the previous data came back at
   /// start (`AppStorage.open`); said once, as the restore the user confirmed

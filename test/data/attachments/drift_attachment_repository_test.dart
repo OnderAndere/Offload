@@ -106,7 +106,7 @@ void main() {
       ),
       throwsA(anything),
     );
-    expect(dir.listSync(), isEmpty);
+    expect(dir.listSync(recursive: true).whereType<File>(), isEmpty);
   });
 
   test('a person can own an attachment too (a business card)', () async {

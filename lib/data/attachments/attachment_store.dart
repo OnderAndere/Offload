@@ -16,9 +16,11 @@ import 'attachment_format.dart';
 /// ciphertext is written; reading verifies every segment before handing it
 /// on, so nothing unverified leaves the store.
 ///
-/// A file is written as `<id>.partial` and renamed when complete, so a
-/// stopped write never looks like a finished file; [removeLeftovers] clears
-/// what such a stop left behind (ciphertext only).
+/// A file is written in the folder [partialFolderName] and moved into place
+/// when complete, so a stopped write never looks like a finished file;
+/// [removeLeftovers] clears what such a stop left behind (ciphertext only).
+/// That folder is all a start has to list, however many files there are
+/// (REQ-001).
 class AttachmentStore {
   AttachmentStore({
     required this.directory,
@@ -52,7 +54,9 @@ class AttachmentStore {
   /// thumbnails opens no attachment, nor the reverse.
   final AttachmentVariant variant;
 
-  static const _partial = '.partial';
+  /// Where writes in progress are, inside [directory]. Never an attachment
+  /// id (see [isValidId]); a rename from here stays on the same volume.
+  static const partialFolderName = 'partial';
 
   /// Lower case only: the id is part of the key, and a case-insensitive
   /// file system (Windows) would otherwise open one file under two ids.
@@ -66,12 +70,16 @@ class AttachmentStore {
     return File('${directory.path}${Platform.pathSeparator}$id');
   }
 
+  static Directory _partialIn(Directory directory) =>
+      Directory('${directory.path}${Platform.pathSeparator}$partialFolderName');
+
   /// Encrypts [plaintext] as the file of attachment [id], replacing any
   /// earlier one. Returns the plaintext's size and SHA-256.
   Future<StoredAttachment> write(String id, Stream<List<int>> plaintext) async {
     final target = _file(id);
-    await directory.create(recursive: true);
-    final partial = File('${target.path}$_partial');
+    final partials = _partialIn(directory);
+    await partials.create(recursive: true);
+    final partial = File('${partials.path}${Platform.pathSeparator}$id');
     final header = AttachmentHeader.random(_random, segmentShift: segmentShift);
     final key = header.fileKey(_key, id, variant: variant);
     final aad = header.associatedData(id, variant: variant);
@@ -226,7 +234,9 @@ class AttachmentStore {
     if (!await directory.exists()) return 0;
     var total = 0;
     await for (final entity in directory.list()) {
-      if (entity is File && !entity.path.endsWith(_partial)) {
+      // Only attachment files: not the folders, nor a leftover of an older
+      // version that wrote `<id>.partial` here.
+      if (entity is File && isValidId(_name(entity))) {
         total += await entity.length();
       }
     }
@@ -237,16 +247,19 @@ class AttachmentStore {
   Future<int> removeLeftovers() async => removeLeftoversIn(directory);
 
   /// [removeLeftovers] for the attachments in [directory], at start, before
-  /// any write (AppStorage.open). Only ever ciphertext.
+  /// any write (AppStorage.open). Only ever ciphertext. Lists only the folder
+  /// of writes in progress, so the time stays the same however many
+  /// attachments there are (REQ-001).
   /// Never fails: a leftover that cannot go now (locked by a virus scanner
   /// or an indexer on Windows) goes at the next start, and must not keep
   /// the app from opening.
   static int removeLeftoversIn(Directory directory) {
     var removed = 0;
     try {
-      if (!directory.existsSync()) return 0;
-      for (final entity in directory.listSync()) {
-        if (entity is File && entity.path.endsWith(_partial)) {
+      final partials = _partialIn(directory);
+      if (!partials.existsSync()) return 0;
+      for (final entity in partials.listSync()) {
+        if (entity is File) {
           try {
             entity.deleteSync();
             removed++;
@@ -260,6 +273,38 @@ class AttachmentStore {
     }
     return removed;
   }
+
+  /// Removes the `<id>.partial` files that a version up to 0.6.2 wrote next
+  /// to the attachments in [directory], before [partialFolderName] existed;
+  /// whether none is left. Lists the whole folder, so it runs once, after
+  /// the start (AppStorage.removeOldPartialFiles), never in the start route
+  /// (REQ-001). Never fails, like [removeLeftoversIn].
+  static Future<bool> removeOldLeftoversIn(Directory directory) async {
+    var allGone = true;
+    try {
+      if (!await directory.exists()) return true;
+      await for (final entity in directory.list()) {
+        if (entity is! File) continue;
+        final name = _name(entity);
+        if (!name.endsWith(_oldPartial)) continue;
+        final id = name.substring(0, name.length - _oldPartial.length);
+        if (!isValidId(id)) continue;
+        try {
+          await entity.delete();
+        } on FileSystemException {
+          allGone = false;
+        }
+      }
+    } on FileSystemException {
+      return false;
+    }
+    return allGone;
+  }
+
+  static const _oldPartial = '.partial';
+
+  static String _name(File file) =>
+      file.path.substring(file.path.lastIndexOf(Platform.pathSeparator) + 1);
 }
 
 /// What [AttachmentStore.write] stored: the plaintext's size and SHA-256

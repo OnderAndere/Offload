@@ -744,8 +744,12 @@ Order from `photo-resize-port-spec.md`: first the service, then the capture flow
       500 photos (1,000 files) ≈ 9 ms, with 5,000 photos (10,000 files) ≈ 55 ms, on the emulator and on Windows alike
       — *proposal (to the PO):* write `.partial` files in a folder of their own (`attachments/partial/`, renamed into
       place), so the scan at start lists only that folder and stays constant however many photos there are
+      — *done 11-10-2026 (PO approved):* writes go through `partial/` in the attachments and the thumbnails folder; a
+      `<id>.partial` of a version up to 0.6.2 goes once per device after the start (DD-006)
       — *from the review of T5.3 (10-10-2026, clean-up):* `PhotoChannel` and `BackupFileChannel` each make an executor
       that is never shut down; one idle thread per activity instance. Shut them down in `onDestroy` or share one
+      — *done 11-10-2026:* every channel with a worker thread (photos, backup files, sharing, AES-GCM, the capture queue)
+      has `close()`, called in `MainActivity.onDestroy` after `super`; a running task still finishes
 - [ ] **T5.4** Own `ImageProvider` with a cache key and `cacheWidth`; lists show only
       thumbnails (DD-006 point 5)
       — *from T7.2b (PO 09-10-2026):* the first task that shows attachments (this or T6.2) shows *Attachment not in this backup*
@@ -1106,6 +1110,7 @@ migration (since T1.6 there is data).
   single-thread executor per channel instance and never shut it down; Android recreating `MainActivity` (e.g. a
   rotation) leaves an idle thread per instance until the process ends (harmless: no CPU, little memory). Tidy:
   one shared executor for both. Take along with the next Android-side task
+  — *done 11-10-2026* with the T5.3 review point: each executor is shut down in `MainActivity.onDestroy` instead
 - Sharing an item with attachments (REQ-044, Could) — first Q12
 - *Proposal (T7.2a, 09-10-2026):* `tool/check_dependencies.sh` checks Dart packages and native libraries, but
   not the Gradle/Maven dependencies of the Android build (a gap in DD-008). Now `androidx.core` is named in

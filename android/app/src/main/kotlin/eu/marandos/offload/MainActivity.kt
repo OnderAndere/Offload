@@ -12,6 +12,9 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : FlutterActivity() {
     private val backupFiles = BackupFileChannel(this)
     private val photos = PhotoChannel(this)
+    private val shares = ShareChannel(this)
+    private val aead = AeadChannel()
+    private var captureQueue: CaptureQueueChannel? = null
     private val reminders = ReminderChannel(this)
     private var reminderChannel: MethodChannel? = null
 
@@ -42,7 +45,7 @@ class MainActivity : FlutterActivity() {
             .setMethodCallHandler(KeyStoreChannel(applicationContext))
         // AES-256-GCM for the attachments (AndroidAeadCipher, T5.1).
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, AeadChannel.CHANNEL)
-            .setMethodCallHandler(AeadChannel())
+            .setMethodCallHandler(aead)
         // The app's private files directory for the database (AndroidAppDirectory).
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, APP_DIRECTORY_CHANNEL)
             .setMethodCallHandler { call, result ->
@@ -64,11 +67,11 @@ class MainActivity : FlutterActivity() {
             }
         // Captures from the home-screen widget (AndroidCaptureChannel).
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CaptureQueueChannel.CHANNEL)
-            .setMethodCallHandler(CaptureQueueChannel(applicationContext))
+            .setMethodCallHandler(CaptureQueueChannel(applicationContext).also { captureQueue = it })
         // Sharing an item as text and a backup as a file (AndroidShareChannel);
         // needs the activity to start the share menu.
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ShareChannel.CHANNEL)
-            .setMethodCallHandler(ShareChannel(this))
+            .setMethodCallHandler(shares)
         // Dialling a number or mailing an address of a person
         // (AndroidContactLauncher); needs the activity to start them.
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ContactLauncherChannel.CHANNEL)
@@ -83,6 +86,18 @@ class MainActivity : FlutterActivity() {
         // Deadline reminders (AndroidReminderScheduler, T4.1).
         reminderChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ReminderChannel.CHANNEL)
             .also { it.setMethodCallHandler(reminders) }
+    }
+
+    // Each channel has a worker thread of its own; made again with the
+    // activity (low memory, "Don't keep activities"), the old ones would stay
+    // idle until the process ends. After super: no call reaches them then.
+    override fun onDestroy() {
+        super.onDestroy()
+        backupFiles.close()
+        photos.close()
+        shares.close()
+        aead.close()
+        captureQueue?.close()
     }
 
     // A tap on a reminder while the app runs: tell the app what to open.

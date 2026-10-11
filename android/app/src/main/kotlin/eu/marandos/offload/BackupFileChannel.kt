@@ -26,6 +26,9 @@ class BackupFileChannel(private val activity: Activity) : MethodChannel.MethodCa
     private val io = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
 
+    /** Lets the worker thread end with this activity; a running task finishes. */
+    fun close() = io.shutdown()
+
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "pickSaveTarget" -> pick(result, REQUEST_SAVE) {

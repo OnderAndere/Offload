@@ -21,6 +21,9 @@ class AeadChannel : MethodChannel.MethodCallHandler {
     private val worker = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
 
+    /** Lets the worker thread end with this activity; a running task finishes. */
+    fun close() = worker.shutdown()
+
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         val mode = when (call.method) {
             "seal" -> Cipher.ENCRYPT_MODE

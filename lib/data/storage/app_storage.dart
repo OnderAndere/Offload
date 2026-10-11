@@ -114,6 +114,7 @@ class AppStorage {
   static const nudgeOnKey = 'nudge_on';
   static const nudgeAfterDaysKey = 'nudge_after_days';
   static const todayNotesOnKey = 'today_notes_on';
+  static const oldPartialFilesClearedKey = 'old_partial_files_cleared';
   static const _systemLanguage = 'system';
   static const _true = 'true';
   static const _false = 'false';
@@ -323,7 +324,9 @@ class AppStorage {
     }
     final key = crypto.deriveKey(KeyPurpose.database);
     // A write stopped halfway left only ciphertext; it goes (T5.1), also
-    // of a thumbnail (T5.2).
+    // of a thumbnail (T5.2). Only the small folders of writes in progress
+    // are listed; leftovers of older versions go after the start
+    // ([removeOldPartialFiles]).
     final attachments = Directory(
       '${directory.path}${Platform.pathSeparator}$attachmentsFolderName',
     );
@@ -437,6 +440,23 @@ class AppStorage {
       databaseKey,
       attachmentsKey,
     );
+  }
+
+  /// Once per device, after the start: removes the `<id>.partial` files a
+  /// version up to 0.6.2 left next to the attachments and thumbnails
+  /// ([AttachmentStore.removeOldLeftoversIn]). Remembered only when none is
+  /// left, so a file locked now goes at a later start (DD-006).
+  Future<void> removeOldPartialFiles() async {
+    final attachments = attachmentsDirectory;
+    if (attachments == null) return;
+    if (await _localState.read(oldPartialFilesClearedKey) == _true) return;
+    final files = await AttachmentStore.removeOldLeftoversIn(attachments);
+    final thumbnails = await AttachmentStore.removeOldLeftoversIn(
+      _thumbnailsIn(attachments),
+    );
+    if (files && thumbnails) {
+      await _localState.write(oldPartialFilesClearedKey, _true);
+    }
   }
 
   Future<void> saveLanguageChoice(LanguageChoice choice) async {

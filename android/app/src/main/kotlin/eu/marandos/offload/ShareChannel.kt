@@ -29,6 +29,9 @@ class ShareChannel(private val activity: Activity) : MethodChannel.MethodCallHan
     private val io = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
 
+    /** Lets the worker thread end with this activity; a running task finishes. */
+    fun close() = io.shutdown()
+
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "shareText" -> shareText(call, result)

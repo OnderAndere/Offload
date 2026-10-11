@@ -35,6 +35,9 @@ class PhotoChannel(private val activity: Activity) : MethodChannel.MethodCallHan
     private val io = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
 
+    /** Lets the worker thread end with this activity; a running task finishes. */
+    fun close() = io.shutdown()
+
     /** The open request: its answer, the camera's file, the largest photo taken. */
     private class Pending(val result: MethodChannel.Result, val cameraFile: File?, val maxBytes: Long)
 

@@ -166,7 +166,11 @@ void main() {
 
   test('a thumbnail written halfway is cleared at the next start', () async {
     final id = await photos.add(owner: owner, source: photo());
-    final partial = File('${thumbnailFile(id).path}.partial')
+    final partials = Directory(
+      '${storage.thumbnailsDirectory!.path}${Platform.pathSeparator}'
+      '${AttachmentStore.partialFolderName}',
+    )..createSync();
+    final partial = File('${partials.path}${Platform.pathSeparator}$id')
       ..writeAsBytesSync([1, 2, 3]);
     await storage.close();
     storage = await AppStorage.open(directory: dir, keyStore: keys);

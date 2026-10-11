@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:offload/data/attachments/attachment_store.dart';
 import 'package:offload/data/database/app_database.dart';
 import 'package:offload/data/storage/app_storage.dart';
 import 'package:offload/domain/items/item_enums.dart';
@@ -55,7 +56,11 @@ void main() {
     final folder = Directory(
       '${dir.path}${Platform.pathSeparator}${AppStorage.attachmentsFolderName}',
     )..createSync();
-    final leftover = File('${folder.path}${Platform.pathSeparator}x.partial')
+    final partials = Directory(
+      '${folder.path}${Platform.pathSeparator}'
+      '${AttachmentStore.partialFolderName}',
+    )..createSync();
+    final leftover = File('${partials.path}${Platform.pathSeparator}x')
       ..writeAsBytesSync([1, 2, 3]);
     final kept = File('${folder.path}${Platform.pathSeparator}kept')
       ..writeAsBytesSync([4]);
@@ -67,6 +72,34 @@ void main() {
     expect(storage.attachmentsDirectory!.path, folder.path);
     expect(leftover.existsSync(), isFalse);
     expect(kept.existsSync(), isTrue);
+  });
+
+  test('leftovers of a version up to 0.6.2 go once, after the start, also '
+      'of thumbnails (DD-006)', () async {
+    String sep(String a, String b) => '$a${Platform.pathSeparator}$b';
+    final folder = Directory(sep(dir.path, AppStorage.attachmentsFolderName));
+    final thumbs = Directory(sep(folder.path, AppStorage.thumbnailsFolderName))
+      ..createSync(recursive: true);
+    const id = '0192a3b4-c5d6-7e8f-9a0b-1c2d3e4f5a6b';
+    final kept = File(sep(folder.path, id))..writeAsBytesSync([4]);
+    final old = File(sep(folder.path, '$id.partial'))..writeAsBytesSync([1]);
+    final oldThumb = File(sep(thumbs.path, '$id.partial'))
+      ..writeAsBytesSync([2]);
+
+    final storage = await open(FakeKeyStore());
+    addTearDown(storage.close);
+    // Not in the start route (REQ-001).
+    expect(old.existsSync(), isTrue);
+
+    await storage.removeOldPartialFiles();
+    expect(old.existsSync(), isFalse);
+    expect(oldThumb.existsSync(), isFalse);
+    expect(kept.existsSync(), isTrue);
+
+    // Remembered: a later one is not looked for again.
+    final later = File(sep(folder.path, '$id.partial'))..writeAsBytesSync([3]);
+    await storage.removeOldPartialFiles();
+    expect(later.existsSync(), isTrue);
   });
 
   test('a restart keeps key, device id and data', () async {

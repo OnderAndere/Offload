@@ -176,15 +176,59 @@ void main() {
       store.write(id, failing()),
       throwsA(isA<FileSystemException>()),
     );
-    expect(dir.listSync(), isEmpty);
+    expect(dir.listSync(recursive: true).whereType<File>(), isEmpty);
   });
+
+  File partialOf(String id) => File(
+    '${dir.path}${Platform.pathSeparator}${AttachmentStore.partialFolderName}'
+    '${Platform.pathSeparator}$id',
+  );
 
   test('leftover partial files are removed and never counted', () async {
     await store.write(id, Stream.value(bytes(10)));
-    File('${fileOf(otherId).path}.partial').writeAsBytesSync(bytes(500));
+    partialOf(otherId).writeAsBytesSync(bytes(500));
+    // A leftover of a version that wrote next to the files is not counted.
+    File('${fileOf(otherId).path}.partial').writeAsBytesSync(bytes(300));
     expect(await store.totalBytes(), fileOf(id).lengthSync());
     expect(await store.removeLeftovers(), 1);
-    expect(dir.listSync(), hasLength(1));
+    expect(partialOf(otherId).existsSync(), isFalse);
+    expect(fileOf(id).existsSync(), isTrue);
+  });
+
+  test('leftovers of a version up to 0.6.2 next to the files go, nothing '
+      'else', () async {
+    await store.write(id, Stream.value(bytes(10)));
+    final old = File('${fileOf(otherId).path}.partial')
+      ..writeAsBytesSync(bytes(300));
+    final notOurs = File('${dir.path}${Platform.pathSeparator}notes.partial')
+      ..writeAsBytesSync(bytes(3));
+    expect(await AttachmentStore.removeOldLeftoversIn(dir), isTrue);
+    expect(old.existsSync(), isFalse);
+    expect(notOurs.existsSync(), isTrue);
+    expect(fileOf(id).existsSync(), isTrue);
+    expect(
+      await AttachmentStore.removeOldLeftoversIn(
+        Directory('${dir.path}${Platform.pathSeparator}missing'),
+      ),
+      isTrue,
+    );
+  });
+
+  test('a write goes through the partial folder, not next to the files '
+      '(REQ-001)', () async {
+    final seen = <String>[];
+    Stream<List<int>> watched() async* {
+      yield bytes(segment);
+      seen.addAll(
+        dir.listSync(recursive: true).whereType<File>().map((f) => f.path),
+      );
+      yield bytes(segment);
+    }
+
+    await store.write(id, watched());
+    expect(seen, [partialOf(id).path]);
+    expect(fileOf(id).existsSync(), isTrue);
+    expect(partialOf(id).existsSync(), isFalse);
   });
 
   test('delete, exists and the total size', () async {
