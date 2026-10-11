@@ -1110,3 +1110,25 @@ abstract class ShareChannel {
 **Consequences.** One more pure-Dart dependency (two packages); the manual's assets grow the app a little (about 150 kB of text). The documentation agent writes English from now on; CLAUDE.md (language, agents and gates, Definition of done) changes with it.
 
 **Realises:** REQ-065; supports REQ-055 (T10.10).
+
+---
+
+## DD-021 · Image input: handwriting read by an on-device vision model 🔍
+
+**Context.** REQ-064 asks for thoughts captured from a photo of handwriting (whiteboard, notebook), fully offline. Spike S6 (`docs/spikes/S6-handwriting.md`) tested eight small vision-language models with llama.cpp on 14 photos made by the PO; the PO gave GO on 11-10-2026 (SPEC Q43–Q45).
+
+**Choice.**
+- **Engine:** llama.cpp (`llama`, `ggml`, `ggml-base`, one `ggml-cpu` backend, `mtmd`) behind an own C shim and `dart:ffi`, run in an isolate, as whisper.cpp in S4 (DD-002). Built without `LLAMA_CURL` and without `common`: none of the linked libraries references a network library. The libraries go into `tool/allowed_native_libs.txt` and their licence (MIT) into `bundledLicenses` (PO 11-10-2026).
+- **Model:** Qwen3-VL-2B-Instruct, `Q4_K_M` plus `mmproj` `Q8_0`, 1,552 MB, Apache-2.0, from Hugging Face `Qwen/Qwen3-VL-2B-Instruct-GGUF` at commit `52d6c8f`; SHA-256 `089d75c5…6c2ae` and `f9a68fab…f9c82` (full values in the S6 report). The same files serve Android and Windows. Imported by hand through the shared Settings → *Models* and checked against the hashes in the app (DD-002); never in a backup (DD-007); its licence is shown on import and in the manual, not under *About Offload* (it is not bundled).
+- **Settings:** longest side 1280 px, context 2048, the model's own number of image tokens, `temp 0`, the literal prompt of S6 (prompt B). Measured on the PC: 20–41 s per photo, 3.0 GB peak. `--image-max-tokens 512` is the fallback when the phone is too slow (half the time, 0.3 GB less, about 8 points fewer exact tokens).
+- **Phone gate:** the first task of M6a measures the model on the Fairphone (the lower bound) before any UI is built. Pass: Android does not kill the app, and a photo takes at most about 2 minutes; otherwise try the fallback, and NO-GO if that fails too (PO 11-10-2026).
+- **Clean-up after reading**, before the inline parser: a token sign followed by a space joins the next word (`@ Harry` → `@Harry`), `×` becomes `*`, a lone `-` line is dropped. These are the model's consistent habits; nothing else is changed (AC REQ-064 a).
+- **Thoughts:** the `-` convention stays (AC REQ-064 b, SPEC Q44).
+- **Straightening:** an optional step before reading, with four draggable corners that start at the photo's corners; the straightened copy, like the photo, lives only in memory and is discarded after confirming (AC REQ-064 d). No automatic corner detection and no contrast step (S6: no gain). The photo attachment of DD-006 gets only *rotate 90°* for now (SPEC Q45).
+- **Review screen** (AC REQ-064 c): one candidate per thought; tokens, dates and numbers must be easy to check, as a misread letter or digit changes exactly those.
+
+**Alternatives.** InternVL3-1B (822 MB): fails on the notebook (repeats, invents tokens). SmolVLM-256M/500M: too weak. InternVL3-2B (1,453 MB): invented tokens on the synthetic set. Qwen2.5-VL-3B: over the limit, non-commercial licence upstream. Gemma 4 E2B: over the limit, crashed on b11526. The platform OCR engines: ML Kit sends usage metrics to Google (REQ-015) and is Android only; Windows.Media.Ocr needs package identity and reads print; Tesseract is not made for handwriting (sources in the S6 report).
+
+**Consequences.** About 1.5 GB of model the user imports, and about 3 GB of memory while a photo is read; a native library of about 7 MB per platform. Reading takes tens of seconds: the photo screen shows progress and the quick capture route (REQ-001) never loads the model. Settings → *Models* is shared with speech (M6), so M6a builds it first.
+
+**Realises:** REQ-064; supports DD-010.

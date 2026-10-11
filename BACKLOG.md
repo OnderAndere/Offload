@@ -36,7 +36,7 @@ Goal: test the four assumptions that could bring the spec down. The result is a 
       model size are measured (SPEC Q4). (DD-002)
       → **GO**; Q4 decided: `ggml-small-q5_1` (181 MB). Speed on the phone not measured yet
       (the emulator is not representative), follows in T6.1. See [`docs/spikes/S4-whisper.md`](docs/spikes/S4-whisper.md)
-- [~] **S6 · Handwriting from a photo with a small vision model** (REQ-064, DD-010, DD-002; PO
+- [x] **S6 · Handwriting from a photo with a small vision model** (REQ-064, DD-010, DD-002; PO
       09-10-2026) — llama.cpp (`llama-mtmd-cli`, GGUF + `mmproj`) on Windows (CPU) first.
       Candidates: SmolVLM-500M, InternVL3-2B, Qwen2.5-VL-3B, Gemma 4 E2B, plus Qwen3-VL-2B (PO:
       yes, as another candidate within the size limit); per model source, version, licence, size and SHA-256,
@@ -52,6 +52,13 @@ Goal: test the four assumptions that could bring the spec down. The result is a 
       whether the same model could answer Q14 (business cards, S5)
       — *PO 10-10-2026 (SPEC Q45):* the report also advises on cropping and straightening a photo (four corners):
       does straightening help the model enough to offer it in M6a, and should the photo capture of T5.3 get it too
+      — *done 11-10-2026:* `docs/spikes/S6-handwriting.md` (c7b3dda). **GO (PO 11-10-2026)** with Qwen3-VL-2B (1,552 MB,
+      Apache-2.0) at 1280 px and context 2048: about 5 % character errors, 77 % of the tokens exact after a small
+      clean-up, 20–41 s and 3.0 GB on the PC (DD-021). PO decisions: the phone measurement is the gate and first task
+      of M6a (not killed, at most about 2 minutes per photo; fallback `--image-max-tokens 512`); the `-` convention
+      stays (Q44); four-corner straightening in M6a, *rotate 90°* for attachments (Q45, T5.9); M6a before M6, the
+      Whisper measurement stays with T6.1 (Q43); llama.cpp's native libraries and MIT licence allowed. Q14: probably
+      the same model, untested
 
 ## M1 · Walking skeleton
 
@@ -543,7 +550,7 @@ build order at M3).
 
 **Order for the rest of v1 (PO decision 04-10-2026):** M4 (T4.2–T4.7 and the nudge of T10.1) → T1.11 (Offload bar, PO 06-10-2026) → T4b.1 and T4b.2 (PO 06-10-2026) → M4b (after
 2–4 weeks of use) → M7 (T7.3, T7.5) → M6 (T5.1 first, then T7.2b backup with attachments, then T6.1–T6.3, then
-T7.4; PO 09-10-2026; before it M7b, Help in the app, T8.11–T8.14, PO 09-10-2026, and after S6 possibly M6a) → M5 (*PO 10-10-2026: M5 now, before M6, while S6 waits*; T5.2–T5.8, with regenerating thumbnails on restore (rest of T7.2) and T3.8) → M8, so that finishing (accessibility, the manual) comes last. The sections below
+T7.4; PO 09-10-2026; before it M7b, Help in the app, T8.11–T8.14, PO 09-10-2026, and M6a, image input, GO after S6, PO 11-10-2026) → M5 (*PO 10-10-2026: M5 now, before M6, while S6 waits*; T5.2–T5.8, with regenerating thumbnails on restore (rest of T7.2) and T3.8) → M8, so that finishing (accessibility, the manual) comes last. The sections below
 follow that order; the milestone numbers stay.
 
 ## M7 · Backup, export, clean-up
@@ -637,14 +644,25 @@ or M6.
       `HelpScope`/`HelpButton`/`HelpKey`, the table `HelpTopic` in `lib/domain/help/`; checked on the emulator (1×, 1.5×,
       2× text) and in the Windows release (F1, Esc). **M7b complete** (0.6.0)
 
-## M6a · Image input (proposal, only if S6 gives GO; SPEC Q43)
+## M6a · Image input (GO after S6, PO 11-10-2026; before M6, SPEC Q43)
 
-*Proposal (PO 09-10-2026): image input comes before speech (M6). The PO decides after S6.* It
-needs neither T5.1 nor M5: the photo is discarded after confirming (AC REQ-064 d). Tasks follow
-from the S6 report; expected: the native llama.cpp library (a C shim + `dart:ffi`, as in S4),
-Settings → *Models* shared with speech (import of several files at once, a free-space check,
-progress, SHA-256 against a list in the app, remove, the source as text; replaces the import of
-T6.1), the photo and review screen, and the model as a row in Settings → *Storage*.
+*PO 11-10-2026:* S6 gave GO with Qwen3-VL-2B (DD-021); M6a comes before speech (M6). It needs
+neither T5.1 nor M5: the photo is discarded after confirming (AC REQ-064 d). Each task is planned
+first; the order follows the gate.
+
+- [ ] **T6a.1** Phone gate: llama.cpp for Android arm64 (C shim + `dart:ffi`, as in S4) in a spike app, the model
+      on the Fairphone; measure time per photo and peak memory at 1280 px, context 2048. Pass: not killed, at most
+      about 2 minutes per photo; else try `--image-max-tokens 512`; NO-GO if that fails too (DD-021). Whisper
+      waits for T6.1 (PO 11-10-2026)
+- [ ] **T6a.2** The native library in the app on Android and Windows: shim, isolate, `tool/allowed_native_libs.txt`
+      and `bundledLicenses` (MIT, PO 11-10-2026), the network check of DD-008
+- [ ] **T6a.3** Settings → *Models*, shared with speech: import of several files at once, free-space check,
+      progress, SHA-256 against a list in the app, remove, the source and licence as text; the model as a row in
+      Settings → *Storage*; never in a backup, and the message after a restore (DD-007). Replaces the import of T6.1
+- [ ] **T6a.4** The photo screen: take or choose a photo, optional straightening with four draggable corners
+      (SPEC Q45), reading with progress, the clean-up of DD-021
+- [ ] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`
+      items after confirming (AC REQ-064 c); the button in capture only with a verified model
 
 ## M6 · Speech
 
@@ -773,6 +791,9 @@ Order from `photo-resize-port-spec.md`: first the service, then the capture flow
       — *PO 09-10-2026 (after T7.2a):* take along here: a received `.offload` backup ("Open with" or
       "Share" → Offload, e.g. a mail attachment) starts *Restore a backup* with that file. Restoring from
       another place already works through the document picker (Downloads, NAS, cloud apps; checked by the PO)
+- [ ] **T5.9** *Rotate 90°* for a photo in the item detail (SPEC Q45, PO 11-10-2026): a photo that came out on its
+      side is turned, both files rewritten and the thumbnail made again; four-corner straightening of a kept photo
+      is parked
 
 ## M8 · Finishing
 
@@ -1125,7 +1146,9 @@ migration (since T1.6 there is data).
   the release gate unseen. Option: compare the resolved `releaseRuntimeClasspath` (or the merged manifest
   report) against a `tool/allowed_android_deps.txt`
 - Showing an item as a QR code (REQ-045, Could) — after T9.1
-- OCR of business cards (REQ-042, Could) — first spike S5 (Q14); S6 says whether its model could serve here too
+- OCR of business cards (REQ-042, Could) — first spike S5 (Q14); S6: probably the same model (Qwen3-VL-2B, DD-021), untested
+- *PO 11-10-2026 (SPEC Q45):* four-corner straightening of a kept photo attachment, reusing the corners of M6a; and
+  automatic corner detection for M6a. Only if missed in use
 - *PO 09-10-2026 (REQ-064 a):* let the vision model *suggest* tokens (`@person`, `!date`, …) for handwriting
   that has none; for now the transcription is literal
 - File-based sync through a chosen folder (the app stays network-free) — can reuse the package format
@@ -1164,8 +1187,8 @@ migration (since T1.6 there is data).
 | Q12 | Clean-up period for temporary files when sharing (attachments, vCard); answered for the backup and the export 09-10-2026 | T3.7, REQ-044 |
 | Q13 | QR pairing: `CAMERA` permission and scanning library | T9.1 |
 | Q14 | OCR engine for business cards (spike S5) | REQ-042 |
-| Q43 | Image input (M6a) before speech (M6), if S6 gives GO | Order after M4b |
-| Q44 | Handwriting: is the `-` convention needed (AC REQ-064 b)? Answered by S6 | REQ-064 |
+| Q43 | Image input (M6a) before speech (M6), if S6 gives GO — *answered 11-10-2026: yes* | Order after M4b |
+| Q44 | Handwriting: is the `-` convention needed (AC REQ-064 b)? — *answered 11-10-2026: it stays* | REQ-064 |
 | Q15 | New device id after restoring a backup | T7.2, T9.1 |
 | Q16 | Default country and library for E.164 phone numbers | T3.6 |
 | Q22 | After v1: first sync (M9) or first the medium items from M10 | Nothing (planning) |
