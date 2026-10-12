@@ -5173,6 +5173,66 @@ abstract class AppLocalizations {
   /// In nl, this message translates to:
   /// **'Het lezen duurde langer dan {minutes} minuten en is gestopt. Waarschijnlijk heeft het toestel te weinig vrij geheugen: sluit andere apps en probeer het opnieuw.'**
   String handwritingTooLong(int minutes);
+
+  /// Title of the review screen after reading handwriting (REQ-064 c, T6a.5).
+  ///
+  /// In nl, this message translates to:
+  /// **'Gedachten controleren'**
+  String get reviewThoughtsTitle;
+
+  /// Checkbox of one thought on the review screen: kept when saving.
+  ///
+  /// In nl, this message translates to:
+  /// **'Opnemen'**
+  String get reviewThoughtsInclude;
+
+  /// Saving the thoughts failed; nothing was saved.
+  ///
+  /// In nl, this message translates to:
+  /// **'Opslaan is mislukt; de tekst staat er nog. Probeer het opnieuw.'**
+  String get reviewThoughtsSaveFailed;
+
+  /// Confirmation when leaving the review screen after an edit.
+  ///
+  /// In nl, this message translates to:
+  /// **'Gelezen tekst weggooien?'**
+  String get reviewThoughtsDiscardTitle;
+
+  /// Body of the discard confirmation.
+  ///
+  /// In nl, this message translates to:
+  /// **'Je aanpassingen gaan verloren. De foto blijft, zodat je opnieuw kunt lezen.'**
+  String get reviewThoughtsDiscardBody;
+
+  /// Button that confirms leaving the review screen.
+  ///
+  /// In nl, this message translates to:
+  /// **'Weggooien'**
+  String get reviewThoughtsDiscard;
+
+  /// Intro on the review screen; count is the number of thoughts read.
+  ///
+  /// In nl, this message translates to:
+  /// **'{count, plural, =1{1 gedachte gelezen.} other{{count} gedachten gelezen.}} Pas aan wat niet klopt en sla over wat je niet wilt; pas na Opslaan komen ze in de inbox.'**
+  String reviewThoughtsIntro(int count);
+
+  /// Save button of the review screen; count is the number of thoughts kept.
+  ///
+  /// In nl, this message translates to:
+  /// **'{count, plural, =0{Niets op te slaan} =1{1 opslaan} other{{count} opslaan}}'**
+  String reviewThoughtsSave(int count);
+
+  /// Label of the field of one thought.
+  ///
+  /// In nl, this message translates to:
+  /// **'Gedachte {index}'**
+  String reviewThoughtLabel(int index);
+
+  /// Message after the thoughts read from a photo were saved.
+  ///
+  /// In nl, this message translates to:
+  /// **'{count, plural, =1{1 item in de inbox} other{{count} items in de inbox}}'**
+  String handwritingSaved(int count);
 }
 
 class _AppLocalizationsDelegate

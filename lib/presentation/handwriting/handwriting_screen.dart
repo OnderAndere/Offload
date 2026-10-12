@@ -9,6 +9,7 @@ import '../../domain/handwriting/reading_clean_up.dart';
 import '../../domain/handwriting/reading_clock.dart';
 import '../../domain/handwriting/reading_policy.dart';
 import '../../domain/handwriting/straightening.dart';
+import '../../domain/handwriting/thoughts.dart';
 import '../../domain/help/help_topics.dart';
 import '../../l10n/app_localizations.dart';
 import '../../platform/handwriting/handwriting_reader.dart';
@@ -21,12 +22,14 @@ import '../photos/photo_providers.dart';
 import '../photos/photo_source_sheet.dart';
 import 'corners_editor.dart';
 import 'handwriting_providers.dart';
+import 'thoughts_review_screen.dart';
 
-/// Reads handwriting from a photo (REQ-064, T6a.4): takes or chooses a
-/// photo, then the photo screen. The cleaned-up text, or null when the user
-/// stopped somewhere or nothing was read. A failure to get the photo is a
-/// message. Only with [model] (`handwritingModelProvider`).
-Future<String?> readHandwriting(
+/// Reads handwriting from a photo (REQ-064, T6a.4, T6a.5): takes or chooses
+/// a photo, then the photo screen and the review screen. The number of
+/// items saved, or null when the user stopped somewhere or nothing was
+/// read. A failure to get the photo is a message. Only with [model]
+/// (`handwritingModelProvider`).
+Future<int?> readHandwriting(
   BuildContext context,
   WidgetRef ref,
   HandwritingModel model,
@@ -64,15 +67,17 @@ Future<String?> readHandwriting(
   }
   if (bytes == null) return null;
   return navigator.push(
-    MaterialPageRoute<String>(
+    MaterialPageRoute<int>(
       builder: (_) => HandwritingScreen(photo: bytes!, model: model),
     ),
   );
 }
 
 /// The photo screen (T6a.4, DD-021): four corners to straighten the photo,
-/// optionally, then reading with progress and a stop button. Closes with
-/// the text read, cleaned up (DD-021). After *Stop* or a failure it goes back
+/// optionally, then reading with progress and a stop button. The text read,
+/// cleaned up (DD-021), goes to the review screen by thought (T6a.5); the
+/// screen closes with the number of items saved there, and stays at the
+/// corners when the user comes back from it. After *Stop* or a failure it goes back
 /// to the corners with the same photo (PO 12-10-2026). The photo and every
 /// copy of it live only in memory and go with the screen (AC REQ-064 d).
 class HandwritingScreen extends ConsumerStatefulWidget {
@@ -225,7 +230,6 @@ class _HandwritingScreenState extends ConsumerState<HandwritingScreen>
         cancel: cancel,
       );
       text = cleanUpReading(reading.text);
-      if (text.isEmpty) message = l10n.handwritingNothingFound;
     } on HandwritingReaderException catch (e) {
       modelGone =
           e.failure == HandwritingFailure.modelUnreadable ||
@@ -255,14 +259,22 @@ class _HandwritingScreenState extends ConsumerState<HandwritingScreen>
     // Looked at again, so the button in capture goes when the files did
     // (AC REQ-064, *Only with a model*).
     if (modelGone) ref.invalidate(handwritingModelProvider);
-    if (text != null && text.isNotEmpty) {
-      Navigator.of(context).pop(text);
-      return;
+    final thoughts = text == null ? const <String>[] : splitThoughts(text);
+    if (text != null && thoughts.isEmpty) {
+      message = l10n.handwritingNothingFound;
     }
     setState(() {
       _stage = _Stage.corners;
       _message = message;
     });
+    if (thoughts.isEmpty) return;
+    final saved = await Navigator.of(context).push<int>(
+      MaterialPageRoute(
+        builder: (_) => ThoughtsReviewScreen(thoughts: thoughts),
+      ),
+    );
+    // Back from the review: the corners again, with the same photo.
+    if (saved != null && mounted) Navigator.of(context).pop(saved);
   }
 
   void _tick() {

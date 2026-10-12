@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.7.0] – 2026-10-12
+
+### Changed
+
+- **Read handwriting**: after reading, a new screen *Review thoughts* shows one field per thought (each line that
+  starts with `-`; a line without `-` continues the thought before it), with the people, tags, dates and priority
+  it will get, so a misread date or sign shows. Correct a thought, or untick *Include* to skip it; *Save* (on
+  Windows also Ctrl+Enter) puts the kept thoughts in the inbox as items of their own, marked as captured via
+  handwriting, and *Capture* closes when nothing was typed in it. Nothing is saved before that; going back returns
+  to the photo, asking first when you changed something.
+
 ### Fixed
 
 - *Read handwriting*: a photo that cannot be opened always gives a message instead of a screen that keeps saying

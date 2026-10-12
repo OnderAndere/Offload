@@ -33,7 +33,8 @@ final readingTimeSourceProvider = Provider<Duration Function()>((ref) {
 /// The handwriting model when this device can read with it: the reader's
 /// library is there and all model files are (AC REQ-064, *Only with a
 /// model*); null otherwise. Kept for the app's life, so capture asks it
-/// once; invalidated by Settings → *Models* after an import or a removal.
+/// once; invalidated by Settings → *Models* after an import or a removal,
+/// and by the photo screen when the model turned out unreadable.
 final handwritingModelProvider = FutureProvider<HandwritingModel?>((ref) async {
   final spec = ref
       .watch(modelCatalogProvider)

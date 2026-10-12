@@ -12,6 +12,7 @@ import 'package:offload/platform/handwriting/handwriting_reader.dart';
 import 'package:offload/presentation/handwriting/corners_editor.dart';
 import 'package:offload/presentation/handwriting/handwriting_providers.dart';
 import 'package:offload/presentation/handwriting/handwriting_screen.dart';
+import 'package:offload/presentation/handwriting/thoughts_review_screen.dart';
 import 'package:offload/presentation/models/model_providers.dart';
 
 import '../../fakes/fake_handwriting_reader.dart';
@@ -31,7 +32,7 @@ void main() {
   late FakeScreenAwake awake;
   late _FakePreparer preparer;
   late Duration now;
-  String? result;
+  int? result;
   bool closed = false;
 
   var modelLookups = 0;
@@ -81,7 +82,7 @@ void main() {
             builder: (context) => Scaffold(
               body: TextButton(
                 onPressed: () async {
-                  result = await Navigator.of(context).push<String>(
+                  result = await Navigator.of(context).push<int>(
                     MaterialPageRoute(
                       builder: (_) =>
                           HandwritingScreen(photo: Uint8List(4), model: model),
@@ -118,8 +119,8 @@ void main() {
     expect(reset.onPressed, isNull);
   });
 
-  testWidgets('reads with progress and the screen on, then closes with the '
-      'text cleaned up', (tester) async {
+  testWidgets('reads with progress and the screen on, then reviews the '
+      'thoughts cleaned up', (tester) async {
     await open(tester);
     reader
       ..hold = true
@@ -139,9 +140,57 @@ void main() {
 
     reader.release();
     await tester.pumpAndSettle();
-    expect(closed, isTrue);
-    expect(result, '- @Anna bellen\n- tegels *3');
+    expect(find.byType(ThoughtsReviewScreen), findsOneWidget);
+    final fields = tester.widgetList<TextField>(find.byType(TextField));
+    expect(
+      [for (final f in fields) f.controller!.text],
+      ['@Anna bellen', 'tegels *3'],
+    );
     expect(awake.isAwake, isFalse);
+    expect(closed, isFalse);
+  });
+
+  testWidgets('back from the review without an edit: the corners again, '
+      'with the same photo', (tester) async {
+    await open(tester);
+    reader.next = '- zaaien\n- snoeien';
+    await tapRead(tester);
+    await tester.pumpAndSettle();
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.byType(ThoughtsReviewScreen), findsNothing);
+    expect(find.byType(CornersEditor), findsOneWidget);
+    expect(closed, isFalse);
+  });
+
+  testWidgets('back from the review after an edit asks first', (tester) async {
+    await open(tester);
+    reader.next = '- zaaien\n- snoeien';
+    await tapRead(tester);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(Checkbox).last);
+    await tester.pump();
+    expect(find.text(l10n.reviewThoughtsSave(1)), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text(l10n.reviewThoughtsDiscardTitle), findsOneWidget);
+    await tester.tap(
+      find.text(
+        MaterialLocalizations.of(
+          tester.element(find.byType(AlertDialog)),
+        ).cancelButtonLabel,
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(ThoughtsReviewScreen), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(l10n.reviewThoughtsDiscard));
+    await tester.pumpAndSettle();
+    expect(find.byType(ThoughtsReviewScreen), findsNothing);
+    expect(find.byType(CornersEditor), findsOneWidget);
   });
 
   testWidgets('Windows: no word about pausing outside the app', (tester) async {

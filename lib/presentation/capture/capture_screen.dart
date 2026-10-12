@@ -12,6 +12,7 @@ import '../handwriting/handwriting_providers.dart';
 import '../handwriting/handwriting_screen.dart';
 import '../help/help_scope.dart';
 import '../items/item_providers.dart';
+import '../messages.dart';
 import '../people/text_contacts.dart';
 import '../tokens/link_choices.dart';
 import '../tokens/token_editor.dart';
@@ -123,21 +124,20 @@ class _CaptureScreenState extends ConsumerState<CaptureScreen> {
     if (mounted) Navigator.of(context).pop();
   }
 
-  /// Reads handwriting from a photo into the field (REQ-064, T6a.4): after
-  /// what is typed already, on a line of its own. Until the review screen
-  /// of T6a.5 the text is saved as one item (PO 12-10-2026).
+  /// Reads handwriting from a photo (REQ-064, T6a.4, T6a.5): the thoughts
+  /// kept on the review screen are saved as items of their own. Then this
+  /// screen closes too when nothing is typed in it (PO 12-10-2026), and a
+  /// message says how many went to the inbox.
   Future<void> _readPhoto(HandwritingModel model) async {
-    final text = await readHandwriting(context, ref, model);
-    if (text == null || !mounted) return;
-    final before = _controller.text.trimRight();
-    final joined = before.isEmpty
-        ? text
-        : '$before\n$text'; // l10n-ignore: joins two texts
-    _controller.value = TextEditingValue(
-      text: joined,
-      selection: TextSelection.collapsed(offset: joined.length),
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final saved = await readHandwriting(context, ref, model);
+    if (saved == null || !mounted) return;
+    showMessage(
+      messenger,
+      SnackBar(content: Text(l10n.handwritingSaved(saved))),
     );
-    _focusNode.requestFocus();
+    if (!hasCapturableText(_controller.text)) Navigator.of(context).pop();
   }
 
   @override

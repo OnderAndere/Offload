@@ -3756,4 +3756,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String handwritingTooLong(int minutes) {
     return 'Reading took longer than $minutes minutes and was stopped. The device probably has too little free memory: close other apps and try again.';
   }
+
+  @override
+  String get reviewThoughtsTitle => 'Review thoughts';
+
+  @override
+  String get reviewThoughtsInclude => 'Include';
+
+  @override
+  String get reviewThoughtsSaveFailed =>
+      'Saving failed; the text is still here. Try again.';
+
+  @override
+  String get reviewThoughtsDiscardTitle => 'Discard the text read?';
+
+  @override
+  String get reviewThoughtsDiscardBody =>
+      'Your changes are lost. The photo stays, so you can read it again.';
+
+  @override
+  String get reviewThoughtsDiscard => 'Discard';
+
+  @override
+  String reviewThoughtsIntro(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count thoughts read.',
+      one: '1 thought read.',
+    );
+    return '$_temp0 Correct what is wrong and skip what you do not want; only after Save do they go to the inbox.';
+  }
+
+  @override
+  String reviewThoughtsSave(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Save $count',
+      one: 'Save 1',
+      zero: 'Nothing to save',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String reviewThoughtLabel(int index) {
+    return 'Thought $index';
+  }
+
+  @override
+  String handwritingSaved(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items in the inbox',
+      one: '1 item in the inbox',
+    );
+    return '$_temp0';
+  }
 }

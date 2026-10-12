@@ -716,7 +716,7 @@ first; the order follows the gate.
       makes capture look for it again; the model folder comes from the opened storage, so tests (a storage in memory)
       never look at the models of the machine. PO 12-10-2026: no measurement of opening the native library on the
       Fairphone (it happens once, after the first frame of capture, and only with a model)
-- [ ] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`
+- [x] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`
       items after confirming (AC REQ-064 c); the button in capture only with a verified model
       — *PO decisions 12-10-2026 (plan):* a line without `-` joins the previous thought with a space (to be judged in
       use; a line break is the alternative); text before the first `-` line is a thought of its own; the items get
@@ -725,6 +725,14 @@ first; the order follows the gate.
       empty, with the message "N items in the inbox"; on Windows Ctrl+Enter saves all. Replaces the interim of T6a.4
       (the text into the capture field). Last task of M6a: version 0.7.0. Steps A (`splitThoughts`, `captureAll`,
       the source), B (the screen)
+      — *done 12-10-2026:* A 621a577, B with version 0.7.0. `ThoughtsReviewScreen`: per thought *Include*, an editable
+      field and its live `TokenChips`; saved with `captureAll`, then processed as a capture. The first field has the
+      focus on Windows only (on a phone the keyboard would cover the list). Checked on the emulator (4 thoughts of the
+      synthetic photo saved, capture closed, the message) and in the Windows release (Ctrl+Enter as a real key press,
+      the message). The about text still fits. **M6a complete** (0.7.0)
+      — *open, for the PO (review T6a.5):* a tap on a reminder or the Offload bar pops the screens above the inbox
+      (`reminder_sync.dart`) and stops only at a capture screen with text; the photo and review screens go without
+      asking, with any edits (nothing saved is lost, AC REQ-001). Should they count as "text typed" (REQ-063, Q40)?
 
 ## M6 · Speech
 

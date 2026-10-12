@@ -843,5 +843,15 @@
   "handwritingModelUnreadable": "The model could not be loaded. See Settings → Models.",
   "handwritingFailed": "Reading failed. Try again.",
   "handwritingElapsed": "Elapsed: {minutes}:{seconds}",
-  "handwritingTooLong": "Reading took longer than {minutes} minutes and was stopped. The device probably has too little free memory: close other apps and try again."
+  "handwritingTooLong": "Reading took longer than {minutes} minutes and was stopped. The device probably has too little free memory: close other apps and try again.",
+  "reviewThoughtsTitle": "Review thoughts",
+  "reviewThoughtsInclude": "Include",
+  "reviewThoughtsSaveFailed": "Saving failed; the text is still here. Try again.",
+  "reviewThoughtsDiscardTitle": "Discard the text read?",
+  "reviewThoughtsDiscardBody": "Your changes are lost. The photo stays, so you can read it again.",
+  "reviewThoughtsDiscard": "Discard",
+  "reviewThoughtsIntro": "{count, plural, =1{1 thought read.} other{{count} thoughts read.}} Correct what is wrong and skip what you do not want; only after Save do they go to the inbox.",
+  "reviewThoughtsSave": "{count, plural, =0{Nothing to save} =1{Save 1} other{Save {count}}}",
+  "reviewThoughtLabel": "Thought {index}",
+  "handwritingSaved": "{count, plural, =1{1 item in the inbox} other{{count} items in the inbox}}"
 }

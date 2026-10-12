@@ -3765,4 +3765,63 @@ class AppLocalizationsNl extends AppLocalizations {
   String handwritingTooLong(int minutes) {
     return 'Het lezen duurde langer dan $minutes minuten en is gestopt. Waarschijnlijk heeft het toestel te weinig vrij geheugen: sluit andere apps en probeer het opnieuw.';
   }
+
+  @override
+  String get reviewThoughtsTitle => 'Gedachten controleren';
+
+  @override
+  String get reviewThoughtsInclude => 'Opnemen';
+
+  @override
+  String get reviewThoughtsSaveFailed =>
+      'Opslaan is mislukt; de tekst staat er nog. Probeer het opnieuw.';
+
+  @override
+  String get reviewThoughtsDiscardTitle => 'Gelezen tekst weggooien?';
+
+  @override
+  String get reviewThoughtsDiscardBody =>
+      'Je aanpassingen gaan verloren. De foto blijft, zodat je opnieuw kunt lezen.';
+
+  @override
+  String get reviewThoughtsDiscard => 'Weggooien';
+
+  @override
+  String reviewThoughtsIntro(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count gedachten gelezen.',
+      one: '1 gedachte gelezen.',
+    );
+    return '$_temp0 Pas aan wat niet klopt en sla over wat je niet wilt; pas na Opslaan komen ze in de inbox.';
+  }
+
+  @override
+  String reviewThoughtsSave(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count opslaan',
+      one: '1 opslaan',
+      zero: 'Niets op te slaan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String reviewThoughtLabel(int index) {
+    return 'Gedachte $index';
+  }
+
+  @override
+  String handwritingSaved(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items in de inbox',
+      one: '1 item in de inbox',
+    );
+    return '$_temp0';
+  }
 }

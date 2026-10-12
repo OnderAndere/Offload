@@ -4976,5 +4976,65 @@
         "type": "int"
       }
     }
+  },
+  "reviewThoughtsTitle": "Gedachten controleren",
+  "@reviewThoughtsTitle": {
+    "description": "Title of the review screen after reading handwriting (REQ-064 c, T6a.5)."
+  },
+  "reviewThoughtsInclude": "Opnemen",
+  "@reviewThoughtsInclude": {
+    "description": "Checkbox of one thought on the review screen: kept when saving."
+  },
+  "reviewThoughtsSaveFailed": "Opslaan is mislukt; de tekst staat er nog. Probeer het opnieuw.",
+  "@reviewThoughtsSaveFailed": {
+    "description": "Saving the thoughts failed; nothing was saved."
+  },
+  "reviewThoughtsDiscardTitle": "Gelezen tekst weggooien?",
+  "@reviewThoughtsDiscardTitle": {
+    "description": "Confirmation when leaving the review screen after an edit."
+  },
+  "reviewThoughtsDiscardBody": "Je aanpassingen gaan verloren. De foto blijft, zodat je opnieuw kunt lezen.",
+  "@reviewThoughtsDiscardBody": {
+    "description": "Body of the discard confirmation."
+  },
+  "reviewThoughtsDiscard": "Weggooien",
+  "@reviewThoughtsDiscard": {
+    "description": "Button that confirms leaving the review screen."
+  },
+  "reviewThoughtsIntro": "{count, plural, =1{1 gedachte gelezen.} other{{count} gedachten gelezen.}} Pas aan wat niet klopt en sla over wat je niet wilt; pas na Opslaan komen ze in de inbox.",
+  "@reviewThoughtsIntro": {
+    "description": "Intro on the review screen; count is the number of thoughts read.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewThoughtsSave": "{count, plural, =0{Niets op te slaan} =1{1 opslaan} other{{count} opslaan}}",
+  "@reviewThoughtsSave": {
+    "description": "Save button of the review screen; count is the number of thoughts kept.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewThoughtLabel": "Gedachte {index}",
+  "@reviewThoughtLabel": {
+    "description": "Label of the field of one thought.",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "handwritingSaved": "{count, plural, =1{1 item in de inbox} other{{count} items in de inbox}}",
+  "@handwritingSaved": {
+    "description": "Message after the thoughts read from a photo were saved.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }
