@@ -802,6 +802,8 @@
   "modelRemove": "Remove",
   "modelRemoveTitle": "Remove model?",
   "modelRemoveBody": "{name} ({size}) will be removed from this device. You can import it again later.",
+  "modelRemoveFailed": "The model could not be removed completely. A file may still be in use; try again later.",
+  "modelStateUnknown": "State unknown: the files could not be read.",
   "modelFileTypeName": "Model files",
   "modelImporting": "Copying and checking the model…",
   "modelImportProgress": "{done} of {total}",

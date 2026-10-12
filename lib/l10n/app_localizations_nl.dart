@@ -3618,6 +3618,14 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String get modelRemoveFailed =>
+      'Het model kon niet helemaal worden verwijderd. Misschien is een bestand nog in gebruik; probeer het later opnieuw.';
+
+  @override
+  String get modelStateUnknown =>
+      'Status onbekend: de bestanden konden niet worden gelezen.';
+
+  @override
   String get modelFileTypeName => 'Modelbestanden';
 
   @override

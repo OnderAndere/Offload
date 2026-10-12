@@ -40,7 +40,24 @@ void main() {
     );
   });
 
-  test('pixels that do not match the size are refused', () async {
+  test('pixels that do not match the size are refused, '
+      'before the library is looked at', () async {
+    final absent = NativeHandwritingReader(
+      libraryName: 'no_such_offload_llama.dll',
+      threads: 1,
+    );
+    for (final image in [
+      ReadingImage(width: 10, height: 10, rgb: Uint8List(299)),
+      ReadingImage(width: 0, height: 10, rgb: Uint8List(0)),
+    ]) {
+      await expectLater(
+        absent.read(model: _missingModel, image: image),
+        throwsA(_failure(HandwritingFailure.badImage)),
+      );
+    }
+  });
+
+  test('with its library, pixels that do not match are refused too', () async {
     final image = ReadingImage(width: 10, height: 10, rgb: Uint8List(299));
     await expectLater(
       reader().read(model: _missingModel, image: image),

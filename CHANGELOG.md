@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- *Settings → Models*: when a model cannot be removed (on Windows, a file still in use), a message says so instead
+  of nothing happening; when the model files cannot be looked at, the state reads "State unknown" instead of an
+  import error, and the screen no longer fails.
+
 ## [0.6.4] – 2026-10-11
 
 ### Added

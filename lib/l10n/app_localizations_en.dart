@@ -3610,6 +3610,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get modelRemoveFailed =>
+      'The model could not be removed completely. A file may still be in use; try again later.';
+
+  @override
+  String get modelStateUnknown => 'State unknown: the files could not be read.';
+
+  @override
   String get modelFileTypeName => 'Model files';
 
   @override

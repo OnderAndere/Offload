@@ -698,6 +698,12 @@ first; the order follows the gate.
       file in use) needs a message instead of an unhandled error; a failed status read should say "state unknown",
       not the import text; dispose the import progress notifier; check `ol_alloc` of the status block for null;
       a test of the bad-image check that runs without the native library
+      — *PO decisions 12-10-2026 (plan):* the button in capture comes now (only with a complete model and a reader
+      on this device); until T6a.5 the text read goes into the capture field as it is, to edit and save as one
+      item. The 5-minute stop counts only the time Offload is in the foreground (Android pauses reading outside
+      the app); Windows counts the clock. After *Stop* or a failure the screen goes back to the corners with the
+      same photo. Windows keeps the PC awake while reading (not the screen). Steps A (the review follow-ups above),
+      B (clean-up, straightening geometry, image preparation, `ScreenAwake`), C (screens, version 0.6.5)
 - [ ] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`
       items after confirming (AC REQ-064 c); the button in capture only with a verified model
 

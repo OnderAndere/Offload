@@ -67,7 +67,7 @@ void main() {
           modelCatalogProvider.overrideWith((ref) => [spec]),
           modelFileSourceProvider.overrideWith((ref) => source),
           modelStoreProvider.overrideWith(
-            (ref) => ModelStore(
+            (ref) => _TestStore(
               dataDirectory: () async => dir,
               source: source,
               freeBytes: (_) async => free,
@@ -192,12 +192,68 @@ void main() {
     expect(find.text(l10n.modelNotImported), findsOneWidget);
   });
 
+  testDriftWidgets('a removal that fails says so; what is left shows', (
+    tester,
+  ) async {
+    await open(tester);
+    await importFiles(tester, [source.offer('a', language)]);
+    await tester.tap(find.text('OK'));
+    await settle(tester);
+    removeFails = true;
+    addTearDown(() => removeFails = false);
+    await tester.tap(find.text(l10n.modelRemove));
+    await settle(tester);
+    await tester.tap(find.text(l10n.modelRemove).last);
+    await settle(tester);
+    expect(find.text(l10n.modelRemoveFailed), findsOneWidget);
+    expect(
+      find.text(l10n.modelMissing('mmproj-testmodel.gguf')),
+      findsOneWidget,
+    );
+  });
+
+  testDriftWidgets('a state that cannot be read is unknown, not an import '
+      'failure', (tester) async {
+    statusFails = true;
+    addTearDown(() => statusFails = false);
+    await open(tester);
+    expect(find.text(l10n.modelStateUnknown), findsOneWidget);
+    expect(find.text(l10n.modelImportFailed), findsNothing);
+  });
+
   testDriftWidgets('faster is chosen and kept on this device', (tester) async {
     await open(tester);
     await tester.tap(find.text(l10n.readingSpeedFaster));
     await settle(tester);
     expect(await tester.runAsync(storage.readingSpeed), ReadingSpeed.faster);
   });
+}
+
+/// Makes [_TestStore] fail to remove (a file in use on Windows).
+var removeFails = false;
+
+/// Makes [_TestStore] fail to look at its files.
+var statusFails = false;
+
+/// The real store, with failures on request.
+class _TestStore extends ModelStore {
+  _TestStore({
+    required super.dataDirectory,
+    required super.source,
+    required super.freeBytes,
+  });
+
+  @override
+  Future<ModelStatus> status(ModelSpec spec) async {
+    if (statusFails) throw const FileSystemException('cannot list');
+    return super.status(spec);
+  }
+
+  @override
+  Future<void> remove(ModelSpec spec) async {
+    if (removeFails) throw const FileSystemException('in use');
+    return super.remove(spec);
+  }
 }
 
 /// Lets the real file work of the store run (outside the test's fake

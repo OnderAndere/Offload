@@ -4922,6 +4922,18 @@ abstract class AppLocalizations {
   /// **'{name} ({size}) verdwijnt van dit toestel. Je kunt het later opnieuw importeren.'**
   String modelRemoveBody(String name, String size);
 
+  /// Message when removing a model failed, for example because a file is in use (Windows).
+  ///
+  /// In nl, this message translates to:
+  /// **'Het model kon niet helemaal worden verwijderd. Misschien is een bestand nog in gebruik; probeer het later opnieuw.'**
+  String get modelRemoveFailed;
+
+  /// State of a model when its files could not be looked at.
+  ///
+  /// In nl, this message translates to:
+  /// **'Status onbekend: de bestanden konden niet worden gelezen.'**
+  String get modelStateUnknown;
+
   /// Name of the model file type in the Windows Open window.
   ///
   /// In nl, this message translates to:

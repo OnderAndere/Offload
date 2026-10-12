@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -73,10 +74,11 @@ class _ModelSection extends ConsumerWidget {
       AsyncData(:final value) => l10n.modelMissing(
         value.missing.map((f) => f.name).join(', '),
       ),
-      AsyncError() => l10n.modelImportFailed,
+      AsyncError() => l10n.modelStateUnknown,
       _ => '',
     };
-    final current = status.value;
+    // valueOrNull: `value` throws the error again while a state is unknown.
+    final current = status.valueOrNull;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -148,12 +150,22 @@ class _ModelSection extends ConsumerWidget {
       ),
     );
     if (!(confirmed ?? false)) return;
+    var failed = false;
     try {
       await ref.read(modelStoreProvider).remove(spec);
+    } on FileSystemException {
+      // On Windows a file still opened by a reading cannot be deleted; what
+      // is left shows in the state below.
+      failed = true;
     } finally {
       ref
         ..invalidate(modelStatusProvider(spec))
         ..invalidate(modelBytesProvider);
+    }
+    if (failed && context.mounted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.modelRemoveFailed)));
     }
   }
 
@@ -174,7 +186,7 @@ class _ReadingSpeedChoice extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final speed = ref.watch(readingSpeedProvider).value;
+    final speed = ref.watch(readingSpeedProvider).valueOrNull;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
       child: Column(
@@ -237,16 +249,16 @@ Future<void> importModel(
   final cancel = ModelFileCancel();
   final progress = ValueNotifier<(int, int)?>(null);
   final navigator = Navigator.of(context);
-  unawaited(
-    showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => PopScope(
-        canPop: false,
-        child: _ImportProgressDialog(progress: progress, cancel: cancel),
-      ),
+  final dialog = showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) => PopScope(
+      canPop: false,
+      child: _ImportProgressDialog(progress: progress, cancel: cancel),
     ),
   );
+  // Disposed once the dialog is gone, after its closing animation.
+  unawaited(dialog.whenComplete(progress.dispose));
   List<String> lines;
   try {
     final result = await store.import(

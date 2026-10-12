@@ -59,10 +59,6 @@ class NativeHandwritingReader implements HandwritingReader {
     void Function(ReadingProgress progress)? onProgress,
     ReadingCancel? cancel,
   }) async {
-    final lib = _lib;
-    if (lib == null) {
-      throw const HandwritingReaderException(HandwritingFailure.unavailable);
-    }
     // Checked here, not only by an assert: the native side reads exactly
     // width × height × 3 bytes.
     if (image.width <= 0 ||
@@ -70,11 +66,15 @@ class NativeHandwritingReader implements HandwritingReader {
         image.rgb.length != image.width * image.height * 3) {
       throw const HandwritingReaderException(HandwritingFailure.badImage);
     }
+    final lib = _lib;
+    if (lib == null) {
+      throw const HandwritingReaderException(HandwritingFailure.unavailable);
+    }
     if (_busy) throw StateError('one reading at a time');
-    _busy = true;
     // The status is shared with the reading thread: it writes phase and
     // tokens, this isolate writes cancel.
-    final status = lib.alloc(sizeOf<_Status>()).cast<_Status>();
+    final status = lib.bytes8(sizeOf<_Status>()).cast<_Status>();
+    _busy = true;
     ReadingProgress? last;
     void poll() {
       if (cancel?.isCancelled ?? false) status.ref.cancel = 1;
