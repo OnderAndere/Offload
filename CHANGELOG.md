@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.6.5] – 2026-10-12
+
+### Added
+
+- **Read handwriting from a photo** in *Capture*, once the handwriting model is imported: a new button takes a
+  photo (Android) or opens one, and the photo screen lets you drag four corners onto a skewed board or page to
+  straighten it, or read the whole photo. Reading takes from tens of seconds to a few minutes and shows its
+  progress and a *Stop* button; the screen stays on (Android) or the PC stays awake (Windows). On Android, reading
+  pauses while you are outside Offload. After 5 minutes it stops with the advice to close other apps. The text read
+  is added to the capture field, to check and save; the photo is never stored.
+
 ### Fixed
 
 - *Settings → Models*: when a model cannot be removed (on Windows, a file still in use), a message says so instead

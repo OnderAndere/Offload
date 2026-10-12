@@ -3684,4 +3684,73 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get backupRestoreModelHint =>
       'Do you read handwriting from photos? The model is not part of a backup: import it again after restoring, through Settings → Models.';
+
+  @override
+  String get handwritingButton => 'Read handwriting from a photo';
+
+  @override
+  String get handwritingTitle => 'Read handwriting';
+
+  @override
+  String get handwritingOpening => 'Opening the photo…';
+
+  @override
+  String get handwritingCornersHint =>
+      'Drag the corners onto the corners of the board or page, or read the whole photo.';
+
+  @override
+  String get handwritingCornersCrossed =>
+      'The corners are mixed up. Drag each corner back to its own side.';
+
+  @override
+  String get handwritingResetCorners => 'Reset corners';
+
+  @override
+  String get handwritingRead => 'Read';
+
+  @override
+  String get handwritingWait =>
+      'This can take a few minutes. Keep Offload open; reading pauses outside the app.';
+
+  @override
+  String get handwritingWaitDesktop => 'This can take a few minutes.';
+
+  @override
+  String get handwritingPhaseLoading => 'Loading the model…';
+
+  @override
+  String get handwritingPhaseEncoding => 'Looking at the photo…';
+
+  @override
+  String get handwritingPhaseWriting => 'Writing the text…';
+
+  @override
+  String get handwritingStop => 'Stop';
+
+  @override
+  String get handwritingStopping => 'Stopping…';
+
+  @override
+  String get handwritingNothingFound => 'No text was found in the photo.';
+
+  @override
+  String get handwritingOutOfMemory =>
+      'Too little free memory to read. Close other apps and try again.';
+
+  @override
+  String get handwritingModelUnreadable =>
+      'The model could not be loaded. See Settings → Models.';
+
+  @override
+  String get handwritingFailed => 'Reading failed. Try again.';
+
+  @override
+  String handwritingElapsed(String minutes, String seconds) {
+    return 'Elapsed: $minutes:$seconds';
+  }
+
+  @override
+  String handwritingTooLong(int minutes) {
+    return 'Reading took longer than $minutes minutes and was stopped. The device probably has too little free memory: close other apps and try again.';
+  }
 }

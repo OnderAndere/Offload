@@ -50,6 +50,9 @@ class InlineTokenRegistry {
   final List<InlineTokenType> types;
   final _byPrefix = <String, List<InlineTokenType>>{};
 
+  /// The prefixes of the registered types, such as `@` and `#`.
+  Iterable<String> get prefixes => _byPrefix.keys;
+
   static final _space = RegExp(r'\s');
   static const _openingBrackets = '([{';
 

@@ -10,6 +10,7 @@ import '../../domain/handwriting/reading_policy.dart';
 import '../../domain/models/model_catalog.dart';
 import '../../l10n/app_localizations.dart';
 import '../../platform/model_files/model_file_source.dart';
+import '../handwriting/handwriting_providers.dart';
 import '../settings/storage_section.dart';
 import 'model_providers.dart';
 
@@ -159,7 +160,8 @@ class _ModelSection extends ConsumerWidget {
     } finally {
       ref
         ..invalidate(modelStatusProvider(spec))
-        ..invalidate(modelBytesProvider);
+        ..invalidate(modelBytesProvider)
+        ..invalidate(handwritingModelProvider);
     }
     if (failed && context.mounted) {
       ScaffoldMessenger.of(
@@ -297,7 +299,8 @@ Future<void> importModel(
     navigator.pop();
     ref
       ..invalidate(modelStatusProvider(spec))
-      ..invalidate(modelBytesProvider);
+      ..invalidate(modelBytesProvider)
+      ..invalidate(handwritingModelProvider);
   }
   if (context.mounted) await _tell(context, lines);
 }

@@ -120,6 +120,36 @@ void main() {
     expect(reading.rgb.length, 427 * 1280 * 3);
   });
 
+  test('transparent pixels are white paper, opaque ones stay', () {
+    final image = img.Image(width: 3, height: 1, numChannels: 4)
+      ..setPixelRgba(0, 0, 0, 0, 0, 0)
+      ..setPixelRgba(1, 0, 0, 0, 0, 255)
+      ..setPixelRgba(2, 0, 0, 0, 0, 128);
+    final reading = prepareRgba(
+      width: 3,
+      height: 1,
+      rgba: rgbaOf(image),
+      corners: Corners.whole,
+      maxSide: 1280,
+    );
+    expect(reading.rgb, [255, 255, 255, 0, 0, 0, 127, 127, 127]);
+  });
+
+  test('crossed corners are refused, not read mirrored', () async {
+    const preparer = ReadingImagePreparer();
+    final photo = await preparer.open(img.encodePng(page(40, 30)));
+    addTearDown(photo.dispose);
+    final mirrored = Corners.whole
+        .moved(Corner.topLeft, const CornerPoint(1, 0))
+        .moved(Corner.topRight, const CornerPoint(0, 0))
+        .moved(Corner.bottomRight, const CornerPoint(0, 1))
+        .moved(Corner.bottomLeft, const CornerPoint(1, 1));
+    await expectLater(
+      preparer.prepare(photo, mirrored),
+      throwsA(isA<ArgumentError>()),
+    );
+  });
+
   test('not a picture is refused', () async {
     await expectLater(
       const ReadingImagePreparer().open(Uint8List.fromList([1, 2, 3, 4])),

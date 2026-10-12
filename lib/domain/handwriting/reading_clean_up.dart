@@ -2,9 +2,12 @@
 /// consistent habits, measured in spike S6, and nothing else (AC REQ-064 a).
 library;
 
+import '../tokens/inline_token_registry.dart';
+
 /// [text] as the model wrote it, cleaned up:
-/// - a token sign followed by spaces joins the next word (`@ Harry` →
-///   `@Harry`), but only a sign that starts a word, as a token does;
+/// - a token sign (a prefix of [InlineTokenRegistry.standard]) followed by
+///   spaces joins the next word (`@ Harry` → `@Harry`), but only a sign that
+///   starts a word, as a token does;
 /// - `×` becomes `*`;
 /// - a line with only `-` goes (a thought marker with nothing after it);
 /// - spaces at line ends and blank lines at the start and end go.
@@ -33,4 +36,8 @@ final _lineBreak = RegExp(r'\r\n|\r|\n');
 
 /// A token sign at the start of a word, then spaces before the next word.
 /// Only `' '`: a sign at a line end stays on its line.
-final _signThenSpaces = RegExp(r'(?<=^|\s)([@#!^*]) +(?=\S)');
+final _signThenSpaces = RegExp(r'(?<=^|\s)([' + _signs + r']) +(?=\S)');
+
+final _signs = InlineTokenRegistry.standard().prefixes
+    .map(RegExp.escape)
+    .join();

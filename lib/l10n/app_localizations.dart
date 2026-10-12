@@ -5047,6 +5047,126 @@ abstract class AppLocalizations {
   /// In nl, this message translates to:
   /// **'Lees je handschrift van foto\'s? Het model gaat niet mee in een back-up: importeer het na het terugzetten opnieuw via Instellingen → Modellen.'**
   String get backupRestoreModelHint;
+
+  /// Tooltip of the button in quick capture that reads handwriting from a photo (REQ-064, T6a.4).
+  ///
+  /// In nl, this message translates to:
+  /// **'Handschrift lezen van een foto'**
+  String get handwritingButton;
+
+  /// Title of the photo screen and of the sheet that asks camera or gallery.
+  ///
+  /// In nl, this message translates to:
+  /// **'Handschrift lezen'**
+  String get handwritingTitle;
+
+  /// Shown while the photo is decoded.
+  ///
+  /// In nl, this message translates to:
+  /// **'Foto openen…'**
+  String get handwritingOpening;
+
+  /// Hint under the photo with four draggable corners (straightening, SPEC Q45).
+  ///
+  /// In nl, this message translates to:
+  /// **'Sleep de hoeken naar de hoeken van het bord of blad, of lees de hele foto.'**
+  String get handwritingCornersHint;
+
+  /// Shown when the corners cannot be straightened (crossed, or a shape too small).
+  ///
+  /// In nl, this message translates to:
+  /// **'De hoeken staan door elkaar. Sleep elke hoek terug naar zijn eigen kant.'**
+  String get handwritingCornersCrossed;
+
+  /// Button that puts the corners back on the photo corners.
+  ///
+  /// In nl, this message translates to:
+  /// **'Hoeken herstellen'**
+  String get handwritingResetCorners;
+
+  /// Button that starts reading the photo.
+  ///
+  /// In nl, this message translates to:
+  /// **'Lezen'**
+  String get handwritingRead;
+
+  /// Message while reading on Android, where reading pauses outside the app (DD-021).
+  ///
+  /// In nl, this message translates to:
+  /// **'Dit kan een paar minuten duren. Laat Offload open; buiten de app pauzeert het lezen.'**
+  String get handwritingWait;
+
+  /// Message while reading on Windows.
+  ///
+  /// In nl, this message translates to:
+  /// **'Dit kan een paar minuten duren.'**
+  String get handwritingWaitDesktop;
+
+  /// Reading phase: the model files are read into memory.
+  ///
+  /// In nl, this message translates to:
+  /// **'Het model laden…'**
+  String get handwritingPhaseLoading;
+
+  /// Reading phase: the model looks at the image (most of the time).
+  ///
+  /// In nl, this message translates to:
+  /// **'De foto bekijken…'**
+  String get handwritingPhaseEncoding;
+
+  /// Reading phase: the model writes the text.
+  ///
+  /// In nl, this message translates to:
+  /// **'De tekst schrijven…'**
+  String get handwritingPhaseWriting;
+
+  /// Button that stops reading; the screen goes back to the corners.
+  ///
+  /// In nl, this message translates to:
+  /// **'Stoppen'**
+  String get handwritingStop;
+
+  /// Shown after Stop until the model has stopped (a few seconds).
+  ///
+  /// In nl, this message translates to:
+  /// **'Stoppen…'**
+  String get handwritingStopping;
+
+  /// The model wrote no text.
+  ///
+  /// In nl, this message translates to:
+  /// **'Er is geen tekst op de foto gevonden.'**
+  String get handwritingNothingFound;
+
+  /// The model could not get the memory it needs.
+  ///
+  /// In nl, this message translates to:
+  /// **'Te weinig vrij geheugen om te lezen. Sluit andere apps en probeer het opnieuw.'**
+  String get handwritingOutOfMemory;
+
+  /// A model file is missing or damaged.
+  ///
+  /// In nl, this message translates to:
+  /// **'Het model kon niet worden geladen. Kijk bij Instellingen → Modellen.'**
+  String get handwritingModelUnreadable;
+
+  /// Any other failure while reading.
+  ///
+  /// In nl, this message translates to:
+  /// **'Het lezen is mislukt. Probeer het opnieuw.'**
+  String get handwritingFailed;
+
+  /// Time spent reading, as minutes and two-digit seconds.
+  ///
+  /// In nl, this message translates to:
+  /// **'Bezig: {minutes}:{seconds}'**
+  String handwritingElapsed(String minutes, String seconds);
+
+  /// Reading was stopped after the time limit (DD-021).
+  ///
+  /// In nl, this message translates to:
+  /// **'Het lezen duurde langer dan {minutes} minuten en is gestopt. Waarschijnlijk heeft het toestel te weinig vrij geheugen: sluit andere apps en probeer het opnieuw.'**
+  String handwritingTooLong(int minutes);
 }
 
 class _AppLocalizationsDelegate

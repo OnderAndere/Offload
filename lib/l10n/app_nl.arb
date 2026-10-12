@@ -4879,5 +4879,98 @@
   "backupRestoreModelHint": "Lees je handschrift van foto's? Het model gaat niet mee in een back-up: importeer het na het terugzetten opnieuw via Instellingen → Modellen.",
   "@backupRestoreModelHint": {
     "description": "Line in the restore confirmation when this device has no handwriting model (DD-007, T6a.3)."
+  },
+  "handwritingButton": "Handschrift lezen van een foto",
+  "@handwritingButton": {
+    "description": "Tooltip of the button in quick capture that reads handwriting from a photo (REQ-064, T6a.4)."
+  },
+  "handwritingTitle": "Handschrift lezen",
+  "@handwritingTitle": {
+    "description": "Title of the photo screen and of the sheet that asks camera or gallery."
+  },
+  "handwritingOpening": "Foto openen…",
+  "@handwritingOpening": {
+    "description": "Shown while the photo is decoded."
+  },
+  "handwritingCornersHint": "Sleep de hoeken naar de hoeken van het bord of blad, of lees de hele foto.",
+  "@handwritingCornersHint": {
+    "description": "Hint under the photo with four draggable corners (straightening, SPEC Q45)."
+  },
+  "handwritingCornersCrossed": "De hoeken staan door elkaar. Sleep elke hoek terug naar zijn eigen kant.",
+  "@handwritingCornersCrossed": {
+    "description": "Shown when the corners cannot be straightened (crossed, or a shape too small)."
+  },
+  "handwritingResetCorners": "Hoeken herstellen",
+  "@handwritingResetCorners": {
+    "description": "Button that puts the corners back on the photo corners."
+  },
+  "handwritingRead": "Lezen",
+  "@handwritingRead": {
+    "description": "Button that starts reading the photo."
+  },
+  "handwritingWait": "Dit kan een paar minuten duren. Laat Offload open; buiten de app pauzeert het lezen.",
+  "@handwritingWait": {
+    "description": "Message while reading on Android, where reading pauses outside the app (DD-021)."
+  },
+  "handwritingWaitDesktop": "Dit kan een paar minuten duren.",
+  "@handwritingWaitDesktop": {
+    "description": "Message while reading on Windows."
+  },
+  "handwritingPhaseLoading": "Het model laden…",
+  "@handwritingPhaseLoading": {
+    "description": "Reading phase: the model files are read into memory."
+  },
+  "handwritingPhaseEncoding": "De foto bekijken…",
+  "@handwritingPhaseEncoding": {
+    "description": "Reading phase: the model looks at the image (most of the time)."
+  },
+  "handwritingPhaseWriting": "De tekst schrijven…",
+  "@handwritingPhaseWriting": {
+    "description": "Reading phase: the model writes the text."
+  },
+  "handwritingStop": "Stoppen",
+  "@handwritingStop": {
+    "description": "Button that stops reading; the screen goes back to the corners."
+  },
+  "handwritingStopping": "Stoppen…",
+  "@handwritingStopping": {
+    "description": "Shown after Stop until the model has stopped (a few seconds)."
+  },
+  "handwritingNothingFound": "Er is geen tekst op de foto gevonden.",
+  "@handwritingNothingFound": {
+    "description": "The model wrote no text."
+  },
+  "handwritingOutOfMemory": "Te weinig vrij geheugen om te lezen. Sluit andere apps en probeer het opnieuw.",
+  "@handwritingOutOfMemory": {
+    "description": "The model could not get the memory it needs."
+  },
+  "handwritingModelUnreadable": "Het model kon niet worden geladen. Kijk bij Instellingen → Modellen.",
+  "@handwritingModelUnreadable": {
+    "description": "A model file is missing or damaged."
+  },
+  "handwritingFailed": "Het lezen is mislukt. Probeer het opnieuw.",
+  "@handwritingFailed": {
+    "description": "Any other failure while reading."
+  },
+  "handwritingElapsed": "Bezig: {minutes}:{seconds}",
+  "@handwritingElapsed": {
+    "description": "Time spent reading, as minutes and two-digit seconds.",
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "handwritingTooLong": "Het lezen duurde langer dan {minutes} minuten en is gestopt. Waarschijnlijk heeft het toestel te weinig vrij geheugen: sluit andere apps en probeer het opnieuw.",
+  "@handwritingTooLong": {
+    "description": "Reading was stopped after the time limit (DD-021).",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
   }
 }

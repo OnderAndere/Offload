@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:offload/domain/handwriting/reading_policy.dart';
 import 'package:offload/platform/handwriting/handwriting_reader.dart';
 
 /// A [HandwritingReader] that answers with [next]: the text read, or a
 /// [HandwritingReaderException] to throw. [progress] is reported first; a
-/// [ReadingCancel] cancelled by then ends the reading as cancelled.
+/// [ReadingCancel] cancelled by then ends the reading as cancelled. [hold]
+/// keeps the answer back until [release], to look at the screen while it
+/// reads; a cancel meanwhile is looked at after the release.
 class FakeHandwritingReader implements HandwritingReader {
   FakeHandwritingReader({
     this.isAvailable = true,
@@ -19,6 +23,13 @@ class FakeHandwritingReader implements HandwritingReader {
   Object next = '';
   List<ReadingProgress> progress = const [];
   final calls = <({ReadingImage image, ReadingSpeed speed})>[];
+  bool hold = false;
+  Completer<void>? _held;
+
+  /// Whether a reading waits for [release].
+  bool get holding => _held != null && !_held!.isCompleted;
+
+  void release() => _held?.complete();
 
   @override
   Future<HandwritingReading> read({
@@ -36,6 +47,7 @@ class FakeHandwritingReader implements HandwritingReader {
     for (final p in progress) {
       onProgress?.call(p);
     }
+    if (hold) await (_held = Completer<void>()).future;
     if (cancel?.isCancelled ?? false) {
       throw const HandwritingReaderException(HandwritingFailure.cancelled);
     }

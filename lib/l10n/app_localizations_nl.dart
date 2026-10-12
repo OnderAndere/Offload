@@ -3693,4 +3693,73 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get backupRestoreModelHint =>
       'Lees je handschrift van foto\'s? Het model gaat niet mee in een back-up: importeer het na het terugzetten opnieuw via Instellingen → Modellen.';
+
+  @override
+  String get handwritingButton => 'Handschrift lezen van een foto';
+
+  @override
+  String get handwritingTitle => 'Handschrift lezen';
+
+  @override
+  String get handwritingOpening => 'Foto openen…';
+
+  @override
+  String get handwritingCornersHint =>
+      'Sleep de hoeken naar de hoeken van het bord of blad, of lees de hele foto.';
+
+  @override
+  String get handwritingCornersCrossed =>
+      'De hoeken staan door elkaar. Sleep elke hoek terug naar zijn eigen kant.';
+
+  @override
+  String get handwritingResetCorners => 'Hoeken herstellen';
+
+  @override
+  String get handwritingRead => 'Lezen';
+
+  @override
+  String get handwritingWait =>
+      'Dit kan een paar minuten duren. Laat Offload open; buiten de app pauzeert het lezen.';
+
+  @override
+  String get handwritingWaitDesktop => 'Dit kan een paar minuten duren.';
+
+  @override
+  String get handwritingPhaseLoading => 'Het model laden…';
+
+  @override
+  String get handwritingPhaseEncoding => 'De foto bekijken…';
+
+  @override
+  String get handwritingPhaseWriting => 'De tekst schrijven…';
+
+  @override
+  String get handwritingStop => 'Stoppen';
+
+  @override
+  String get handwritingStopping => 'Stoppen…';
+
+  @override
+  String get handwritingNothingFound => 'Er is geen tekst op de foto gevonden.';
+
+  @override
+  String get handwritingOutOfMemory =>
+      'Te weinig vrij geheugen om te lezen. Sluit andere apps en probeer het opnieuw.';
+
+  @override
+  String get handwritingModelUnreadable =>
+      'Het model kon niet worden geladen. Kijk bij Instellingen → Modellen.';
+
+  @override
+  String get handwritingFailed => 'Het lezen is mislukt. Probeer het opnieuw.';
+
+  @override
+  String handwritingElapsed(String minutes, String seconds) {
+    return 'Bezig: $minutes:$seconds';
+  }
+
+  @override
+  String handwritingTooLong(int minutes) {
+    return 'Het lezen duurde langer dan $minutes minuten en is gestopt. Waarschijnlijk heeft het toestel te weinig vrij geheugen: sluit andere apps en probeer het opnieuw.';
+  }
 }

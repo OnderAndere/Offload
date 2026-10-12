@@ -7,6 +7,9 @@ import '../../domain/help/help_topics.dart';
 import '../../domain/items/item.dart';
 import '../../domain/items/item_enums.dart';
 import '../../l10n/app_localizations.dart';
+import '../../platform/handwriting/handwriting_reader.dart';
+import '../handwriting/handwriting_providers.dart';
+import '../handwriting/handwriting_screen.dart';
 import '../help/help_scope.dart';
 import '../items/item_providers.dart';
 import '../people/text_contacts.dart';
@@ -50,10 +53,17 @@ class _CaptureScreenState extends ConsumerState<CaptureScreen> {
   bool _saving = false;
   bool _failed = false;
 
+  /// Whether to look for the handwriting model: only after the first frame,
+  /// so the field and the keyboard come first (CLAUDE.md rule 7).
+  bool _lookForModel = false;
+
   @override
   void initState() {
     super.initState();
     _controller.addListener(_tellRoute);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() => _lookForModel = true);
+    });
   }
 
   /// The route this screen is on, when it is a [CaptureRoute].
@@ -113,15 +123,42 @@ class _CaptureScreenState extends ConsumerState<CaptureScreen> {
     if (mounted) Navigator.of(context).pop();
   }
 
+  /// Reads handwriting from a photo into the field (REQ-064, T6a.4): after
+  /// what is typed already, on a line of its own. Until the review screen
+  /// of T6a.5 the text is saved as one item (PO 12-10-2026).
+  Future<void> _readPhoto(HandwritingModel model) async {
+    final text = await readHandwriting(context, ref, model);
+    if (text == null || !mounted) return;
+    final before = _controller.text.trimRight();
+    final joined = before.isEmpty
+        ? text
+        : '$before\n$text'; // l10n-ignore: joins two texts
+    _controller.value = TextEditingValue(
+      text: joined,
+      selection: TextSelection.collapsed(offset: joined.length),
+    );
+    _focusNode.requestFocus();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // Only with a model and a reader on this device (AC REQ-064).
+    final model = _lookForModel
+        ? ref.watch(handwritingModelProvider).valueOrNull
+        : null;
     return HelpScope(
       topic: HelpTopic.capture,
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.captureTitle),
           actions: [
+            if (model != null)
+              IconButton(
+                icon: const Icon(Icons.document_scanner_outlined),
+                tooltip: l10n.handwritingButton,
+                onPressed: _saving ? null : () => unawaited(_readPhoto(model)),
+              ),
             ValueListenableBuilder(
               valueListenable: _controller,
               builder: (context, value, _) => IconButton(

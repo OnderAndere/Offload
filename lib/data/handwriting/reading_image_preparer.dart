@@ -13,7 +13,9 @@ import '../attachments/photo_compressor.dart';
 /// upright, at most `ReadingPolicy.workingMaxSide`, in memory only (AC
 /// REQ-064 d). [image] is for the screen; [dispose] it when done.
 class WorkingPhoto {
-  WorkingPhoto._(this.image, this._rgba);
+  /// [image] and its pixels [_rgba], four bytes each; made by
+  /// [ReadingImagePreparer.open].
+  WorkingPhoto(this.image, this._rgba);
 
   final ui.Image image;
   final ByteBuffer _rgba;
@@ -42,7 +44,7 @@ class ReadingImagePreparer {
       policy.workingMaxSide,
     );
     try {
-      return WorkingPhoto._(image, await PhotoCompressor.rgbaOf(image));
+      return WorkingPhoto(image, await PhotoCompressor.rgbaOf(image));
     } catch (_) {
       image.dispose();
       rethrow;
@@ -50,11 +52,15 @@ class ReadingImagePreparer {
   }
 
   /// The part of [photo] within [corners], straightened, as the model reads
-  /// it; [Corners.whole] gives the whole photo. Only corners that are
-  /// [Corners.isUsable].
-  Future<ReadingImage> prepare(WorkingPhoto photo, Corners corners) {
+  /// it; [Corners.whole] gives the whole photo. Throws [ArgumentError] for
+  /// corners that are not [Corners.isUsable] (crossed corners would give a
+  /// mirrored image).
+  Future<ReadingImage> prepare(WorkingPhoto photo, Corners corners) async {
     final width = photo.width;
     final height = photo.height;
+    if (!corners.isWhole && !corners.isUsable(width, height)) {
+      throw ArgumentError.value(corners, 'corners', 'not usable');
+    }
     final rgba = photo._rgba;
     final maxSide = policy.maxSide;
     return Isolate.run(
@@ -119,6 +125,26 @@ ReadingImage prepareRgba({
   return ReadingImage(
     width: image.width,
     height: image.height,
-    rgb: image.getBytes(order: img.ChannelOrder.rgb),
+    rgb: _onWhite(image.getBytes(order: img.ChannelOrder.rgba)),
   );
+}
+
+/// RGBA pixels as RGB on white paper: a transparent part of a picture (a
+/// PNG from the picker) would otherwise be black, and dark ink on it lost.
+Uint8List _onWhite(Uint8List rgba) {
+  final rgb = Uint8List(rgba.length ~/ 4 * 3);
+  for (var i = 0, o = 0; i < rgba.length; i += 4, o += 3) {
+    final alpha = rgba[i + 3];
+    if (alpha == 255) {
+      rgb[o] = rgba[i];
+      rgb[o + 1] = rgba[i + 1];
+      rgb[o + 2] = rgba[i + 2];
+    } else {
+      final white = 255 * (255 - alpha);
+      rgb[o] = (rgba[i] * alpha + white) ~/ 255;
+      rgb[o + 1] = (rgba[i + 1] * alpha + white) ~/ 255;
+      rgb[o + 2] = (rgba[i + 2] * alpha + white) ~/ 255;
+    }
+  }
+  return rgb;
 }

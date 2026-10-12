@@ -692,7 +692,7 @@ first; the order follows the gate.
       — *done 11-10-2026:* A 7b3d28a, B 4d972f7, C with version 0.6.4. The restore line sits in the restore
       confirmation (there is no message after it). Copy speed (debug builds): emulator ~100–200 MB/s, Windows
       ~60 MB/s, so the 1.5 GB model takes a quarter to half a minute from local storage
-- [ ] **T6a.4** The photo screen: take or choose a photo, optional straightening with four draggable corners
+- [x] **T6a.4** The photo screen: take or choose a photo, optional straightening with four draggable corners
       (SPEC Q45), reading with progress, the clean-up of DD-021
       — *from the reviews of T6a.2/T6a.3 (11-10-2026):* a failed *Remove* in Settings → *Models* (Windows: a model
       file in use) needs a message instead of an unhandled error; a failed status read should say "state unknown",
@@ -704,6 +704,14 @@ first; the order follows the gate.
       the app); Windows counts the clock. After *Stop* or a failure the screen goes back to the corners with the
       same photo. Windows keeps the PC awake while reading (not the screen). Steps A (the review follow-ups above),
       B (clean-up, straightening geometry, image preparation, `ScreenAwake`), C (screens, version 0.6.5)
+      — *done 12-10-2026:* A 57ec422, B bf36427, C with version 0.6.5. The handwriting button in *Capture* (only with a
+      complete model and a reader), `HandwritingScreen` (corners, reading, stop, the 5-minute stop) and the text into the
+      field. Checked in the Windows release (model in a sandbox: a synthetic photo read in about 40 s, a notebook photo
+      of S6 read as S6 did at 1280 px but one letter) and on the emulator (gallery, dragged corner, `KEEP_SCREEN_ON` on
+      while reading and off after it, the synthetic photo in about 4.5 min, *Stop* back at the corners in 3 s). Seen:
+      at 1280 px the synthetic photo loses the `@` of `@Daan` and the capital of `^Zomer`, as S6 measured at 1024 px;
+      real photos were not better at 1600 (S6), so no change. The help of the photo screen is the capture topic until
+      the manual has a section of its own
 - [ ] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`
       items after confirming (AC REQ-064 c); the button in capture only with a verified model
 

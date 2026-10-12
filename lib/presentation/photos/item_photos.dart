@@ -11,6 +11,7 @@ import '../messages.dart';
 import 'attachment_image.dart';
 import 'delete_photo.dart';
 import 'photo_providers.dart';
+import 'photo_source_sheet.dart';
 import 'photo_viewer.dart';
 
 /// The side of a thumbnail in the row, in logical pixels.
@@ -108,7 +109,7 @@ Future<void> addPhoto(BuildContext context, String itemId) async {
   if (photos == null || adding.state != PhotoAdding.idle) return;
   var take = false;
   if (source.canTakePhoto) {
-    final choice = await _chooseSource(context, l10n);
+    final choice = await choosePhotoSource(context, title: l10n.photoAdd);
     if (choice == null) return;
     take = choice;
   }
@@ -143,39 +144,6 @@ Future<void> addPhoto(BuildContext context, String itemId) async {
     adding.state = PhotoAdding.idle;
   }
 }
-
-/// The sheet "Foto toevoegen": true for the camera, false for the gallery,
-/// null when closed.
-Future<bool?> _chooseSource(BuildContext context, AppLocalizations l10n) =>
-    showModalBottomSheet<bool>(
-      context: context,
-      showDragHandle: true,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-              child: Text(
-                l10n.photoAdd,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_camera_outlined),
-              title: Text(l10n.photoTake),
-              onTap: () => Navigator.of(context).pop(true),
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_library_outlined),
-              title: Text(l10n.photoFromGallery),
-              onTap: () => Navigator.of(context).pop(false),
-            ),
-          ],
-        ),
-      ),
-    );
 
 /// What the menu of a thumbnail offers.
 enum _TileAction { view, delete }
