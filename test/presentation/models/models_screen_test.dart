@@ -251,7 +251,7 @@ class _TestStore extends ModelStore {
 
   @override
   Future<void> remove(ModelSpec spec) async {
-    if (removeFails) throw const FileSystemException('in use');
+    if (removeFails) throw const ModelRemoveFailed('in use');
     return super.remove(spec);
   }
 }

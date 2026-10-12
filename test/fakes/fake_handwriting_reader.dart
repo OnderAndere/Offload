@@ -5,10 +5,16 @@ import 'package:offload/platform/handwriting/handwriting_reader.dart';
 /// [HandwritingReaderException] to throw. [progress] is reported first; a
 /// [ReadingCancel] cancelled by then ends the reading as cancelled.
 class FakeHandwritingReader implements HandwritingReader {
-  FakeHandwritingReader({this.isAvailable = true});
+  FakeHandwritingReader({
+    this.isAvailable = true,
+    this.pausesOutsideApp = true,
+  });
 
   @override
   final bool isAvailable;
+
+  @override
+  final bool pausesOutsideApp;
 
   Object next = '';
   List<ReadingProgress> progress = const [];

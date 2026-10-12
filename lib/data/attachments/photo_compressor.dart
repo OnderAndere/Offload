@@ -56,6 +56,33 @@ class PhotoCompressor {
       _scaled(display, policy.thumbnailMaxSide, policy.thumbnailQuality);
 
   Future<Uint8List> _scaled(Uint8List bytes, int maxSide, int quality) async {
+    final image = await decodeUpright(bytes, maxSide);
+    final ByteBuffer rgba;
+    final int outWidth;
+    final int outHeight;
+    try {
+      rgba = await rgbaOf(image);
+      (outWidth, outHeight) = (image.width, image.height);
+    } finally {
+      image.dispose();
+    }
+    return Isolate.run(
+      () => img.encodeJpg(
+        img.Image.fromBytes(
+          width: outWidth,
+          height: outHeight,
+          bytes: rgba,
+          numChannels: 4,
+        ),
+        quality: quality,
+      ),
+    );
+  }
+
+  /// [bytes] decoded upright (EXIF orientation applied) and made smaller to
+  /// fit in [maxSide], never larger; natively, off the UI thread. The caller
+  /// disposes the image. Throws [PhotoFormatException].
+  static Future<ui.Image> decodeUpright(Uint8List bytes, int maxSide) async {
     final (width, height, orientation) = await _storedSize(bytes);
     final target = decodeTarget(
       width: width,
@@ -73,40 +100,26 @@ class PhotoCompressor {
     } catch (e) {
       throw PhotoFormatException('cannot decode: $e');
     }
-    final ByteBuffer rgba;
-    final int outWidth;
-    final int outHeight;
     try {
-      final frame = await codec.getNextFrame();
-      final image = frame.image;
-      try {
-        final data = await image.toByteData(
-          format: ui.ImageByteFormat.rawStraightRgba,
-        );
-        if (data == null) throw const PhotoFormatException('no pixels');
-        rgba = data.buffer;
-        (outWidth, outHeight) = (image.width, image.height);
-      } finally {
-        image.dispose();
-      }
-    } on PhotoFormatException {
-      rethrow;
+      return (await codec.getNextFrame()).image;
     } catch (e) {
       throw PhotoFormatException('cannot decode: $e');
     } finally {
       codec.dispose();
     }
-    return Isolate.run(
-      () => img.encodeJpg(
-        img.Image.fromBytes(
-          width: outWidth,
-          height: outHeight,
-          bytes: rgba,
-          numChannels: 4,
-        ),
-        quality: quality,
-      ),
-    );
+  }
+
+  /// The pixels of [image], four bytes (R, G, B, A) each, row by row.
+  /// Throws [PhotoFormatException].
+  static Future<ByteBuffer> rgbaOf(ui.Image image) async {
+    final ByteData? data;
+    try {
+      data = await image.toByteData(format: ui.ImageByteFormat.rawStraightRgba);
+    } catch (e) {
+      throw PhotoFormatException('cannot decode: $e');
+    }
+    if (data == null) throw const PhotoFormatException('no pixels');
+    return data.buffer;
   }
 
   /// The size as stored and the EXIF orientation: for a JPEG from its own

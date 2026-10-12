@@ -16,6 +16,7 @@ class NativeHandwritingReader implements HandwritingReader {
   NativeHandwritingReader({
     required this.libraryName,
     required this.threads,
+    required this.pausesOutsideApp,
     this.pollInterval = const Duration(milliseconds: 250),
   });
 
@@ -24,6 +25,9 @@ class NativeHandwritingReader implements HandwritingReader {
 
   /// CPU threads for the model (DD-021: 6 on the phone).
   final int threads;
+
+  @override
+  final bool pausesOutsideApp;
 
   /// How often progress and [ReadingCancel] are looked at while reading.
   final Duration pollInterval;

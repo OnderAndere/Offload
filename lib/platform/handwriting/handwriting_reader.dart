@@ -13,6 +13,11 @@ abstract class HandwritingReader {
   /// (not on 32-bit Android).
   bool get isAvailable;
 
+  /// Whether a reading pauses while the user is outside the app: Android
+  /// freezes an app about 70 s after it is left (T6a.1), Windows does not.
+  /// Only time in the app then counts towards the stop (DD-021).
+  bool get pausesOutsideApp;
+
   /// Reads [image] with [model]: loads the model, reads, and frees the memory
   /// again. Takes tens of seconds to minutes; [onProgress] hears each change
   /// of phase and the number of text tokens written, [cancel] stops it.

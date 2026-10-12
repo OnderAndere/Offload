@@ -3,6 +3,7 @@ package eu.marandos.offload
 import android.content.Intent
 import android.os.Bundle
 import android.os.StatFs
+import android.view.WindowManager
 import eu.marandos.offload.capture.CaptureQueueChannel
 import eu.marandos.offload.reminders.ReminderChannel
 import io.flutter.embedding.android.FlutterActivity
@@ -87,6 +88,22 @@ class MainActivity : FlutterActivity() {
         // Importing the files of a model (AndroidModelFileSource, T6a.3).
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ModelFileChannel.CHANNEL)
             .setMethodCallHandler(modelFiles)
+        // The screen stays on while handwriting is read (AndroidScreenAwake,
+        // T6a.4): a window flag, no permission. Called on the main thread.
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, SCREEN_AWAKE_CHANNEL)
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "keepScreenOn" -> {
+                        if (call.argument<Boolean>("on") == true) {
+                            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                        } else {
+                            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                        }
+                        result.success(null)
+                    }
+                    else -> result.notImplemented()
+                }
+            }
         // Deadline reminders (AndroidReminderScheduler, T4.1).
         reminderChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, ReminderChannel.CHANNEL)
             .also { it.setMethodCallHandler(reminders) }
@@ -152,5 +169,6 @@ class MainActivity : FlutterActivity() {
 
     private companion object {
         const val APP_DIRECTORY_CHANNEL = "eu.marandos.offload/app_directory"
+        const val SCREEN_AWAKE_CHANNEL = "eu.marandos.offload/screen_awake"
     }
 }

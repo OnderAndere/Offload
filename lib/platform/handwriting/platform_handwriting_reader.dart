@@ -11,6 +11,7 @@ HandwritingReader createPlatformHandwritingReader() {
     return NativeHandwritingReader(
       libraryName: 'liboffload_llama.so',
       threads: 6,
+      pausesOutsideApp: true,
     );
   }
   // One thread per core on the PC: processors counts hyperthreads twice.
@@ -18,6 +19,7 @@ HandwritingReader createPlatformHandwritingReader() {
     return NativeHandwritingReader(
       libraryName: 'offload_llama.dll',
       threads: math.max(1, math.min(8, Platform.numberOfProcessors ~/ 2)),
+      pausesOutsideApp: false,
     );
   }
   throw UnsupportedError('Offload runs on Android and Windows only');

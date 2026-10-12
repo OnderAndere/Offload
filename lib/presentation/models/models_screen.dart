@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -153,7 +152,7 @@ class _ModelSection extends ConsumerWidget {
     var failed = false;
     try {
       await ref.read(modelStoreProvider).remove(spec);
-    } on FileSystemException {
+    } on ModelRemoveFailed {
       // On Windows a file still opened by a reading cannot be deleted; what
       // is left shows in the state below.
       failed = true;
@@ -257,7 +256,7 @@ Future<void> importModel(
       child: _ImportProgressDialog(progress: progress, cancel: cancel),
     ),
   );
-  // Disposed once the dialog is gone, after its closing animation.
+  // Disposed once the dialog is popped; nothing sets it after that.
   unawaited(dialog.whenComplete(progress.dispose));
   List<String> lines;
   try {

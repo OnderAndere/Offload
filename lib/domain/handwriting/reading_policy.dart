@@ -21,10 +21,12 @@ enum ReadingSpeed {
 class ReadingPolicy {
   const ReadingPolicy({
     this.maxSide = 1280,
+    this.workingMaxSide = 2560,
     this.contextSize = 2048,
     this.maxTextTokens = 1024,
     this.fasterImageTokens = 512,
     this.prompt = readingPrompt,
+    this.maxReadingTime = const Duration(minutes: 5),
   });
 
   /// The values of DD-021.
@@ -32,6 +34,10 @@ class ReadingPolicy {
 
   /// The longest side of the image given to the model, in pixels.
   final int maxSide;
+
+  /// The longest side of the photo kept while the corners are placed: large
+  /// enough that a straightened part of half the photo still has [maxSide].
+  final int workingMaxSide;
 
   /// The model's context: image tokens, prompt and text together.
   final int contextSize;
@@ -45,6 +51,10 @@ class ReadingPolicy {
 
   /// What the model is asked.
   final String prompt;
+
+  /// How long a reading may take before it stops with the advice to close
+  /// other apps (DD-021); on Android only the time in the app counts.
+  final Duration maxReadingTime;
 
   /// The limit on image tokens for [speed]; 0 keeps the model's own.
   int imageTokensFor(ReadingSpeed speed) => switch (speed) {

@@ -167,6 +167,18 @@ void main() {
     expect((await store.status(spec)).isEmpty, isTrue);
   });
 
+  test('a file still open cannot be removed: that is said, the rest of '
+      'the model is gone', () async {
+    await store.import(spec, [
+      source.offer('a', language),
+      source.offer('b', projector),
+    ]);
+    final open = File('${folder().path}/model.gguf').openSync();
+    addTearDown(open.closeSync);
+    await expectLater(store.remove(spec), throwsA(isA<ModelRemoveFailed>()));
+    expect(filesIn(folder()), ['model.gguf']);
+  }, skip: Platform.isWindows ? null : 'only Windows keeps an open file');
+
   test('leftover half copies are removed at start', () async {
     folder().createSync(recursive: true);
     File('${folder().path}/import-0.partial').writeAsBytesSync([1]);

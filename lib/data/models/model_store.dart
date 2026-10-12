@@ -154,10 +154,16 @@ class ModelStore {
     );
   }
 
-  /// Removes the files of [spec] from this device.
+  /// Removes the files of [spec] from this device. Throws
+  /// [ModelRemoveFailed] when a file stays (on Windows, one still open);
+  /// the files that went stay gone.
   Future<void> remove(ModelSpec spec) async {
     final folder = await _folder(spec);
-    if (await folder.exists()) await folder.delete(recursive: true);
+    try {
+      if (await folder.exists()) await folder.delete(recursive: true);
+    } on FileSystemException catch (e) {
+      throw ModelRemoveFailed(e.message);
+    }
   }
 
   /// Removes copies an import left behind when the app stopped during it
@@ -225,6 +231,16 @@ class ModelImportResult {
   final List<String> alreadyPresent;
   final List<String> unknown;
   final ModelStatus status;
+}
+
+/// A model whose files could not all be removed.
+class ModelRemoveFailed implements Exception {
+  const ModelRemoveFailed(this.message);
+
+  final String message;
+
+  @override
+  String toString() => 'ModelRemoveFailed: $message';
 }
 
 /// Too little room for the copies (PO 11-10-2026): nothing was copied.

@@ -25,13 +25,17 @@ void main() {
           ? 'set OFFLOAD_VISION_MODEL_DIR to the folder with the model'
           : null);
 
-  NativeHandwritingReader reader() =>
-      NativeHandwritingReader(libraryName: library!, threads: 4);
+  NativeHandwritingReader reader() => NativeHandwritingReader(
+    libraryName: library!,
+    threads: 4,
+    pausesOutsideApp: false,
+  );
 
   test('without its library the reader is unavailable', () async {
     final absent = NativeHandwritingReader(
       libraryName: 'no_such_offload_llama.dll',
       threads: 1,
+      pausesOutsideApp: false,
     );
     expect(absent.isAvailable, isFalse);
     await expectLater(
@@ -45,6 +49,7 @@ void main() {
     final absent = NativeHandwritingReader(
       libraryName: 'no_such_offload_llama.dll',
       threads: 1,
+      pausesOutsideApp: false,
     );
     for (final image in [
       ReadingImage(width: 10, height: 10, rgb: Uint8List(299)),
