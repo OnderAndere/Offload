@@ -27,5 +27,6 @@ extension ItemLabels on AppLocalizations {
     ItemSource.hotkey => itemSourceHotkey,
     ItemSource.tray => itemSourceTray,
     ItemSource.voice => itemSourceVoice,
+    ItemSource.handwriting => itemSourceHandwriting,
   };
 }

@@ -1600,6 +1600,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get itemSourceVoice => 'voice';
 
   @override
+  String get itemSourceHandwriting => 'handwriting';
+
+  @override
   String get duplicateOpen => 'Open';
 
   @override

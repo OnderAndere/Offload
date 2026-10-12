@@ -12,8 +12,9 @@ enum ItemStatus { inbox, active, waiting, scheduled, done, archived }
 /// yet". A thought is an idea (SPEC Q20): there is no separate type.
 enum ItemType { task, request, idea, note }
 
-/// Channel through which an item was captured (DD-010).
-enum ItemSource { app, widget, share, hotkey, tray, voice }
+/// Channel through which an item was captured (DD-010); [handwriting] is a
+/// thought read from a photo (REQ-064, DD-021).
+enum ItemSource { app, widget, share, hotkey, tray, voice, handwriting }
 
 /// Priority from `*hoog`, `*2`, `*laag` in the text (REQ-050, DD-004 point
 /// 11). All three are stored: an item with `*2` has [normal], one without

@@ -2318,6 +2318,12 @@ abstract class AppLocalizations {
   /// **'spraak'**
   String get itemSourceVoice;
 
+  /// Capture source: a thought read from a photo of handwriting (REQ-064); completes 'via …'.
+  ///
+  /// In nl, this message translates to:
+  /// **'handschrift'**
+  String get itemSourceHandwriting;
+
   /// Opens the older item from the duplicate hint.
   ///
   /// In nl, this message translates to:

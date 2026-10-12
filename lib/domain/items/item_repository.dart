@@ -24,6 +24,17 @@ abstract class ItemRepository {
     Map<String, String> links = const {},
   });
 
+  /// Stores each of [rawTexts] unchanged as a new inbox item, in one
+  /// transaction: all or none (the thoughts read from a photo, T6a.5,
+  /// AC REQ-064 c). Returns their ids in the order of [rawTexts].
+  ///
+  /// Throws [ArgumentError] when one of them has no text; nothing is stored
+  /// then.
+  Future<List<String>> captureAll(
+    List<String> rawTexts, {
+    required ItemSource source,
+  });
+
   /// Stores a capture made outside the app (for example in the Android
   /// widget) under its own [id], a version 7 UUID from the moment of capture.
   /// Returns false, and changes nothing, when an item with [id] already

@@ -718,6 +718,13 @@ first; the order follows the gate.
       Fairphone (it happens once, after the first frame of capture, and only with a model)
 - [ ] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`
       items after confirming (AC REQ-064 c); the button in capture only with a verified model
+      — *PO decisions 12-10-2026 (plan):* a line without `-` joins the previous thought with a space (to be judged in
+      use; a line break is the alternative); text before the first `-` line is a thought of its own; the items get
+      the new source `handwriting`; back from the review screen returns to the corners with the same photo (asking
+      first when something was edited); after saving, the photo screen closes, and capture too when its field is
+      empty, with the message "N items in the inbox"; on Windows Ctrl+Enter saves all. Replaces the interim of T6a.4
+      (the text into the capture field). Last task of M6a: version 0.7.0. Steps A (`splitThoughts`, `captureAll`,
+      the source), B (the screen)
 
 ## M6 · Speech
 

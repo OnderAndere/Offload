@@ -64,6 +64,22 @@ class DriftItemRepository implements ItemRepository {
   static final _trailingSpaces = RegExp(r'[ \t]+$');
 
   @override
+  Future<List<String>> captureAll(
+    List<String> rawTexts, {
+    required ItemSource source,
+  }) async {
+    // Every text checked before anything is written.
+    final rows = [for (final text in rawTexts) _newInboxItem(text, source)];
+    return _db.transaction(() async {
+      final ids = <String>[];
+      for (final row in rows) {
+        ids.add(await _storage.writer.insert(_db.items, row));
+      }
+      return ids;
+    });
+  }
+
+  @override
   Future<bool> captureWithId(
     String id,
     String rawText, {

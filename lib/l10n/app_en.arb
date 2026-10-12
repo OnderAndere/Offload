@@ -370,6 +370,7 @@
   "itemSourceHotkey": "the hotkey",
   "itemSourceTray": "the tray",
   "itemSourceVoice": "voice",
+  "itemSourceHandwriting": "handwriting",
   "duplicateOpen": "Open",
   "inboxMoreLines": "{count, plural, =1{+ 1 line} other{+ {count} lines}}",
   "ageJustNow": "just now",

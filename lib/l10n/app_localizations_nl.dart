@@ -1606,6 +1606,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get itemSourceVoice => 'spraak';
 
   @override
+  String get itemSourceHandwriting => 'handschrift';
+
+  @override
   String get duplicateOpen => 'Openen';
 
   @override

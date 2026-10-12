@@ -65,6 +65,44 @@ void main() {
     });
   });
 
+  group('captureAll (the thoughts of a photo, T6a.5)', () {
+    test('stores each text as an inbox item with its source, in order, '
+        'through the change log', () async {
+      final ids = await repository.captureAll([
+        '@Anna bellen !vr',
+        'kweekbak bouwen #tuin',
+      ], source: ItemSource.handwriting);
+
+      expect(ids, hasLength(2));
+      final rows = await db().select(db().items).get();
+      final byId = {for (final row in rows) row.id: row};
+      expect(byId[ids[0]]!.rawText, '@Anna bellen !vr');
+      expect(byId[ids[1]]!.rawText, 'kweekbak bouwen #tuin');
+      for (final row in rows) {
+        expect(row.status, ItemStatus.inbox);
+        expect(row.source, ItemSource.handwriting);
+      }
+      expect(ids[0].compareTo(ids[1]), lessThan(0), reason: 'UUIDv7 order');
+      expect(await db().select(db().changeLog).get(), hasLength(2));
+    });
+
+    test('one text without characters: nothing is stored', () async {
+      await expectLater(
+        repository.captureAll(['zaaien', '  '], source: ItemSource.handwriting),
+        throwsArgumentError,
+      );
+      expect(await db().select(db().items).get(), isEmpty);
+      expect(await db().select(db().changeLog).get(), isEmpty);
+    });
+
+    test('nothing to store stores nothing', () async {
+      expect(
+        await repository.captureAll(const [], source: ItemSource.handwriting),
+        isEmpty,
+      );
+    });
+  });
+
   group('captureWithId (captures from outside the app)', () {
     final id = UuidV7Generator().next();
 

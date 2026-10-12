@@ -2072,6 +2072,10 @@
   "@itemSourceVoice": {
     "description": "Capture source, completes 'via …'."
   },
+  "itemSourceHandwriting": "handschrift",
+  "@itemSourceHandwriting": {
+    "description": "Capture source: a thought read from a photo of handwriting (REQ-064); completes 'via …'."
+  },
   "duplicateOpen": "Openen",
   "@duplicateOpen": {
     "description": "Opens the older item from the duplicate hint."
