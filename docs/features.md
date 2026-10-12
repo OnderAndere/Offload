@@ -132,6 +132,7 @@ status and type, complete it and move it to the trash
   models are not part of a backup; see [Settings](user-manual/en/settings.md#models).
 - **Read handwriting from a photo** in **Capture**, once the model is imported: take or open a
   photo (Android: camera or gallery), optionally drag four corners onto a skewed page, and read.
-  It shows progress and **Stop**; the text is added to the capture field to check and save, and
-  the photo is never stored; see
+  It shows progress and **Stop**; then **Review thoughts** shows one card per thought, with
+  what Offload recognises, to correct or skip before **Save** puts them in the inbox as separate
+  items. The photo is never stored; see
   [Reading handwriting from a photo](user-manual/en/capturing.md#reading-handwriting-from-a-photo).

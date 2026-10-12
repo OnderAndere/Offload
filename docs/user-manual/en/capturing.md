@@ -444,18 +444,42 @@ see "The photo could not be opened." or "Offload cannot read this photo."
 
 ### The result
 
-The text read is added to the capture field, on its own line. Offload tidies it a little: `@ Anna`
-becomes `@Anna`, `×` becomes `*`, and a line with only `-` is dropped. Check it, correct what
-is wrong, and save it as one item, as described in [Capturing a thought](#capturing-a-thought).
-For now the text becomes one item; a screen to split it per thought is not there yet.
+When reading is done, the screen **Review thoughts** opens. It says, for example, "3 thoughts
+read. Correct what is wrong and skip what you do not want; only after Save do they go to the
+inbox." Nothing is saved before you choose **Save**.
 
-For the best result, write each thought with a `-` at the start: one line is one thought, and
-a line without `-` continues the previous one. For example:
+Offload splits the text into thoughts: each line that starts with `-` starts a thought (the `-`
+itself is left out), and a line without `-` is added to the thought before it, with a space. Text
+before the first `-` line becomes a thought of its own. Offload also tidies the text a little:
+`@ Anna` becomes `@Anna`, `×` becomes `*`, and a line with only `-` is dropped. So for the best
+result, write each thought with a `-` at the start. For example:
 
 ```
 - Buy bulbs for the garden #garden !sat
 - Ask @Anna about the club newsletter
 ```
+
+Every thought is a card:
+
+- A checkbox **Include**. Untick it to skip that thought.
+- A field "Thought 1", "Thought 2" and so on, with the text. Correct it where the reading went
+  wrong.
+- Under the field, chips show what Offload will recognise: a person, a tag, a date (such as
+  "Thu, Oct 15"), a priority or a project. So you see at once when a date or a sign was misread.
+
+On Windows the first thought already has the cursor; on Android no keyboard opens by itself.
+
+The button **Save 3** (the number is the thoughts you kept; it reads **Nothing to save** when you
+kept none) stores all kept thoughts at once, each as a separate item in the inbox, with the
+source "via handwriting". On Windows, **Ctrl+Enter** does the same. Then the photo screen closes;
+the capture screen closes too if you typed nothing in it, and a message says, for example, "3
+items in the inbox". If saving fails, you see "Saving failed; the text is still here. Try again."
+and nothing is lost.
+
+If you go back from **Review thoughts**, you return to the corners with the same photo, so you
+can read it again. If you changed something, Offload first asks **Discard the text read?** ("Your
+changes are lost. The photo stays, so you can read it again.") with **Discard** and **Cancel**.
+While saving, going back does nothing.
 
 The photo is never stored. Under **Settings** → **Models** you choose **Accurate** or
 **Faster**, which applies here.
