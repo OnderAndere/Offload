@@ -111,7 +111,8 @@ shortcut **Ctrl+N**). It opens a screen with one text field; the cursor is alrea
 you can start typing right away. As long as the field is empty, you see the text "What's on
 your mind?" as a hint.
 
-Your text is kept exactly as you type it.
+Your text is kept exactly as you type it. You can also let Offload read handwriting from a
+photo, see [Reading handwriting from a photo](#reading-handwriting-from-a-photo).
 
 ### Saving
 
@@ -398,6 +399,66 @@ You only see these chips while you type in the capture screen of the app itself 
 **Capture** button, the Windows hotkey or the system tray); the input window of the Android
 widget does not show them. After saving, the processed tokens do appear as chips on the card in
 the inbox, see above, whatever you used to capture the item.
+
+## Reading handwriting from a photo
+
+Instead of typing, you can photograph a page or whiteboard with handwritten thoughts and let
+Offload read it. This works without internet, on your device only, and only after you have
+imported the handwriting model under **Settings** → **Models**, see
+[The handwriting model](settings.md#the-handwriting-model).
+
+### Starting
+
+In the capture screen, in the title bar, you see a document-scanner icon with the tip **Read
+handwriting from a photo**. It is there only when the handwriting model is imported and
+complete and this device can read with it. If it is missing, check **Settings** →
+**Models**.
+
+- **Android:** a sheet **Read handwriting** opens with **Take photo** and **From gallery**.
+- **Windows:** the Open window opens, where you pick an image file.
+
+### Straightening the photo
+
+The photo screen **Read handwriting** shows your photo with four corners. You may drag them onto
+the corners of a skewed board or page, so that Offload straightens it; or leave them and read
+the whole photo. **Reset corners** puts them back. If you drag corners past each other, you see
+a message in red ("The corners are mixed up...") and **Read** is disabled until you put them
+right. Tap **Read** to start.
+
+### While Offload reads
+
+Reading can take from tens of seconds to a few minutes. You see "This can take a few minutes.
+Keep Offload open; reading pauses outside the app." (on Windows only the first sentence), the
+step Offload is in (**Loading the model…**, **Looking at the photo…** or **Writing the
+text…**) and "Elapsed: m:ss".
+
+- Choose **Stop** to cancel. Going back also stops it.
+- **Android:** the screen stays on and reading pauses while you are outside Offload; that time
+  does not count. **Windows:** the PC stays awake.
+- After 5 minutes in the app, reading stops with the advice to close other apps and try again.
+
+After **Stop** or a problem, you return to the corners with the same photo and a message: too
+little free memory, the model could not be loaded (see **Settings** → **Models**), no text
+found in the photo, or "Reading failed. Try again." If the photo itself cannot be opened, you
+see "The photo could not be opened." or "Offload cannot read this photo."
+
+### The result
+
+The text read is added to the capture field, on its own line. Offload tidies it a little: `@ Anna`
+becomes `@Anna`, `×` becomes `*`, and a line with only `-` is dropped. Check it, correct what
+is wrong, and save it as one item, as described in [Capturing a thought](#capturing-a-thought).
+For now the text becomes one item; a screen to split it per thought is not there yet.
+
+For the best result, write each thought with a `-` at the start: one line is one thought, and
+a line without `-` continues the previous one. For example:
+
+```
+- Buy bulbs for the garden #garden !sat
+- Ask @Anna about the club newsletter
+```
+
+The photo is never stored. Under **Settings** → **Models** you choose **Accurate** or
+**Faster**, which applies here.
 
 ## Capturing with the hotkey (Windows)
 

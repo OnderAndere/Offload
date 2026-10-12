@@ -176,6 +176,10 @@ The screen shows its state:
 Under the name you see the source, for example "Hugging Face, Qwen/Qwen3-VL-2B-Instruct-GGUF @
 52d6c8f", and the licence (Apache-2.0).
 
+Once the model is **Ready to use**, the capture screen offers a button to read handwriting from a
+photo, see [Reading handwriting from a photo](capturing.md#reading-handwriting-from-a-photo).
+If the files cannot be looked at, the state reads "State unknown: the files could not be read."
+
 ### Importing the model
 
 1. Choose **Import...**. Offload opens the file window of your system. On Android that is the
@@ -198,7 +202,8 @@ You can import the second file later.
 ### Removing the model
 
 Choose **Remove**. Offload asks **Remove model?** ("... will be removed from this device. You can
-import it again later."). Confirm to remove it.
+import it again later."). Confirm to remove it. If that does not work completely, you see "The
+model could not be removed completely. A file may still be in use; try again later."
 
 ### Reading handwriting: Accurate or Faster
 

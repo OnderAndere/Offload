@@ -130,3 +130,8 @@ status and type, complete it and move it to the trash
   from files you choose yourself, with a free-space check, progress and **Stop**; remove it again,
   and choose **Accurate** or **Faster** for reading handwriting. Offload downloads nothing and
   models are not part of a backup; see [Settings](user-manual/en/settings.md#models).
+- **Read handwriting from a photo** in **Capture**, once the model is imported: take or open a
+  photo (Android: camera or gallery), optionally drag four corners onto a skewed page, and read.
+  It shows progress and **Stop**; the text is added to the capture field to check and save, and
+  the photo is never stored; see
+  [Reading handwriting from a photo](user-manual/en/capturing.md#reading-handwriting-from-a-photo).
