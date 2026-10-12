@@ -179,6 +179,30 @@ void main() {
     expect(filesIn(folder()), ['model.gguf']);
   }, skip: Platform.isWindows ? null : 'only Windows keeps an open file');
 
+  test('without a data directory (a storage in memory) there are no '
+      'models, and none can be imported', () async {
+    final none = ModelStore(
+      dataDirectory: () async => null,
+      source: source,
+      freeBytes: (_) async => free,
+    );
+    expect((await none.status(spec)).isEmpty, isTrue);
+    expect(await none.paths(spec), isNull);
+    expect(await none.totalBytes(catalog: [spec]), 0);
+    await none.remove(spec);
+    await none.removeLeftovers();
+    await expectLater(
+      none.import(spec, [source.offer('a', language)]),
+      throwsA(
+        isA<ModelFileException>().having(
+          (e) => e.failure,
+          'failure',
+          ModelFileFailure.unavailable,
+        ),
+      ),
+    );
+  });
+
   test('leftover half copies are removed at start', () async {
     folder().createSync(recursive: true);
     File('${folder().path}/import-0.partial').writeAsBytesSync([1]);

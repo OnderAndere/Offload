@@ -34,13 +34,21 @@ void main() {
   String? result;
   bool closed = false;
 
-  Future<void> open(WidgetTester tester, {bool pausesOutsideApp = true}) async {
+  var modelLookups = 0;
+
+  Future<void> open(
+    WidgetTester tester, {
+    bool pausesOutsideApp = true,
+    Object? openError,
+  }) async {
     reader = FakeHandwritingReader(pausesOutsideApp: pausesOutsideApp);
     awake = FakeScreenAwake();
     final image = (await tester.runAsync(
       () => createTestImage(width: 200, height: 150),
     ))!;
-    preparer = _FakePreparer(WorkingPhoto(image, Uint8List(0).buffer));
+    preparer = _FakePreparer(WorkingPhoto(image, Uint8List(0).buffer))
+      ..openError = openError;
+    modelLookups = 0;
     now = Duration.zero;
     result = null;
     closed = false;
@@ -55,6 +63,10 @@ void main() {
                 () => now,
           ),
           readingSpeedProvider.overrideWith(_Faster.new),
+          handwritingModelProvider.overrideWith((ref) async {
+            modelLookups++;
+            return model;
+          }),
         ],
         child: MaterialApp(
           locale: const Locale('nl'),
@@ -246,6 +258,35 @@ void main() {
     });
   }
 
+  testWidgets('a model that cannot be read is looked for again, so the '
+      'capture button can go', (tester) async {
+    await open(tester);
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(HandwritingScreen)),
+    );
+    await tester.runAsync(
+      () => container.read(handwritingModelProvider.future),
+    );
+    expect(modelLookups, 1);
+    reader.next = const HandwritingReaderException(
+      HandwritingFailure.modelUnreadable,
+    );
+    await tapRead(tester);
+    await tester.pumpAndSettle();
+    await tester.runAsync(
+      () => container.read(handwritingModelProvider.future),
+    );
+    expect(modelLookups, 2);
+  });
+
+  testWidgets('a photo that cannot be opened, for any reason: a message, '
+      'and the screen closes', (tester) async {
+    await open(tester, openError: StateError('no pixels'));
+    expect(find.byType(HandwritingScreen), findsNothing);
+    expect(find.text(l10n.photoUnreadable), findsOneWidget);
+    expect(closed, isTrue);
+  });
+
   testWidgets('no text read: says so and stays', (tester) async {
     await open(tester);
     reader.next = '\n-\n';
@@ -319,9 +360,13 @@ class _FakePreparer extends ReadingImagePreparer {
 
   final WorkingPhoto photo;
   Corners? prepared;
+  Object? openError;
 
   @override
-  Future<WorkingPhoto> open(Uint8List bytes) async => photo;
+  Future<WorkingPhoto> open(Uint8List bytes) async {
+    if (openError case final error?) throw error;
+    return photo;
+  }
 
   @override
   Future<ReadingImage> prepare(WorkingPhoto photo, Corners corners) async {

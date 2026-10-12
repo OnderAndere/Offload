@@ -712,6 +712,10 @@ first; the order follows the gate.
       at 1280 px the synthetic photo loses the `@` of `@Daan` and the capital of `^Zomer`, as S6 measured at 1024 px;
       real photos were not better at 1600 (S6), so no change. The help of the photo screen is the capture topic until
       the manual has a section of its own
+      — *follow-up 12-10-2026 (review C):* a photo that fails to open always gives a message; a model found unreadable
+      makes capture look for it again; the model folder comes from the opened storage, so tests (a storage in memory)
+      never look at the models of the machine. PO 12-10-2026: no measurement of opening the native library on the
+      Fairphone (it happens once, after the first frame of capture, and only with a model)
 - [ ] **T6a.5** The review screen: one candidate per thought (`-` convention), edit or skip, save as `inbox`
       items after confirming (AC REQ-064 c); the button in capture only with a verified model
 

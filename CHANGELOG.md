@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- *Read handwriting*: a photo that cannot be opened always gives a message instead of a screen that keeps saying
+  "Opening the photo…"; when the model turns out to be missing or damaged, the button in *Capture* goes.
+
 ## [0.6.5] – 2026-10-12
 
 ### Added

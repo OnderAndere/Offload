@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/attachments/photo_compressor.dart';
 import '../../data/handwriting/reading_image_preparer.dart';
 import '../../domain/handwriting/reading_clean_up.dart';
 import '../../domain/handwriting/reading_clock.dart';
@@ -150,7 +149,8 @@ class _HandwritingScreenState extends ConsumerState<HandwritingScreen>
         _photo = photo;
         _stage = _Stage.corners;
       });
-    } on PhotoFormatException {
+    } catch (_) {
+      // Not a picture the engine decodes, or its pixels could not be read.
       if (!mounted) return;
       showMessage(
         ScaffoldMessenger.of(context),
@@ -205,6 +205,7 @@ class _HandwritingScreenState extends ConsumerState<HandwritingScreen>
 
     String? text;
     String? message;
+    var modelGone = false;
     try {
       final image = await ref
           .read(readingImagePreparerProvider)
@@ -226,6 +227,9 @@ class _HandwritingScreenState extends ConsumerState<HandwritingScreen>
       text = cleanUpReading(reading.text);
       if (text.isEmpty) message = l10n.handwritingNothingFound;
     } on HandwritingReaderException catch (e) {
+      modelGone =
+          e.failure == HandwritingFailure.modelUnreadable ||
+          e.failure == HandwritingFailure.unavailable;
       message = switch (e.failure) {
         HandwritingFailure.cancelled =>
           _timedOut
@@ -248,6 +252,9 @@ class _HandwritingScreenState extends ConsumerState<HandwritingScreen>
     }
     if (!mounted) return;
     _cancel = null;
+    // Looked at again, so the button in capture goes when the files did
+    // (AC REQ-064, *Only with a model*).
+    if (modelGone) ref.invalidate(handwritingModelProvider);
     if (text != null && text.isNotEmpty) {
       Navigator.of(context).pop(text);
       return;
@@ -261,7 +268,10 @@ class _HandwritingScreenState extends ConsumerState<HandwritingScreen>
   void _tick() {
     final clock = _clock;
     if (clock == null || !mounted) return;
-    setState(() => _elapsed = clock.elapsed);
+    final elapsed = clock.elapsed;
+    // Paused outside the app: nothing changed to show.
+    if (elapsed == _elapsed) return;
+    setState(() => _elapsed = elapsed);
     if (_elapsed >= widget.policy.maxReadingTime && !_stopping) {
       _timedOut = true;
       _stop();

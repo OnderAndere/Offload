@@ -17,11 +17,14 @@ final modelFileSourceProvider = Provider<ModelFileSource>(
   (ref) => createPlatformModelFileSource(),
 );
 
-/// The models on this device (T6a.3, DD-002, DD-021).
+/// The models on this device (T6a.3, DD-002, DD-021), in the folder of the
+/// opened storage: none for a storage kept in memory (tests), so a test
+/// never looks at the models of the machine it runs on.
 final modelStoreProvider = Provider<ModelStore>((ref) {
   final directory = ref.watch(appDirectoryProvider);
+  final data = ref.watch(storageProvider).directory;
   return ModelStore(
-    dataDirectory: directory.dataDirectory,
+    dataDirectory: () async => data,
     source: ref.watch(modelFileSourceProvider),
     freeBytes: directory.freeBytes,
   );

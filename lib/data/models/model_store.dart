@@ -13,7 +13,9 @@ import '../../platform/model_files/model_file_source.dart';
 /// it checks out, so a half copy never counts. A file counts as present
 /// when it has its catalogue size: its hash was checked when it came in.
 /// One import at a time (the screen allows no second one), and the
-/// leftovers are only removed at start.
+/// leftovers are only removed at start. Without a data directory (a
+/// storage kept in memory, in tests) there are no models and none can be
+/// imported.
 class ModelStore {
   ModelStore({
     required this._dataDirectory,
@@ -21,18 +23,22 @@ class ModelStore {
     required this._freeBytes,
   });
 
-  final Future<Directory> Function() _dataDirectory;
+  final Future<Directory?> Function() _dataDirectory;
   final ModelFileSource _source;
   final Future<int?> Function(Directory directory) _freeBytes;
 
-  /// The folder of all models.
-  Future<Directory> _root() async => Directory(
-    '${(await _dataDirectory()).path}${Platform.pathSeparator}'
-    '$modelsFolderName',
-  );
+  /// The folder of all models; null without a data directory.
+  Future<Directory?> _root() async => switch (await _dataDirectory()) {
+    final data? => Directory(
+      '${data.path}${Platform.pathSeparator}$modelsFolderName',
+    ),
+    null => null,
+  };
 
-  Future<Directory> _folder(ModelSpec spec) async =>
-      Directory('${(await _root()).path}${Platform.pathSeparator}${spec.id}');
+  Future<Directory?> _folder(ModelSpec spec) async => switch (await _root()) {
+    final root? => Directory('${root.path}${Platform.pathSeparator}${spec.id}'),
+    null => null,
+  };
 
   File _file(Directory folder, String name) =>
       File('${folder.path}${Platform.pathSeparator}$name');
@@ -43,6 +49,7 @@ class ModelStore {
   Future<ModelStatus> status(ModelSpec spec) async {
     final folder = await _folder(spec);
     final present = <String>{};
+    if (folder == null) return ModelStatus(spec: spec, present: present);
     for (final file in spec.files) {
       final f = _file(folder, file.name);
       try {
@@ -58,7 +65,7 @@ class ModelStore {
   /// there.
   Future<Map<ModelFileRole, String>?> paths(ModelSpec spec) async {
     if (!(await status(spec)).isComplete) return null;
-    final folder = await _folder(spec);
+    final folder = (await _folder(spec))!;
     return {
       for (final file in spec.files) file.role: _file(folder, file.name).path,
     };
@@ -84,7 +91,8 @@ class ModelStore {
   /// bytes copied of all files and the total to copy.
   ///
   /// Throws [ModelImportNoRoom] before copying, or [ModelFileException]
-  /// (cancelled, noSpace, unavailable) while copying.
+  /// (cancelled, noSpace, unavailable) while copying; unavailable too
+  /// without a data directory.
   Future<ModelImportResult> import(
     ModelSpec spec,
     List<PickedModelFile> picked, {
@@ -92,6 +100,9 @@ class ModelStore {
     ModelFileCancel? cancel,
   }) async {
     final folder = await _folder(spec);
+    if (folder == null) {
+      throw const ModelFileException(ModelFileFailure.unavailable);
+    }
     final before = await status(spec);
     final infos = [for (final p in picked) (name: p.name, size: p.size)];
     final plan = planModelImport(spec, infos, present: before.present);
@@ -159,6 +170,7 @@ class ModelStore {
   /// the files that went stay gone.
   Future<void> remove(ModelSpec spec) async {
     final folder = await _folder(spec);
+    if (folder == null) return;
     try {
       if (await folder.exists()) await folder.delete(recursive: true);
     } on FileSystemException catch (e) {
@@ -170,7 +182,7 @@ class ModelStore {
   /// (they never counted). At start, when no import runs.
   Future<void> removeLeftovers() async {
     final root = await _root();
-    if (!await root.exists()) return;
+    if (root == null || !await root.exists()) return;
     await for (final entity in root.list(recursive: true)) {
       if (entity is File && entity.path.endsWith(partialSuffix)) {
         await _delete(entity);
